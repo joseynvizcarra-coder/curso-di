@@ -164,7 +164,7 @@
 </div>
 
 <script>
-const SHEET_SCRIPT_URL = 'REEMPLAZAR_CON_URL_DE_APPS_SCRIPT';
+const SHEET_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzZvd7DCXRBuD5KPPhWk67Op1tm81gBXGuK1F9JuPqihr62i-bfGAB4d28Aw3jsP0QH_g/exec';
 const UNIDAD_ID = 'm1-1';
 
 const PREGUNTAS = [
@@ -242,7 +242,7 @@ async function guardarPuntaje(ratio) {
   const scores = getScores();
   scores[UNIDAD_ID] = ratio;
   localStorage.setItem('di_scores', JSON.stringify(scores));
-  if (SHEET_SCRIPT_URL === 'REEMPLAZAR_CON_URL_DE_APPS_SCRIPT') return;
+  if (SHEET_SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbzZvd7DCXRBuD5KPPhWk67Op1tm81gBXGuK1F9JuPqihr62i-bfGAB4d28Aw3jsP0QH_g/exec') return;
   try {
     await fetch(SHEET_SCRIPT_URL, {
       method:'POST',
