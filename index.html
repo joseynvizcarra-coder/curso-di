@@ -211,7 +211,7 @@ function updateUI() {
 async function syncSheet() {
   const dot = document.getElementById('syncDot');
   const msg = document.getElementById('syncMsg');
-  if (SHEET_SCRIPT_URL === 'REEMPLAZAR_CON_URL_DE_APPS_SCRIPT') {
+  if (SHEET_SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbzZvd7DCXRBuD5KPPhWk67Op1tm81gBXGuK1F9JuPqihr62i-bfGAB4d28Aw3jsP0QH_g/exec') {
     dot.className = 'sync-dot error';
     msg.textContent = 'Google Sheets pendiente de configurar — puntajes guardados en este navegador';
     return;
