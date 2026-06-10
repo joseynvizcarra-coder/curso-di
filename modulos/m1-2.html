@@ -71,6 +71,29 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
 .lbadge i { color: var(--terra); }
 .lesson-body { padding: 1.8rem 2rem; }
 
+/* PRESENTACIÓN */
+.presentacion { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
+.presentacion-head { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; flex-wrap: wrap; background: var(--dark); color: #fff; padding: 0.8rem 1.2rem; }
+.pres-title { font-size: 0.95rem; font-weight: bold; display: flex; align-items: center; gap: 0.6rem; }
+.pres-title i { color: var(--terra); font-size: 1.1rem; }
+.pres-tag { font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: #a09a94; border: 1px solid rgba(255,255,255,0.18); border-radius: 20px; padding: 0.12rem 0.55rem; }
+.presentacion-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.pres-btn { font-size: 0.78rem; color: #fff; text-decoration: none; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.08); border-radius: 20px; padding: 0.35rem 0.9rem; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.4rem; }
+.pres-btn:hover { background: var(--terra); border-color: var(--terra); color: #fff; }
+.presentacion-viewer { height: 520px; background: var(--cream); }
+.presentacion-viewer object, .presentacion-viewer iframe { width: 100%; height: 100%; border: none; display: block; }
+.pres-placeholder { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: var(--muted); padding: 2rem; }
+.pres-placeholder i { font-size: 2.4rem; color: #c9c2b8; margin-bottom: 0.8rem; }
+.pres-placeholder p { font-size: 0.98rem; font-weight: bold; color: var(--dark); margin-bottom: 0.3rem; }
+.pres-placeholder small { font-size: 0.82rem; line-height: 1.6; max-width: 360px; }
+.pres-placeholder code { background: #fff; border: 1px solid var(--border); border-radius: 4px; padding: 0.1rem 0.4rem; color: var(--terra); }
+@media(max-width:600px){ .presentacion-viewer { height: 380px; } }
+.pres-audio { display: flex; align-items: center; gap: 0.9rem; padding: 0.85rem 1.2rem; background: var(--terra-light); border-top: 1px solid var(--border); }
+.pres-audio-label { font-size: 0.82rem; color: var(--dark); font-weight: bold; display: flex; align-items: center; gap: 0.5rem; white-space: nowrap; }
+.pres-audio-label i { color: var(--terra); font-size: 1rem; }
+.pres-audio audio { flex: 1; height: 38px; min-width: 0; }
+@media(max-width:600px){ .pres-audio { flex-direction: column; align-items: stretch; gap: 0.55rem; } }
+
 /* ACCORDION */
 .accordion-di { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1rem; }
 .accordion-di-btn { background: var(--cream); border: none; width: 100%; text-align: left; padding: 1rem 1.2rem; display: flex; align-items: center; gap: 0.8rem; cursor: pointer; transition: background 0.2s; font-size: 0.95rem; font-weight: bold; color: var(--dark); }
@@ -207,6 +230,24 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
         </div>
 
         <div class="lesson-body">
+
+          <!-- PRESENTACIÓN -->
+          <div class="presentacion">
+            <div class="presentacion-head">
+              <div class="pres-title"><i class="bi bi-easel2"></i> Presentación del tema <span class="pres-tag">NotebookLM</span></div>
+              <div class="presentacion-actions">
+                <a class="pres-btn" href="m1-2.pdf" target="_blank" rel="noopener"><i class="bi bi-arrows-fullscreen"></i> Pantalla completa</a>
+                <a class="pres-btn" href="m1-2.pdf" download><i class="bi bi-download"></i> Descargar</a>
+              </div>
+            </div>
+            <div class="presentacion-viewer">
+              <iframe src="m1-2.pdf#view=FitH" title="Presentación del tema" loading="lazy"></iframe>
+            </div>
+            <div class="pres-audio">
+              <span class="pres-audio-label"><i class="bi bi-headphones"></i> Resumen en audio</span>
+              <audio controls preload="metadata" src="m1-2-audio.mp3"></audio>
+            </div>
+          </div>
 
           <!-- ACORDEÓN 1 -->
           <div class="accordion-di">
