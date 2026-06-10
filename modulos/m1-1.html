@@ -511,7 +511,14 @@ async function guardarPuntaje(ratio) {
   const s = getScores(); s[UNIDAD_ID] = ratio; localStorage.setItem('di_scores', JSON.stringify(s));
   updateSidebar();
   try {
-    await fetch(SCRIPT_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ action:'saveScore', id:UNIDAD_ID, score:ratio, label:'1.1 ¿Qué es el DI?', date: new Date().toLocaleDateString('es-CL') }) });
+    const params = new URLSearchParams({
+      action: 'saveScore',
+      id: UNIDAD_ID,
+      score: ratio,
+      label: '1.1 ¿Qué es el DI?',
+      date: new Date().toLocaleDateString('es-CL')
+    });
+    await fetch(SCRIPT_URL + '?' + params.toString());
   } catch(e) {}
 }
 
