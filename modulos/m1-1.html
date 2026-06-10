@@ -589,6 +589,25 @@ function showToast(msg, type) {
 function scrollToTop() { window.scrollTo({top:0,behavior:'smooth'}); }
 
 updateSidebar();
+
+function trackVisit() {
+  try {
+    let vid = localStorage.getItem('di_vid');
+    if (!vid) { vid = 'v' + Date.now().toString(36) + Math.random().toString(36).slice(2,8); localStorage.setItem('di_vid', vid); }
+    let sid = sessionStorage.getItem('di_sid');
+    if (!sid) { sid = 's' + Date.now().toString(36) + Math.random().toString(36).slice(2,8); sessionStorage.setItem('di_sid', sid); }
+    const qs = new URLSearchParams(location.search);
+    if (qs.get('owner') === '1') localStorage.setItem('di_owner', '1');
+    if (qs.get('owner') === '0') localStorage.removeItem('di_owner');
+    const owner = localStorage.getItem('di_owner') === '1' ? '1' : '0';
+    const device = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'movil' : 'escritorio';
+    const u = SCRIPT_URL + '?action=logVisit&page=' + encodeURIComponent(UNIDAD_ID)
+      + '&vid=' + encodeURIComponent(vid) + '&sid=' + encodeURIComponent(sid)
+      + '&owner=' + owner + '&device=' + device;
+    fetch(u).catch(()=>{});
+  } catch(e) {}
+}
+trackVisit();
 </script>
 </body>
 </html>
