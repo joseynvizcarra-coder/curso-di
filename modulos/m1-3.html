@@ -559,7 +559,12 @@ function trackVisit() {
     if (qs.get('owner') === '0') localStorage.removeItem('di_owner');
     const owner = localStorage.getItem('di_owner') === '1' ? '1' : '0';
     const device = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'movil' : 'escritorio';
-    jsonp({ action: 'logVisit', page: UNIDAD_ID, vid: vid, sid: sid, owner: owner, device: device }).catch(function(){});
+    var u = SCRIPT_URL + '?action=logVisit&page=' + encodeURIComponent(UNIDAD_ID) + '&vid=' + encodeURIComponent(vid) + '&sid=' + encodeURIComponent(sid) + '&owner=' + owner + '&device=' + device + '&t=' + Date.now();
+    var f = document.createElement('iframe');
+    f.style.cssText = 'position:absolute;width:1px;height:1px;border:0;left:-9999px;top:-9999px;';
+    f.src = u;
+    document.body.appendChild(f);
+    setTimeout(function(){ if (f.parentNode) f.parentNode.removeChild(f); }, 15000);
   } catch(e) {}
 }
 trackVisit();
