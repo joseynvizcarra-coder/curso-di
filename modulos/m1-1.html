@@ -88,6 +88,11 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
 .pres-placeholder small { font-size: 0.82rem; line-height: 1.6; max-width: 360px; }
 .pres-placeholder code { background: #fff; border: 1px solid var(--border); border-radius: 4px; padding: 0.1rem 0.4rem; color: var(--terra); }
 @media(max-width:600px){ .presentacion-viewer { height: 380px; } }
+.pres-audio { display: flex; align-items: center; gap: 0.9rem; padding: 0.85rem 1.2rem; background: var(--terra-light); border-top: 1px solid var(--border); }
+.pres-audio-label { font-size: 0.82rem; color: var(--dark); font-weight: bold; display: flex; align-items: center; gap: 0.5rem; white-space: nowrap; }
+.pres-audio-label i { color: var(--terra); font-size: 1rem; }
+.pres-audio audio { flex: 1; height: 38px; min-width: 0; }
+@media(max-width:600px){ .pres-audio { flex-direction: column; align-items: stretch; gap: 0.55rem; } }
 
 /* ACCORDION */
 .accordion-di { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1rem; }
@@ -236,6 +241,10 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
             </div>
             <div class="presentacion-viewer">
               <iframe src="m1-1.pdf#view=FitH" title="Presentación del tema" loading="lazy"></iframe>
+            </div>
+            <div class="pres-audio">
+              <span class="pres-audio-label"><i class="bi bi-headphones"></i> Resumen en audio</span>
+              <audio controls preload="metadata" src="m1-1-audio.mp3"></audio>
             </div>
           </div>
 
