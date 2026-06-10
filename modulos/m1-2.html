@@ -4,179 +4,372 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>1.2 Teorías del aprendizaje — Curso DI</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <style>
-  :root { --cream:#f5f2ec; --dark:#0f1117; --terra:#c85c3a; --blue:#3a6b8a; --muted:#7a7570; --border:#ddd8d0; --white:#ffffff; --success:#2d7a4f; }
-  * { box-sizing:border-box; margin:0; padding:0; }
-  body { background:var(--cream); color:var(--dark); font-family:'Calibri','Segoe UI',sans-serif; font-size:16px; line-height:1.7; }
-  .topbar { background:var(--dark); color:var(--cream); padding:0.9rem 1.5rem; display:flex; align-items:center; gap:1rem; border-bottom:3px solid var(--terra); }
-  .topbar a { color:#a09a94; font-size:0.85rem; text-decoration:none; }
-  .topbar a:hover { color:var(--cream); }
-  .topbar span { color:var(--terra); }
-  .hero { background:var(--dark); color:var(--cream); padding:2.5rem 1.5rem 2rem; border-bottom:1px solid #2a2a35; }
-  .hero-inner { max-width:780px; margin:0 auto; }
-  .hero-tag { font-size:0.75rem; color:var(--terra); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.6rem; }
-  .hero h1 { font-family:Georgia,serif; font-size:1.8rem; font-weight:normal; margin-bottom:0.5rem; }
-  .hero p { color:#a09a94; font-size:0.92rem; }
-  .container { max-width:780px; margin:0 auto; padding:2rem 1.5rem; }
-  h2 { font-family:Georgia,serif; font-size:1.25rem; font-weight:normal; color:var(--dark); margin:2.2rem 0 0.8rem; padding-bottom:0.4rem; border-bottom:2px solid var(--terra); }
-  h3 { font-size:1rem; font-weight:bold; color:var(--dark); margin:1.5rem 0 0.5rem; }
-  p { margin-bottom:1rem; }
-  .callout { background:var(--white); border-left:4px solid var(--terra); padding:1rem 1.2rem; margin:1.5rem 0; border-radius:0 6px 6px 0; }
-  .callout p { margin:0; font-size:0.92rem; }
-  .callout strong { color:var(--terra); }
-  .info-box { background:var(--white); border:1px solid var(--border); border-radius:8px; padding:1.2rem 1.4rem; margin:1.2rem 0; }
-  .info-box h4 { font-size:0.9rem; font-weight:bold; color:var(--blue); margin-bottom:0.5rem; }
-  .info-box p { margin:0; font-size:0.9rem; }
-  .teoria-header { background:var(--dark); color:var(--cream); padding:0.8rem 1.2rem; border-radius:6px 6px 0 0; margin-top:1.5rem; }
-  .teoria-header h3 { color:var(--terra); margin:0; font-size:1rem; }
-  .teoria-header span { color:#a09a94; font-size:0.8rem; }
-  .teoria-body { background:var(--white); border:1px solid var(--border); border-top:none; border-radius:0 0 6px 6px; padding:1.2rem 1.4rem; margin-bottom:1rem; }
-  .teoria-body p { margin-bottom:0.8rem; font-size:0.92rem; }
-  .teoria-body p:last-child { margin-bottom:0; }
-  .di-tag { display:inline-block; background:#eef3f7; color:var(--blue); border:1px solid #c5d8e8; border-radius:4px; font-size:0.78rem; padding:0.2rem 0.6rem; margin-bottom:0.5rem; }
-  table { width:100%; border-collapse:collapse; margin:1.2rem 0; font-size:0.88rem; }
-  th { background:var(--dark); color:var(--cream); padding:0.6rem 0.8rem; text-align:left; font-weight:normal; }
-  td { padding:0.6rem 0.8rem; border-bottom:1px solid var(--border); vertical-align:top; }
-  tr:last-child td { border-bottom:none; }
-  tr:nth-child(even) td { background:#faf8f4; }
-  .nav-bottom { display:flex; justify-content:space-between; align-items:center; margin-top:3rem; padding-top:1.5rem; border-top:1px solid var(--border); }
-  .btn { padding:0.6rem 1.4rem; border-radius:6px; font-size:0.9rem; cursor:pointer; font-family:inherit; text-decoration:none; display:inline-block; }
-  .btn-outline { background:transparent; border:1px solid var(--border); color:var(--dark); }
-  .btn-outline:hover { background:var(--white); }
-  .btn-primary { background:var(--terra); border:1px solid var(--terra); color:white; }
-  .btn-primary:hover { background:#a8492d; }
-  .quiz-section { background:var(--white); border:1px solid var(--border); border-radius:8px; padding:1.5rem; margin-top:3rem; }
-  .quiz-section h2 { border-bottom:2px solid var(--blue); color:var(--blue); margin-top:0; }
-  .q-block { margin-bottom:1.8rem; padding-bottom:1.8rem; border-bottom:1px solid var(--border); }
-  .q-block:last-of-type { border-bottom:none; margin-bottom:0; padding-bottom:0; }
-  .q-num { font-size:0.75rem; color:var(--muted); margin-bottom:0.3rem; text-transform:uppercase; letter-spacing:0.05em; }
-  .q-text { font-size:0.95rem; font-weight:bold; margin-bottom:0.8rem; line-height:1.5; }
-  .opt { display:flex; align-items:flex-start; gap:0.7rem; padding:0.6rem 0.8rem; border-radius:6px; border:1px solid var(--border); margin-bottom:0.5rem; cursor:pointer; font-size:0.88rem; transition:background 0.12s; }
-  .opt:hover { background:var(--cream); }
-  .opt.selected { border-color:var(--blue); background:#eef3f7; }
-  .opt.correct { border-color:var(--success); background:#edf7f2; }
-  .opt.wrong { border-color:var(--terra); background:#fdf0ec; }
-  .opt input { margin-top:2px; flex-shrink:0; }
-  .feedback { font-size:0.85rem; padding:0.7rem 0.9rem; border-radius:6px; margin-top:0.6rem; line-height:1.6; }
-  .feedback.ok { background:#edf7f2; color:var(--success); border:1px solid #b0ddc5; }
-  .feedback.fail { background:#fdf0ec; color:#a03020; border:1px solid #f0b8a8; }
-  .quiz-actions { margin-top:1.5rem; display:flex; gap:1rem; flex-wrap:wrap; }
-  .score-result { text-align:center; padding:1.5rem; background:var(--cream); border-radius:8px; margin-top:1.5rem; }
-  .score-big { font-family:Georgia,serif; font-size:3rem; color:var(--terra); line-height:1; }
-  .score-sub { font-size:0.88rem; color:var(--muted); margin-top:0.3rem; margin-bottom:1rem; }
-  .score-msg { font-size:0.92rem; max-width:480px; margin:0 auto; line-height:1.6; }
+:root {
+  --cream: #f5f2ec;
+  --dark: #0f1117;
+  --terra: #c85c3a;
+  --blue: #3a6b8a;
+  --muted: #7a7570;
+  --border: #ddd8d0;
+  --success: #2d7a4f;
+  --terra-light: #f7ede8;
+  --blue-light: #e8f0f5;
+}
+body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif; color: var(--dark); }
+
+/* HEADER */
+.header-di {
+  background: linear-gradient(135deg, var(--dark) 0%, #1e2030 100%);
+  border-bottom: 3px solid var(--terra);
+  padding: 0.9rem 0;
+  position: sticky; top: 0; z-index: 1030;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+.header-di .course-name { color: #fff; font-family: Georgia, serif; font-size: 1.1rem; font-weight: normal; }
+.header-di .unit-name { color: var(--terra); font-size: 0.82rem; }
+.btn-back { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; border-radius: 20px; padding: 0.4rem 1rem; font-size: 0.82rem; text-decoration: none; transition: all 0.2s; }
+.btn-back:hover { background: rgba(255,255,255,0.2); color: #fff; }
+
+/* SIDEBAR */
+.sidebar-di {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  overflow: hidden;
+}
+@media(min-width:992px){ .sidebar-di { position: sticky; top: 80px; max-height: calc(100vh - 100px); overflow-y: auto; } }
+.sidebar-header { background: var(--dark); color: #fff; padding: 1rem 1.2rem; }
+.sidebar-header h6 { font-family: Georgia, serif; font-weight: normal; font-size: 0.9rem; margin: 0; color: var(--terra); }
+.sidebar-header p { font-size: 0.75rem; color: #a09a94; margin: 0.2rem 0 0; }
+.lesson-item { display: flex; align-items: center; gap: 0.8rem; padding: 0.75rem 1.2rem; border-bottom: 1px solid var(--border); cursor: pointer; transition: all 0.2s; text-decoration: none; color: var(--dark); }
+.lesson-item:hover { background: var(--cream); }
+.lesson-item.active { background: var(--terra-light); border-left: 3px solid var(--terra); }
+.lesson-item.done { color: var(--muted); }
+.lesson-num { width: 30px; height: 30px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold; flex-shrink: 0; color: var(--muted); }
+.lesson-item.active .lesson-num { background: var(--terra); color: #fff; }
+.lesson-item.done .lesson-num { background: var(--success); color: #fff; }
+.lesson-info { flex: 1; }
+.lesson-info strong { font-size: 0.83rem; display: block; }
+.lesson-info span { font-size: 0.74rem; color: var(--muted); }
+.sidebar-progress { padding: 1rem 1.2rem; background: var(--cream); }
+.progress-di { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.progress-di-fill { height: 100%; background: linear-gradient(90deg, var(--terra), #e07a5a); border-radius: 99px; transition: width 0.5s ease; }
+.sidebar-footer { padding: 0.8rem 1.2rem; text-align: center; border-top: 1px solid var(--border); }
+
+/* CONTENT */
+.content-di { background: #fff; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow: hidden; }
+.lesson-hero { background: linear-gradient(135deg, var(--dark) 0%, #1e2030 100%); color: #fff; padding: 2rem 2rem 1.5rem; }
+.lesson-hero .unit-tag { font-size: 0.72rem; color: var(--terra); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.4rem; }
+.lesson-hero h1 { font-family: Georgia, serif; font-size: 1.6rem; font-weight: normal; margin-bottom: 0.4rem; }
+.lesson-hero p { color: #a09a94; font-size: 0.88rem; margin: 0; }
+.lesson-badges { padding: 1rem 2rem; background: var(--terra-light); border-bottom: 1px solid var(--border); display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.lbadge { font-size: 0.78rem; padding: 0.3rem 0.7rem; border-radius: 20px; border: 1px solid var(--border); background: #fff; color: var(--muted); }
+.lbadge i { color: var(--terra); }
+.lesson-body { padding: 1.8rem 2rem; }
+
+/* ACCORDION */
+.accordion-di { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1rem; }
+.accordion-di-btn { background: var(--cream); border: none; width: 100%; text-align: left; padding: 1rem 1.2rem; display: flex; align-items: center; gap: 0.8rem; cursor: pointer; transition: background 0.2s; font-size: 0.95rem; font-weight: bold; color: var(--dark); }
+.accordion-di-btn:hover { background: #ede9e2; }
+.accordion-di-btn.open { background: var(--dark); color: #fff; }
+.accordion-di-btn.open .acc-icon { color: var(--terra); }
+.accordion-di-btn .acc-chevron { margin-left: auto; transition: transform 0.25s; font-size: 0.8rem; }
+.accordion-di-btn.open .acc-chevron { transform: rotate(180deg); }
+.acc-icon { font-size: 1rem; color: var(--terra); }
+.accordion-di-body { display: none; padding: 1.2rem 1.4rem; border-top: 1px solid var(--border); background: #fff; font-size: 0.92rem; line-height: 1.7; }
+.accordion-di-body.show { display: block; }
+.accordion-di-body h5 { font-family: Georgia, serif; font-size: 1rem; font-weight: normal; color: var(--blue); margin: 1.2rem 0 0.5rem; }
+.accordion-di-body h5:first-child { margin-top: 0; }
+.theory-meta { font-size: 0.78rem; color: var(--muted); margin-bottom: 0.8rem; font-style: italic; }
+
+/* CARDS */
+.card-di { background: var(--cream); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; margin-bottom: 0.7rem; height: 100%; }
+.card-di h6 { font-size: 0.85rem; font-weight: bold; color: var(--blue); margin-bottom: 0.3rem; }
+.card-di p { font-size: 0.88rem; margin: 0; }
+.callout-terra { border-left: 4px solid var(--terra); background: var(--terra-light); padding: 0.9rem 1.1rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: 0.88rem; }
+.callout-terra strong { color: var(--terra); }
+.callout-blue { border-left: 4px solid var(--blue); background: var(--blue-light); padding: 0.9rem 1.1rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: 0.88rem; }
+.callout-blue strong { color: var(--blue); }
+.table-di { font-size: 0.85rem; }
+.table-di th { background: var(--dark); color: #fff; font-weight: normal; }
+.table-di td { vertical-align: top; }
+
+/* EVALUACIÓN */
+.eval-section { background: var(--cream); border-radius: 10px; border: 1px solid var(--border); padding: 1.5rem; margin-top: 2rem; }
+.eval-section h4 { font-family: Georgia, serif; font-weight: normal; color: var(--dark); font-size: 1.1rem; margin-bottom: 0.3rem; }
+.eval-progress-text { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.2rem; }
+.eval-question { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem 1.3rem; margin-bottom: 1rem; }
+.eval-question h6 { font-size: 0.9rem; font-weight: bold; color: var(--dark); margin-bottom: 0.8rem; line-height: 1.5; }
+.eval-option { display: flex; align-items: flex-start; gap: 0.7rem; padding: 0.6rem 0.8rem; border-radius: 7px; border: 1px solid var(--border); margin-bottom: 0.5rem; cursor: pointer; font-size: 0.88rem; transition: all 0.15s; background: var(--cream); }
+.eval-option:hover { border-color: var(--blue); background: var(--blue-light); }
+.eval-option.selected { border-color: var(--blue); background: var(--blue-light); }
+.eval-option.correct { border-color: var(--success); background: #edf7f2; pointer-events: none; }
+.eval-option.incorrect { border-color: var(--terra); background: var(--terra-light); pointer-events: none; }
+.eval-option.disabled { pointer-events: none; opacity: 0.7; }
+.eval-radio { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px; transition: all 0.15s; }
+.eval-option.selected .eval-radio { border-color: var(--blue); background: var(--blue); }
+.eval-option.correct .eval-radio { border-color: var(--success); background: var(--success); }
+.eval-option.incorrect .eval-radio { border-color: var(--terra); background: var(--terra); }
+.feedback-box { font-size: 0.84rem; padding: 0.7rem 1rem; border-radius: 7px; margin-top: 0.5rem; line-height: 1.6; }
+.feedback-ok { background: #edf7f2; color: var(--success); border: 1px solid #b0ddc5; }
+.feedback-fail { background: var(--terra-light); color: #8a3020; border: 1px solid #e0b0a0; }
+
+/* RESULT */
+.result-card { text-align: center; padding: 2rem; background: #fff; border-radius: 12px; border: 1px solid var(--border); margin-top: 1rem; }
+.result-score { font-family: Georgia, serif; font-size: 4rem; color: var(--terra); line-height: 1; }
+.result-label { font-size: 0.85rem; color: var(--muted); margin: 0.3rem 0 0.8rem; }
+.result-msg { font-size: 0.92rem; max-width: 400px; margin: 0 auto 1.5rem; line-height: 1.6; }
+
+/* BTN */
+.btn-terra { background: var(--terra); border-color: var(--terra); color: #fff; border-radius: 8px; padding: 0.6rem 1.4rem; }
+.btn-terra:hover { background: #a8492d; border-color: #a8492d; color: #fff; }
+.btn-blue { background: var(--blue); border-color: var(--blue); color: #fff; border-radius: 8px; }
+.btn-blue:hover { background: #2d5570; border-color: #2d5570; color: #fff; }
+.btn-outline-terra { border-color: var(--terra); color: var(--terra); border-radius: 8px; }
+.btn-outline-terra:hover { background: var(--terra); color: #fff; }
+
+/* TOAST */
+.toast-di { position: fixed; top: 80px; right: 20px; padding: 0.9rem 1.3rem; border-radius: 8px; color: #fff; z-index: 9999; font-size: 0.88rem; box-shadow: 0 4px 16px rgba(0,0,0,0.2); animation: slideIn 0.3s ease; }
+@keyframes slideIn { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:translateX(0); } }
 </style>
 </head>
 <body>
-<div class="topbar">
-  <a href="../index.html">← Inicio</a>
-  <span>›</span>
-  <a href="m1-1.html">1.1</a>
-  <span>›</span>
-  <span style="color:var(--cream);font-size:0.85rem">1.2 Teorías del aprendizaje</span>
-</div>
-<div class="hero">
-  <div class="hero-inner">
-    <div class="hero-tag">Módulo 1 · Fundamentos teóricos</div>
-    <h1>Teorías del aprendizaje</h1>
-    <p>Conductismo · Cognitivismo · Constructivismo · Andragogía · Conectivismo</p>
+
+<!-- HEADER -->
+<div class="header-di">
+  <div class="container-fluid px-3">
+    <div class="d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center gap-3">
+        <a href="../index.html" class="btn-back"><i class="bi bi-arrow-left me-1"></i>Inicio</a>
+        <div>
+          <div class="course-name">Diseño Instruccional</div>
+          <div class="unit-name">Módulo 1 · Unidad 1.2</div>
+        </div>
+      </div>
+      <div class="d-none d-md-flex align-items-center gap-2">
+        <span id="headerProgress" style="font-size:0.8rem;color:#a09a94"></span>
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="container">
+<div class="container-fluid px-3 py-4" style="max-width:1200px;margin:0 auto">
+  <div class="row g-4">
 
-<h2>¿Por qué importan las teorías del aprendizaje en el DI?</h2>
-<p>Las teorías del aprendizaje no son decoración académica. Son el fundamento que justifica cada decisión de diseño. Cuando un diseñador instruccional decide usar retroalimentación inmediata, está aplicando conductismo. Cuando segmenta el contenido en unidades pequeñas, aplica la teoría de la carga cognitiva. Cuando diseña un foro de discusión colaborativa, aplica constructivismo social. Sin conocer estas teorías, las decisiones se toman por intuición o moda, no por evidencia.</p>
+    <!-- SIDEBAR -->
+    <div class="col-lg-3">
+      <div class="sidebar-di">
+        <div class="sidebar-header">
+          <h6>Módulo 1</h6>
+          <p>Fundamentos teóricos</p>
+        </div>
+        <a class="lesson-item" href="m1-1.html">
+          <div class="lesson-num" id="num-m1-1">1</div>
+          <div class="lesson-info"><strong>¿Qué es el DI?</strong><span>Definición · historia · perfil</span></div>
+        </a>
+        <a class="lesson-item active" onclick="scrollToTop()">
+          <div class="lesson-num">2</div>
+          <div class="lesson-info"><strong>Teorías del aprendizaje</strong><span>Conductismo · constructivismo</span></div>
+        </a>
+        <a class="lesson-item" href="m1-3.html">
+          <div class="lesson-num" id="num-m1-3">3</div>
+          <div class="lesson-info"><strong>Gagné y carga cognitiva</strong><span>Nueve eventos · Sweller</span></div>
+        </a>
+        <div class="sidebar-progress">
+          <div class="d-flex justify-content-between mb-1">
+            <small style="color:var(--muted);font-size:0.75rem">Módulo 1</small>
+            <small id="sidebarPct" style="color:var(--terra);font-size:0.75rem;font-weight:bold">0/3</small>
+          </div>
+          <div class="progress-di"><div class="progress-di-fill" id="sidebarBar" style="width:0%"></div></div>
+        </div>
+        <div class="sidebar-footer">
+          <a href="../index.html" style="font-size:0.8rem;color:var(--muted);text-decoration:none"><i class="bi bi-grid me-1"></i>Ver todos los módulos</a>
+        </div>
+      </div>
+    </div>
 
-<div class="callout">
-  <p><strong>Para entrevistas:</strong> No te pedirán recitar definiciones. Te preguntarán "¿cómo diseñarías X?" y esperarán que tus decisiones reflejen fundamento teórico. La clave es poder nombrar la teoría detrás de cada elección.</p>
-</div>
+    <!-- CONTENT -->
+    <div class="col-lg-9">
+      <div class="content-di">
+        <div class="lesson-hero">
+          <div class="unit-tag">Módulo 1 · Unidad 1.2</div>
+          <h1>Teorías del aprendizaje</h1>
+          <p>Conductismo · cognitivismo · constructivismo · andragogía · conectivismo</p>
+        </div>
+        <div class="lesson-badges">
+          <span class="lbadge"><i class="bi bi-book me-1"></i>5 teorías</span>
+          <span class="lbadge"><i class="bi bi-clipboard-check me-1"></i>10 preguntas al final</span>
+          <span class="lbadge"><i class="bi bi-clock me-1"></i>~25 min</span>
+        </div>
 
-<h2>1. Conductismo</h2>
-<div class="teoria-header"><h3>Conductismo</h3><span>Watson, Skinner, Pavlov · 1920s–1950s</span></div>
-<div class="teoria-body">
-  <p>El aprendizaje es un cambio observable y medible en la conducta, producido por estímulos externos. Lo que ocurre dentro de la mente no interesa: solo importa la respuesta observable ante un estímulo. El conocimiento existe en el entorno y se transfiere al aprendiz mediante refuerzo positivo (recompensar la conducta correcta) y repetición.</p>
-  <p>B.F. Skinner aplicó estos principios a la educación con la instrucción programada: el contenido se descompone en pasos pequeños y secuenciales, cada paso requiere una respuesta del aprendiz, y la respuesta correcta es inmediatamente reforzada. Las primeras "máquinas de enseñanza" y los primeros cuestionarios automatizados de los LMS son herencia directa del conductismo.</p>
-  <div class="di-tag">Aplicación en DI</div>
-  <p>Justifica: cuestionarios con retroalimentación inmediata, práctica repetida, descomposición de habilidades complejas en pasos pequeños, insignias y puntos como refuerzo positivo, criterios de evaluación explícitos y objetivos de desempeño medibles.</p>
-  <p>Sigue siendo relevante para: formación de procedimientos técnicos, cumplimiento normativo, habilidades que requieren automatización (como protocolos de seguridad).</p>
-</div>
+        <div class="lesson-body">
 
-<h2>2. Cognitivismo</h2>
-<div class="teoria-header"><h3>Cognitivismo</h3><span>Piaget, Bruner, Ausubel, Sweller · 1960s–1980s</span></div>
-<div class="teoria-body">
-  <p>El aprendizaje ocurre cuando nueva información es procesada activamente y se integra a esquemas mentales existentes. Ya no basta observar la conducta: hay que entender qué pasa dentro de la mente. La memoria tiene estructura: memoria sensorial (brevísima), memoria de trabajo (limitada, 7±2 elementos simultáneos) y memoria a largo plazo (ilimitada, organizada en esquemas).</p>
-  <p>David Ausubel propuso el concepto de aprendizaje significativo: la nueva información se aprende mejor cuando se conecta con conocimiento previo relevante. Un organizador previo (una introducción que activa lo que ya sabes) facilita esa conexión.</p>
-  <p>John Sweller desarrolló la teoría de la carga cognitiva, que establece que la memoria de trabajo se satura fácilmente. Un mal diseño genera carga extrínseca (ruido innecesario) que compite con la carga germana (el esfuerzo que produce aprendizaje real).</p>
-  <div class="di-tag">Aplicación en DI</div>
-  <p>Justifica: organizadores previos al inicio de cada módulo, segmentación del contenido, uso de analogías y ejemplos que conecten con lo conocido, esquemas visuales, reducción del ruido informacional, principios de diseño multimedia de Mayer.</p>
-</div>
+          <!-- ACORDEÓN 1 -->
+          <div class="accordion-di">
+            <button class="accordion-di-btn open" onclick="toggleAcc(this)">
+              <i class="bi bi-compass acc-icon"></i> ¿Por qué importan las teorías en el DI?
+              <i class="bi bi-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-di-body show">
+              <p>Las teorías del aprendizaje no son decoración académica: son el fundamento que justifica cada decisión de diseño. Cuando un diseñador decide usar <strong>retroalimentación inmediata</strong>, aplica conductismo. Cuando <strong>segmenta el contenido</strong> en unidades pequeñas, aplica carga cognitiva. Cuando diseña un <strong>foro colaborativo</strong>, aplica constructivismo social. Sin conocer estas teorías, las decisiones se toman por intuición o moda, no por evidencia.</p>
+              <div class="callout-terra">
+                <strong>Para entrevistas:</strong> No te pedirán recitar definiciones. Te preguntarán "¿cómo diseñarías X?" y esperarán que tus decisiones reflejen fundamento teórico. La clave es poder nombrar la teoría detrás de cada elección.
+              </div>
+            </div>
+          </div>
 
-<h2>3. Constructivismo</h2>
-<div class="teoria-header"><h3>Constructivismo</h3><span>Piaget, Vygotsky · 1970s–1990s</span></div>
-<div class="teoria-body">
-  <p>El conocimiento no se transmite: se construye activamente por el aprendiz a partir de su experiencia previa y en interacción con el entorno. Aprender no es recibir información; es reorganizar, cuestionar y elaborar.</p>
-  <p><strong>Piaget (construcción individual):</strong> el aprendiz construye su comprensión mediante dos procesos: asimilación (incorporar nueva información a esquemas existentes) y acomodación (modificar los esquemas cuando la nueva información no encaja). El conflicto cognitivo — enfrentarse a algo que no se puede explicar con lo que ya se sabe — es el motor del aprendizaje.</p>
-  <p><strong>Vygotsky (construcción social):</strong> el aprendizaje ocurre en interacción social, no en soledad. Su concepto central es la Zona de Desarrollo Próximo (ZDP): la distancia entre lo que el aprendiz puede hacer solo y lo que puede hacer con ayuda de alguien más capaz. El andamiaje (scaffolding) es el apoyo temporal que se retira a medida que el aprendiz gana autonomía.</p>
-  <div class="di-tag">Aplicación en DI</div>
-  <p>Justifica: aprendizaje basado en problemas y proyectos, foros de discusión, trabajo colaborativo, estudios de caso, evaluación auténtica, actividades que generen conflicto cognitivo, diseño por andamiaje progresivo (de actividades muy guiadas a actividades autónomas).</p>
-</div>
+          <!-- ACORDEÓN 2 -->
+          <div class="accordion-di">
+            <button class="accordion-di-btn" onclick="toggleAcc(this)">
+              <i class="bi bi-1-circle acc-icon"></i> Conductismo
+              <i class="bi bi-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-di-body">
+              <div class="theory-meta">Watson, Skinner, Pavlov · 1920s–1950s</div>
+              <p>El aprendizaje es un cambio observable y medible en la conducta, producido por estímulos externos. Lo que ocurre dentro de la mente no interesa: solo importa la respuesta observable ante un estímulo. El conocimiento existe en el entorno y se transfiere al aprendiz mediante <strong>refuerzo positivo</strong> y repetición.</p>
+              <p>B.F. Skinner aplicó estos principios con la <em>instrucción programada</em>: el contenido se descompone en pasos pequeños y secuenciales, cada paso requiere una respuesta, y la respuesta correcta es inmediatamente reforzada. Las primeras "máquinas de enseñanza" y los cuestionarios automatizados de los LMS son herencia directa del conductismo.</p>
+              <div class="callout-blue">
+                <strong>Aplicación en DI:</strong> cuestionarios con retroalimentación inmediata, práctica repetida, descomposición de habilidades complejas en pasos, insignias y puntos como refuerzo, criterios de evaluación explícitos y objetivos de desempeño medibles. Sigue siendo clave para procedimientos técnicos, cumplimiento normativo y protocolos de seguridad.
+              </div>
+            </div>
+          </div>
 
-<h2>4. Andragogía</h2>
-<div class="teoria-header"><h3>Andragogía</h3><span>Malcolm Knowles · 1968</span></div>
-<div class="teoria-body">
-  <p>Malcolm Knowles acuñó el término andragogía para describir el arte y la ciencia de ayudar a los adultos a aprender, diferenciándolo de la pedagogía (orientada a niños). Su argumento: los adultos tienen características como aprendices que son fundamentalmente distintas a las de los niños, y esas diferencias deben guiar el diseño instruccional.</p>
-  <p>Los cinco principios de Knowles son:</p>
-</div>
+          <!-- ACORDEÓN 3 -->
+          <div class="accordion-di">
+            <button class="accordion-di-btn" onclick="toggleAcc(this)">
+              <i class="bi bi-2-circle acc-icon"></i> Cognitivismo
+              <i class="bi bi-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-di-body">
+              <div class="theory-meta">Piaget, Bruner, Ausubel, Sweller · 1960s–1980s</div>
+              <p>El aprendizaje ocurre cuando nueva información es procesada activamente y se integra a esquemas mentales existentes. Ya no basta observar la conducta: hay que entender qué pasa dentro de la mente. La memoria tiene estructura: sensorial (brevísima), de trabajo (limitada, 7±2 elementos) y a largo plazo (ilimitada, organizada en esquemas).</p>
+              <h5>Aprendizaje significativo (Ausubel)</h5>
+              <p>La nueva información se aprende mejor cuando se conecta con conocimiento previo relevante. Un <strong>organizador previo</strong> —una introducción que activa lo que ya sabes— facilita esa conexión.</p>
+              <h5>Carga cognitiva (Sweller)</h5>
+              <p>La memoria de trabajo se satura fácilmente. Un mal diseño genera carga extrínseca (ruido innecesario) que compite con la carga germana (el esfuerzo que produce aprendizaje real).</p>
+              <div class="callout-blue">
+                <strong>Aplicación en DI:</strong> organizadores previos al inicio de cada módulo, segmentación del contenido, analogías y ejemplos que conecten con lo conocido, esquemas visuales, reducción del ruido informacional y principios de diseño multimedia de Mayer.
+              </div>
+            </div>
+          </div>
 
-<div class="info-box"><h4>1. Autoconcepto</h4><p>Los adultos se perciben como aprendices autodirigidos y autónomos. Resisten cuando sienten que se les trata como receptores pasivos. El diseño debe ofrecerles control sobre su aprendizaje: ritmo, secuencia, opciones.</p></div>
-<div class="info-box"><h4>2. Experiencia previa</h4><p>Los adultos traen un bagaje rico de experiencias vitales y profesionales que debe ser reconocido y aprovechado, no ignorado. Las actividades que conectan con esa experiencia generan aprendizaje más profundo que las que la ignoran.</p></div>
-<div class="info-box"><h4>3. Disposición para aprender</h4><p>Los adultos están dispuestos a aprender cuando el contenido es relevante para su rol social o profesional actual. "¿Para qué me sirve esto ahora?" es la pregunta implícita en cada módulo.</p></div>
-<div class="info-box"><h4>4. Orientación al aprendizaje</h4><p>Los adultos aprenden mejor con problemas reales que con disciplinas abstractas. Prefieren aplicar lo aprendido a situaciones concretas de su vida o trabajo.</p></div>
-<div class="info-box"><h4>5. Motivación interna</h4><p>Están impulsados principalmente por motivadores internos: satisfacción personal, desarrollo profesional, autoestima. Los motivadores externos (notas, certificados) son secundarios aunque no irrelevantes.</p></div>
+          <!-- ACORDEÓN 4 -->
+          <div class="accordion-di">
+            <button class="accordion-di-btn" onclick="toggleAcc(this)">
+              <i class="bi bi-3-circle acc-icon"></i> Constructivismo
+              <i class="bi bi-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-di-body">
+              <div class="theory-meta">Piaget, Vygotsky · 1970s–1990s</div>
+              <p>El conocimiento no se transmite: se construye activamente por el aprendiz a partir de su experiencia previa y en interacción con el entorno. Aprender no es recibir información; es reorganizar, cuestionar y elaborar.</p>
+              <div class="row g-2 mt-1 mb-2">
+                <div class="col-md-6"><div class="card-di"><h6><i class="bi bi-person me-1"></i>Piaget · construcción individual</h6><p>El aprendiz construye mediante <strong>asimilación</strong> (incorporar lo nuevo a esquemas existentes) y <strong>acomodación</strong> (modificar los esquemas cuando lo nuevo no encaja). El conflicto cognitivo es el motor del aprendizaje.</p></div></div>
+                <div class="col-md-6"><div class="card-di"><h6><i class="bi bi-people me-1"></i>Vygotsky · construcción social</h6><p>El aprendizaje ocurre en interacción social. La <strong>Zona de Desarrollo Próximo (ZDP)</strong> es la distancia entre lo que el aprendiz hace solo y lo que hace con ayuda. El <strong>andamiaje</strong> es el apoyo temporal que se retira al ganar autonomía.</p></div></div>
+              </div>
+              <div class="callout-blue">
+                <strong>Aplicación en DI:</strong> aprendizaje basado en problemas y proyectos, foros de discusión, trabajo colaborativo, estudios de caso, evaluación auténtica, actividades que generen conflicto cognitivo y andamiaje progresivo (de guiado a autónomo).
+              </div>
+            </div>
+          </div>
 
-<div class="callout">
-  <p><strong>Para EMMD, INACAP y U. de Chile:</strong> Las tres instituciones trabajan con adultos. La andragogía es el marco de referencia obligado para justificar decisiones de diseño en entrevistas. Explica por qué diseñas con casos reales, por qué das autonomía al estudiante, por qué conectas con la práctica profesional.</p>
-</div>
+          <!-- ACORDEÓN 5 -->
+          <div class="accordion-di">
+            <button class="accordion-di-btn" onclick="toggleAcc(this)">
+              <i class="bi bi-4-circle acc-icon"></i> Andragogía
+              <i class="bi bi-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-di-body">
+              <div class="theory-meta">Malcolm Knowles · 1968</div>
+              <p>Knowles acuñó el término <em>andragogía</em> para describir el arte y la ciencia de ayudar a los adultos a aprender, diferenciándolo de la pedagogía (orientada a niños). Su argumento: los adultos tienen características como aprendices fundamentalmente distintas, y esas diferencias deben guiar el diseño. Sus cinco principios:</p>
+              <div class="row g-2 mt-1 mb-2">
+                <div class="col-md-6"><div class="card-di"><h6>1 · Autoconcepto</h6><p>Se perciben como aprendices autodirigidos y autónomos. El diseño debe ofrecer control: ritmo, secuencia, opciones.</p></div></div>
+                <div class="col-md-6"><div class="card-di"><h6>2 · Experiencia previa</h6><p>Traen un bagaje rico que debe aprovecharse, no ignorarse. Conectar con esa experiencia genera aprendizaje más profundo.</p></div></div>
+                <div class="col-md-6"><div class="card-di"><h6>3 · Disposición para aprender</h6><p>Aprenden cuando el contenido es relevante para su rol actual. "¿Para qué me sirve esto ahora?" es la pregunta implícita.</p></div></div>
+                <div class="col-md-6"><div class="card-di"><h6>4 · Orientación al aprendizaje</h6><p>Aprenden mejor con problemas reales que con disciplinas abstractas. Prefieren aplicar a situaciones concretas.</p></div></div>
+                <div class="col-md-12"><div class="card-di"><h6>5 · Motivación interna</h6><p>Impulsados por motivadores internos: satisfacción personal, desarrollo profesional, autoestima. Las notas y certificados son secundarios.</p></div></div>
+              </div>
+              <div class="callout-terra">
+                <strong>Marco de referencia obligado:</strong> al trabajar con adultos, la andragogía justifica por qué diseñas con casos reales, por qué das autonomía al estudiante y por qué conectas con la práctica profesional.
+              </div>
+            </div>
+          </div>
 
-<h2>5. Conectivismo</h2>
-<div class="teoria-header"><h3>Conectivismo</h3><span>George Siemens, Stephen Downes · 2005</span></div>
-<div class="teoria-body">
-  <p>Propuesto como una teoría del aprendizaje para la era digital. Su premisa: en un mundo donde el conocimiento crece y cambia a velocidad exponencial, aprender no es acumular información sino saber conectar nodos relevantes en una red. El conocimiento está distribuido entre personas, bases de datos, herramientas y organizaciones — no reside solo en la mente del individuo.</p>
-  <p>Principios centrales: el aprendizaje es el proceso de crear conexiones entre nodos especializados; la capacidad de saber más es más importante que lo que se sabe en un momento dado; mantener y nutrir conexiones es necesario para el aprendizaje continuo.</p>
-  <div class="di-tag">Aplicación en DI</div>
-  <p>Justifica: diseño de comunidades de práctica, integración de recursos externos y actualizados en los cursos, uso de redes profesionales como LinkedIn como espacio de aprendizaje, PLN (Personal Learning Networks), diseño de cursos que enseñen a aprender más que a memorizar contenidos específicos.</p>
-  <p>Nota: su estatus como "teoría del aprendizaje" es debatido académicamente (algunos la consideran más una epistemología que una teoría). Sin embargo, su influencia en el diseño de entornos de aprendizaje en red es innegable.</p>
-</div>
+          <!-- ACORDEÓN 6 -->
+          <div class="accordion-di">
+            <button class="accordion-di-btn" onclick="toggleAcc(this)">
+              <i class="bi bi-5-circle acc-icon"></i> Conectivismo
+              <i class="bi bi-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-di-body">
+              <div class="theory-meta">George Siemens, Stephen Downes · 2005</div>
+              <p>Propuesto como teoría del aprendizaje para la era digital. Su premisa: en un mundo donde el conocimiento crece y cambia a velocidad exponencial, aprender no es acumular información sino <strong>saber conectar nodos relevantes en una red</strong>. El conocimiento está distribuido entre personas, bases de datos, herramientas y organizaciones, no solo en la mente del individuo.</p>
+              <p>Principios: el aprendizaje es crear conexiones entre nodos especializados; la capacidad de saber más es más importante que lo que se sabe en un momento dado; mantener y nutrir conexiones es necesario para el aprendizaje continuo.</p>
+              <div class="callout-blue">
+                <strong>Aplicación en DI:</strong> comunidades de práctica, integración de recursos externos y actualizados, uso de redes profesionales como espacio de aprendizaje, PLN (Personal Learning Networks) y cursos que enseñen a aprender más que a memorizar.
+              </div>
+              <div class="callout-terra">
+                <strong>Nota:</strong> su estatus como "teoría del aprendizaje" es debatido (algunos la consideran más una epistemología). Su influencia en el diseño de entornos en red, sin embargo, es innegable.
+              </div>
+            </div>
+          </div>
 
-<h2>Comparación rápida para entrevistas</h2>
-<table>
-  <tr><th>Teoría</th><th>¿Cómo aprende el aprendiz?</th><th>Rol del diseñador</th><th>Ejemplo en DI virtual</th></tr>
-  <tr><td>Conductismo</td><td>Respondiendo a estímulos y recibiendo refuerzo</td><td>Diseñar estímulos, refuerzos y práctica repetida</td><td>Quiz con retroalimentación inmediata, insignias</td></tr>
-  <tr><td>Cognitivismo</td><td>Procesando y organizando información en esquemas</td><td>Reducir carga extrínseca, activar conocimiento previo</td><td>Video segmentado, organizador previo, esquemas visuales</td></tr>
-  <tr><td>Constructivismo</td><td>Construyendo activamente a partir de la experiencia</td><td>Diseñar problemas, andamiar, facilitar colaboración</td><td>Caso de estudio + foro, proyecto grupal</td></tr>
-  <tr><td>Andragogía</td><td>Conectando con experiencia previa y necesidades reales</td><td>Relevar experiencia, dar autonomía, justificar relevancia</td><td>Actividades basadas en el propio contexto laboral</td></tr>
-  <tr><td>Conectivismo</td><td>Creando y navegando redes de conocimiento</td><td>Facilitar conexiones, diseñar para el aprendizaje continuo</td><td>Comunidad de práctica, curación de recursos externos</td></tr>
-</table>
+          <!-- ACORDEÓN 7 -->
+          <div class="accordion-di">
+            <button class="accordion-di-btn" onclick="toggleAcc(this)">
+              <i class="bi bi-table acc-icon"></i> Comparación rápida para entrevistas
+              <i class="bi bi-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-di-body">
+              <table class="table table-di table-bordered mt-1">
+                <thead><tr><th>Teoría</th><th>¿Cómo aprende?</th><th>Rol del diseñador</th><th>Ejemplo en DI virtual</th></tr></thead>
+                <tbody>
+                  <tr><td>Conductismo</td><td>Respondiendo a estímulos y recibiendo refuerzo</td><td>Diseñar estímulos, refuerzos y práctica repetida</td><td>Quiz con retroalimentación inmediata, insignias</td></tr>
+                  <tr><td>Cognitivismo</td><td>Procesando y organizando información en esquemas</td><td>Reducir carga extrínseca, activar conocimiento previo</td><td>Video segmentado, organizador previo, esquemas</td></tr>
+                  <tr><td>Constructivismo</td><td>Construyendo activamente desde la experiencia</td><td>Diseñar problemas, andamiar, facilitar colaboración</td><td>Caso de estudio + foro, proyecto grupal</td></tr>
+                  <tr><td>Andragogía</td><td>Conectando con experiencia y necesidades reales</td><td>Relevar experiencia, dar autonomía, justificar relevancia</td><td>Actividades basadas en el contexto laboral propio</td></tr>
+                  <tr><td>Conectivismo</td><td>Creando y navegando redes de conocimiento</td><td>Facilitar conexiones, diseñar para el aprendizaje continuo</td><td>Comunidad de práctica, curación de recursos</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
 
-<!-- QUIZ -->
-<div class="quiz-section" id="quizSection">
-  <h2>Cuestionario — Unidad 1.2</h2>
-  <p style="font-size:0.88rem;color:var(--muted);margin-bottom:1.5rem">10 preguntas · responde todas antes de enviar</p>
-  <div id="quizBody"></div>
-  <div class="quiz-actions" id="quizActions"></div>
-  <div id="quizResult"></div>
-</div>
+          <!-- EVALUACIÓN -->
+          <div class="eval-section mt-4">
+            <h4><i class="bi bi-clipboard-check me-2" style="color:var(--terra)"></i>Evaluación — Unidad 1.2</h4>
+            <p class="eval-progress-text">Preguntas respondidas: <strong><span id="answeredCount">0</span>/10</strong> — puedes enviar en cualquier momento</p>
 
-<div class="nav-bottom">
-  <a class="btn btn-outline" href="m1-1.html">← 1.1 ¿Qué es el DI?</a>
-  <a class="btn btn-primary" href="m1-3.html">Siguiente: Gagné y carga cognitiva →</a>
-</div>
-</div>
+            <div id="quizBody"></div>
 
+            <div id="evalResult" class="mt-3"></div>
+
+            <div class="d-flex flex-wrap gap-2 mt-3">
+              <button class="btn btn-terra" id="submitBtn" onclick="submitEval()">
+                <i class="bi bi-check-circle me-2"></i>Enviar evaluación
+              </button>
+              <button class="btn btn-outline-terra" id="retryBtn" style="display:none" onclick="retryEval()">
+                <i class="bi bi-arrow-clockwise me-2"></i>Reintentar
+              </button>
+              <a href="m1-3.html" class="btn btn-blue" id="nextBtn" style="display:none">
+                Siguiente unidad <i class="bi bi-arrow-right ms-2"></i>
+              </a>
+            </div>
+          </div>
+
+        </div><!-- /lesson-body -->
+      </div><!-- /content-di -->
+    </div><!-- /col -->
+  </div><!-- /row -->
+</div><!-- /container -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-const SHEET_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzZvd7DCXRBuD5KPPhWk67Op1tm81gBXGuK1F9JuPqihr62i-bfGAB4d28Aw3jsP0QH_g/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzZvd7DCXRBuD5KPPhWk67Op1tm81gBXGuK1F9JuPqihr62i-bfGAB4d28Aw3jsP0QH_g/exec';
 const UNIDAD_ID = 'm1-2';
+const UNIDAD_LABEL = '1.2 Teorías del aprendizaje';
 
 const PREGUNTAS = [
   { q:"Un diseñador instruccional decide incluir retroalimentación inmediata en cada pregunta del cuestionario y agregar insignias al completar módulos. ¿Qué teoría fundamenta principalmente estas decisiones?", opts:["Constructivismo de Vygotsky","Andragogía de Knowles","Conductismo de Skinner","Conectivismo de Siemens"], c:2, fb_ok:"Correcto. La retroalimentación inmediata y el refuerzo positivo (insignias) son herramientas conductistas clásicas, derivadas del trabajo de Skinner con el condicionamiento operante.", fb_fail:"La retroalimentación inmediata y los sistemas de recompensa (insignias) son aplicaciones directas del conductismo de Skinner, no del constructivismo ni la andragogía." },
@@ -191,49 +384,140 @@ const PREGUNTAS = [
   { q:"¿Por qué las teorías del aprendizaje no son mutuamente excluyentes en la práctica del DI?", opts:["Porque ninguna teoría ha sido validada científicamente","Porque cada teoría explica distintos tipos de aprendizaje y contextos; un curso bien diseñado integra elementos de varias","Porque todas dicen exactamente lo mismo con distintas palabras","Porque solo la andragogía aplica en educación superior"], c:1, fb_ok:"Correcto. Un módulo puede usar conductismo para la práctica repetida, cognitivismo para la presentación del contenido, constructivismo para las actividades grupales y andragogía para el diseño general de la experiencia.", fb_fail:"Las teorías son complementarias. Distintos momentos y objetivos de un curso pueden requerir distintos enfoques teóricos." }
 ];
 
-let respuestas = {}, enviado = false;
+let answers = {};
+let submitted = false;
+
+function toggleAcc(btn) {
+  const body = btn.nextElementSibling;
+  const isOpen = body.classList.contains('show');
+  body.classList.toggle('show', !isOpen);
+  btn.classList.toggle('open', !isOpen);
+}
 
 function renderQuiz() {
   const body = document.getElementById('quizBody');
   body.innerHTML = PREGUNTAS.map((p, qi) => {
-    const r = respuestas[qi];
-    const opts = p.opts.map((o, oi) => {
-      let cls = 'opt';
-      if (enviado) { if (oi===p.c) cls+=' correct'; else if (r===oi) cls+=' wrong'; }
-      else if (r===oi) cls+=' selected';
-      return `<div class="${cls}" onclick="sel(${qi},${oi})"><input type="radio" ${r===oi?'checked':''} ${enviado?'disabled':''}/> ${o}</div>`;
-    }).join('');
-    let fb = '';
-    if (enviado && r!==undefined) fb = `<div class="feedback ${r===p.c?'ok':'fail'}">${r===p.c?'✓ '+p.fb_ok:'✗ '+p.fb_fail}</div>`;
-    return `<div class="q-block"><div class="q-num">Pregunta ${qi+1} de ${PREGUNTAS.length}</div><div class="q-text">${p.q}</div>${opts}${fb}</div>`;
+    const opts = p.opts.map((o, oi) =>
+      `<div class="eval-option" onclick="selectOpt(this,${qi},${oi})"><div class="eval-radio"></div><span>${o}</span></div>`
+    ).join('');
+    return `<div class="eval-question" data-question="${qi}"><h6>${qi+1}. ${p.q}</h6>${opts}</div>`;
   }).join('');
-  const actions = document.getElementById('quizActions');
-  const result = document.getElementById('quizResult');
-  if (!enviado) {
-    const n = Object.keys(respuestas).length;
-    actions.innerHTML = `<button class="btn btn-primary" onclick="enviar()" ${n<PREGUNTAS.length?'disabled':''}>Enviar respuestas (${n}/${PREGUNTAS.length})</button>`;
-    result.innerHTML = '';
-  } else {
-    const ok = PREGUNTAS.filter((_,qi)=>respuestas[qi]===PREGUNTAS[qi].c).length;
-    const pct = Math.round(ok/PREGUNTAS.length*100);
-    const msg = pct>=90?'Excelente. Tienes las teorías bien integradas.':pct>=70?'Buen resultado. Repasa las que fallaste antes de avanzar.':'Vuelve a repasar las teorías — especialmente las diferencias entre ellas.';
-    result.innerHTML = `<div class="score-result"><div class="score-big">${ok}/${PREGUNTAS.length}</div><div class="score-sub">${pct}% de respuestas correctas</div><div class="score-msg">${msg}</div></div>`;
-    actions.innerHTML = `<button class="btn btn-outline" onclick="reintentar()">Reintentar</button>`;
-    guardar(pct/100);
-  }
 }
 
-function sel(qi,oi) { if(enviado) return; respuestas[qi]=oi; renderQuiz(); }
-function enviar() { if(Object.keys(respuestas).length<PREGUNTAS.length) return; enviado=true; renderQuiz(); }
-function reintentar() { respuestas={}; enviado=false; renderQuiz(); }
+function selectOpt(el, qi, oi) {
+  if (submitted) return;
+  const container = el.closest('[data-question]');
+  container.querySelectorAll('.eval-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  answers[qi] = oi;
+  document.getElementById('answeredCount').textContent = Object.keys(answers).length;
+}
+
+function submitEval() {
+  if (Object.keys(answers).length === 0) {
+    showToast('Responde al menos una pregunta para enviar', 'warning');
+    return;
+  }
+  submitted = true;
+  let score = 0;
+
+  PREGUNTAS.forEach((p, qi) => {
+    const container = document.querySelector(`[data-question="${qi}"]`);
+    if (!container) return;
+    const userAns = answers[qi];
+    const opts = container.querySelectorAll('.eval-option');
+    opts.forEach((opt, idx) => {
+      opt.style.pointerEvents = 'none';
+      if (idx === userAns) {
+        if (userAns === p.c) { opt.classList.add('correct'); score++; }
+        else opt.classList.add('incorrect');
+      } else if (idx === p.c && userAns !== undefined) {
+        opt.classList.add('correct');
+      }
+    });
+    if (userAns !== undefined) {
+      const isOk = userAns === p.c;
+      const fbEl = document.createElement('div');
+      fbEl.className = 'feedback-box ' + (isOk ? 'feedback-ok' : 'feedback-fail');
+      fbEl.innerHTML = (isOk ? '<i class="bi bi-check-circle me-1"></i>' : '<i class="bi bi-x-circle me-1"></i>') + (isOk ? p.fb_ok : p.fb_fail);
+      container.appendChild(fbEl);
+    }
+  });
+
+  const answered = Object.keys(answers).length;
+  const pct = Math.round(score / PREGUNTAS.length * 100);
+  const msg = pct >= 90 ? 'Excelente. Tienes las teorías bien integradas.' : pct >= 70 ? 'Buen resultado. Repasa las que fallaste antes de avanzar.' : 'Vuelve a repasar las teorías — especialmente las diferencias entre ellas.';
+
+  document.getElementById('evalResult').innerHTML = `
+    <div class="result-card">
+      <div class="result-score">${score}/${PREGUNTAS.length}</div>
+      <div class="result-label">${pct}% de respuestas correctas (${answered} respondidas)</div>
+      <div class="result-msg">${msg}</div>
+    </div>`;
+
+  document.getElementById('submitBtn').style.display = 'none';
+  document.getElementById('retryBtn').style.display = 'inline-block';
+  document.getElementById('nextBtn').style.display = 'inline-block';
+  guardarPuntaje(score / PREGUNTAS.length);
+}
+
+function retryEval() {
+  submitted = false;
+  answers = {};
+  renderQuiz();
+  document.getElementById('evalResult').innerHTML = '';
+  document.getElementById('answeredCount').textContent = '0';
+  document.getElementById('submitBtn').style.display = 'inline-block';
+  document.getElementById('retryBtn').style.display = 'none';
+  document.getElementById('nextBtn').style.display = 'none';
+  showToast('Inténtalo de nuevo — repasa el contenido antes de responder', 'info');
+  document.querySelector('.eval-section').scrollIntoView({ behavior:'smooth' });
+}
 
 function getScores() { try { return JSON.parse(localStorage.getItem('di_scores')||'{}'); } catch(e) { return {}; } }
-async function guardar(ratio) {
-  const s = getScores(); s[UNIDAD_ID]=ratio; localStorage.setItem('di_scores',JSON.stringify(s));
-  if (SHEET_SCRIPT_URL.includes('PLACEHOLDER')) return;
-  try { await fetch(SHEET_SCRIPT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'saveScore',id:UNIDAD_ID,score:ratio,label:'1.2 Teorías del aprendizaje',date:new Date().toLocaleDateString('es-CL')})}); } catch(e) {}
+
+async function guardarPuntaje(ratio) {
+  const s = getScores(); s[UNIDAD_ID] = ratio; localStorage.setItem('di_scores', JSON.stringify(s));
+  updateSidebar();
+  try {
+    const params = new URLSearchParams({
+      action: 'saveScore',
+      id: UNIDAD_ID,
+      score: ratio,
+      label: UNIDAD_LABEL,
+      date: new Date().toLocaleDateString('es-CL')
+    });
+    await fetch(SCRIPT_URL + '?' + params.toString());
+  } catch(e) {}
 }
+
+function updateSidebar() {
+  const s = getScores();
+  const ids = ['m1-1','m1-2','m1-3'];
+  const done = ids.filter(id => s[id] !== undefined).length;
+  document.getElementById('sidebarPct').textContent = done + '/3';
+  document.getElementById('sidebarBar').style.width = Math.round(done/3*100) + '%';
+  ids.forEach(id => {
+    const el = document.getElementById('num-' + id);
+    if (el && s[id] !== undefined) { el.style.background = 'var(--success)'; el.style.color = '#fff'; }
+  });
+  document.getElementById('headerProgress').textContent = done + '/3 completadas';
+}
+
+function showToast(msg, type) {
+  const colors = { warning:'#c85c3a', info:'#3a6b8a', success:'#2d7a4f' };
+  const t = document.createElement('div');
+  t.className = 'toast-di';
+  t.style.background = colors[type] || colors.info;
+  t.innerHTML = msg;
+  document.body.appendChild(t);
+  setTimeout(() => { t.style.opacity='0'; t.style.transition='opacity 0.3s'; setTimeout(()=>t.remove(),300); }, 3000);
+}
+
+function scrollToTop() { window.scrollTo({top:0,behavior:'smooth'}); }
+
 renderQuiz();
+updateSidebar();
 </script>
 </body>
 </html>
