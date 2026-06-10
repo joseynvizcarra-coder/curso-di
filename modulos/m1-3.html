@@ -498,18 +498,25 @@ function retryEval() {
 
 function getScores() { try { return JSON.parse(localStorage.getItem('di_scores')||'{}'); } catch(e) { return {}; } }
 
+function jsonp(params) {
+  return new Promise(function(resolve, reject) {
+    var cb = 'cb_' + Date.now() + '_' + Math.floor(Math.random()*1e6);
+    var script = document.createElement('script');
+    function cleanup(){ try { delete window[cb]; } catch(e) { window[cb] = undefined; } if (script.parentNode) script.parentNode.removeChild(script); }
+    window[cb] = function(data){ cleanup(); resolve(data); };
+    var qp = new URLSearchParams(Object.assign({}, params, { callback: cb }));
+    script.src = SCRIPT_URL + '?' + qp.toString();
+    script.onerror = function(){ cleanup(); reject(new Error('conexion')); };
+    setTimeout(function(){ if (window[cb]) { cleanup(); reject(new Error('timeout')); } }, 20000);
+    document.head.appendChild(script);
+  });
+}
+
 async function guardarPuntaje(ratio) {
   const s = getScores(); s[UNIDAD_ID] = ratio; localStorage.setItem('di_scores', JSON.stringify(s));
   updateSidebar();
   try {
-    const params = new URLSearchParams({
-      action: 'saveScore',
-      id: UNIDAD_ID,
-      score: ratio,
-      label: UNIDAD_LABEL,
-      date: new Date().toLocaleDateString('es-CL')
-    });
-    await fetch(SCRIPT_URL + '?' + params.toString());
+    await jsonp({ action: 'saveScore', id: UNIDAD_ID, score: ratio, label: UNIDAD_LABEL, date: new Date().toLocaleDateString('es-CL') });
   } catch(e) {}
 }
 
@@ -552,10 +559,7 @@ function trackVisit() {
     if (qs.get('owner') === '0') localStorage.removeItem('di_owner');
     const owner = localStorage.getItem('di_owner') === '1' ? '1' : '0';
     const device = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'movil' : 'escritorio';
-    const u = SCRIPT_URL + '?action=logVisit&page=' + encodeURIComponent(UNIDAD_ID)
-      + '&vid=' + encodeURIComponent(vid) + '&sid=' + encodeURIComponent(sid)
-      + '&owner=' + owner + '&device=' + device;
-    fetch(u).catch(()=>{});
+    jsonp({ action: 'logVisit', page: UNIDAD_ID, vid: vid, sid: sid, owner: owner, device: device }).catch(function(){});
   } catch(e) {}
 }
 trackVisit();
