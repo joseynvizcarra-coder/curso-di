@@ -520,9 +520,13 @@ function trackVisit(pageId) {
     if (qs.get('owner') === '0') localStorage.removeItem('di_owner');
     const owner = localStorage.getItem('di_owner') === '1' ? '1' : '0';
     const device = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'movil' : 'escritorio';
-    // Pixel de imagen: registro confiable en móvil, incógnito y cualquier navegador, sin CORS.
+    // Iframe invisible: registro confiable en móvil, incógnito y cualquier navegador, sin CORS.
     const params = new URLSearchParams({ action: 'logVisit', page: pageId, vid: vid, sid: sid, owner: owner, device: device, t: String(Date.now()) });
-    new Image().src = SCRIPT_URL + '?' + params.toString();
+    const iframe = document.createElement('iframe');
+    iframe.style.cssText = 'display:none;width:0;height:0;border:0;position:absolute';
+    iframe.src = SCRIPT_URL + '?' + params.toString();
+    document.body.appendChild(iframe);
+    setTimeout(() => { if (iframe.parentNode) iframe.parentNode.removeChild(iframe); }, 8000);
   } catch(e) {}
 }
 
