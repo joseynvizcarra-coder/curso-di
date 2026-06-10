@@ -566,8 +566,7 @@ async function guardarPuntaje(ratio) {
   const s = getScores(); s[UNIDAD_ID] = ratio; localStorage.setItem('di_scores', JSON.stringify(s));
   updateSidebar();
   try {
-    var su = SCRIPT_URL + '?action=saveScore&id=' + encodeURIComponent(UNIDAD_ID) + '&score=' + encodeURIComponent(ratio) + '&label=' + encodeURIComponent('1.1 ¿Qué es el DI?') + '&date=' + encodeURIComponent(new Date().toLocaleDateString('es-CL')) + '&t=' + Date.now();
-    new Image().src = su;
+    await jsonp({ action: 'saveScore', id: UNIDAD_ID, score: ratio, label: '1.1 ¿Qué es el DI?', date: new Date().toLocaleDateString('es-CL') });
   } catch(e) {}
 }
 
@@ -609,8 +608,7 @@ function trackVisit() {
     if (qs.get('owner') === '0') localStorage.removeItem('di_owner');
     const owner = localStorage.getItem('di_owner') === '1' ? '1' : '0';
     const device = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'movil' : 'escritorio';
-    var u = SCRIPT_URL + '?action=logVisit&page=' + encodeURIComponent(UNIDAD_ID) + '&vid=' + encodeURIComponent(vid) + '&sid=' + encodeURIComponent(sid) + '&owner=' + owner + '&device=' + device + '&t=' + Date.now();
-    new Image().src = u;
+    jsonp({ action: 'logVisit', page: UNIDAD_ID, vid: vid, sid: sid, owner: owner, device: device }).catch(function(){});
   } catch(e) {}
 }
 trackVisit();
