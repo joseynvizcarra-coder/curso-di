@@ -81,7 +81,7 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
 .pres-btn { font-size: 0.78rem; color: #fff; text-decoration: none; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.08); border-radius: 20px; padding: 0.35rem 0.9rem; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.4rem; }
 .pres-btn:hover { background: var(--terra); border-color: var(--terra); color: #fff; }
 .presentacion-viewer { height: 520px; background: var(--cream); }
-.presentacion-viewer object { width: 100%; height: 100%; border: none; display: block; }
+.presentacion-viewer object, .presentacion-viewer iframe { width: 100%; height: 100%; border: none; display: block; }
 .pres-placeholder { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: var(--muted); padding: 2rem; }
 .pres-placeholder i { font-size: 2.4rem; color: #c9c2b8; margin-bottom: 0.8rem; }
 .pres-placeholder p { font-size: 0.98rem; font-weight: bold; color: var(--dark); margin-bottom: 0.3rem; }
@@ -230,18 +230,12 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
             <div class="presentacion-head">
               <div class="pres-title"><i class="bi bi-easel2"></i> Presentación del tema <span class="pres-tag">NotebookLM</span></div>
               <div class="presentacion-actions">
-                <a class="pres-btn" href="../recursosm1-1.pdf" target="_blank" rel="noopener"><i class="bi bi-arrows-fullscreen"></i> Pantalla completa</a>
-                <a class="pres-btn" href="../recursosm1-1.pdf" download><i class="bi bi-download"></i> Descargar</a>
+                <a class="pres-btn" href="m1-1.pdf" target="_blank" rel="noopener"><i class="bi bi-arrows-fullscreen"></i> Pantalla completa</a>
+                <a class="pres-btn" href="m1-1.pdf" download><i class="bi bi-download"></i> Descargar</a>
               </div>
             </div>
             <div class="presentacion-viewer">
-              <object data="../recursosm1-1.pdf" type="application/pdf">
-                <div class="pres-placeholder">
-                  <i class="bi bi-file-earmark-slides"></i>
-                  <p>Presentación pendiente</p>
-                  <small>Genera el PDF en NotebookLM y guárdalo como <code>recursosm1-1.pdf</code> para verlo incrustado aquí.</small>
-                </div>
-              </object>
+              <iframe src="m1-1.pdf#view=FitH" title="Presentación del tema" loading="lazy"></iframe>
             </div>
           </div>
 
