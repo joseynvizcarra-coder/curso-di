@@ -542,12 +542,13 @@ async function guardarPuntaje(ratio) {
 function updateSidebar() {
   const s = getScores();
   const ids = ['m1-1','m1-2','m1-3'];
-  const done = ids.filter(id => s[id] !== undefined).length;
+  // Una unidad cuenta como completada solo si su puntaje es mayor a 0.
+  const done = ids.filter(id => s[id] !== undefined && s[id] > 0).length;
   document.getElementById('sidebarPct').textContent = done + '/3';
   document.getElementById('sidebarBar').style.width = Math.round(done/3*100) + '%';
   ids.forEach(id => {
     const el = document.getElementById('num-' + id);
-    if (el && s[id] !== undefined) { el.style.background = 'var(--success)'; el.style.color = '#fff'; }
+    if (el && s[id] !== undefined && s[id] > 0) { el.style.background = 'var(--success)'; el.style.color = '#fff'; }
   });
   document.getElementById('headerProgress').textContent = done + '/3 completadas';
 }
@@ -567,6 +568,52 @@ function scrollToTop() { window.scrollTo({top:0,behavior:'smooth'}); }
 renderQuiz();
 updateSidebar();
 
+// ---- Sincronización con Google Sheets al cargar el módulo ----
+// Trae los puntajes desde Sheets aunque el localStorage esté vacío
+// (otro dispositivo, modo incógnito o navegador nuevo).
+async function syncSheet() {
+  try {
+    const data = await jsonp({ action: 'getAll' });
+    if (data && data.ok) {
+      const s = getScores();
+      (data.scores || []).forEach(function(row){
+        if (row.id && row.score !== undefined) s[row.id] = parseFloat(row.score);
+      });
+      localStorage.setItem('di_scores', JSON.stringify(s));
+      updateSidebar();
+      showCompletedState();
+    }
+  } catch(e) {}
+}
+
+// ---- Muestra el estado "ya completado" si esta unidad tiene puntaje ----
+function showCompletedState() {
+  const ratio = getScores()[UNIDAD_ID];
+  if (ratio === undefined || ratio <= 0) return;
+  const pct = Math.round(ratio * 100);
+  const ok = pct >= 70;
+  const sec = document.querySelector('.eval-section');
+  if (!sec) return;
+  let banner = document.getElementById('completedBanner');
+  if (!banner) {
+    banner = document.createElement('div');
+    banner.id = 'completedBanner';
+    sec.insertBefore(banner, sec.firstChild);
+  }
+  banner.innerHTML =
+    '<div style="display:flex;align-items:center;gap:0.9rem;background:' + (ok ? '#edf7f2' : 'var(--terra-light)') +
+    ';border:1px solid ' + (ok ? '#b0ddc5' : '#e0b0a0') + ';border-left:4px solid ' + (ok ? 'var(--success)' : 'var(--terra)') +
+    ';border-radius:8px;padding:0.9rem 1.1rem;margin-bottom:1.2rem">' +
+      '<i class="bi bi-' + (ok ? 'check-circle-fill' : 'arrow-repeat') + '" style="color:' + (ok ? 'var(--success)' : 'var(--terra)') + ';font-size:1.5rem"></i>' +
+      '<div style="flex:1">' +
+        '<div style="font-weight:bold;font-size:0.9rem;color:var(--dark)">Ya completaste esta unidad</div>' +
+        '<div style="font-size:0.82rem;color:var(--muted)">Puntaje guardado: <strong>' + pct + '%</strong>. Puedes repasar el contenido o volver a responder más abajo.</div>' +
+      '</div>' +
+    '</div>';
+}
+
+// ---- Registro de visita por pixel de imagen ----
+// Más confiable que JSONP: funciona en móvil, incógnito y cualquier navegador, sin CORS.
 function trackVisit() {
   try {
     let vid = localStorage.getItem('di_vid');
@@ -578,10 +625,13 @@ function trackVisit() {
     if (qs.get('owner') === '0') localStorage.removeItem('di_owner');
     const owner = localStorage.getItem('di_owner') === '1' ? '1' : '0';
     const device = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'movil' : 'escritorio';
-    jsonp({ action: 'logVisit', page: UNIDAD_ID, vid: vid, sid: sid, owner: owner, device: device }).catch(function(){});
+    const params = new URLSearchParams({ action: 'logVisit', page: UNIDAD_ID, vid: vid, sid: sid, owner: owner, device: device, t: String(Date.now()) });
+    new Image().src = SCRIPT_URL + '?' + params.toString();
   } catch(e) {}
 }
+
 trackVisit();
+syncSheet();
 </script>
 </body>
 </html>
