@@ -520,8 +520,7 @@ function trackVisit(pageId) {
     if (qs.get('owner') === '0') localStorage.removeItem('di_owner');
     const owner = localStorage.getItem('di_owner') === '1' ? '1' : '0';
     const device = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'movil' : 'escritorio';
-    var u = SCRIPT_URL + '?action=logVisit&page=' + encodeURIComponent(pageId) + '&vid=' + encodeURIComponent(vid) + '&sid=' + encodeURIComponent(sid) + '&owner=' + owner + '&device=' + device + '&t=' + Date.now();
-    new Image().src = u;
+    jsonp({ action: 'logVisit', page: pageId, vid: vid, sid: sid, owner: owner, device: device }).catch(function(){});
   } catch(e) {}
 }
 
