@@ -197,9 +197,18 @@ function pageLabel(id) {
   return id;
 }
 
+function visitDate(x) {
+  let d = new Date(x.ts);
+  if (isNaN(d.getTime())) d = new Date(x.date);
+  return isNaN(d.getTime()) ? null : d;
+}
+function dayKeyOf(d) { return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
+function hourOf(x) { const d = visitDate(x); if (d) return d.getHours(); const h = Number(x.hour); return (h>=0 && h<24) ? h : 0; }
+function isOwner(x) { return x.owner === true || x.owner === 'true' || x.owner === 'TRUE' || x.owner === '1'; }
+
 function render(all) {
   const cont = document.getElementById('dashContent');
-  const v = all.filter(x => !x.owner);
+  const v = all.filter(x => !isOwner(x));
   if (v.length === 0) {
     cont.innerHTML = '<div class="dash-empty"><i class="bi bi-people"></i>Todavía no hay visitas de otras personas registradas.<br>Cuando alguien entre a tu página, aparecerá aquí.</div>';
     return;
@@ -219,7 +228,7 @@ function render(all) {
   document.getElementById('dsMovil').textContent = ses.length ? Math.round(movil/ses.length*100) + '%' : '0%';
 
   const byDay = {}; const seen = {};
-  v.forEach(x => { const k = x.date + '|' + x.sid; if (seen[k]) return; seen[k]=1; byDay[x.date] = (byDay[x.date]||0)+1; });
+  v.forEach(x => { const d = visitDate(x); if (!d) return; const key = dayKeyOf(d); const k = key + '|' + x.sid; if (seen[k]) return; seen[k]=1; byDay[key] = (byDay[key]||0)+1; });
   const days = [];
   for (let i = 13; i >= 0; i--) {
     const d = new Date(); d.setDate(d.getDate() - i);
@@ -229,7 +238,7 @@ function render(all) {
   renderBars('chartDays', days, true);
 
   const byHour = new Array(24).fill(0);
-  v.forEach(x => { const h = Number(x.hour); if (h>=0 && h<24) byHour[h]++; });
+  v.forEach(x => { const h = hourOf(x); if (h>=0 && h<24) byHour[h]++; });
   renderBars('chartHours', byHour.map((n, h) => ({ label: (h%3===0)? (h+'h') : '', n })), false);
 
   const byPage = {};
@@ -240,16 +249,18 @@ function render(all) {
     '<div class="hbar"><span class="hlabel" style="width:auto;min-width:70px">' + p.label + '</span><div class="htrack"><div class="hfill" style="width:' + Math.round(p.n/maxP*100) + '%"></div></div><span class="hval">' + p.n + '</span></div>'
   ).join('');
 
-  const recent = v.slice().sort((a,b) => String(b.ts).localeCompare(String(a.ts))).slice(0, 12);
-  document.getElementById('recentList').innerHTML = recent.map(x =>
-    '<div class="recent-row"><span class="r-when">' + x.ts + '</span><span class="r-page">' + pageLabel(x.page) + '</span><span class="r-dev"><i class="bi bi-' + (x.device==='movil'?'phone':'laptop') + ' me-1"></i>' + (x.device||'') + '</span></div>'
-  ).join('');
+  const recent = v.slice().sort((a,b) => ((visitDate(b)&&visitDate(b).getTime())||0) - ((visitDate(a)&&visitDate(a).getTime())||0)).slice(0, 12);
+  document.getElementById('recentList').innerHTML = recent.map(x => {
+    const d = visitDate(x);
+    const when = d ? d.toLocaleString('es-CL', {day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) : '';
+    return '<div class="recent-row"><span class="r-when">' + when + '</span><span class="r-page">' + pageLabel(x.page) + '</span><span class="r-dev"><i class="bi bi-' + (x.device==='movil'?'phone':'laptop') + ' me-1"></i>' + (x.device||'—') + '</span></div>';
+  }).join('');
 
   const sesPorVid = {};
   v.forEach(x => { (sesPorVid[x.vid] = sesPorVid[x.vid] || new Set()).add(x.sid); });
   const recurrentes = Object.values(sesPorVid).filter(s => s.size > 1).length;
   const nuevos = vids.size - recurrentes;
-  const tuyas = all.filter(x => x.owner).length;
+  const tuyas = all.filter(x => isOwner(x)).length;
   document.getElementById('dashNote').textContent =
     'Visitantes nuevos: ' + nuevos + ' · Recurrentes: ' + recurrentes + '. Tus propias visitas (' + tuyas + ') quedan fuera de estos números.';
 }
