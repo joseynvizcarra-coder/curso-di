@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1.3 Gagné y carga cognitiva — Curso DI</title>
+<style>
+  :root { --cream:#f5f2ec; --dark:#0f1117; --terra:#c85c3a; --blue:#3a6b8a; --muted:#7a7570; --border:#ddd8d0; --white:#ffffff; --success:#2d7a4f; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--cream); color:var(--dark); font-family:'Calibri','Segoe UI',sans-serif; font-size:16px; line-height:1.7; }
+  .topbar { background:var(--dark); color:var(--cream); padding:0.9rem 1.5rem; display:flex; align-items:center; gap:1rem; border-bottom:3px solid var(--terra); }
+  .topbar a { color:#a09a94; font-size:0.85rem; text-decoration:none; } .topbar a:hover { color:var(--cream); } .topbar span { color:var(--terra); }
+  .hero { background:var(--dark); color:var(--cream); padding:2.5rem 1.5rem 2rem; border-bottom:1px solid #2a2a35; }
+  .hero-inner { max-width:780px; margin:0 auto; }
+  .hero-tag { font-size:0.75rem; color:var(--terra); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.6rem; }
+  .hero h1 { font-family:Georgia,serif; font-size:1.8rem; font-weight:normal; margin-bottom:0.5rem; }
+  .hero p { color:#a09a94; font-size:0.92rem; }
+  .container { max-width:780px; margin:0 auto; padding:2rem 1.5rem; }
+  h2 { font-family:Georgia,serif; font-size:1.25rem; font-weight:normal; color:var(--dark); margin:2.2rem 0 0.8rem; padding-bottom:0.4rem; border-bottom:2px solid var(--terra); }
+  h3 { font-size:1rem; font-weight:bold; color:var(--dark); margin:1.5rem 0 0.5rem; }
+  p { margin-bottom:1rem; }
+  .callout { background:var(--white); border-left:4px solid var(--terra); padding:1rem 1.2rem; margin:1.5rem 0; border-radius:0 6px 6px 0; }
+  .callout p { margin:0; font-size:0.92rem; } .callout strong { color:var(--terra); }
+  .evento { display:grid; grid-template-columns:48px 1fr; gap:0; margin-bottom:0.5rem; }
+  .ev-num { background:var(--terra); color:white; display:flex; align-items:center; justify-content:center; font-family:Georgia,serif; font-size:1.1rem; border-radius:6px 0 0 6px; min-height:80px; }
+  .ev-body { background:var(--white); border:1px solid var(--border); border-left:none; border-radius:0 6px 6px 0; padding:0.8rem 1rem; }
+  .ev-body h4 { font-size:0.88rem; font-weight:bold; color:var(--dark); margin-bottom:0.3rem; }
+  .ev-body p { font-size:0.85rem; margin:0; color:#444; }
+  .ev-body .proceso { font-size:0.78rem; color:var(--blue); margin-top:0.3rem; font-style:italic; }
+  .carga-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem; margin:1.2rem 0; }
+  .carga-card { background:var(--white); border:1px solid var(--border); border-radius:8px; padding:1rem; }
+  .carga-card h4 { font-size:0.85rem; font-weight:bold; margin-bottom:0.4rem; }
+  .carga-card p { font-size:0.82rem; margin:0; color:var(--muted); }
+  .carga-card.malo h4 { color:var(--terra); }
+  .carga-card.bueno h4 { color:var(--success); }
+  .carga-card.neutral h4 { color:var(--blue); }
+  .principio { background:var(--white); border:1px solid var(--border); border-radius:8px; padding:1rem 1.2rem; margin:0.7rem 0; display:grid; grid-template-columns:140px 1fr; gap:1rem; align-items:start; }
+  .principio-nombre { font-size:0.85rem; font-weight:bold; color:var(--blue); }
+  .principio-desc { font-size:0.88rem; color:var(--dark); }
+  table { width:100%; border-collapse:collapse; margin:1.2rem 0; font-size:0.88rem; }
+  th { background:var(--dark); color:var(--cream); padding:0.6rem 0.8rem; text-align:left; font-weight:normal; }
+  td { padding:0.6rem 0.8rem; border-bottom:1px solid var(--border); vertical-align:top; }
+  tr:last-child td { border-bottom:none; } tr:nth-child(even) td { background:#faf8f4; }
+  .nav-bottom { display:flex; justify-content:space-between; align-items:center; margin-top:3rem; padding-top:1.5rem; border-top:1px solid var(--border); }
+  .btn { padding:0.6rem 1.4rem; border-radius:6px; font-size:0.9rem; cursor:pointer; font-family:inherit; text-decoration:none; display:inline-block; }
+  .btn-outline { background:transparent; border:1px solid var(--border); color:var(--dark); } .btn-outline:hover { background:var(--white); }
+  .btn-primary { background:var(--terra); border:1px solid var(--terra); color:white; } .btn-primary:hover { background:#a8492d; }
+  .quiz-section { background:var(--white); border:1px solid var(--border); border-radius:8px; padding:1.5rem; margin-top:3rem; }
+  .quiz-section h2 { border-bottom:2px solid var(--blue); color:var(--blue); margin-top:0; }
+  .q-block { margin-bottom:1.8rem; padding-bottom:1.8rem; border-bottom:1px solid var(--border); }
+  .q-block:last-of-type { border-bottom:none; margin-bottom:0; padding-bottom:0; }
+  .q-num { font-size:0.75rem; color:var(--muted); margin-bottom:0.3rem; text-transform:uppercase; letter-spacing:0.05em; }
+  .q-text { font-size:0.95rem; font-weight:bold; margin-bottom:0.8rem; line-height:1.5; }
+  .opt { display:flex; align-items:flex-start; gap:0.7rem; padding:0.6rem 0.8rem; border-radius:6px; border:1px solid var(--border); margin-bottom:0.5rem; cursor:pointer; font-size:0.88rem; transition:background 0.12s; }
+  .opt:hover { background:var(--cream); } .opt.selected { border-color:var(--blue); background:#eef3f7; }
+  .opt.correct { border-color:var(--success); background:#edf7f2; } .opt.wrong { border-color:var(--terra); background:#fdf0ec; }
+  .opt input { margin-top:2px; flex-shrink:0; }
+  .feedback { font-size:0.85rem; padding:0.7rem 0.9rem; border-radius:6px; margin-top:0.6rem; line-height:1.6; }
+  .feedback.ok { background:#edf7f2; color:var(--success); border:1px solid #b0ddc5; }
+  .feedback.fail { background:#fdf0ec; color:#a03020; border:1px solid #f0b8a8; }
+  .quiz-actions { margin-top:1.5rem; display:flex; gap:1rem; }
+  .score-result { text-align:center; padding:1.5rem; background:var(--cream); border-radius:8px; margin-top:1.5rem; }
+  .score-big { font-family:Georgia,serif; font-size:3rem; color:var(--terra); line-height:1; }
+  .score-sub { font-size:0.88rem; color:var(--muted); margin-top:0.3rem; margin-bottom:1rem; }
+  .score-msg { font-size:0.92rem; max-width:480px; margin:0 auto; line-height:1.6; }
+  @media(max-width:600px){ .carga-grid{grid-template-columns:1fr;} .principio{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="../index.html">← Inicio</a><span>›</span>
+  <a href="m1-2.html">1.2</a><span>›</span>
+  <span style="color:var(--cream);font-size:0.85rem">1.3 Gagné y carga cognitiva</span>
+</div>
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">Módulo 1 · Fundamentos teóricos</div>
+    <h1>Nueve Eventos de Gagné y carga cognitiva</h1>
+    <p>Eventos instruccionales · Teoría de Sweller · Principios de diseño de materiales</p>
+  </div>
+</div>
+
+<div class="container">
+
+<h2>1. Los Nueve Eventos de Instrucción de Gagné</h2>
+<p>Robert Gagné propuso en Las condiciones del aprendizaje (1965) que toda experiencia instruccional efectiva debe activar nueve procesos cognitivos en el aprendiz. Cada evento externo (lo que el diseñador hace) corresponde a un proceso interno (lo que ocurre en la mente del aprendiz). No son pasos rígidos obligatorios, sino un marco de verificación: el diseñador debe asegurarse de que ninguno quede completamente ignorado.</p>
+
+<div class="callout"><p><strong>Para entrevistas:</strong> Si te preguntan cómo estructurarías un módulo o cápsula de aprendizaje, los Nueve Eventos son la respuesta ideal. Muestra que sabes la lógica detrás de cada momento del diseño.</p></div>
+
+<div style="margin:1.5rem 0">
+  <div class="evento"><div class="ev-num">1</div><div class="ev-body"><h4>Captar la atención</h4><p>Activar la disposición perceptual del estudiante antes de presentar contenido. Una pregunta provocadora, un dato sorprendente, un caso real, un video corto impactante.</p><p class="proceso">Proceso interno: activación de la percepción selectiva</p></div></div>
+  <div class="evento"><div class="ev-num">2</div><div class="ev-body"><h4>Informar los objetivos</h4><p>El estudiante debe saber qué va a aprender y por qué le sirve antes de comenzar. Esto activa la expectativa y orienta la atención hacia lo relevante, no hacia todo.</p><p class="proceso">Proceso interno: creación de expectativa sobre el desempeño esperado</p></div></div>
+  <div class="evento"><div class="ev-num">3</div><div class="ev-body"><h4>Estimular el recuerdo de conocimientos previos</h4><p>Conectar lo nuevo con lo que ya sabe. Pregunta diagnóstica, analogía con algo conocido, actividad de recuperación. Sin este gancho, la nueva información flota sin ancla.</p><p class="proceso">Proceso interno: recuperación de información relevante a la memoria de trabajo</p></div></div>
+  <div class="evento"><div class="ev-num">4</div><div class="ev-body"><h4>Presentar el contenido</h4><p>Entregar la nueva información de forma organizada, clara y con apoyo visual o auditivo. No sobrecargar: segmentar en unidades manejables. El contenido debe ser consistente con el objetivo declarado.</p><p class="proceso">Proceso interno: codificación semántica selectiva</p></div></div>
+  <div class="evento"><div class="ev-num">5</div><div class="ev-body"><h4>Proporcionar orientación para el aprendizaje</h4><p>No solo mostrar el contenido: guiar cómo procesarlo. Ejemplos resueltos, analogías, esquemas conceptuales, preguntas guía. Este evento es el más subestimado del modelo.</p><p class="proceso">Proceso interno: codificación semántica profunda — construcción de esquemas</p></div></div>
+  <div class="evento"><div class="ev-num">6</div><div class="ev-body"><h4>Provocar el desempeño</h4><p>El estudiante practica lo aprendido. Ejercicios, actividades, simulaciones, casos. Sin práctica no hay transferencia. La práctica debe ser consistente con el nivel del objetivo (Bloom).</p><p class="proceso">Proceso interno: ejecución del desempeño esperado</p></div></div>
+  <div class="evento"><div class="ev-num">7</div><div class="ev-body"><h4>Proporcionar retroalimentación</h4><p>Informar específicamente qué hizo bien y qué debe mejorar, de manera oportuna. La retroalimentación debe ser informativa, no solo evaluativa. "Incorrecto" no es retroalimentación; "Incorrecto porque..." sí lo es.</p><p class="proceso">Proceso interno: refuerzo y corrección del esquema</p></div></div>
+  <div class="evento"><div class="ev-num">8</div><div class="ev-body"><h4>Evaluar el desempeño</h4><p>Verificar que el objetivo fue alcanzado mediante evaluación formal o informal. Distinto de la práctica: aquí se certifica el logro. Debe estar directamente alineado con el objetivo declarado en el Evento 2.</p><p class="proceso">Proceso interno: activación del desempeño aprendido para verificación</p></div></div>
+  <div class="evento"><div class="ev-num">9</div><div class="ev-body"><h4>Mejorar la retención y la transferencia</h4><p>Actividades que consolidan y conectan con situaciones nuevas. Resúmenes, mapas conceptuales, casos de aplicación en contextos distintos. Es el evento más frecuentemente omitido.</p><p class="proceso">Proceso interno: generalización — aplicación a nuevos contextos</p></div></div>
+</div>
+
+<div class="callout"><p><strong>Los más omitidos en cursos virtuales:</strong> Evento 3 (conocimientos previos) y Evento 9 (retención y transferencia). Sin el 3, el aprendizaje no tiene dónde anclarse. Sin el 9, el estudiante puede aprobar el examen pero no transfiere el conocimiento a situaciones reales.</p></div>
+
+<h2>2. Teoría de la carga cognitiva (Sweller, 1988)</h2>
+<p>John Sweller propuso que la memoria de trabajo tiene capacidad limitada: puede manejar aproximadamente 7±2 elementos de información simultáneamente (Miller, 1956). Si un diseño supera esa capacidad, el aprendizaje se bloquea — no porque el estudiante sea incapaz, sino porque el diseño lo sobrecargó.</p>
+<p>La teoría distingue tres tipos de carga:</p>
+
+<div class="carga-grid">
+  <div class="carga-card neutral"><h4>Carga intrínseca</h4><p>Inherente a la complejidad del contenido. No puede eliminarse, pero puede gestionarse con buena secuenciación: de simple a complejo, de general a específico.</p></div>
+  <div class="carga-card malo"><h4>Carga extrínseca</h4><p>Generada por un mal diseño: navegación confusa, exceso de texto, animaciones decorativas, instrucciones ambiguas. Esta es la que el DI debe eliminar.</p></div>
+  <div class="carga-card bueno"><h4>Carga germana</h4><p>La que genera aprendizaje real: el esfuerzo de construir nuevos esquemas mentales. El diseño debe maximizarla eliminando la extrínseca.</p></div>
+</div>
+
+<h2>3. Principios de diseño de materiales</h2>
+<p>Richard Mayer sistematizó los principios cognitivos del diseño multimedia, derivados de la teoría de Sweller. Son fundamentales para cualquier diseñador instruccional:</p>
+
+<div class="principio"><div class="principio-nombre">Principio de coherencia</div><div class="principio-desc">Eliminar palabras, imágenes, música o efectos que no contribuyan directamente al objetivo. Menos es más. Una imagen decorativa puede interferir con el aprendizaje al competir por recursos cognitivos.</div></div>
+<div class="principio"><div class="principio-nombre">Principio de señalización</div><div class="principio-desc">Usar recursos visuales (negritas, flechas, colores, números, íconos) para guiar la atención hacia lo más importante. El ojo necesita orientación; sin señalización, todo parece igualmente relevante.</div></div>
+<div class="principio"><div class="principio-nombre">Principio de redundancia</div><div class="principio-desc">Evitar presentar la misma información en texto escrito y audio simultáneamente. Compiten por el mismo canal visual y generan carga extrínseca. El error clásico: diapositiva con texto completo que el docente lee en voz alta.</div></div>
+<div class="principio"><div class="principio-nombre">Principio de contigüidad</div><div class="principio-desc">Presentar texto e imágenes relacionados juntos en el espacio y en el tiempo, no separados. Una leyenda debajo de la imagen funciona mejor que una leyenda al otro lado de la pantalla.</div></div>
+<div class="principio"><div class="principio-nombre">Principio de segmentación</div><div class="principio-desc">Dividir el contenido en unidades pequeñas antes de presentar el todo. Permitir al estudiante controlar el ritmo de avance. Un video de 20 minutos abruma más que cuatro videos de 5 minutos.</div></div>
+<div class="principio"><div class="principio-nombre">Principio de modalidad</div><div class="principio-desc">Es más efectivo narración de audio + imágenes que texto escrito + imágenes. El canal visual y auditivo son independientes: usar ambos libera capacidad cognitiva en lugar de saturar uno solo.</div></div>
+<div class="principio"><div class="principio-nombre">Principio de personalización</div><div class="principio-desc">El aprendizaje mejora cuando el contenido usa lenguaje conversacional en lugar de lenguaje formal. "Ahora veamos cómo..." funciona mejor que "A continuación se procederá a examinar..."</div></div>
+
+<h2>4. Aplicación práctica: checklist de diseño</h2>
+<table>
+  <tr><th>Pregunta de verificación</th><th>Principio que aplica</th></tr>
+  <tr><td>¿El módulo comienza captando la atención antes de presentar contenido?</td><td>Evento 1 de Gagné</td></tr>
+  <tr><td>¿El estudiante sabe desde el inicio qué aprenderá y para qué?</td><td>Evento 2 de Gagné</td></tr>
+  <tr><td>¿Se activan conocimientos previos antes del contenido nuevo?</td><td>Evento 3 de Gagné</td></tr>
+  <tr><td>¿Los videos duran menos de 10 minutos?</td><td>Segmentación (Mayer)</td></tr>
+  <tr><td>¿El texto en pantalla está narrado en voz alta o complementado con imagen?</td><td>Redundancia / Modalidad</td></tr>
+  <tr><td>¿Las imágenes son funcionales o decorativas?</td><td>Coherencia (Mayer)</td></tr>
+  <tr><td>¿La retroalimentación explica por qué, no solo si es correcto?</td><td>Evento 7 de Gagné</td></tr>
+  <tr><td>¿Hay actividades de consolidación y transferencia al final?</td><td>Evento 9 de Gagné</td></tr>
+  <tr><td>¿La evaluación está alineada con el objetivo declarado?</td><td>Evento 8 de Gagné + alineación constructiva</td></tr>
+</table>
+
+<!-- QUIZ -->
+<div class="quiz-section" id="quizSection">
+  <h2>Cuestionario — Unidad 1.3</h2>
+  <p style="font-size:0.88rem;color:var(--muted);margin-bottom:1.5rem">10 preguntas · responde todas antes de enviar</p>
+  <div id="quizBody"></div>
+  <div class="quiz-actions" id="quizActions"></div>
+  <div id="quizResult"></div>
+</div>
+
+<div class="nav-bottom">
+  <a class="btn btn-outline" href="m1-2.html">← 1.2 Teorías del aprendizaje</a>
+  <a class="btn btn-primary" href="m2-1.html">Siguiente: Módulo 2 — Modelos ADDIE, SAM, UbD →</a>
+</div>
+</div>
+
+<script>
+const SHEET_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzZvd7DCXRBuD5KPPhWk67Op1tm81gBXGuK1F9JuPqihr62i-bfGAB4d28Aw3jsP0QH_g/exec';
+const UNIDAD_ID = 'm1-3';
+const PREGUNTAS = [
+  { q:"¿Cuál es el propósito del Evento 3 de Gagné (estimular el recuerdo de conocimientos previos)?", opts:["Evaluar si el estudiante puede saltarse el módulo","Crear un gancho mental donde la nueva información pueda anclarse, facilitando su integración y retención","Motivar al estudiante con preguntas fáciles antes del contenido difícil","Verificar que el estudiante completó el módulo anterior"], c:1, fb_ok:"Correcto. Desde el cognitivismo de Ausubel, el aprendizaje significativo ocurre cuando la nueva información se ancla en esquemas existentes. El Evento 3 activa esos esquemas.", fb_fail:"El Evento 3 tiene un propósito cognitivo: activar los esquemas existentes para que la nueva información tenga dónde anclarse. No es motivacional ni evaluativo." },
+  { q:"Un diseñador presenta un módulo donde primero explica los 5 principios de la andragogía, luego muestra ejemplos, y al final hace un quiz. ¿Cuál evento crítico de Gagné está omitiendo?", opts:["Evento 1 — no captó la atención al inicio","Evento 9 — no hay actividad de retención y transferencia a nuevos contextos","Evento 8 — no hay evaluación formal","Evento 4 — no presentó el contenido"], c:1, fb_ok:"Correcto. El Evento 9 (retención y transferencia) es el más omitido. Sin él, el aprendizaje queda en la memoria a corto plazo y no se generaliza a situaciones nuevas.", fb_fail:"El Evento 9 (retención y transferencia) es el más frecuentemente omitido. Sin actividades que consoliden y transfieran a nuevos contextos, el aprendizaje es superficial." },
+  { q:"¿Qué tipo de carga cognitiva genera una diapositiva con 400 palabras de texto que el docente lee en voz alta?", opts:["Carga intrínseca alta, porque el contenido es complejo","Carga extrínseca alta, porque el mal diseño hace que el mismo contenido compita por el canal visual dos veces","Carga germana alta, porque obliga al estudiante a construir esquemas","Carga intrínseca baja, porque el contenido se simplifica al verbalizarse"], c:1, fb_ok:"Correcto. Viola el principio de redundancia: texto escrito + narración del mismo texto satura el canal visual. El diseñador debe elegir uno u otro, o complementar el audio con imágenes.", fb_fail:"Es carga extrínseca: generada por el mal diseño. El principio de redundancia establece que texto escrito + narración del mismo texto sobrecarga el canal visual." },
+  { q:"Según el principio de modalidad de Mayer, ¿cuál de estas combinaciones es más efectiva para el aprendizaje?", opts:["Texto escrito + imágenes en la misma pantalla","Narración de audio + imágenes relacionadas","Solo texto escrito, sin imágenes que distraigan","Texto escrito + narración de audio + imágenes simultáneos"], c:1, fb_ok:"Correcto. Audio + imágenes usa dos canales independientes (auditivo y visual) sin sobrecargar ninguno. Texto + imágenes compiten por el canal visual.", fb_fail:"Narración de audio + imágenes es la combinación más efectiva según Mayer. Aprovecha dos canales independientes sin sobrecargarlos." },
+  { q:"¿Cuál es la diferencia entre el Evento 6 (provocar el desempeño) y el Evento 8 (evaluar el desempeño) de Gagné?", opts:["Son el mismo evento con diferente nombre","El Evento 6 es práctica formativa para desarrollar la habilidad; el Evento 8 certifica si el objetivo fue alcanzado","El Evento 6 es solo para cursos presenciales; el 8 es para virtuales","El Evento 6 lo hace el docente; el Evento 8 lo hace el estudiante"], c:1, fb_ok:"Correcto. Esta distinción es fundamental: la práctica (6) desarrolla la habilidad con margen para el error; la evaluación (8) certifica el logro. Confundirlos distorsiona el diseño.", fb_fail:"Son distintos: el Evento 6 es práctica formativa (aprender haciendo con retroalimentación); el Evento 8 es evaluación sumativa (certificar el logro del objetivo)." },
+  { q:"¿Qué establece el principio de coherencia de Mayer?", opts:["El contenido debe ser coherente con los objetivos de aprendizaje","Se deben eliminar elementos (imágenes, música, texto) que no contribuyan directamente al objetivo, porque compiten por recursos cognitivos","El diseño visual debe ser coherente en todo el curso","El texto y las imágenes deben aparecer juntos en pantalla"], c:1, fb_ok:"Correcto. Menos es más. Una imagen decorativa atractiva puede parecer inofensiva, pero consume recursos cognitivos que el estudiante necesita para procesar el contenido relevante.", fb_fail:"El principio de coherencia establece eliminar todo lo que no contribuye al objetivo: imágenes decorativas, música de fondo, texto adicional. Compiten por recursos cognitivos limitados." },
+  { q:"Un curso de capacitación comienza con: 'En este módulo aprenderás a redactar correos de cobranza efectivos. Al finalizar, podrás escribir un correo que logre respuesta en menos de 48 horas.' ¿Qué evento de Gagné activa esto?", opts:["Evento 1 (captar la atención)","Evento 2 (informar los objetivos)","Evento 3 (conocimientos previos)","Evento 5 (orientación para el aprendizaje)"], c:1, fb_ok:"Correcto. Informar los objetivos en términos concretos y relevantes activa la expectativa del estudiante y orienta su atención hacia lo que importa.", fb_fail:"Es el Evento 2: informar los objetivos. El estudiante sabe qué aprenderá y cuál será el beneficio concreto. Esto activa la expectativa y orienta la atención." },
+  { q:"¿Por qué el principio de segmentación mejora el aprendizaje según la teoría de la carga cognitiva?", opts:["Porque los estudiantes tienen menos tiempo disponible hoy","Porque divide el contenido en unidades pequeñas que no saturan la memoria de trabajo, permitiendo procesar cada parte antes de avanzar","Porque los videos cortos son más fáciles de producir","Porque los LMS modernos solo soportan contenido corto"], c:1, fb_ok:"Correcto. La segmentación respeta los límites de la memoria de trabajo: cada unidad pequeña puede procesarse completamente antes de que llegue la siguiente.", fb_fail:"La segmentación reduce la carga intrínseca percibida al dividir el contenido en porciones que no saturan la memoria de trabajo. No es una razón de producción o tecnología." },
+  { q:"¿Qué ocurre cuando un diseñador omite el Evento 5 de Gagné (orientación para el aprendizaje)?", opts:["El estudiante no sabe qué evaluar","El estudiante recibe la información pero sin guía para procesarla profundamente, lo que resulta en aprendizaje superficial o memorístico","El módulo pierde su estructura narrativa","El estudiante no puede hacer la práctica del Evento 6"], c:1, fb_ok:"Correcto. El Evento 5 es el puente entre recibir información y construir comprensión. Sin ejemplos resueltos, analogías o esquemas guía, el estudiante memorizará en lugar de comprender.", fb_fail:"El Evento 5 es el puente entre presentar información y construir comprensión. Sin él, el estudiante memoriza pero no comprende. Es uno de los eventos más subestimados." },
+  { q:"¿Cuál de los siguientes escenarios aplica correctamente el principio de señalización?", opts:["Un video de 15 minutos sin pausas ni subtítulos","Una presentación donde los conceptos clave están en negrita, las flechas indican relaciones y los íconos distinguen tipos de contenido","Un documento con todo el texto en el mismo tamaño y color para no distraer","Una pantalla con múltiples colores aleatorios para hacer el contenido más atractivo"], c:1, fb_ok:"Correcto. La señalización guía la atención hacia lo relevante: negritas, flechas, íconos con propósito. No es decoración; es orientación cognitiva.", fb_fail:"La señalización usa recursos visuales con propósito pedagógico (negritas para énfasis, flechas para relaciones, íconos para categorías) para guiar la atención. No es decoración aleatoria." }
+];
+
+let respuestas = {}, enviado = false;
+function renderQuiz() {
+  const body = document.getElementById('quizBody');
+  body.innerHTML = PREGUNTAS.map((p,qi) => {
+    const r = respuestas[qi];
+    const opts = p.opts.map((o,oi) => {
+      let cls='opt'; if(enviado){if(oi===p.c)cls+=' correct';else if(r===oi)cls+=' wrong';}else if(r===oi)cls+=' selected';
+      return `<div class="${cls}" onclick="sel(${qi},${oi})"><input type="radio" ${r===oi?'checked':''} ${enviado?'disabled':''}/> ${o}</div>`;
+    }).join('');
+    let fb=''; if(enviado&&r!==undefined) fb=`<div class="feedback ${r===p.c?'ok':'fail'}">${r===p.c?'✓ '+p.fb_ok:'✗ '+p.fb_fail}</div>`;
+    return `<div class="q-block"><div class="q-num">Pregunta ${qi+1} de ${PREGUNTAS.length}</div><div class="q-text">${p.q}</div>${opts}${fb}</div>`;
+  }).join('');
+  const actions=document.getElementById('quizActions'), result=document.getElementById('quizResult');
+  if(!enviado){
+    const n=Object.keys(respuestas).length;
+    actions.innerHTML=`<button class="btn btn-primary" onclick="enviar()" ${n<PREGUNTAS.length?'disabled':''}>Enviar respuestas (${n}/${PREGUNTAS.length})</button>`;
+    result.innerHTML='';
+  } else {
+    const ok=PREGUNTAS.filter((_,qi)=>respuestas[qi]===PREGUNTAS[qi].c).length;
+    const pct=Math.round(ok/PREGUNTAS.length*100);
+    const msg=pct>=90?'Excelente. Dominas Gagné y la carga cognitiva.':pct>=70?'Buen resultado. Repasa los principios de Mayer.':'Vuelve a repasar los Nueve Eventos y los principios de diseño.';
+    result.innerHTML=`<div class="score-result"><div class="score-big">${ok}/${PREGUNTAS.length}</div><div class="score-sub">${pct}% de respuestas correctas</div><div class="score-msg">${msg}</div></div>`;
+    actions.innerHTML=`<button class="btn btn-outline" onclick="reintentar()">Reintentar</button>`;
+    guardar(pct/100);
+  }
+}
+function sel(qi,oi){if(enviado)return;respuestas[qi]=oi;renderQuiz();}
+function enviar(){if(Object.keys(respuestas).length<PREGUNTAS.length)return;enviado=true;renderQuiz();}
+function reintentar(){respuestas={};enviado=false;renderQuiz();}
+function getScores(){try{return JSON.parse(localStorage.getItem('di_scores')||'{}');}catch(e){return{};}}
+async function guardar(ratio){
+  const s=getScores();s[UNIDAD_ID]=ratio;localStorage.setItem('di_scores',JSON.stringify(s));
+  if(SHEET_SCRIPT_URL.includes('PLACEHOLDER'))return;
+  try{await fetch(SHEET_SCRIPT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'saveScore',id:UNIDAD_ID,score:ratio,label:'1.3 Gagné y carga cognitiva',date:new Date().toLocaleDateString('es-CL')})});}catch(e){}
+}
+renderQuiz();
+</script>
+</body>
+</html>

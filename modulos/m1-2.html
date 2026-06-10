@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1.2 Teorías del aprendizaje — Curso DI</title>
+<style>
+  :root { --cream:#f5f2ec; --dark:#0f1117; --terra:#c85c3a; --blue:#3a6b8a; --muted:#7a7570; --border:#ddd8d0; --white:#ffffff; --success:#2d7a4f; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--cream); color:var(--dark); font-family:'Calibri','Segoe UI',sans-serif; font-size:16px; line-height:1.7; }
+  .topbar { background:var(--dark); color:var(--cream); padding:0.9rem 1.5rem; display:flex; align-items:center; gap:1rem; border-bottom:3px solid var(--terra); }
+  .topbar a { color:#a09a94; font-size:0.85rem; text-decoration:none; }
+  .topbar a:hover { color:var(--cream); }
+  .topbar span { color:var(--terra); }
+  .hero { background:var(--dark); color:var(--cream); padding:2.5rem 1.5rem 2rem; border-bottom:1px solid #2a2a35; }
+  .hero-inner { max-width:780px; margin:0 auto; }
+  .hero-tag { font-size:0.75rem; color:var(--terra); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.6rem; }
+  .hero h1 { font-family:Georgia,serif; font-size:1.8rem; font-weight:normal; margin-bottom:0.5rem; }
+  .hero p { color:#a09a94; font-size:0.92rem; }
+  .container { max-width:780px; margin:0 auto; padding:2rem 1.5rem; }
+  h2 { font-family:Georgia,serif; font-size:1.25rem; font-weight:normal; color:var(--dark); margin:2.2rem 0 0.8rem; padding-bottom:0.4rem; border-bottom:2px solid var(--terra); }
+  h3 { font-size:1rem; font-weight:bold; color:var(--dark); margin:1.5rem 0 0.5rem; }
+  p { margin-bottom:1rem; }
+  .callout { background:var(--white); border-left:4px solid var(--terra); padding:1rem 1.2rem; margin:1.5rem 0; border-radius:0 6px 6px 0; }
+  .callout p { margin:0; font-size:0.92rem; }
+  .callout strong { color:var(--terra); }
+  .info-box { background:var(--white); border:1px solid var(--border); border-radius:8px; padding:1.2rem 1.4rem; margin:1.2rem 0; }
+  .info-box h4 { font-size:0.9rem; font-weight:bold; color:var(--blue); margin-bottom:0.5rem; }
+  .info-box p { margin:0; font-size:0.9rem; }
+  .teoria-header { background:var(--dark); color:var(--cream); padding:0.8rem 1.2rem; border-radius:6px 6px 0 0; margin-top:1.5rem; }
+  .teoria-header h3 { color:var(--terra); margin:0; font-size:1rem; }
+  .teoria-header span { color:#a09a94; font-size:0.8rem; }
+  .teoria-body { background:var(--white); border:1px solid var(--border); border-top:none; border-radius:0 0 6px 6px; padding:1.2rem 1.4rem; margin-bottom:1rem; }
+  .teoria-body p { margin-bottom:0.8rem; font-size:0.92rem; }
+  .teoria-body p:last-child { margin-bottom:0; }
+  .di-tag { display:inline-block; background:#eef3f7; color:var(--blue); border:1px solid #c5d8e8; border-radius:4px; font-size:0.78rem; padding:0.2rem 0.6rem; margin-bottom:0.5rem; }
+  table { width:100%; border-collapse:collapse; margin:1.2rem 0; font-size:0.88rem; }
+  th { background:var(--dark); color:var(--cream); padding:0.6rem 0.8rem; text-align:left; font-weight:normal; }
+  td { padding:0.6rem 0.8rem; border-bottom:1px solid var(--border); vertical-align:top; }
+  tr:last-child td { border-bottom:none; }
+  tr:nth-child(even) td { background:#faf8f4; }
+  .nav-bottom { display:flex; justify-content:space-between; align-items:center; margin-top:3rem; padding-top:1.5rem; border-top:1px solid var(--border); }
+  .btn { padding:0.6rem 1.4rem; border-radius:6px; font-size:0.9rem; cursor:pointer; font-family:inherit; text-decoration:none; display:inline-block; }
+  .btn-outline { background:transparent; border:1px solid var(--border); color:var(--dark); }
+  .btn-outline:hover { background:var(--white); }
+  .btn-primary { background:var(--terra); border:1px solid var(--terra); color:white; }
+  .btn-primary:hover { background:#a8492d; }
+  .quiz-section { background:var(--white); border:1px solid var(--border); border-radius:8px; padding:1.5rem; margin-top:3rem; }
+  .quiz-section h2 { border-bottom:2px solid var(--blue); color:var(--blue); margin-top:0; }
+  .q-block { margin-bottom:1.8rem; padding-bottom:1.8rem; border-bottom:1px solid var(--border); }
+  .q-block:last-of-type { border-bottom:none; margin-bottom:0; padding-bottom:0; }
+  .q-num { font-size:0.75rem; color:var(--muted); margin-bottom:0.3rem; text-transform:uppercase; letter-spacing:0.05em; }
+  .q-text { font-size:0.95rem; font-weight:bold; margin-bottom:0.8rem; line-height:1.5; }
+  .opt { display:flex; align-items:flex-start; gap:0.7rem; padding:0.6rem 0.8rem; border-radius:6px; border:1px solid var(--border); margin-bottom:0.5rem; cursor:pointer; font-size:0.88rem; transition:background 0.12s; }
+  .opt:hover { background:var(--cream); }
+  .opt.selected { border-color:var(--blue); background:#eef3f7; }
+  .opt.correct { border-color:var(--success); background:#edf7f2; }
+  .opt.wrong { border-color:var(--terra); background:#fdf0ec; }
+  .opt input { margin-top:2px; flex-shrink:0; }
+  .feedback { font-size:0.85rem; padding:0.7rem 0.9rem; border-radius:6px; margin-top:0.6rem; line-height:1.6; }
+  .feedback.ok { background:#edf7f2; color:var(--success); border:1px solid #b0ddc5; }
+  .feedback.fail { background:#fdf0ec; color:#a03020; border:1px solid #f0b8a8; }
+  .quiz-actions { margin-top:1.5rem; display:flex; gap:1rem; flex-wrap:wrap; }
+  .score-result { text-align:center; padding:1.5rem; background:var(--cream); border-radius:8px; margin-top:1.5rem; }
+  .score-big { font-family:Georgia,serif; font-size:3rem; color:var(--terra); line-height:1; }
+  .score-sub { font-size:0.88rem; color:var(--muted); margin-top:0.3rem; margin-bottom:1rem; }
+  .score-msg { font-size:0.92rem; max-width:480px; margin:0 auto; line-height:1.6; }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="../index.html">← Inicio</a>
+  <span>›</span>
+  <a href="m1-1.html">1.1</a>
+  <span>›</span>
+  <span style="color:var(--cream);font-size:0.85rem">1.2 Teorías del aprendizaje</span>
+</div>
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">Módulo 1 · Fundamentos teóricos</div>
+    <h1>Teorías del aprendizaje</h1>
+    <p>Conductismo · Cognitivismo · Constructivismo · Andragogía · Conectivismo</p>
+  </div>
+</div>
+
+<div class="container">
+
+<h2>¿Por qué importan las teorías del aprendizaje en el DI?</h2>
+<p>Las teorías del aprendizaje no son decoración académica. Son el fundamento que justifica cada decisión de diseño. Cuando un diseñador instruccional decide usar retroalimentación inmediata, está aplicando conductismo. Cuando segmenta el contenido en unidades pequeñas, aplica la teoría de la carga cognitiva. Cuando diseña un foro de discusión colaborativa, aplica constructivismo social. Sin conocer estas teorías, las decisiones se toman por intuición o moda, no por evidencia.</p>
+
+<div class="callout">
+  <p><strong>Para entrevistas:</strong> No te pedirán recitar definiciones. Te preguntarán "¿cómo diseñarías X?" y esperarán que tus decisiones reflejen fundamento teórico. La clave es poder nombrar la teoría detrás de cada elección.</p>
+</div>
+
+<h2>1. Conductismo</h2>
+<div class="teoria-header"><h3>Conductismo</h3><span>Watson, Skinner, Pavlov · 1920s–1950s</span></div>
+<div class="teoria-body">
+  <p>El aprendizaje es un cambio observable y medible en la conducta, producido por estímulos externos. Lo que ocurre dentro de la mente no interesa: solo importa la respuesta observable ante un estímulo. El conocimiento existe en el entorno y se transfiere al aprendiz mediante refuerzo positivo (recompensar la conducta correcta) y repetición.</p>
+  <p>B.F. Skinner aplicó estos principios a la educación con la instrucción programada: el contenido se descompone en pasos pequeños y secuenciales, cada paso requiere una respuesta del aprendiz, y la respuesta correcta es inmediatamente reforzada. Las primeras "máquinas de enseñanza" y los primeros cuestionarios automatizados de los LMS son herencia directa del conductismo.</p>
+  <div class="di-tag">Aplicación en DI</div>
+  <p>Justifica: cuestionarios con retroalimentación inmediata, práctica repetida, descomposición de habilidades complejas en pasos pequeños, insignias y puntos como refuerzo positivo, criterios de evaluación explícitos y objetivos de desempeño medibles.</p>
+  <p>Sigue siendo relevante para: formación de procedimientos técnicos, cumplimiento normativo, habilidades que requieren automatización (como protocolos de seguridad).</p>
+</div>
+
+<h2>2. Cognitivismo</h2>
+<div class="teoria-header"><h3>Cognitivismo</h3><span>Piaget, Bruner, Ausubel, Sweller · 1960s–1980s</span></div>
+<div class="teoria-body">
+  <p>El aprendizaje ocurre cuando nueva información es procesada activamente y se integra a esquemas mentales existentes. Ya no basta observar la conducta: hay que entender qué pasa dentro de la mente. La memoria tiene estructura: memoria sensorial (brevísima), memoria de trabajo (limitada, 7±2 elementos simultáneos) y memoria a largo plazo (ilimitada, organizada en esquemas).</p>
+  <p>David Ausubel propuso el concepto de aprendizaje significativo: la nueva información se aprende mejor cuando se conecta con conocimiento previo relevante. Un organizador previo (una introducción que activa lo que ya sabes) facilita esa conexión.</p>
+  <p>John Sweller desarrolló la teoría de la carga cognitiva, que establece que la memoria de trabajo se satura fácilmente. Un mal diseño genera carga extrínseca (ruido innecesario) que compite con la carga germana (el esfuerzo que produce aprendizaje real).</p>
+  <div class="di-tag">Aplicación en DI</div>
+  <p>Justifica: organizadores previos al inicio de cada módulo, segmentación del contenido, uso de analogías y ejemplos que conecten con lo conocido, esquemas visuales, reducción del ruido informacional, principios de diseño multimedia de Mayer.</p>
+</div>
+
+<h2>3. Constructivismo</h2>
+<div class="teoria-header"><h3>Constructivismo</h3><span>Piaget, Vygotsky · 1970s–1990s</span></div>
+<div class="teoria-body">
+  <p>El conocimiento no se transmite: se construye activamente por el aprendiz a partir de su experiencia previa y en interacción con el entorno. Aprender no es recibir información; es reorganizar, cuestionar y elaborar.</p>
+  <p><strong>Piaget (construcción individual):</strong> el aprendiz construye su comprensión mediante dos procesos: asimilación (incorporar nueva información a esquemas existentes) y acomodación (modificar los esquemas cuando la nueva información no encaja). El conflicto cognitivo — enfrentarse a algo que no se puede explicar con lo que ya se sabe — es el motor del aprendizaje.</p>
+  <p><strong>Vygotsky (construcción social):</strong> el aprendizaje ocurre en interacción social, no en soledad. Su concepto central es la Zona de Desarrollo Próximo (ZDP): la distancia entre lo que el aprendiz puede hacer solo y lo que puede hacer con ayuda de alguien más capaz. El andamiaje (scaffolding) es el apoyo temporal que se retira a medida que el aprendiz gana autonomía.</p>
+  <div class="di-tag">Aplicación en DI</div>
+  <p>Justifica: aprendizaje basado en problemas y proyectos, foros de discusión, trabajo colaborativo, estudios de caso, evaluación auténtica, actividades que generen conflicto cognitivo, diseño por andamiaje progresivo (de actividades muy guiadas a actividades autónomas).</p>
+</div>
+
+<h2>4. Andragogía</h2>
+<div class="teoria-header"><h3>Andragogía</h3><span>Malcolm Knowles · 1968</span></div>
+<div class="teoria-body">
+  <p>Malcolm Knowles acuñó el término andragogía para describir el arte y la ciencia de ayudar a los adultos a aprender, diferenciándolo de la pedagogía (orientada a niños). Su argumento: los adultos tienen características como aprendices que son fundamentalmente distintas a las de los niños, y esas diferencias deben guiar el diseño instruccional.</p>
+  <p>Los cinco principios de Knowles son:</p>
+</div>
+
+<div class="info-box"><h4>1. Autoconcepto</h4><p>Los adultos se perciben como aprendices autodirigidos y autónomos. Resisten cuando sienten que se les trata como receptores pasivos. El diseño debe ofrecerles control sobre su aprendizaje: ritmo, secuencia, opciones.</p></div>
+<div class="info-box"><h4>2. Experiencia previa</h4><p>Los adultos traen un bagaje rico de experiencias vitales y profesionales que debe ser reconocido y aprovechado, no ignorado. Las actividades que conectan con esa experiencia generan aprendizaje más profundo que las que la ignoran.</p></div>
+<div class="info-box"><h4>3. Disposición para aprender</h4><p>Los adultos están dispuestos a aprender cuando el contenido es relevante para su rol social o profesional actual. "¿Para qué me sirve esto ahora?" es la pregunta implícita en cada módulo.</p></div>
+<div class="info-box"><h4>4. Orientación al aprendizaje</h4><p>Los adultos aprenden mejor con problemas reales que con disciplinas abstractas. Prefieren aplicar lo aprendido a situaciones concretas de su vida o trabajo.</p></div>
+<div class="info-box"><h4>5. Motivación interna</h4><p>Están impulsados principalmente por motivadores internos: satisfacción personal, desarrollo profesional, autoestima. Los motivadores externos (notas, certificados) son secundarios aunque no irrelevantes.</p></div>
+
+<div class="callout">
+  <p><strong>Para EMMD, INACAP y U. de Chile:</strong> Las tres instituciones trabajan con adultos. La andragogía es el marco de referencia obligado para justificar decisiones de diseño en entrevistas. Explica por qué diseñas con casos reales, por qué das autonomía al estudiante, por qué conectas con la práctica profesional.</p>
+</div>
+
+<h2>5. Conectivismo</h2>
+<div class="teoria-header"><h3>Conectivismo</h3><span>George Siemens, Stephen Downes · 2005</span></div>
+<div class="teoria-body">
+  <p>Propuesto como una teoría del aprendizaje para la era digital. Su premisa: en un mundo donde el conocimiento crece y cambia a velocidad exponencial, aprender no es acumular información sino saber conectar nodos relevantes en una red. El conocimiento está distribuido entre personas, bases de datos, herramientas y organizaciones — no reside solo en la mente del individuo.</p>
+  <p>Principios centrales: el aprendizaje es el proceso de crear conexiones entre nodos especializados; la capacidad de saber más es más importante que lo que se sabe en un momento dado; mantener y nutrir conexiones es necesario para el aprendizaje continuo.</p>
+  <div class="di-tag">Aplicación en DI</div>
+  <p>Justifica: diseño de comunidades de práctica, integración de recursos externos y actualizados en los cursos, uso de redes profesionales como LinkedIn como espacio de aprendizaje, PLN (Personal Learning Networks), diseño de cursos que enseñen a aprender más que a memorizar contenidos específicos.</p>
+  <p>Nota: su estatus como "teoría del aprendizaje" es debatido académicamente (algunos la consideran más una epistemología que una teoría). Sin embargo, su influencia en el diseño de entornos de aprendizaje en red es innegable.</p>
+</div>
+
+<h2>Comparación rápida para entrevistas</h2>
+<table>
+  <tr><th>Teoría</th><th>¿Cómo aprende el aprendiz?</th><th>Rol del diseñador</th><th>Ejemplo en DI virtual</th></tr>
+  <tr><td>Conductismo</td><td>Respondiendo a estímulos y recibiendo refuerzo</td><td>Diseñar estímulos, refuerzos y práctica repetida</td><td>Quiz con retroalimentación inmediata, insignias</td></tr>
+  <tr><td>Cognitivismo</td><td>Procesando y organizando información en esquemas</td><td>Reducir carga extrínseca, activar conocimiento previo</td><td>Video segmentado, organizador previo, esquemas visuales</td></tr>
+  <tr><td>Constructivismo</td><td>Construyendo activamente a partir de la experiencia</td><td>Diseñar problemas, andamiar, facilitar colaboración</td><td>Caso de estudio + foro, proyecto grupal</td></tr>
+  <tr><td>Andragogía</td><td>Conectando con experiencia previa y necesidades reales</td><td>Relevar experiencia, dar autonomía, justificar relevancia</td><td>Actividades basadas en el propio contexto laboral</td></tr>
+  <tr><td>Conectivismo</td><td>Creando y navegando redes de conocimiento</td><td>Facilitar conexiones, diseñar para el aprendizaje continuo</td><td>Comunidad de práctica, curación de recursos externos</td></tr>
+</table>
+
+<!-- QUIZ -->
+<div class="quiz-section" id="quizSection">
+  <h2>Cuestionario — Unidad 1.2</h2>
+  <p style="font-size:0.88rem;color:var(--muted);margin-bottom:1.5rem">10 preguntas · responde todas antes de enviar</p>
+  <div id="quizBody"></div>
+  <div class="quiz-actions" id="quizActions"></div>
+  <div id="quizResult"></div>
+</div>
+
+<div class="nav-bottom">
+  <a class="btn btn-outline" href="m1-1.html">← 1.1 ¿Qué es el DI?</a>
+  <a class="btn btn-primary" href="m1-3.html">Siguiente: Gagné y carga cognitiva →</a>
+</div>
+</div>
+
+<script>
+const SHEET_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzZvd7DCXRBuD5KPPhWk67Op1tm81gBXGuK1F9JuPqihr62i-bfGAB4d28Aw3jsP0QH_g/exec';
+const UNIDAD_ID = 'm1-2';
+
+const PREGUNTAS = [
+  { q:"Un diseñador instruccional decide incluir retroalimentación inmediata en cada pregunta del cuestionario y agregar insignias al completar módulos. ¿Qué teoría fundamenta principalmente estas decisiones?", opts:["Constructivismo de Vygotsky","Andragogía de Knowles","Conductismo de Skinner","Conectivismo de Siemens"], c:2, fb_ok:"Correcto. La retroalimentación inmediata y el refuerzo positivo (insignias) son herramientas conductistas clásicas, derivadas del trabajo de Skinner con el condicionamiento operante.", fb_fail:"La retroalimentación inmediata y los sistemas de recompensa (insignias) son aplicaciones directas del conductismo de Skinner, no del constructivismo ni la andragogía." },
+  { q:"¿Cuál es la diferencia central entre la asimilación y la acomodación en la teoría constructivista de Piaget?", opts:["La asimilación ocurre en adultos; la acomodación en niños","La asimilación incorpora nueva información a esquemas existentes; la acomodación modifica los esquemas cuando la nueva información no encaja","La asimilación es inconsciente; la acomodación es deliberada","La asimilación ocurre en modalidad presencial; la acomodación en virtual"], c:1, fb_ok:"Correcto. El conflicto cognitivo — cuando algo no cabe en los esquemas existentes — activa la acomodación y produce aprendizaje más profundo.", fb_fail:"Asimilación = encajar lo nuevo en lo que ya sé. Acomodación = modificar lo que sé porque lo nuevo no encaja. Ambos son mecanismos del constructivismo de Piaget." },
+  { q:"Según la andragogía de Knowles, ¿por qué los adultos aprenden mejor con problemas reales que con contenido disciplinar abstracto?", opts:["Porque los adultos tienen menor capacidad de abstracción que los niños","Porque el principio de orientación al aprendizaje establece que los adultos aprenden mejor cuando ven aplicación concreta a su vida o trabajo actual","Porque los adultos tienen menos tiempo para estudiar teoría","Porque el conductismo así lo establece"], c:1, fb_ok:"Correcto. Es el principio de orientación al aprendizaje. Los adultos organizan su aprendizaje en torno a problemas, no en torno a disciplinas.", fb_fail:"Es el principio de orientación al aprendizaje de Knowles: los adultos prefieren aprender resolviendo problemas reales de su contexto, no acumulando teoría abstracta." },
+  { q:"¿Qué es la Zona de Desarrollo Próximo (ZDP) de Vygotsky y cuál es su implicación para el DI?", opts:["La zona de comodidad del aprendiz, donde debe mantenerse para aprender sin ansiedad","La distancia entre lo que el aprendiz puede hacer solo y lo que puede hacer con ayuda; el DI debe diseñar actividades en esa zona con andamiaje apropiado","El espacio físico óptimo para el aprendizaje colaborativo","El rango de edades para las que aplica el constructivismo"], c:1, fb_ok:"Exacto. El andamiaje (scaffolding) es el apoyo temporal que el DI diseña para que el aprendiz logre hoy con ayuda lo que mañana podrá hacer solo.", fb_fail:"La ZDP es la brecha entre autonomía actual y potencial con apoyo. Diseñar en esa zona — con andamiaje — produce el mayor avance en el aprendizaje." },
+  { q:"¿Cuál de los siguientes recursos genera mayor carga extrínseca según la teoría cognitiva de Sweller?", opts:["Un video de 7 minutos con narración de audio y esquema visual animado","Una diapositiva con 350 palabras de texto que el docente lee simultáneamente en voz alta","Un caso de estudio de una página para analizar en un foro","Un cuestionario de 5 preguntas con retroalimentación específica"], c:1, fb_ok:"Correcto. Leer el mismo texto que aparece en pantalla viola el principio de redundancia: el canal visual procesa el mismo contenido dos veces simultáneamente, saturando la memoria de trabajo.", fb_fail:"La diapositiva con texto que se lee en voz alta viola el principio de redundancia: el mismo contenido llega por dos canales visuales simultáneos, generando carga extrínseca alta." },
+  { q:"El aprendizaje significativo de Ausubel plantea que la nueva información se aprende mejor cuando:", opts:["Se presenta de forma completamente nueva, sin conexión con conocimiento previo, para evitar interferencias","Se conecta con conocimiento previo relevante mediante organizadores previos","Se fragmenta en unidades tan pequeñas que no requieren conocimiento previo","Se presenta solo en formato audiovisual, no textual"], c:1, fb_ok:"Correcto. El organizador previo es la herramienta concreta que Ausubel propone: una introducción que activa esquemas existentes antes de presentar la nueva información.", fb_fail:"Ausubel propone que el aprendizaje es más profundo cuando la nueva información se ancla en esquemas existentes. El organizador previo es su herramienta clave." },
+  { q:"¿Cuál de estas afirmaciones sobre el conectivismo es correcta?", opts:["Es la teoría del aprendizaje más antigua y consolidada del campo","Propone que en la era digital, el aprendizaje consiste en crear y navegar conexiones entre nodos de conocimiento distribuidos en redes","Reemplazó completamente al constructivismo en los años 2000","Es equivalente al aprendizaje en línea o e-learning"], c:1, fb_ok:"Correcto. El conectivismo (Siemens, 2005) es la teoría más reciente, propuesta para la era digital. Su estatus teórico es debatido, pero su influencia práctica en el DI es real.", fb_fail:"El conectivismo propone que aprender es saber conectar nodos relevantes en redes de conocimiento distribuido. No reemplazó al constructivismo; convive con él." },
+  { q:"¿Cuál es el principio de la andragogía que explica por qué es importante comenzar cada módulo explicando la relevancia práctica del contenido?", opts:["Principio de autoconcepto","Principio de experiencia previa","Principio de disposición para aprender","Principio de motivación interna"], c:2, fb_ok:"Correcto. La disposición para aprender en adultos está condicionada por la relevancia percibida. Si no ven para qué sirve, la motivación cae.", fb_fail:"Es el principio de disposición para aprender: los adultos están dispuestos cuando el contenido es relevante para su situación actual. Sin esa justificación, la motivación disminuye." },
+  { q:"Un diseñador instruccional quiere que los estudiantes aprendan a diagnosticar problemas de diseño en cursos virtuales reales. ¿Qué teoría fundamenta mejor el uso de análisis de casos reales con discusión colaborativa?", opts:["Conductismo, porque genera respuestas observables ante estímulos","Constructivismo, porque el aprendiz construye comprensión activa en interacción con otros","Conectivismo, porque los casos están en internet","Andragogía solo, porque los estudiantes son adultos"], c:1, fb_ok:"Correcto. El análisis de casos reales con discusión es una estrategia constructivista: genera conflicto cognitivo, activa conocimiento previo y produce construcción social del conocimiento.", fb_fail:"El análisis de casos + discusión es una estrategia constructivista. Genera conflicto cognitivo (algo que no se puede explicar fácilmente) y construcción social (a través de la discusión)." },
+  { q:"¿Por qué las teorías del aprendizaje no son mutuamente excluyentes en la práctica del DI?", opts:["Porque ninguna teoría ha sido validada científicamente","Porque cada teoría explica distintos tipos de aprendizaje y contextos; un curso bien diseñado integra elementos de varias","Porque todas dicen exactamente lo mismo con distintas palabras","Porque solo la andragogía aplica en educación superior"], c:1, fb_ok:"Correcto. Un módulo puede usar conductismo para la práctica repetida, cognitivismo para la presentación del contenido, constructivismo para las actividades grupales y andragogía para el diseño general de la experiencia.", fb_fail:"Las teorías son complementarias. Distintos momentos y objetivos de un curso pueden requerir distintos enfoques teóricos." }
+];
+
+let respuestas = {}, enviado = false;
+
+function renderQuiz() {
+  const body = document.getElementById('quizBody');
+  body.innerHTML = PREGUNTAS.map((p, qi) => {
+    const r = respuestas[qi];
+    const opts = p.opts.map((o, oi) => {
+      let cls = 'opt';
+      if (enviado) { if (oi===p.c) cls+=' correct'; else if (r===oi) cls+=' wrong'; }
+      else if (r===oi) cls+=' selected';
+      return `<div class="${cls}" onclick="sel(${qi},${oi})"><input type="radio" ${r===oi?'checked':''} ${enviado?'disabled':''}/> ${o}</div>`;
+    }).join('');
+    let fb = '';
+    if (enviado && r!==undefined) fb = `<div class="feedback ${r===p.c?'ok':'fail'}">${r===p.c?'✓ '+p.fb_ok:'✗ '+p.fb_fail}</div>`;
+    return `<div class="q-block"><div class="q-num">Pregunta ${qi+1} de ${PREGUNTAS.length}</div><div class="q-text">${p.q}</div>${opts}${fb}</div>`;
+  }).join('');
+  const actions = document.getElementById('quizActions');
+  const result = document.getElementById('quizResult');
+  if (!enviado) {
+    const n = Object.keys(respuestas).length;
+    actions.innerHTML = `<button class="btn btn-primary" onclick="enviar()" ${n<PREGUNTAS.length?'disabled':''}>Enviar respuestas (${n}/${PREGUNTAS.length})</button>`;
+    result.innerHTML = '';
+  } else {
+    const ok = PREGUNTAS.filter((_,qi)=>respuestas[qi]===PREGUNTAS[qi].c).length;
+    const pct = Math.round(ok/PREGUNTAS.length*100);
+    const msg = pct>=90?'Excelente. Tienes las teorías bien integradas.':pct>=70?'Buen resultado. Repasa las que fallaste antes de avanzar.':'Vuelve a repasar las teorías — especialmente las diferencias entre ellas.';
+    result.innerHTML = `<div class="score-result"><div class="score-big">${ok}/${PREGUNTAS.length}</div><div class="score-sub">${pct}% de respuestas correctas</div><div class="score-msg">${msg}</div></div>`;
+    actions.innerHTML = `<button class="btn btn-outline" onclick="reintentar()">Reintentar</button>`;
+    guardar(pct/100);
+  }
+}
+
+function sel(qi,oi) { if(enviado) return; respuestas[qi]=oi; renderQuiz(); }
+function enviar() { if(Object.keys(respuestas).length<PREGUNTAS.length) return; enviado=true; renderQuiz(); }
+function reintentar() { respuestas={}; enviado=false; renderQuiz(); }
+
+function getScores() { try { return JSON.parse(localStorage.getItem('di_scores')||'{}'); } catch(e) { return {}; } }
+async function guardar(ratio) {
+  const s = getScores(); s[UNIDAD_ID]=ratio; localStorage.setItem('di_scores',JSON.stringify(s));
+  if (SHEET_SCRIPT_URL.includes('PLACEHOLDER')) return;
+  try { await fetch(SHEET_SCRIPT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'saveScore',id:UNIDAD_ID,score:ratio,label:'1.2 Teorías del aprendizaje',date:new Date().toLocaleDateString('es-CL')})}); } catch(e) {}
+}
+renderQuiz();
+</script>
+</body>
+</html>
