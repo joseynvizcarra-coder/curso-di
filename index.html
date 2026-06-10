@@ -453,7 +453,7 @@ function updateUI() {
     const scoreEl = document.getElementById('score-' + id);
     if (!badgeEl || !scoreEl) return;
 
-    if (s !== undefined) {
+    if (s !== undefined && s > 0) {
       const pct = Math.round(s * 100);
       completadas++; suma += pct; cont++;
 
@@ -479,7 +479,7 @@ function updateUI() {
 
   // Por módulo
   Object.entries(MODULOS).forEach(([mod, ids]) => {
-    const done = ids.filter(id => scores[id] !== undefined).length;
+    const done = ids.filter(id => scores[id] !== undefined && scores[id] > 0).length;
     const pctEl = document.getElementById('pct-' + mod);
     const barEl = document.getElementById('bar-' + mod);
     if (pctEl) pctEl.textContent = done + '/3 completadas';
@@ -520,7 +520,9 @@ function trackVisit(pageId) {
     if (qs.get('owner') === '0') localStorage.removeItem('di_owner');
     const owner = localStorage.getItem('di_owner') === '1' ? '1' : '0';
     const device = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'movil' : 'escritorio';
-    jsonp({ action: 'logVisit', page: pageId, vid: vid, sid: sid, owner: owner, device: device }).catch(function(){});
+    // Pixel de imagen: registro confiable en móvil, incógnito y cualquier navegador, sin CORS.
+    const params = new URLSearchParams({ action: 'logVisit', page: pageId, vid: vid, sid: sid, owner: owner, device: device, t: String(Date.now()) });
+    new Image().src = SCRIPT_URL + '?' + params.toString();
   } catch(e) {}
 }
 
