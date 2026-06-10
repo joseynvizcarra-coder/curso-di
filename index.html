@@ -425,6 +425,20 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzW-icHpsefBYG2Pzahg
 const UNIDADES = ['m1-1','m1-2','m1-3','m2-1','m2-2','m2-3','m3-1','m3-2','m3-3','m4-1','m4-2','m4-3'];
 const MODULOS = { m1:['m1-1','m1-2','m1-3'], m2:['m2-1','m2-2','m2-3'], m3:['m3-1','m3-2','m3-3'], m4:['m4-1','m4-2','m4-3'] };
 
+function jsonp(params) {
+  return new Promise(function(resolve, reject) {
+    var cb = 'cb_' + Date.now() + '_' + Math.floor(Math.random()*1e6);
+    var script = document.createElement('script');
+    function cleanup(){ try { delete window[cb]; } catch(e) { window[cb] = undefined; } if (script.parentNode) script.parentNode.removeChild(script); }
+    window[cb] = function(data){ cleanup(); resolve(data); };
+    var qp = new URLSearchParams(Object.assign({}, params, { callback: cb }));
+    script.src = SCRIPT_URL + '?' + qp.toString();
+    script.onerror = function(){ cleanup(); reject(new Error('conexion')); };
+    setTimeout(function(){ if (window[cb]) { cleanup(); reject(new Error('timeout')); } }, 20000);
+    document.head.appendChild(script);
+  });
+}
+
 function getScores() {
   try { return JSON.parse(localStorage.getItem('di_scores') || '{}'); } catch(e) { return {}; }
 }
@@ -477,8 +491,7 @@ async function syncSheet() {
   const dot = document.getElementById('syncDot');
   const msg = document.getElementById('syncMsg');
   try {
-    const res = await fetch(SCRIPT_URL + '?action=getAll');
-    const data = await res.json();
+    const data = await jsonp({ action: 'getAll' });
     if (data.ok) {
       const scores = getScores();
       (data.scores || []).forEach(row => {
@@ -507,10 +520,7 @@ function trackVisit(pageId) {
     if (qs.get('owner') === '0') localStorage.removeItem('di_owner');
     const owner = localStorage.getItem('di_owner') === '1' ? '1' : '0';
     const device = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'movil' : 'escritorio';
-    const u = SCRIPT_URL + '?action=logVisit&page=' + encodeURIComponent(pageId)
-      + '&vid=' + encodeURIComponent(vid) + '&sid=' + encodeURIComponent(sid)
-      + '&owner=' + owner + '&device=' + device;
-    fetch(u).catch(()=>{});
+    jsonp({ action: 'logVisit', page: pageId, vid: vid, sid: sid, owner: owner, device: device }).catch(function(){});
   } catch(e) {}
 }
 
