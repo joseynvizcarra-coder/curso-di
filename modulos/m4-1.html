@@ -220,12 +220,12 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
         <div class="lesson-hero">
           <div class="unit-tag">Módulo 4 · Unidad 4.1</div>
           <h1>Herramientas de autoría e interactividad</h1>
-          <p>Articulate Storyline, Rise, H5P, Genially, Nearpod, Canva — URL, precio y límites reales</p>
+          <p>De cero: qué es una herramienta de autoría · niveles de interactividad y Bloom · cómo elegir la correcta · catálogo con precios y límites reales · flujo de producción</p>
         </div>
         <div class="lesson-badges">
-          <span class="lbadge"><i class="bi bi-book me-1"></i>6 bloques de contenido</span>
-          <span class="lbadge"><i class="bi bi-clipboard-check me-1"></i>8 preguntas al final</span>
-          <span class="lbadge"><i class="bi bi-clock me-1"></i>~26 min</span>
+          <span class="lbadge"><i class="bi bi-book me-1"></i>9 bloques de contenido</span>
+          <span class="lbadge"><i class="bi bi-clipboard-check me-1"></i>8 preguntas de certificación</span>
+          <span class="lbadge"><i class="bi bi-clock me-1"></i>~55 min</span>
         </div>
 
         <div class="lesson-body">
@@ -245,10 +245,56 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
 
           <div class="accordion-di">
             <button class="accordion-di-btn open" onclick="toggleAcc(this)">
-              <i class="bi bi-1-circle acc-icon"></i> Articulate Storyline
+              <i class="bi bi-info-circle acc-icon"></i> Fundamento: qué es una herramienta de autoría y los niveles de interactividad
               <i class="bi bi-chevron-down acc-chevron"></i>
             </button>
             <div class="accordion-di-body show">
+              <p>Una <strong>herramienta de autoría</strong> (authoring tool) es el software con el que un diseñador instruccional <em>construye</em> el contenido interactivo del curso — sin programar. Es la diferencia entre <strong>crear</strong> el objeto de aprendizaje (aquí) y <strong>alojarlo y distribuirlo</strong> (el LMS, Módulo 3). El producto de una herramienta de autoría se empaqueta como SCORM o xAPI y se sube al LMS: los dos mundos se conectan exactamente ahí.</p>
+
+              <h5>La decisión que ordena todo: ¿cuánta interactividad necesita este contenido?</h5>
+              <p>La industria clasifica el e-learning en <strong>cuatro niveles de interactividad</strong>. No es una escala de calidad — es una escala de <em>costo, tiempo y herramienta apropiada</em>. Elegir el nivel correcto para cada contenido es una de las decisiones más rentables de un DI: sobre-producir un contenido simple desperdicia semanas; sub-producir uno complejo entrega un curso que no enseña.</p>
+              <table class="table table-di table-bordered mt-2">
+                <thead><tr><th>Nivel</th><th>Qué es</th><th>Herramienta típica</th><th>Ejemplo</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>1 · Pasivo</strong></td><td>El estudiante solo lee/ve: pasa diapositivas, reproduce video. Sin decisiones.</td><td>PowerPoint, Rise, Canva</td><td>Una política de la empresa presentada como lectura navegable</td></tr>
+                  <tr><td><strong>2 · Interacción limitada</strong></td><td>Clics simples: acordeones, pestañas, quizzes de repaso, arrastrar y soltar básico.</td><td>Rise, H5P, Genially</td><td>Un módulo con tarjetas volteables y un quiz de autochequeo</td></tr>
+                  <tr><td><strong>3 · Interacción compleja</strong></td><td>El estudiante manipula, decide y ve consecuencias: escenarios ramificados, simulaciones guiadas.</td><td>Storyline, Captivate</td><td>Un cliente molesto simulado que reacciona según lo que el estudiante elige responder</td></tr>
+                  <tr><td><strong>4 · Inmersivo</strong></td><td>Simulación de alta fidelidad, serious games, realidad virtual, lógica avanzada por variables.</td><td>Storyline avanzado + código, motores de simulación, VR</td><td>Un simulador de procedimiento clínico con variables fisiológicas que cambian en tiempo real</td></tr>
+                </tbody>
+              </table>
+              <div class="callout-terra mt-2">
+                <strong>La regla de oro del nivel:</strong> el nivel de interactividad lo dicta el <em>verbo del objetivo de aprendizaje</em> (Unidad 3.1), no el gusto por lo vistoso. Si el objetivo es "recordar la política", nivel 1 basta. Si es "aplicar el protocolo ante un cliente difícil", exige nivel 3. Producir un escape room de nivel 4 para enseñar algo que un quiz de nivel 2 cubría es el error de sobre-ingeniería más caro en e-learning.
+              </div>
+              <div class="callout-blue">
+                <strong>Para entrevista:</strong> cuando expliques un proyecto, nombra el nivel de interactividad y justifícalo con el objetivo ("era nivel 3 porque el objetivo pedía tomar decisiones bajo presión, así que usé escenarios ramificados en Storyline"). Demuestra que eliges herramienta por criterio pedagógico, no por moda.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-di">
+            <button class="accordion-di-btn" onclick="toggleAcc(this)">
+              <i class="bi bi-signpost-split acc-icon"></i> Cómo elegir la herramienta correcta (y no al revés)
+              <i class="bi bi-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-di-body">
+              <p>El error del principiante es elegir la herramienta primero ("quiero aprender Storyline") y forzar el contenido dentro de ella. El profesional elige al revés: define el objetivo y el nivel de interactividad, y <em>entonces</em> la herramienta cae por su propio peso. Cinco criterios de decisión, en orden:</p>
+              <div class="card-di"><h6><i class="bi bi-1-circle me-1"></i>Nivel de interactividad requerido</h6><p>El criterio dominante (bloque anterior). Nivel 1-2 → Rise/H5P/Genially. Nivel 3-4 → Storyline/Captivate. Todo lo demás se subordina a esto.</p></div>
+              <div class="card-di"><h6><i class="bi bi-phone me-1"></i>Dispositivo de consumo</h6><p>¿Se verá mayoritariamente en celular? Rise es responsive automático; Storyline exige diseñar el comportamiento móvil a mano. Si tu GA4 (Unidad 4.2) dice que el 70% entra desde móvil, esto pesa.</p></div>
+              <div class="card-di"><h6><i class="bi bi-clock-history me-1"></i>Tiempo y presupuesto</h6><p>Rise produce un curso en horas; Storyline en días o semanas. H5P es gratis; Articulate 360 cuesta ~US$1.399/año. Un plazo corto con presupuesto cero descarta soluciones por sí solo.</p></div>
+              <div class="card-di"><h6><i class="bi bi-arrow-repeat me-1"></i>Mantenimiento y actualización</h6><p>¿El contenido cambiará seguido? Rise y H5P se editan rápido; una simulación compleja de Storyline es cara de mantener. Contenido volátil pide herramienta ágil.</p></div>
+              <div class="card-di"><h6><i class="bi bi-people me-1"></i>Competencias del equipo y estándar de salida</h6><p>¿Quién lo mantendrá después de ti? Y siempre: que exporte SCORM/xAPI si va a un LMS. Una herramienta que nadie más del equipo sabe usar es deuda técnica.</p></div>
+              <div class="callout-terra mt-2">
+                <strong>Caso de decisión:</strong> "inducción de 20 min sobre normas de convivencia, se actualiza cada semestre, 80% la ven en el teléfono, presupuesto acotado". Análisis: objetivo nivel 1-2, alta rotación, móvil dominante, sin plata → <strong>Rise</strong> (o H5P si ya hay Moodle). Storyline aquí sería sobre-ingeniería costosa e imposible de mantener al ritmo del cambio.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-di">
+            <button class="accordion-di-btn" onclick="toggleAcc(this)">
+              <i class="bi bi-1-circle acc-icon"></i> Catálogo · Articulate Storyline
+              <i class="bi bi-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-di-body">
               <div class="tool-di">
                 <div class="tool-di-head">
                   <h6><i class="bi bi-easel3 me-2" style="color:var(--terra)"></i>Articulate Storyline 360</h6>
@@ -387,73 +433,92 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
             </div>
           </div>
 
+          <div class="accordion-di">
+            <button class="accordion-di-btn" onclick="toggleAcc(this)">
+              <i class="bi bi-diagram-3 acc-icon"></i> Flujo de producción de un módulo interactivo (de la idea al SCORM)
+              <i class="bi bi-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-di-body">
+              <p>Saber usar la herramienta no basta; hay un flujo de producción que separa a quien improvisa de quien entrega a tiempo y sin retrabajo. Estas seis etapas aplican a cualquier herramienta de autoría:</p>
+              <div class="card-di"><h6><i class="bi bi-1-circle me-1"></i>Storyboard antes de abrir la herramienta</h6><p>El storyboard es el guion pantalla por pantalla: qué texto, qué imagen, qué interacción y qué feedback lleva cada slide. Se hace en un documento o plantilla, <strong>no</strong> dentro de Storyline. Construir directamente en la herramienta sin storyboard es la causa número uno de proyectos que se rehacen tres veces: cada cambio de estructura cuesta 10× más una vez montado.</p></div>
+              <div class="card-di"><h6><i class="bi bi-2-circle me-1"></i>Reunir y preparar los recursos (media assets)</h6><p>Imágenes, íconos, audio, video, logos — todo listo y en la resolución correcta antes de montar. Detenerse a buscar una imagen a mitad de producción rompe el ritmo y multiplica el tiempo.</p></div>
+              <div class="card-di"><h6><i class="bi bi-3-circle me-1"></i>Montar un prototipo de una pantalla (look &amp; feel)</h6><p>Antes de producir 40 slides, se arma <em>una</em> con la plantilla visual, tipografías y colores definitivos, y se valida con el cliente/SME. Corregir el estilo en una pantalla es trivial; corregirlo en 40 ya montadas es un día perdido.</p></div>
+              <div class="card-di"><h6><i class="bi bi-4-circle me-1"></i>Producir el grueso del contenido</h6><p>Recién aquí se montan todas las pantallas siguiendo el storyboard aprobado y el prototipo validado. El trabajo fluye porque las decisiones difíciles ya se tomaron.</p></div>
+              <div class="card-di"><h6><i class="bi bi-5-circle me-1"></i>Revisión de calidad (QA) como estudiante</h6><p>Recorrer el curso completo como aprendiz de prueba: ¿todos los botones funcionan?, ¿el quiz califica bien?, ¿los enlaces abren?, ¿el criterio de finalización marca "completado" (Unidad 3.2)? El error clásico es publicar sin este paso y descubrir en producción que la nota no se guardaba.</p></div>
+              <div class="card-di"><h6><i class="bi bi-6-circle me-1"></i>Publicar como SCORM/xAPI y probar en el LMS real</h6><p>Exportar el paquete, subirlo a Moodle y probarlo <em>en el LMS</em>, no solo en vista previa local. Muchos problemas (finalización, tamaño de <code>suspend_data</code>, media que no carga) solo aparecen dentro del LMS.</p></div>
+              <div class="callout-blue mt-2">
+                <strong>Cómo aplicarlo:</strong> si en una entrevista describes tu proceso como "hago el storyboard, valido un prototipo de una pantalla, produzco, hago QA como estudiante y pruebo el paquete en el LMS real", transmites método y previsibilidad — que es lo que un jefe de proyecto necesita oír, más que una lista de herramientas que sabes usar.
+              </div>
+            </div>
+          </div>
+
           <!-- EVALUACIÓN -->
           <div class="eval-section mt-4">
             <h4><i class="bi bi-clipboard-check me-2" style="color:var(--terra)"></i>Evaluación — Unidad 4.1</h4>
             <p class="eval-progress-text">Preguntas respondidas: <strong><span id="answeredCount">0</span>/8</strong> — puedes enviar en cualquier momento</p>
 
             <div class="eval-question" data-question="q1">
-              <h6>1. ¿Cuál es la diferencia funcional clave entre Articulate Storyline y Rise 360?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q1',1)"><div class="eval-radio"></div><span>Storyline es gratis y Rise es pago</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',2)"><div class="eval-radio"></div><span>Storyline permite interactividad compleja y ramificaciones; Rise es más rápido pero con plantillas más rígidas</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',3)"><div class="eval-radio"></div><span>Rise no funciona en navegador</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',4)"><div class="eval-radio"></div><span>No hay ninguna diferencia relevante</span></div>
+              <h6>1. Debes producir una inducción de 15 minutos sobre normas de convivencia que se actualiza cada semestre, la ve el 80% en celular y no hay presupuesto para licencias. ¿Qué herramienta y por qué?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q1',1)"><div class="eval-radio"></div><span>Storyline, porque es el estándar de la industria y siempre es la mejor opción</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q1',2)"><div class="eval-radio"></div><span>Rise (o H5P sobre Moodle): objetivo de baja interactividad, responsive automático para móvil, edición rápida para las actualizaciones y sin costo de licencia</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q1',3)"><div class="eval-radio"></div><span>Un escape room de nivel 4 en Genially para que sea más atractivo</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q1',4)"><div class="eval-radio"></div><span>Adobe Captivate, porque hace contenido responsive</span></div>
             </div>
 
             <div class="eval-question" data-question="q2">
-              <h6>2. ¿Qué formato de exportación es estándar al terminar un proyecto en Storyline para subirlo a un LMS como Moodle?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q2',1)"><div class="eval-radio"></div><span>Solo PDF</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',2)"><div class="eval-radio"></div><span>SCORM (1.2 o 2004) o xAPI</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',3)"><div class="eval-radio"></div><span>Únicamente HTML sin empaquetar</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',4)"><div class="eval-radio"></div><span>Formato propietario no compatible con LMS</span></div>
+              <h6>2. El objetivo de aprendizaje es "aplicar el protocolo de atención ante un cliente molesto, tomando decisiones bajo presión". ¿Qué nivel de interactividad corresponde y qué herramienta lo habilita?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q2',1)"><div class="eval-radio"></div><span>Nivel 1 (pasivo): basta un video explicativo en Canva</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q2',2)"><div class="eval-radio"></div><span>Nivel 3 (interacción compleja): un escenario ramificado con consecuencias en Storyline o Captivate</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q2',3)"><div class="eval-radio"></div><span>Nivel 1: una lectura navegable en Rise</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q2',4)"><div class="eval-radio"></div><span>El nivel da igual; lo importante es que se vea bonito</span></div>
             </div>
 
             <div class="eval-question" data-question="q3">
-              <h6>3. ¿Qué caracteriza a la versión gratuita de H5P cuando se autoaloja en un CMS o LMS propio?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q3',1)"><div class="eval-radio"></div><span>Es completamente gratis, sin límites de contenido, porque es open source</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',2)"><div class="eval-radio"></div><span>Requiere pago mensual obligatorio</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',3)"><div class="eval-radio"></div><span>Solo permite un tipo de actividad</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',4)"><div class="eval-radio"></div><span>No es compatible con Moodle</span></div>
+              <h6>3. Un colega arma directamente 40 pantallas en Storyline sin storyboard previo, y el cliente pide reordenar toda la estructura. ¿Cuál es la lección de flujo de producción?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q3',1)"><div class="eval-radio"></div><span>No hay problema: reestructurar 40 pantallas montadas cuesta lo mismo que planificarlas antes</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q3',2)"><div class="eval-radio"></div><span>El storyboard (guion pantalla por pantalla) se hace antes de abrir la herramienta: cambiar la estructura ya montada cuesta muchísimo más que cambiarla en el documento de diseño</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q3',3)"><div class="eval-radio"></div><span>La solución es cambiar de herramienta a Rise</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q3',4)"><div class="eval-radio"></div><span>Los storyboards solo sirven para video, no para e-learning interactivo</span></div>
             </div>
 
             <div class="eval-question" data-question="q4">
-              <h6>4. ¿Cuál es la principal limitación del plan gratuito de Genially?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q4',1)"><div class="eval-radio"></div><span>No permite crear ningún contenido</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',2)"><div class="eval-radio"></div><span>Incluye marca de agua y limita plantillas premium y descargas offline</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',3)"><div class="eval-radio"></div><span>Solo funciona en dispositivos móviles</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',4)"><div class="eval-radio"></div><span>Requiere tarjeta de crédito para usarse</span></div>
+              <h6>4. Terminas un módulo en Storyline. ¿Qué formato de exportación usas para subirlo a Moodle y que registre la nota y la finalización?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q4',1)"><div class="eval-radio"></div><span>Solo PDF</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q4',2)"><div class="eval-radio"></div><span>SCORM (1.2 o 2004) o xAPI, que el LMS interpreta y con el que registra estado y puntaje</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q4',3)"><div class="eval-radio"></div><span>HTML suelto sin empaquetar, subido como archivo</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q4',4)"><div class="eval-radio"></div><span>Un video MP4 exportado del proyecto</span></div>
             </div>
 
             <div class="eval-question" data-question="q5">
-              <h6>5. ¿En qué se diferencia Nearpod de Genially o H5P en su uso típico?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q5',1)"><div class="eval-radio"></div><span>Nearpod solo sirve para video, no para interactividad</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',2)"><div class="eval-radio"></div><span>Nearpod está más orientado a sesiones en vivo/sincrónicas con polls y quiz en tiempo real</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',3)"><div class="eval-radio"></div><span>Nearpod no tiene plan gratuito de ningún tipo</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',4)"><div class="eval-radio"></div><span>Nearpod reemplaza completamente a un LMS</span></div>
+              <h6>5. Tienes contenido interactivo ligero (video interactivo, arrastrar y soltar, línea de tiempo) que quieres integrar de forma nativa y gratuita dentro de tu Moodle. ¿Qué herramienta encaja mejor?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q5',1)"><div class="eval-radio"></div><span>Adobe Captivate, por su licencia mensual</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q5',2)"><div class="eval-radio"></div><span>H5P, open source y gratuito al autoalojarse vía plugin en Moodle, ideal para actividades interactivas ligeras y reutilizables</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q5',3)"><div class="eval-radio"></div><span>Canva, porque hace todo tipo de interactividad</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q5',4)"><div class="eval-radio"></div><span>Nearpod, porque es la única gratuita</span></div>
             </div>
 
             <div class="eval-question" data-question="q6">
-              <h6>6. ¿Para qué se usa típicamente Canva dentro de un flujo de diseño instruccional, a diferencia de Storyline o H5P?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q6',1)"><div class="eval-radio"></div><span>Para crear SCORM interactivo complejo</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',2)"><div class="eval-radio"></div><span>Para diseño gráfico rápido de materiales de apoyo: portadas, infografías, guías descargables</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',3)"><div class="eval-radio"></div><span>Para alojar cursos completos como un LMS</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',4)"><div class="eval-radio"></div><span>Para programar integraciones xAPI</span></div>
+              <h6>6. Para una clase sincrónica en vivo donde quieres lanzar polls y quizzes en tiempo real y ver las respuestas al instante, ¿qué herramienta está diseñada para eso?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q6',1)"><div class="eval-radio"></div><span>H5P, que es para contenido autónomo asincrónico</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q6',2)"><div class="eval-radio"></div><span>Nearpod, orientado a sesiones sincrónicas con interacción en tiempo real (polls, quiz en vivo, VR)</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q6',3)"><div class="eval-radio"></div><span>Storyline, porque exporta SCORM</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q6',4)"><div class="eval-radio"></div><span>Canva, por su modo presentación</span></div>
             </div>
 
             <div class="eval-question" data-question="q7">
-              <h6>7. Si necesitas simular el uso de un software específico paso a paso dentro de un curso, ¿qué herramienta de las vistas es más adecuada?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q7',1)"><div class="eval-radio"></div><span>Canva</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',2)"><div class="eval-radio"></div><span>Articulate Storyline o Adobe Captivate</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',3)"><div class="eval-radio"></div><span>Nearpod</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',4)"><div class="eval-radio"></div><span>H5P exclusivamente</span></div>
+              <h6>7. Antes de dar por terminado un curso y publicarlo, ¿cuál es el paso de QA imprescindible según el flujo de producción?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q7',1)"><div class="eval-radio"></div><span>Recorrer el curso completo como estudiante de prueba y luego probar el paquete en el LMS real, verificando que botones, quiz y criterio de finalización funcionen</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q7',2)"><div class="eval-radio"></div><span>Confiar en la vista previa local de la herramienta; si ahí se ve bien, está listo</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q7',3)"><div class="eval-radio"></div><span>Publicar y esperar a que los estudiantes reporten los errores</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q7',4)"><div class="eval-radio"></div><span>Revisar solo la primera y la última pantalla</span></div>
             </div>
 
             <div class="eval-question" data-question="q8">
-              <h6>8. ¿Cuál es una ventaja concreta y verificable que ya tienes con H5P para mostrar en un proceso de selección?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q8',1)"><div class="eval-radio"></div><span>Un certificado oficial de Articulate</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',2)"><div class="eval-radio"></div><span>Contenido H5P público y funcional alojado en tu propia cuenta de H5P.com</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',3)"><div class="eval-radio"></div><span>Un curso completo en Adobe Captivate</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',4)"><div class="eval-radio"></div><span>Una app propia desarrollada en H5P</span></div>
+              <h6>8. Sobre-producir es un error tan real como sub-producir. ¿Cuál de estas situaciones es un caso de sobre-ingeniería?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q8',1)"><div class="eval-radio"></div><span>Usar un escenario ramificado (nivel 3) para entrenar la toma de decisiones ante un cliente difícil</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q8',2)"><div class="eval-radio"></div><span>Construir un serious game inmersivo de nivel 4, con semanas de producción, para que el personal memorice una política que un quiz de repaso de nivel 2 cubría igual</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q8',3)"><div class="eval-radio"></div><span>Usar Rise para una inducción informativa que se ve mayormente en celular</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q8',4)"><div class="eval-radio"></div><span>Usar H5P para un video interactivo dentro de Moodle</span></div>
             </div>
 
             <div id="evalResult" class="mt-3"></div>
@@ -483,16 +548,16 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbylYML8h2BnNgi2AXtZ8
 const UNIDAD_ID = 'm4-1';
 const UNIDAD_LABEL = '4.1 Herramientas de autoría';
 
-const CORRECTAS = { q1:2, q2:2, q3:1, q4:2, q5:2, q6:2, q7:2, q8:2 };
+const CORRECTAS = { q1:2, q2:2, q3:2, q4:2, q5:2, q6:2, q7:1, q8:2 };
 const FEEDBACK = {
-  q1: {ok:'Correcto. Storyline ofrece control total e interactividad compleja; Rise prioriza velocidad de producción y diseño responsive automático.',fail:'Ambas herramientas son parte de la misma suscripción paga (Articulate 360). La diferencia real es que Storyline permite mayor interactividad y ramificación, mientras Rise es más rápida pero con plantillas más limitadas.'},
-  q2: {ok:'Correcto. Storyline exporta a SCORM 1.2/2004 o xAPI, formatos que un LMS como Moodle puede interpretar y registrar.',fail:'Storyline exporta a SCORM (1.2 o 2004) o xAPI para integrarse con un LMS, no solo a PDF ni en un formato propietario incompatible.'},
-  q3: {ok:'Correcto. H5P es open source y gratuito cuando se integra directamente en una plataforma propia como Moodle, WordPress o Drupal.',fail:'H5P es gratis y sin restricciones de contenido cuando se autoaloja vía plugin en un CMS/LMS propio; los planes pagos solo aplican al hosting de H5P.com.'},
-  q4: {ok:'Correcto. El plan gratuito de Genially incluye marca de agua y restringe plantillas premium y ciertas exportaciones.',fail:'El plan gratuito de Genially sí permite crear contenido, pero incluye marca de agua y limita plantillas premium y descargas — no bloquea la creación por completo.'},
-  q5: {ok:'Correcto. Nearpod se distingue por su enfoque en sesiones en vivo con interacción en tiempo real, más que en contenido autónomo estático.',fail:'Nearpod sí tiene un plan gratuito (Silver) y no reemplaza a un LMS; su diferenciador es el enfoque en sesiones sincrónicas con interacción en tiempo real.'},
-  q6: {ok:'Correcto. Canva se usa para piezas gráficas de apoyo, no para construir la interactividad central del curso ni para alojarlo.',fail:'Canva se usa para diseño gráfico de apoyo (portadas, infografías, guías), no para crear interactividad SCORM compleja ni para alojar cursos.'},
-  q7: {ok:'Correcto. Tanto Storyline como Captivate están diseñados para simulaciones de software con captura de pantalla e interactividad guiada.',fail:'Storyline y Captivate son las herramientas orientadas a simulaciones de software; Canva y Nearpod no están diseñadas para ese tipo de interactividad.'},
-  q8: {ok:'Correcto. Tener contenido H5P público y funcionando es evidencia directa y verificable de dominio de la herramienta.',fail:'Tu evidencia concreta es el contenido H5P público en tu propia cuenta, no un certificado de Articulate ni un curso en Captivate.'}
+  q1: {ok:'Correcto. Los cuatro criterios apuntan a lo mismo: baja interactividad + móvil dominante + alta rotación de contenido + sin presupuesto. Rise (o H5P sobre Moodle) resuelve todo eso; Storyline sería sobre-ingeniería cara e imposible de mantener al ritmo semestral.',fail:'Storyline no es "siempre la mejor opción": aquí sería sobre-ingeniería. El contenido es de baja interactividad, se ve en móvil, cambia cada semestre y no hay presupuesto — eso apunta a Rise (o H5P), que es responsive automático, gratis/económico y rápido de editar.'},
+  q2: {ok:'Correcto. El verbo "aplicar tomando decisiones bajo presión" exige nivel 3: el estudiante debe decidir y ver consecuencias. Un escenario ramificado en Storyline o Captivate es lo que lo habilita — un video o una lectura (nivel 1) no practican la toma de decisiones.',fail:'El verbo del objetivo manda: "aplicar tomando decisiones bajo presión" no se practica leyendo ni viendo un video (nivel 1). Exige nivel 3 — un escenario ramificado con consecuencias, que se construye en Storyline o Captivate.'},
+  q3: {ok:'Correcto. El storyboard se hace antes de abrir la herramienta porque reordenar la estructura en el documento de diseño es trivial, mientras cambiarla en 40 pantallas ya montadas cuesta 10× más. Saltarse el storyboard es la causa número uno de proyectos que se rehacen.',fail:'La lección no es cambiar de herramienta ni que "cueste lo mismo". El storyboard (guion pantalla por pantalla) se hace antes de montar precisamente porque reestructurar el contenido ya construido es carísimo en tiempo; planificarlo en el documento de diseño evita ese retrabajo.'},
+  q4: {ok:'Correcto. SCORM (1.2 o 2004) o xAPI son los formatos que un LMS interpreta para registrar estado de finalización y puntaje. Un PDF, HTML suelto o un MP4 no reportan datos al LMS.',fail:'Para que Moodle registre nota y finalización, el módulo debe exportarse como SCORM (1.2/2004) o xAPI. PDF, HTML sin empaquetar o un MP4 no comunican datos de progreso al LMS.'},
+  q5: {ok:'Correcto. H5P es open source, gratuito al autoalojarse vía plugin en Moodle, y está pensado justamente para actividades interactivas ligeras y reutilizables (video interactivo, arrastrar y soltar, línea de tiempo) integradas de forma nativa.',fail:'Para contenido interactivo ligero integrado de forma nativa y gratuita en Moodle, la herramienta es H5P (open source). Captivate es una suite paga de nivel 3-4, Canva es diseño gráfico y Nearpod está orientado a sesiones en vivo.'},
+  q6: {ok:'Correcto. Nearpod está diseñado para sesiones sincrónicas: lanzar polls y quizzes en tiempo real y ver las respuestas al instante. H5P y Storyline son para contenido autónomo asincrónico.',fail:'Para interacción en vivo con polls y quiz en tiempo real, la herramienta es Nearpod. H5P y Storyline producen contenido autónomo asincrónico, y Canva no es una plataforma de interacción sincrónica.'},
+  q7: {ok:'Correcto. El QA imprescindible es recorrer el curso como estudiante de prueba y luego probar el paquete en el LMS real: muchos fallos (finalización, media, calificación) solo aparecen dentro del LMS, no en la vista previa local.',fail:'Confiar solo en la vista previa local, o publicar y esperar reportes, es exactamente lo que produce cursos rotos en producción. El QA correcto es recorrer todo como estudiante de prueba y probar el paquete en el LMS real, donde aparecen los fallos de finalización y media.'},
+  q8: {ok:'Correcto. Producir un serious game de nivel 4 durante semanas para lo que un quiz de repaso de nivel 2 cubría igual es sobre-ingeniería: gasto de tiempo y presupuesto desproporcionado al objetivo. El nivel debe ajustarse al verbo del objetivo, ni más ni menos.',fail:'Los otros casos ajustan bien la herramienta al objetivo. La sobre-ingeniería es construir un nivel 4 inmersivo, con semanas de producción, para un objetivo de memorización que un quiz de nivel 2 resolvía — desperdicia tiempo y presupuesto sin ganancia pedagógica.'}
 };
 
 let answers = {};
