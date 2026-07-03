@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>4.2 Herramientas de análisis: PowerBI, GA4 y reportes Moodle — Curso DI</title>
+<title>4.4 Colaboración y gestión de proyectos — Curso DI</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <style>
@@ -169,7 +169,7 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
         <a href="../index.html" class="btn-back"><i class="bi bi-arrow-left me-1"></i>Inicio</a>
         <div>
           <div class="course-name">Diseño Instruccional</div>
-          <div class="unit-name">Módulo 4 · Unidad 4.2</div>
+          <div class="unit-name">Módulo 4 · Unidad 4.4</div>
         </div>
       </div>
       <div class="d-none d-md-flex align-items-center gap-2">
@@ -193,16 +193,16 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
           <div class="lesson-num" id="num-m4-1">1</div>
           <div class="lesson-info"><strong>Herramientas de autoría</strong><span>Storyline · Rise · H5P · Genially</span></div>
         </a>
-        <a class="lesson-item active" onclick="scrollToTop()">
-          <div class="lesson-num">2</div>
+        <a class="lesson-item" href="m4-2.html">
+          <div class="lesson-num" id="num-m4-2">2</div>
           <div class="lesson-info"><strong>Herramientas de análisis</strong><span>PowerBI · GA4 · reportes Moodle</span></div>
         </a>
         <a class="lesson-item" href="m4-3.html">
           <div class="lesson-num" id="num-m4-3">3</div>
-          <div class="lesson-info"><strong>Producción multimedia</strong><span>Camtasia · OBS · Loom · Synthesia</span></div>
+          <div class="lesson-info"><strong>Producción multimedia</strong><span>Camtasia · OBS · Loom · Synthesia · HeyGen</span></div>
         </a>
-        <a class="lesson-item" href="m4-4.html">
-          <div class="lesson-num" id="num-m4-4">4</div>
+        <a class="lesson-item active" onclick="scrollToTop()">
+          <div class="lesson-num">4</div>
           <div class="lesson-info"><strong>Colaboración y gestión</strong><span>Miro · Trello · Notion</span></div>
         </a>
         <div class="sidebar-progress">
@@ -222,12 +222,12 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
     <div class="col-lg-9">
       <div class="content-di">
         <div class="lesson-hero">
-          <div class="unit-tag">Módulo 4 · Unidad 4.2</div>
-          <h1>Herramientas de análisis: PowerBI, GA4 y reportes Moodle</h1>
-          <p>Desde cero: qué es la analítica del aprendizaje · métricas que importan vs. de vanidad · del dato a la decisión · Power BI · GA4 · reportes Moodle · criterios de selección</p>
+          <div class="unit-tag">Módulo 4 · Unidad 4.4</div>
+          <h1>Colaboración y gestión de proyectos</h1>
+          <p>Waterfall vs Agile aplicado al DI · pizarras visuales con Miro · tableros kanban con Trello · documentación compartida con Notion · comunicación con stakeholders y SMEs</p>
         </div>
         <div class="lesson-badges">
-          <span class="lbadge"><i class="bi bi-book me-1"></i>6 bloques de contenido</span>
+          <span class="lbadge"><i class="bi bi-book me-1"></i>7 bloques de contenido</span>
           <span class="lbadge"><i class="bi bi-clipboard-check me-1"></i>8 preguntas de certificación</span>
           <span class="lbadge"><i class="bi bi-clock me-1"></i>~50 min</span>
         </div>
@@ -249,235 +249,246 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
 
           <div class="accordion-di">
             <button class="accordion-di-btn open" onclick="toggleAcc(this)">
-              <i class="bi bi-info-circle acc-icon"></i> Fundamento: qué es la analítica del aprendizaje (y para qué sirve)
+              <i class="bi bi-info-circle acc-icon"></i> Fundamento: por qué un DI necesita gestionar proyectos, no solo diseñar contenido
               <i class="bi bi-chevron-down acc-chevron"></i>
             </button>
             <div class="accordion-di-body show">
-              <p>La <strong>analítica del aprendizaje</strong> (<em>learning analytics</em>) es la recolección y análisis de datos sobre los estudiantes y su contexto con un fin concreto: <strong>entender y mejorar el aprendizaje</strong>. La palabra clave es <em>mejorar</em> — medir sin actuar sobre lo medido no es analítica, es solo acumular números. Una herramienta (Power BI, GA4) es solo el medio; el valor lo pone el DI que traduce el dato en una decisión de rediseño.</p>
+              <p>Un curso no se atrasa porque el diseño instruccional esté mal pensado — se atrasa porque nadie coordinó al SME, al equipo de producción y al cliente en el mismo calendario. En la práctica, el DI actúa como <strong>gestor de proyecto</strong> de su propio proceso ADDIE/SAM: define hitos, hace seguimiento de tareas, documenta decisiones y comunica avances a stakeholders que no leen documentación pedagógica, solo fechas y riesgos.</p>
 
-              <h5>Los cuatro tipos de analítica: de mirar atrás a actuar adelante</h5>
-              <p>No toda pregunta de datos es igual. Distinguir el tipo de analítica ordena qué herramienta y qué dato necesitas:</p>
+              <h5>Los tres tipos de coordinación que un DI sostiene en paralelo</h5>
               <table class="table table-di table-bordered mt-2">
-                <thead><tr><th>Tipo</th><th>Pregunta que responde</th><th>Ejemplo en un curso</th></tr></thead>
+                <thead><tr><th>Tipo de coordinación</th><th>Con quién</th><th>Qué necesita</th></tr></thead>
                 <tbody>
-                  <tr><td><strong>Descriptiva</strong></td><td>¿Qué pasó?</td><td>El 40% completó la Unidad 2</td></tr>
-                  <tr><td><strong>Diagnóstica</strong></td><td>¿Por qué pasó?</td><td>La caída coincide con una actividad de 45 min sin puntos de guardado</td></tr>
-                  <tr><td><strong>Predictiva</strong></td><td>¿Qué va a pasar?</td><td>Los estudiantes sin ingreso en 7 días tienen alta probabilidad de desertar</td></tr>
-                  <tr><td><strong>Prescriptiva</strong></td><td>¿Qué conviene hacer?</td><td>Enviar un recordatorio y acortar la Unidad 2 en dos actividades</td></tr>
+                  <tr><td><strong>Contenido</strong></td><td>SME (Subject Matter Expert)</td><td>Ciclos de revisión claros, con fecha límite y versión trazable de cada entrega</td></tr>
+                  <tr><td><strong>Producción</strong></td><td>Equipo de diseño gráfico, video, desarrollo LMS</td><td>Tablero visible de qué está pendiente, en curso y terminado, sin depender de correos sueltos</td></tr>
+                  <tr><td><strong>Negociación</strong></td><td>Sponsor o cliente interno</td><td>Reportes de avance breves y honestos, incluyendo riesgos antes de que se conviertan en atrasos</td></tr>
                 </tbody>
               </table>
               <div class="callout-terra mt-2">
-                <strong>Dónde vive el valor de un DI:</strong> la mayoría de los reportes se quedan en lo descriptivo ("tenemos estos números"). El salto profesional es llegar al menos a lo diagnóstico ("esto es <em>por qué</em>") y prescriptivo ("esto es lo que haremos"). Un dashboard hermoso que nadie usa para decidir nada es un fracaso, por bonito que se vea.
+                <strong>Para entrevistas:</strong> cuando te pregunten "¿cómo gestionas varios proyectos de e-learning a la vez?", la respuesta con peso técnico nombra herramientas y metodología (kanban, sprints, cadencia de revisión), no "soy muy organizada". Mostrar proceso es lo que distingue a alguien que gestiona de alguien que solo ejecuta.
               </div>
               <div class="callout-blue">
-                <strong>Conexión con el Módulo 3:</strong> esto es la continuación directa de los reportes de Moodle (Unidad 3.2). Allí viste dónde nacen los datos crudos y el proceso ETL; aquí ves las herramientas que los convierten en decisiones y cómo elegir la correcta.
+                <strong>Conexión con el resto del curso:</strong> este bloque es el "cómo" operativo de los modelos que viste en la Unidad 2.1 (ADDIE, SAM, UbD) — ahí definiste las fases del proceso; aquí ves las herramientas y la metodología para ejecutarlas sin perder el control del cronograma.
               </div>
             </div>
           </div>
 
           <div class="accordion-di">
             <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-bullseye acc-icon"></i> Métricas que importan vs. métricas de vanidad
+              <i class="bi bi-bullseye acc-icon"></i> Metodologías: Waterfall vs Agile aplicado al DI
               <i class="bi bi-chevron-down acc-chevron"></i>
             </button>
             <div class="accordion-di-body">
-              <p>Una <strong>métrica de vanidad</strong> es un número que se ve bien pero no informa ninguna decisión. "1.200 visitas al curso" impresiona en una presentación, pero no dice si alguien aprendió ni qué cambiar. Una <strong>métrica accionable</strong>, en cambio, apunta a un problema concreto y sugiere una acción.</p>
+              <p>La elección de metodología no es una moda de gestión — determina cómo se reparten las revisiones del SME, cuándo se puede mostrar un avance al cliente y qué tan caro sale un cambio de alcance a mitad de camino. Un DI necesita reconocer ambas y saber cuál calza con cada proyecto.</p>
+              <div class="card-di"><h6><i class="bi bi-1-circle me-1"></i>Waterfall (cascada)</h6><p>Fases secuenciales que no comienzan hasta que termina la anterior: análisis → diseño → desarrollo → implementación → evaluación, cada una con aprobación formal antes de avanzar. Es, en esencia, la lectura lineal clásica del modelo ADDIE.</p></div>
+              <div class="card-di"><h6><i class="bi bi-2-circle me-1"></i>Agile aplicado a DI (a veces llamado "Agile ADDIE" o vinculado al modelo SAM)</h6><p>El curso se construye en iteraciones cortas ("sprints"): se produce un prototipo o módulo pequeño, se muestra al SME o cliente, se ajusta según feedback, y se repite. En vez de un solo hito de aprobación al final, hay muchos hitos pequeños.</p></div>
+
+              <h5>Cuándo conviene cada una</h5>
               <table class="table table-di table-bordered mt-2">
-                <thead><tr><th>Métrica de vanidad</th><th>Métrica accionable equivalente</th><th>Qué decisión habilita</th></tr></thead>
+                <thead><tr><th>Situación</th><th>Metodología más adecuada</th></tr></thead>
                 <tbody>
-                  <tr><td>Número total de inscritos</td><td>Tasa de finalización (%) por unidad</td><td>Dónde exactamente se cae la gente → qué unidad rediseñar</td></tr>
-                  <tr><td>Total de visitas al sitio</td><td>Tasa de rebote y duración por página</td><td>Qué página expulsa a los usuarios → revisar contenido o carga</td></tr>
-                  <tr><td>"Horas de contenido producido"</td><td>Tiempo real de dedicación vs. estimado</td><td>Si el curso toma el doble de lo prometido → recortar</td></tr>
-                  <tr><td>Promedio general del curso</td><td>Distribución de notas por ítem de evaluación</td><td>Qué pregunta falla casi todo el mundo → revisar ítem o enseñanza</td></tr>
+                  <tr><td>Contenido normativo o de compliance, con requisitos legales fijos que no van a cambiar</td><td>Waterfall — el alcance está cerrado desde el inicio, no se necesita iterar</td></tr>
+                  <tr><td>Cliente que no tiene claro el resultado final o pide "ver avances" seguido</td><td>Agile — permite mostrar prototipos tempranos y corregir el rumbo antes de invertir en producción completa</td></tr>
+                  <tr><td>Equipo distribuido con un solo SME disponible en ventanas de tiempo acotadas</td><td>Waterfall — concentra la validación del SME en momentos puntuales y bien definidos</td></tr>
+                  <tr><td>Curso grande dividido en varios módulos independientes entre sí</td><td>Agile — cada módulo puede iterar y lanzarse por separado, sin esperar a que todo el curso esté terminado</td></tr>
                 </tbody>
               </table>
-              <h5>El indicador estrella del DI: la tasa de finalización desglosada</h5>
-              <p>El promedio de finalización del curso completo esconde el problema; <strong>la finalización unidad por unidad lo revela</strong>. Un curso con 65% de finalización global puede ser en realidad 95% en las primeras tres unidades y 20% en la cuarta — y esa cuarta unidad es exactamente lo que hay que arreglar. Promediar oculta; desglosar acciona.</p>
               <div class="callout-terra mt-2">
-                <strong>Para entrevista:</strong> cuando te pregunten "¿cómo mides el éxito de un curso?", la respuesta débil es "por la cantidad de inscritos y la satisfacción". La fuerte: "miro la finalización desglosada por unidad para detectar dónde se cae la gente, cruzo eso con el tiempo de dedicación y la distribución de notas por ítem, y con eso decido qué rediseñar". Demuestra que distingues métricas accionables de métricas de vanidad.
+                <strong>Para entrevista:</strong> la respuesta madura no es "yo trabajo Agile" a secas — es explicar que la metodología se elige según el tipo de proyecto, y poder justificar con un ejemplo concreto por qué un curso de compliance no se beneficia de sprints, mientras uno de habilidades blandas sí.
+              </div>
+              <div class="callout-blue mt-2">
+                <strong>Conexión con el resto del curso:</strong> esto retoma directamente los modelos ADDIE y SAM de la Unidad 2.1 — Waterfall es la lectura lineal de ADDIE, y SAM ya nace pensado como un ciclo iterativo, más cercano a Agile.
               </div>
             </div>
           </div>
 
           <div class="accordion-di">
             <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-1-circle acc-icon"></i> Catálogo · Power BI: fundamentos para diseño instruccional
+              <i class="bi bi-1-circle acc-icon"></i> Catálogo · Miro: pizarra visual para storyboards y mapas de proceso
               <i class="bi bi-chevron-down acc-chevron"></i>
             </button>
             <div class="accordion-di-body">
-              <p>Power BI (Microsoft) es una herramienta de business intelligence para transformar datos crudos en dashboards visuales interactivos. En contexto de DI, se usa para reportar resultados de aprendizaje a audiencias ejecutivas (dirección académica, gerencia de capacitación) de forma más visual que los reportes nativos de un LMS.</p>
-              <table class="table table-di table-bordered mt-2">
-                <thead><tr><th></th><th>Detalle</th></tr></thead>
-                <tbody>
-                  <tr><td>URL</td><td>powerbi.microsoft.com</td></tr>
-                  <tr><td>Precio</td><td>Power BI Desktop es gratis (creación); Power BI Pro ~US$10/usuario/mes (compartir online); Premium por capacidad para organizaciones grandes</td></tr>
-                  <tr><td>Versión gratuita</td><td>Power BI Desktop gratis para crear reportes en tu computador; compartirlos online requiere licencia Pro</td></tr>
-                  <tr><td>Límite típico</td><td>Sin licencia Pro, compartir reportes con otros usuarios de forma colaborativa es limitado</td></tr>
-                </tbody>
-              </table>
-              <h5>Flujo típico en un proyecto de DI</h5>
-              <p>1. Exportar datos desde el LMS (Moodle: logs, calificaciones, finalización) en CSV. 2. Cargarlos en Power BI Desktop. 3. Construir visualizaciones (tasas de finalización por curso, promedio de puntajes, tiempo de dedicación). 4. Publicar o exportar el dashboard para presentarlo a stakeholders.</p>
+              <div class="tool-di">
+                <div class="tool-di-head">
+                  <h6><i class="bi bi-easel me-2" style="color:var(--terra)"></i>Miro</h6>
+                  <span class="tool-price">Gratis hasta 3 tableros editables; Starter ~US$8-10/usuario/mes; Business ~US$20-25/usuario/mes</span>
+                </div>
+                <a class="tool-link" href="https://miro.com" target="_blank" rel="noopener"><i class="bi bi-box-arrow-up-right me-1"></i>miro.com</a>
+                <div class="tool-grid">
+                  <div><strong>Versión gratuita</strong>Funcional para explorar, pero el tope de 3 tableros editables se queda corto para un proyecto real con varios cursos activos</div>
+                  <div><strong>Límites principales</strong>Sin tableros privados ni integraciones (Jira, Slack) en el plan gratuito; el plan Business es el que desbloquea invitados con permiso de edición</div>
+                  <div style="grid-column:1/-1"><strong>Uso típico en DI</strong>Lienzo infinito para construir el storyboard de un curso junto al SME en tiempo real, mapear el flujo de un proceso antes de diseñar la interacción, o hacer una retrospectiva de sprint con el equipo de producción.</div>
+                </div>
+              </div>
+              <h5>Por qué un DI usa Miro y no una diapositiva de PowerPoint para esto</h5>
+              <p>Un storyboard estático se revisa de forma lineal, comentario por comentario en un correo. Un tablero de Miro se revisa en simultáneo: el SME deja notas adhesivas directamente sobre la pantalla que corresponde, el diseñador gráfico ve dónde falta un ícono, y todos ven la misma versión actualizada — sin el caos de "storyboard_v3_FINAL_final2.pptx".</p>
               <div class="callout-terra mt-2">
-                <strong>Honestidad sobre tu brecha:</strong> si no dominas PowerBI aún, en una entrevista puedes decir con seguridad: "he trabajado con reportes de Moodle y Google Sheets/Apps Script para dashboards propios (como el de mi LMS independiente); estoy familiarizándome con PowerBI porque entiendo su lógica de transformación de datos, que es la misma que ya aplico." Eso enmarca la brecha como una extensión natural, no un vacío.
+                <strong>Para entrevista:</strong> mencionar Miro como espacio de <em>co-creación</em> con el SME (no solo de dibujo) muestra que entiendes la colaboración como parte del proceso de diseño, no como un paso administrativo posterior.
               </div>
             </div>
           </div>
 
           <div class="accordion-di">
             <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-2-circle acc-icon"></i> Catálogo · Google Analytics 4 (GA4)
+              <i class="bi bi-2-circle acc-icon"></i> Catálogo · Trello: tablero kanban para seguimiento de tareas
               <i class="bi bi-chevron-down acc-chevron"></i>
             </button>
             <div class="accordion-di-body">
-              <p>GA4 es la herramienta de analítica web de Google, relevante en DI cuando los cursos o materiales viven en sitios propios (como tu curso en GitHub Pages) y se necesita entender el comportamiento de quienes acceden.</p>
+              <div class="tool-di">
+                <div class="tool-di-head">
+                  <h6><i class="bi bi-kanban me-2" style="color:var(--terra)"></i>Trello</h6>
+                  <span class="tool-price">Gratis hasta 10 tableros; Standard ~US$5/usuario/mes; Premium ~US$10/usuario/mes</span>
+                </div>
+                <a class="tool-link" href="https://trello.com" target="_blank" rel="noopener"><i class="bi bi-box-arrow-up-right me-1"></i>trello.com</a>
+                <div class="tool-grid">
+                  <div><strong>Versión gratuita</strong>Suficiente para un DI independiente o un equipo pequeño con pocos proyectos activos a la vez</div>
+                  <div><strong>Límites principales</strong>Sin vistas de Calendario, Cronograma (Timeline) ni Panel de control en el plan gratuito ni en Standard — esas vistas requieren Premium</div>
+                  <div style="grid-column:1/-1"><strong>Uso típico en DI</strong>Un tablero por curso con columnas de estado: "Guion pendiente" → "En revisión SME" → "En producción" → "QA" → "Publicado". Cada tarjeta es una lección o un activo, y su posición muestra el avance real sin necesitar una reunión.</div>
+                </div>
+              </div>
+              <h5>Kanban como ejecución visible de la metodología</h5>
+              <p>Un tablero kanban es la forma más simple de hacer visible el trabajo en curso (el "WIP" o work in progress). Para un DI, esto resuelve el problema clásico de "¿en qué va el curso?": en vez de responder eso en una reunión, se responde con un link al tablero.</p>
+              <div class="callout-blue mt-2">
+                <strong>Distinción clave:</strong> Trello no reemplaza el storyboard de Miro — Miro documenta <em>qué</em> contiene cada pantalla del curso; Trello documenta <em>en qué estado</em> está cada pieza del proyecto. Son dos capas distintas de la misma gestión.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-di">
+            <button class="accordion-di-btn" onclick="toggleAcc(this)">
+              <i class="bi bi-3-circle acc-icon"></i> Catálogo · Notion: documentación y base de conocimiento compartida
+              <i class="bi bi-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-di-body">
+              <div class="tool-di">
+                <div class="tool-di-head">
+                  <h6><i class="bi bi-journal-richtext me-2" style="color:var(--terra)"></i>Notion</h6>
+                  <span class="tool-price">Gratis para uso individual; Plus ~US$10/usuario/mes; Business ~US$20/usuario/mes (incluye IA)</span>
+                </div>
+                <a class="tool-link" href="https://notion.com" target="_blank" rel="noopener"><i class="bi bi-box-arrow-up-right me-1"></i>notion.com</a>
+                <div class="tool-grid">
+                  <div><strong>Versión gratuita</strong>Muy completa para trabajo individual (páginas y bloques ilimitados); las restricciones aparecen al colaborar en equipo</div>
+                  <div><strong>Límites principales</strong>Historial de versiones corto en el plan gratuito y en Plus; funciones de IA completas solo desde Business</div>
+                  <div style="grid-column:1/-1"><strong>Uso típico en DI</strong>Wiki del proyecto: brief del curso, decisiones de diseño, glosario de términos del SME, actas de reuniones y estado de cada entregable, todo enlazado en un solo espacio consultable en vez de disperso en correos y carpetas.</div>
+                </div>
+              </div>
+              <h5>Dónde encaja frente a Miro y Trello</h5>
               <table class="table table-di table-bordered mt-2">
-                <thead><tr><th></th><th>Detalle</th></tr></thead>
+                <thead><tr><th>Herramienta</th><th>Responde a la pregunta</th></tr></thead>
                 <tbody>
-                  <tr><td>URL</td><td>analytics.google.com</td></tr>
-                  <tr><td>Precio</td><td>Gratis (GA4 estándar); GA4 360 es la versión empresarial de pago para grandes volúmenes</td></tr>
-                  <tr><td>Versión gratuita</td><td>Completa para la mayoría de los casos de un sitio educativo pequeño o mediano</td></tr>
-                  <tr><td>Límite típico</td><td>Muestreo de datos en volúmenes muy altos de eventos; retención de datos configurable (2 o 14 meses en el plan gratuito)</td></tr>
+                  <tr><td>Miro</td><td>"¿Cómo se ve y se estructura el curso?" (storyboard, mapa visual)</td></tr>
+                  <tr><td>Trello</td><td>"¿En qué estado va cada tarea?" (seguimiento kanban)</td></tr>
+                  <tr><td>Notion</td><td>"¿Por qué se decidió así, y dónde quedó documentado?" (memoria del proyecto)</td></tr>
                 </tbody>
               </table>
-              <h5>Métricas relevantes para un curso o portafolio</h5>
+              <div class="callout-terra mt-2">
+                <strong>Para entrevista:</strong> tener las tres capas claras (visual, seguimiento, documentación) y poder explicar la diferencia sin dudar es más convincente que decir "manejo herramientas de gestión de proyectos" en general.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-di">
+            <button class="accordion-di-btn" onclick="toggleAcc(this)">
+              <i class="bi bi-people acc-icon"></i> Comunicación con stakeholders: cadencia y reportes de avance
+              <i class="bi bi-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-di-body">
+              <p>Las herramientas no reemplazan la comunicación — la sostienen. Un stakeholder (sponsor, jefatura, cliente) casi nunca entra a mirar el tablero de Trello por su cuenta; espera que el DI le traduzca el estado del proyecto a algo breve y accionable.</p>
+              <div class="card-di"><h6><i class="bi bi-calendar-week me-1"></i>Cadencia fija, no reactiva</h6><p>Un reporte corto semanal o quincenal (aunque no haya novedades) evita que el stakeholder solo se entere del proyecto cuando algo salió mal.</p></div>
+              <div class="card-di"><h6><i class="bi bi-exclamation-triangle me-1"></i>Riesgos declarados temprano</h6><p>Avisar "el SME no ha respondido hace 5 días y eso puede atrasar la entrega" apenas se detecta pesa mucho más que explicarlo después del atraso.</p></div>
+              <div class="card-di"><h6><i class="bi bi-file-earmark-bar-graph me-1"></i>Formato ejecutivo, no técnico</h6><p>El stakeholder no necesita ver la jerga de ADDIE ni las columnas del kanban — necesita tres líneas: qué se hizo, qué sigue, qué necesita de él.</p></div>
+              <div class="callout-blue mt-2">
+                <strong>Conexión con la Unidad 4.2:</strong> los reportes de avance del proyecto (este bloque) son distintos de los reportes de resultados de aprendizaje (Unidad 4.2, con PowerBI o GA4) — el primero mide si el proyecto va a tiempo, el segundo mide si el curso ya publicado está funcionando.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-di">
+            <button class="accordion-di-btn" onclick="toggleAcc(this)">
+              <i class="bi bi-check2-square acc-icon"></i> Checklist de kickoff antes de lanzar un proyecto de DI
+              <i class="bi bi-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-di-body">
+              <p>Antes de empezar a producir contenido, un DI que gestiona bien su proyecto deja resueltos estos puntos — es la diferencia entre "empezar a trabajar" y "empezar a trabajar con orden":</p>
               <div class="row g-2 mt-2">
-                <div class="col-md-6"><div class="card-di"><h6>Usuarios y sesiones</h6><p>Cuántas personas visitan, con qué frecuencia regresan.</p></div></div>
-                <div class="col-md-6"><div class="card-di"><h6>Duración de sesión / rebote</h6><p>Si la gente entra y sale de inmediato, puede indicar problema de contenido o de carga de la página.</p></div></div>
-                <div class="col-md-6"><div class="card-di"><h6>Rutas de navegación</h6><p>Qué páginas visitan en qué orden — revela si el flujo de módulos es intuitivo.</p></div></div>
-                <div class="col-md-6"><div class="card-di"><h6>Eventos personalizados</h6><p>Se pueden configurar eventos como "clic en descargar PDF" o "envío de quiz" para medir interacción específica.</p></div></div>
+                <div class="col-md-6"><div class="card-di"><h6>Metodología definida</h6><p>¿Este proyecto se trabaja en Waterfall o en sprints Agile, y todos los involucrados lo saben?</p></div></div>
+                <div class="col-md-6"><div class="card-di"><h6>Tablero y espacio creados</h6><p>¿Existe ya el tablero de Trello, el board de Miro y la página de Notion, con acceso dado a SME y equipo?</p></div></div>
+                <div class="col-md-6"><div class="card-di"><h6>Ciclos de revisión del SME</h6><p>¿Está acordado cada cuánto revisa el SME, y cuántos días tiene para responder cada ronda?</p></div></div>
+                <div class="col-md-6"><div class="card-di"><h6>Cadencia de reporte al stakeholder</h6><p>¿Está definido cuándo y en qué formato recibe el sponsor el avance del proyecto?</p></div></div>
               </div>
               <div class="callout-blue mt-2">
-                <strong>Aplicación directa a tu portafolio:</strong> tienes pendiente integrar el Measurement ID de GA4 en tu sitio del curso — es la oportunidad perfecta de tener datos reales que mostrar en una entrevista ("aquí ven que el 60% de las visitas llega desde móvil, por eso prioricé diseño responsive").
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-3-circle acc-icon"></i> Catálogo · Reportes de Moodle como fuente de datos
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p>Como viste en la Unidad 3.2, Moodle genera reportes nativos (finalización, logs, calificaciones) que sirven como la fuente de datos cruda antes de llevarlos a PowerBI para un dashboard más visual.</p>
-              <h5>Flujo de trabajo integrado: Moodle → Excel/CSV → PowerBI</h5>
-              <div class="card-di"><h6><i class="bi bi-1-circle me-1"></i>Extracción</h6><p>Se exportan calificaciones y finalización desde Moodle en formato CSV/Excel (Calificaciones → Exportar, o Informes → Finalización de actividad).</p></div>
-              <div class="card-di"><h6><i class="bi bi-2-circle me-1"></i>Limpieza</h6><p>Se estandarizan nombres de columnas, se eliminan duplicados, se verifica consistencia de formatos de fecha.</p></div>
-              <div class="card-di"><h6><i class="bi bi-3-circle me-1"></i>Visualización</h6><p>Se cargan los datos limpios en PowerBI (o incluso en Google Sheets con gráficos, como ya haces con tu sistema de puntajes vía Apps Script) para construir el dashboard final.</p></div>
-              <div class="callout-terra mt-2">
-                <strong>Conexión directa con tu experiencia:</strong> tu propio LMS con dashboard y persistencia en Google Sheets vía Apps Script (Proyecto 01 de tu portafolio) es exactamente esta misma lógica de flujo de datos, aplicada a menor escala con herramientas gratuitas. Puedes presentarlo así en una entrevista: "ya construí este flujo con herramientas sin costo; entiendo la misma lógica que aplicaría con PowerBI en un entorno institucional."
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-4-circle acc-icon"></i> Criterios para elegir la herramienta de análisis adecuada
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p>No toda situación requiere PowerBI. Elegir la herramienta correcta depende de la audiencia del reporte y la complejidad de los datos.</p>
-              <table class="table table-di table-bordered">
-                <thead><tr><th>Situación</th><th>Herramienta recomendada</th></tr></thead>
-                <tbody>
-                  <tr><td>Reporte simple para un equipo pequeño</td><td>Google Sheets con gráficos, o el gradebook nativo de Moodle</td></tr>
-                  <tr><td>Dashboard ejecutivo recurrente con múltiples cursos</td><td>Power BI conectado a exportaciones periódicas de Moodle</td></tr>
-                  <tr><td>Entender comportamiento de visitantes en un sitio o portafolio propio</td><td>Google Analytics 4</td></tr>
-                  <tr><td>Rastrear aprendizaje distribuido (fuera del LMS, offline)</td><td>xAPI + LRS (ver Unidad 3.2), cuyos datos luego también pueden alimentar PowerBI</td></tr>
-                </tbody>
-              </table>
-              <div class="callout-blue mt-2">
-                <strong>Mensaje clave para postulaciones:</strong> mostrar que entiendes cuándo usar cada herramienta —no solo que sabes usarlas— es una señal de madurez profesional más valiosa que el dominio técnico aislado de una sola plataforma.
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-arrow-repeat acc-icon"></i> Del dato a la decisión: el ciclo accionable
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p>Tener datos no mejora nada por sí solo. Lo que produce impacto es un ciclo cerrado que va del número a un cambio concreto y vuelve a medir. Este es el flujo que convierte a un DI en alguien que "toma decisiones basadas en datos" de verdad, no como frase de currículum:</p>
-              <div class="card-di"><h6><i class="bi bi-1-circle me-1"></i>Observar (descriptiva)</h6><p>Leer el reporte: "la finalización cae del 90% al 40% en la Unidad 2". Solo un hecho, todavía sin interpretación.</p></div>
-              <div class="card-di"><h6><i class="bi bi-2-circle me-1"></i>Formular una hipótesis (diagnóstica)</h6><p>Cruzar con otros datos para explicar el porqué: el log muestra que la actividad de la Unidad 2 dura 45 minutos sin puntos de guardado, y el abandono se concentra ahí. Hipótesis: la actividad es demasiado larga para una sola sesión.</p></div>
-              <div class="card-di"><h6><i class="bi bi-3-circle me-1"></i>Decidir una intervención (prescriptiva)</h6><p>Una acción concreta y acotada: dividir la actividad en dos partes con guardado intermedio. Una sola variable a la vez, para poder atribuir el efecto.</p></div>
-              <div class="card-di"><h6><i class="bi bi-4-circle me-1"></i>Implementar y volver a medir</h6><p>Aplicar el cambio en la siguiente cohorte y comparar la finalización de la Unidad 2 antes y después. Si sube, la hipótesis era correcta; si no, se vuelve al paso 2 con nueva información.</p></div>
-              <div class="callout-blue mt-2">
-                <strong>Por qué esto importa:</strong> el error común es saltar directo del paso 1 al 3 ("la gente se cae en la Unidad 2, hay que hacerla más entretenida") sin diagnosticar la causa real. El paso 2 —la hipótesis basada en cruzar datos— es lo que distingue una decisión informada de una corazonada disfrazada de dato.
-              </div>
-              <div class="callout-terra">
-                <strong>Tu caso real:</strong> tu propio sistema de puntajes en Google Sheets vía Apps Script ya captura datos de desempeño por unidad. Ese mismo ciclo —observar dónde bajan los puntajes, hipótesis del porqué, ajustar la unidad, volver a medir— es exactamente lo que aplicarías con Power BI a escala institucional. La lógica es idéntica; solo cambia la herramienta.
+                <strong>Conexión con tu portafolio:</strong> mostrar en una entrevista una plantilla propia de kickoff (aunque sea armada en Notion para un proyecto personal) demuestra proceso real, más que enumerar de memoria las herramientas que conoces.
               </div>
             </div>
           </div>
 
           <!-- EVALUACIÓN -->
           <div class="eval-section mt-4">
-            <h4><i class="bi bi-clipboard-check me-2" style="color:var(--terra)"></i>Evaluación — Unidad 4.2</h4>
+            <h4><i class="bi bi-clipboard-check me-2" style="color:var(--terra)"></i>Evaluación — Unidad 4.4</h4>
             <p class="eval-progress-text">Preguntas respondidas: <strong><span id="answeredCount">0</span>/8</strong> — puedes enviar en cualquier momento</p>
 
             <div class="eval-question" data-question="q1">
-              <h6>1. Un reporte dice "el curso tuvo 1.200 visitas este mes". ¿Por qué es una métrica de vanidad y cuál sería su equivalente accionable?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q1',1)"><div class="eval-radio"></div><span>No es de vanidad: las visitas totales son la mejor medida del éxito de un curso</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',2)"><div class="eval-radio"></div><span>Es de vanidad porque no informa ninguna decisión; su equivalente accionable es la tasa de finalización por unidad, que revela dónde se cae la gente y qué rediseñar</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',3)"><div class="eval-radio"></div><span>Es de vanidad porque el número es demasiado bajo</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',4)"><div class="eval-radio"></div><span>Su equivalente accionable es el número total de inscritos</span></div>
+              <h6>1. Debes producir un curso de compliance con requisitos legales que no van a cambiar durante el proyecto. ¿Qué metodología conviene más?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q1',1)"><div class="eval-radio"></div><span>Agile, porque siempre es superior a Waterfall</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q1',2)"><div class="eval-radio"></div><span>Waterfall, porque el alcance está cerrado desde el inicio y no se necesita iterar</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q1',3)"><div class="eval-radio"></div><span>Ninguna de las dos aplica a proyectos de e-learning</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q1',4)"><div class="eval-radio"></div><span>Da lo mismo, la metodología no afecta el resultado</span></div>
             </div>
 
             <div class="eval-question" data-question="q2">
-              <h6>2. Un curso muestra 65% de finalización global. ¿Por qué el promedio global puede ocultar el problema real y qué métrica lo revela?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q2',1)"><div class="eval-radio"></div><span>El promedio global es siempre suficiente; no hace falta desglosar</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',2)"><div class="eval-radio"></div><span>El promedio puede esconder que hay 95% en las primeras unidades y 20% en una específica; la finalización desglosada por unidad revela dónde está exactamente el abandono</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',3)"><div class="eval-radio"></div><span>El problema es que 65% es un buen número y no hay nada que revisar</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',4)"><div class="eval-radio"></div><span>Se revela contando el total de visitas</span></div>
+              <h6>2. Un cliente no tiene claro el resultado final y pide ver avances con frecuencia antes de aprobar la producción completa. ¿Qué metodología calza mejor?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q2',1)"><div class="eval-radio"></div><span>Waterfall, para fijar el alcance antes de mostrar nada</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q2',2)"><div class="eval-radio"></div><span>Agile, porque permite mostrar prototipos tempranos e iterar según feedback antes de invertir en producción completa</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q2',3)"><div class="eval-radio"></div><span>Ninguna; hay que esperar a que el cliente decida solo, sin mostrarle nada</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q2',4)"><div class="eval-radio"></div><span>Cancelar el proyecto hasta que el cliente tenga claridad total</span></div>
             </div>
 
             <div class="eval-question" data-question="q3">
-              <h6>3. Ves que la finalización cae en la Unidad 2. Un colega propone "hacerla más entretenida" de inmediato. Según el ciclo del dato a la decisión, ¿qué paso se está saltando?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q3',1)"><div class="eval-radio"></div><span>Ninguno: actuar rápido ante el primer dato es lo correcto</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',2)"><div class="eval-radio"></div><span>El diagnóstico (hipótesis): antes de intervenir hay que cruzar datos para entender por qué se cae —p. ej. el log muestra una actividad de 45 min sin guardado— y recién entonces decidir la acción y volver a medir</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',3)"><div class="eval-radio"></div><span>Se está saltando la compra de Power BI</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',4)"><div class="eval-radio"></div><span>No se salta nada; la intuición reemplaza al diagnóstico</span></div>
+              <h6>3. Necesitas construir el storyboard de un curso junto al SME, con ambos viendo y editando la misma pantalla en tiempo real. ¿Qué herramienta de este bloque es la más adecuada?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q3',1)"><div class="eval-radio"></div><span>Trello, porque organiza tareas en columnas</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q3',2)"><div class="eval-radio"></div><span>Miro, porque su lienzo visual permite co-crear el storyboard en tiempo real con notas y comentarios simultáneos</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q3',3)"><div class="eval-radio"></div><span>Notion, porque es la única con historial de versiones</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q3',4)"><div class="eval-radio"></div><span>Ninguna de las tres sirve para storyboards</span></div>
             </div>
 
             <div class="eval-question" data-question="q4">
-              <h6>4. ¿Cuál es el flujo típico y realista para llevar datos de Moodle a un dashboard de Power BI?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q4',1)"><div class="eval-radio"></div><span>Power BI se conecta directo a Moodle sin exportar ni limpiar nada</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',2)"><div class="eval-radio"></div><span>Exportar reportes de Moodle en CSV/Excel, limpiarlos (estandarizar columnas, quitar duplicados, formatear fechas) y cargarlos en Power BI para visualizar</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',3)"><div class="eval-radio"></div><span>No es posible combinar Moodle con Power BI</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',4)"><div class="eval-radio"></div><span>Reprogramar Moodle por completo</span></div>
+              <h6>4. Un stakeholder pregunta "¿en qué va el curso?" y quieres responder sin agendar una reunión, mostrando el estado real de cada lección (pendiente, en revisión, en producción, publicada). ¿Qué herramienta de este bloque resuelve esto directamente?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q4',1)"><div class="eval-radio"></div><span>Notion, porque documenta decisiones de diseño</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q4',2)"><div class="eval-radio"></div><span>Trello, porque un tablero kanban hace visible en qué estado está cada tarea sin necesitar una reunión</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q4',3)"><div class="eval-radio"></div><span>Miro, porque tiene más plantillas visuales</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q4',4)"><div class="eval-radio"></div><span>Ninguna herramienta puede mostrar el estado de un proyecto</span></div>
             </div>
 
             <div class="eval-question" data-question="q5">
-              <h6>5. Necesitas crear reportes en Power BI sin costo, pero también compartirlos online de forma colaborativa con tu equipo. ¿Qué es cierto sobre las licencias?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q5',1)"><div class="eval-radio"></div><span>Todo Power BI es de pago desde el primer uso</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',2)"><div class="eval-radio"></div><span>Power BI Desktop es gratis para crear los reportes localmente, pero compartirlos y colaborar online requiere licencia Pro (de pago)</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',3)"><div class="eval-radio"></div><span>Power BI Desktop es de pago y Pro es gratis</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',4)"><div class="eval-radio"></div><span>Compartir online también es gratis; Pro no aporta nada</span></div>
+              <h6>5. Quieres dejar registrado por qué se decidió cierto enfoque pedagógico, el glosario de términos del SME y las actas de reunión, todo consultable en un solo lugar. ¿Qué herramienta de este bloque cumple ese rol?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q5',1)"><div class="eval-radio"></div><span>Trello, porque tiene tarjetas con descripción</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q5',2)"><div class="eval-radio"></div><span>Miro, porque el lienzo permite escribir texto libre</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q5',3)"><div class="eval-radio"></div><span>Notion, porque funciona como la memoria documentada del proyecto (decisiones, glosario, actas), no solo como seguimiento de tareas</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q5',4)"><div class="eval-radio"></div><span>Ninguna; esto se documenta solo por correo electrónico</span></div>
             </div>
 
             <div class="eval-question" data-question="q6">
-              <h6>6. Tu curso vive en un sitio propio (GitHub Pages) y quieres saber desde qué dispositivo entra la gente y qué rutas de navegación sigue. ¿Qué herramienta mide eso y qué falta habilitar?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q6',1)"><div class="eval-radio"></div><span>El gradebook de Moodle; no hace falta nada más</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',2)"><div class="eval-radio"></div><span>Google Analytics 4, integrando su Measurement ID en el sitio para empezar a recolectar usuarios, sesiones, dispositivo y rutas de navegación</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',3)"><div class="eval-radio"></div><span>Power BI, que mide automáticamente el tráfico web sin configuración</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',4)"><div class="eval-radio"></div><span>El comportamiento web no se puede medir en sitios propios</span></div>
+              <h6>6. Llevas 5 días sin respuesta de un SME clave y eso puede atrasar la entrega. ¿Cuál es la práctica de gestión correcta?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q6',1)"><div class="eval-radio"></div><span>Esperar hasta la fecha de entrega para avisar si finalmente hubo atraso</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q6',2)"><div class="eval-radio"></div><span>Declarar el riesgo al stakeholder apenas se detecta, antes de que se convierta en un atraso confirmado</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q6',3)"><div class="eval-radio"></div><span>No informar nada; los atrasos del SME no son responsabilidad del DI</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q6',4)"><div class="eval-radio"></div><span>Cancelar el proyecto de inmediato</span></div>
             </div>
 
             <div class="eval-question" data-question="q7">
-              <h6>7. Debes entregar un reporte simple a un equipo de tres personas, una sola vez. ¿Cuándo NO se justifica montar un dashboard en Power BI?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q7',1)"><div class="eval-radio"></div><span>Nunca; Power BI es siempre la mejor opción para cualquier reporte</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',2)"><div class="eval-radio"></div><span>Justo en este caso: para un reporte simple y un equipo pequeño, Google Sheets con gráficos o el gradebook de Moodle es más ágil y suficiente</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',3)"><div class="eval-radio"></div><span>Solo se evita Power BI si no hay computador</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',4)"><div class="eval-radio"></div><span>Power BI es obligatorio incluso para dos datos</span></div>
+              <h6>7. Vas a enviar el reporte de avance semanal a un sponsor que no conoce la jerga de diseño instruccional. ¿Qué formato es el adecuado?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q7',1)"><div class="eval-radio"></div><span>Un reporte técnico detallado citando cada fase de ADDIE y cada columna del kanban</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q7',2)"><div class="eval-radio"></div><span>Un resumen ejecutivo breve: qué se hizo, qué sigue, qué necesita el stakeholder de su parte</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q7',3)"><div class="eval-radio"></div><span>No enviar nada hasta que el proyecto esté terminado</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q7',4)"><div class="eval-radio"></div><span>Enviarle acceso directo al tablero de Trello sin ningún resumen</span></div>
             </div>
 
             <div class="eval-question" data-question="q8">
-              <h6>8. En una entrevista te preguntan por herramientas de análisis. ¿Cuál es el mensaje profesional más valioso?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q8',1)"><div class="eval-radio"></div><span>Afirmar dominio absoluto de todas las herramientas sin excepción</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',2)"><div class="eval-radio"></div><span>Demostrar criterio: elegir la herramienta según la audiencia y la complejidad de los datos, y mostrar que llevas el dato hasta una decisión de rediseño (no solo describir números)</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',3)"><div class="eval-radio"></div><span>Evitar mencionar cualquier herramienta que no domines por completo</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',4)"><div class="eval-radio"></div><span>Insistir en que solo Power BI es válida para cualquier reporte</span></div>
+              <h6>8. Estás por hacer el kickoff de un nuevo proyecto de DI. ¿Cuál de estas acciones corresponde específicamente al checklist de kickoff (y no a una etapa posterior de producción)?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q8',1)"><div class="eval-radio"></div><span>Definir la metodología (Waterfall o Agile) y acordar los ciclos de revisión del SME antes de empezar a producir contenido</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q8',2)"><div class="eval-radio"></div><span>Exportar el video final en la resolución correcta para el LMS</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q8',3)"><div class="eval-radio"></div><span>Revisar los subtítulos automáticos del último módulo grabado</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q8',4)"><div class="eval-radio"></div><span>Analizar las métricas de finalización del curso ya publicado</span></div>
             </div>
 
             <div id="evalResult" class="mt-3"></div>
@@ -489,8 +500,8 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
               <button class="btn btn-outline-terra" id="retryBtn" style="display:none" onclick="retryEval()">
                 <i class="bi bi-arrow-clockwise me-2"></i>Reintentar
               </button>
-              <a href="m4-3.html" class="btn btn-blue" id="nextBtn" style="display:none">
-                Siguiente unidad <i class="bi bi-arrow-right ms-2"></i>
+              <a href="../index.html" class="btn btn-blue" id="nextBtn" style="display:none">
+                Volver al inicio <i class="bi bi-arrow-right ms-2"></i>
               </a>
             </div>
           </div>
@@ -504,19 +515,19 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbylYML8h2BnNgi2AXtZ8bkGaXPNRhurswPr5dfyGRldbVoCRvmoT2cHN0r3I4qGynLb/exec';
-const UNIDAD_ID = 'm4-2';
-const UNIDAD_LABEL = '4.2 Herramientas de análisis';
+const UNIDAD_ID = 'm4-4';
+const UNIDAD_LABEL = '4.4 Colaboración y gestión';
 
-const CORRECTAS = { q1:2, q2:2, q3:2, q4:2, q5:2, q6:2, q7:2, q8:2 };
+const CORRECTAS = { q1:2, q2:2, q3:2, q4:2, q5:3, q6:2, q7:2, q8:1 };
 const FEEDBACK = {
-  q1: {ok:'Correcto. Las visitas totales lucen bien pero no informan ninguna decisión: no dicen si alguien aprendió ni qué cambiar. La métrica accionable equivalente es la tasa de finalización por unidad, que revela dónde se cae la gente y qué rediseñar.',fail:'Las visitas totales son el ejemplo clásico de métrica de vanidad: impresionan pero no habilitan ninguna decisión. Su equivalente accionable no es otro número grande (inscritos), sino la tasa de finalización por unidad, que apunta al problema concreto a rediseñar.'},
-  q2: {ok:'Correcto. Un 65% global puede ser 95% en las primeras unidades y 20% en una específica; promediar oculta el punto exacto de abandono. La finalización desglosada por unidad es la que revela dónde intervenir.',fail:'El promedio global oculta el problema en vez de mostrarlo: un 65% puede esconder una unidad con 20% de finalización. La métrica que lo revela es la finalización desglosada por unidad, no el total de visitas ni asumir que 65% está bien.'},
-  q3: {ok:'Correcto. Saltar de "se cae en la Unidad 2" directo a "hagámosla más entretenida" omite el diagnóstico. El paso clave es formular una hipótesis cruzando datos (p. ej. una actividad de 45 min sin guardado), decidir una intervención acotada y volver a medir.',fail:'Actuar ante el primer dato sin diagnosticar es una corazonada disfrazada de decisión basada en datos. El paso que se salta es el diagnóstico: cruzar datos para entender por qué se cae la gente, antes de decidir la intervención y volver a medir.'},
-  q4: {ok:'Correcto. El flujo real es exportar los reportes de Moodle en CSV/Excel, limpiarlos (columnas, duplicados, fechas) y cargarlos en Power BI. No hay una conexión mágica que salte la limpieza de datos.',fail:'Power BI no se conecta directo a Moodle sin preparación, ni exige reprogramar nada. El flujo es exportar en CSV/Excel, limpiar los datos y cargarlos en Power BI — la etapa de limpieza es parte esencial del proceso.'},
-  q5: {ok:'Correcto. Power BI Desktop es gratuito para crear reportes localmente; compartirlos y colaborar online requiere la licencia Pro (de pago). Esa es la distinción práctica que hay que conocer al presupuestar.',fail:'La creación local en Power BI Desktop es gratis; lo que cuesta es compartir y colaborar online, que requiere licencia Pro. No es cierto que Desktop sea de pago ni que compartir online sea gratuito.'},
-  q6: {ok:'Correcto. GA4 mide comportamiento de visitantes —usuarios, sesiones, dispositivo, rutas de navegación— en un sitio propio; para empezar a recolectar esos datos hay que integrar su Measurement ID en el sitio. Power BI no mide tráfico web ni el gradebook cubre esto.',fail:'El comportamiento web de un sitio propio lo mide Google Analytics 4, no Power BI ni el gradebook de Moodle. Y para que empiece a registrar dispositivo y rutas hay que integrar su Measurement ID en el sitio.'},
-  q7: {ok:'Correcto. Para un reporte simple y un equipo pequeño, montar un dashboard en Power BI es sobredimensionado: Google Sheets con gráficos o el gradebook de Moodle es más ágil y suficiente. Elegir la herramienta según el contexto es el criterio profesional.',fail:'Power BI no es siempre la mejor opción. Para un reporte simple de un equipo pequeño y de una sola vez, Google Sheets con gráficos o el gradebook nativo es más ágil y suficiente — montar un dashboard ejecutivo ahí sería sobredimensionar.'},
-  q8: {ok:'Correcto. Lo más valioso es demostrar criterio: elegir la herramienta según audiencia y complejidad de datos, y sobre todo mostrar que llevas el dato hasta una decisión de rediseño, no que solo describes números bonitos.',fail:'Afirmar dominio total o esconder brechas no impresiona. El mensaje fuerte es el criterio: elegir la herramienta según el contexto y demostrar que cierras el ciclo del dato a la decisión de rediseño, que es donde está el valor real de la analítica.'}
+  q1: {ok:'Correcto. Cuando el alcance está cerrado desde el inicio (requisitos legales fijos), Waterfall funciona bien porque no hay necesidad de iterar sobre algo que no va a cambiar.',fail:'Ni Agile es siempre superior ni la metodología es irrelevante. Cuando el alcance está cerrado desde el inicio, como en un curso de compliance con requisitos legales fijos, Waterfall es la opción adecuada: no hay necesidad de iterar sobre algo que no va a cambiar.'},
+  q2: {ok:'Correcto. Agile permite mostrar prototipos o módulos pequeños tempranamente y ajustar el rumbo según feedback, antes de invertir en la producción completa del curso.',fail:'Esperar sin mostrar nada, o fijar el alcance en Waterfall antes de tener claridad, no resuelve el problema. Cuando el cliente no tiene claro el resultado final y quiere ver avances seguido, Agile es la metodología adecuada: permite iterar con prototipos tempranos.'},
+  q3: {ok:'Correcto. Miro está pensado exactamente para esto: un lienzo visual donde SME y DI pueden co-crear y comentar el storyboard en tiempo real sobre la misma pantalla.',fail:'Trello organiza el estado de tareas y Notion documenta decisiones, pero ninguna reemplaza el lienzo visual colaborativo en tiempo real que ofrece Miro para construir un storyboard junto al SME.'},
+  q4: {ok:'Correcto. Un tablero kanban de Trello hace visible en qué estado está cada tarea (pendiente, en revisión, en producción, publicada) sin necesitar una reunión para explicarlo.',fail:'Notion documenta decisiones y Miro es un lienzo visual, pero ninguna resuelve directamente la pregunta de estado de avance como un tablero kanban de Trello, diseñado específicamente para eso.'},
+  q5: {ok:'Correcto. Notion funciona como la memoria documentada del proyecto: decisiones, glosario y actas quedan centralizados y consultables, a diferencia de Miro (visual) o Trello (seguimiento de tareas).',fail:'Trello y Miro cumplen otras funciones (seguimiento de tareas y lienzo visual, respectivamente), no documentación centralizada. Notion es la herramienta de este bloque pensada para ser la memoria documentada del proyecto.'},
+  q6: {ok:'Correcto. Declarar el riesgo apenas se detecta, antes de que se convierta en un atraso confirmado, es la práctica de gestión de proyectos que permite al stakeholder reaccionar a tiempo.',fail:'Esperar hasta la fecha de entrega, no informar nada, o cancelar el proyecto no son respuestas de gestión adecuadas. Lo correcto es declarar el riesgo al stakeholder apenas se detecta, antes de que se convierta en un atraso confirmado.'},
+  q7: {ok:'Correcto. Un stakeholder que no conoce la jerga de diseño instruccional necesita un resumen ejecutivo breve: qué se hizo, qué sigue, qué necesita de él — no el detalle técnico del proceso.',fail:'Un reporte técnico detallado, no enviar nada, o dar acceso directo al tablero sin contexto no comunican eficazmente a un stakeholder no técnico. El formato adecuado es un resumen ejecutivo breve y accionable.'},
+  q8: {ok:'Correcto. Definir la metodología y acordar los ciclos de revisión del SME son decisiones que se toman en el kickoff, antes de empezar a producir contenido — no durante ni después de la producción.',fail:'Exportar el video final, revisar subtítulos o analizar métricas de un curso publicado son actividades de producción o evaluación posterior, no del kickoff. El checklist de kickoff corresponde a decisiones previas, como definir metodología y ciclos de revisión del SME.'}
 };
 
 let answers = {};
