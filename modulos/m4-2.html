@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>1.1 ¿Qué es el DI? — Curso DI</title>
+<title>4.2 Herramientas de análisis: PowerBI, GA4 y reportes Moodle — Curso DI</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <style>
@@ -71,28 +71,17 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
 .lbadge i { color: var(--terra); }
 .lesson-body { padding: 1.8rem 2rem; }
 
-/* PRESENTACIÓN */
+/* PRESENTACIÓN placeholder */
 .presentacion { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
 .presentacion-head { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; flex-wrap: wrap; background: var(--dark); color: #fff; padding: 0.8rem 1.2rem; }
 .pres-title { font-size: 0.95rem; font-weight: bold; display: flex; align-items: center; gap: 0.6rem; }
 .pres-title i { color: var(--terra); font-size: 1.1rem; }
 .pres-tag { font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: #a09a94; border: 1px solid rgba(255,255,255,0.18); border-radius: 20px; padding: 0.12rem 0.55rem; }
-.presentacion-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-.pres-btn { font-size: 0.78rem; color: #fff; text-decoration: none; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.08); border-radius: 20px; padding: 0.35rem 0.9rem; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.4rem; }
-.pres-btn:hover { background: var(--terra); border-color: var(--terra); color: #fff; }
-.presentacion-viewer { height: 520px; background: var(--cream); }
-.presentacion-viewer object, .presentacion-viewer iframe { width: 100%; height: 100%; border: none; display: block; }
+.presentacion-viewer { height: 220px; background: var(--cream); }
 .pres-placeholder { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: var(--muted); padding: 2rem; }
 .pres-placeholder i { font-size: 2.4rem; color: #c9c2b8; margin-bottom: 0.8rem; }
 .pres-placeholder p { font-size: 0.98rem; font-weight: bold; color: var(--dark); margin-bottom: 0.3rem; }
-.pres-placeholder small { font-size: 0.82rem; line-height: 1.6; max-width: 360px; }
-.pres-placeholder code { background: #fff; border: 1px solid var(--border); border-radius: 4px; padding: 0.1rem 0.4rem; color: var(--terra); }
-@media(max-width:600px){ .presentacion-viewer { height: 380px; } }
-.pres-audio { display: flex; align-items: center; gap: 0.9rem; padding: 0.85rem 1.2rem; background: var(--terra-light); border-top: 1px solid var(--border); }
-.pres-audio-label { font-size: 0.82rem; color: var(--dark); font-weight: bold; display: flex; align-items: center; gap: 0.5rem; white-space: nowrap; }
-.pres-audio-label i { color: var(--terra); font-size: 1rem; }
-.pres-audio audio { flex: 1; height: 38px; min-width: 0; }
-@media(max-width:600px){ .pres-audio { flex-direction: column; align-items: stretch; gap: 0.55rem; } }
+.pres-placeholder small { font-size: 0.82rem; line-height: 1.6; max-width: 420px; }
 
 /* ACCORDION */
 .accordion-di { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1rem; }
@@ -119,6 +108,17 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
 .table-di { font-size: 0.85rem; }
 .table-di th { background: var(--dark); color: #fff; font-weight: normal; }
 .table-di td { vertical-align: top; }
+
+/* HERRAMIENTA card (módulo 4) */
+.tool-di { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; margin-bottom: 0.8rem; }
+.tool-di-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; }
+.tool-di-head h6 { font-family: Georgia, serif; font-size: 1rem; font-weight: normal; color: var(--dark); margin: 0; }
+.tool-price { font-size: 0.72rem; padding: 0.2rem 0.6rem; border-radius: 20px; background: var(--terra-light); color: var(--terra); border: 1px solid var(--border); }
+.tool-di a.tool-link { font-size: 0.8rem; color: var(--blue); text-decoration: none; }
+.tool-di a.tool-link:hover { text-decoration: underline; }
+.tool-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; margin-top: 0.6rem; font-size: 0.82rem; }
+@media(max-width:640px) { .tool-grid { grid-template-columns: 1fr; } }
+.tool-grid div strong { display: block; color: var(--muted); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.15rem; }
 
 /* EVALUACIÓN */
 .eval-section { background: var(--cream); border-radius: 10px; border: 1px solid var(--border); padding: 1.5rem; margin-top: 2rem; }
@@ -169,7 +169,7 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
         <a href="../index.html" class="btn-back"><i class="bi bi-arrow-left me-1"></i>Inicio</a>
         <div>
           <div class="course-name">Diseño Instruccional</div>
-          <div class="unit-name">Módulo 1 · Unidad 1.1</div>
+          <div class="unit-name">Módulo 4 · Unidad 4.2</div>
         </div>
       </div>
       <div class="d-none d-md-flex align-items-center gap-2">
@@ -186,24 +186,24 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
     <div class="col-lg-3">
       <div class="sidebar-di">
         <div class="sidebar-header">
-          <h6>Módulo 1</h6>
-          <p>Fundamentos teóricos</p>
+          <h6>Módulo 4</h6>
+          <p>Herramientas para el DI</p>
         </div>
+        <a class="lesson-item" href="m4-1.html">
+          <div class="lesson-num" id="num-m4-1">1</div>
+          <div class="lesson-info"><strong>Herramientas de autoría</strong><span>Storyline · Rise · H5P · Genially</span></div>
+        </a>
         <a class="lesson-item active" onclick="scrollToTop()">
-          <div class="lesson-num">1</div>
-          <div class="lesson-info"><strong>¿Qué es el DI?</strong><span>Definición · historia · perfil</span></div>
+          <div class="lesson-num">2</div>
+          <div class="lesson-info"><strong>Herramientas de análisis</strong><span>PowerBI · GA4 · reportes Moodle</span></div>
         </a>
-        <a class="lesson-item" href="m1-2.html">
-          <div class="lesson-num" id="num-m1-2">2</div>
-          <div class="lesson-info"><strong>Teorías del aprendizaje</strong><span>Conductismo · constructivismo</span></div>
-        </a>
-        <a class="lesson-item" href="m1-3.html">
-          <div class="lesson-num" id="num-m1-3">3</div>
-          <div class="lesson-info"><strong>Gagné y carga cognitiva</strong><span>Nueve eventos · Sweller</span></div>
+        <a class="lesson-item" href="m4-3.html">
+          <div class="lesson-num" id="num-m4-3">3</div>
+          <div class="lesson-info"><strong>Producción multimedia</strong><span>Camtasia · OBS · Loom · Synthesia</span></div>
         </a>
         <div class="sidebar-progress">
           <div class="d-flex justify-content-between mb-1">
-            <small style="color:var(--muted);font-size:0.75rem">Módulo 1</small>
+            <small style="color:var(--muted);font-size:0.75rem">Módulo 4</small>
             <small id="sidebarPct" style="color:var(--terra);font-size:0.75rem;font-weight:bold">0/3</small>
           </div>
           <div class="progress-di"><div class="progress-di-fill" id="sidebarBar" style="width:0%"></div></div>
@@ -218,206 +218,190 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
     <div class="col-lg-9">
       <div class="content-di">
         <div class="lesson-hero">
-          <div class="unit-tag">Módulo 1 · Unidad 1.1</div>
-          <h1>¿Qué es el Diseño Instruccional?</h1>
-          <p>Definición técnica · origen histórico · para qué sirve · perfil profesional</p>
+          <div class="unit-tag">Módulo 4 · Unidad 4.2</div>
+          <h1>Herramientas de análisis: PowerBI, GA4 y reportes Moodle</h1>
+          <p>Power BI · Google Analytics 4 · reportes Moodle · criterios de selección</p>
         </div>
         <div class="lesson-badges">
           <span class="lbadge"><i class="bi bi-book me-1"></i>4 bloques de contenido</span>
-          <span class="lbadge"><i class="bi bi-clipboard-check me-1"></i>10 preguntas al final</span>
-          <span class="lbadge"><i class="bi bi-clock me-1"></i>~20 min</span>
+          <span class="lbadge"><i class="bi bi-clipboard-check me-1"></i>8 preguntas al final</span>
+          <span class="lbadge"><i class="bi bi-clock me-1"></i>~24 min</span>
         </div>
 
         <div class="lesson-body">
 
-          <!-- PRESENTACIÓN -->
           <div class="presentacion">
             <div class="presentacion-head">
-              <div class="pres-title"><i class="bi bi-easel2"></i> Presentación del tema <span class="pres-tag">NotebookLM</span></div>
-              <div class="presentacion-actions">
-                <a class="pres-btn" href="m1-1.pdf" target="_blank" rel="noopener"><i class="bi bi-arrows-fullscreen"></i> Pantalla completa</a>
-                <a class="pres-btn" href="m1-1.pdf" download><i class="bi bi-download"></i> Descargar</a>
-              </div>
+              <div class="pres-title"><i class="bi bi-easel2"></i> Presentación del tema <span class="pres-tag">Próximamente</span></div>
             </div>
             <div class="presentacion-viewer">
-              <iframe src="m1-1.pdf#view=FitH" title="Presentación del tema" loading="lazy"></iframe>
-            </div>
-            <div class="pres-audio">
-              <span class="pres-audio-label"><i class="bi bi-headphones"></i> Resumen en audio</span>
-              <audio controls preload="metadata" src="m1-1-audio.mp3"></audio>
+              <div class="pres-placeholder">
+                <i class="bi bi-file-earmark-slides"></i>
+                <p>Material audiovisual en preparación</p>
+                <small>Por ahora, revisa el contenido en los bloques de esta unidad.</small>
+              </div>
             </div>
           </div>
 
-          <!-- ACORDEÓN 1 -->
           <div class="accordion-di">
             <button class="accordion-di-btn open" onclick="toggleAcc(this)">
-              <i class="bi bi-1-circle acc-icon"></i> Definición técnica
+              <i class="bi bi-1-circle acc-icon"></i> Power BI: fundamentos para diseño instruccional
               <i class="bi bi-chevron-down acc-chevron"></i>
             </button>
             <div class="accordion-di-body show">
-              <p>El Diseño Instruccional (DI) es la disciplina que planifica, desarrolla, implementa y evalúa experiencias de aprendizaje de manera <strong>sistemática</strong>, basada en evidencia y orientada a resultados medibles. No es "hacer materiales educativos" ni "subir contenidos a un LMS". Es un proceso de toma de decisiones pedagógicas.</p>
-              <p>Definición técnica: <em>el proceso sistemático por el cual se traducen principios del aprendizaje en planes para materiales, actividades, recursos y evaluaciones.</em></p>
-              <div class="row g-2 mt-2">
-                <div class="col-md-4"><div class="card-di"><h6><i class="bi bi-diagram-3 me-1"></i>Sistemático</h6><p>Lógica ordenada y replicable. Cada decisión se justifica con criterios pedagógicos. Produce procesos documentados y transferibles.</p></div></div>
-                <div class="col-md-4"><div class="card-di"><h6><i class="bi bi-lightbulb me-1"></i>Principios del aprendizaje</h6><p>Se apoya en psicología cognitiva, andragogía, carga cognitiva, constructivismo. No inventa: aplica lo que la investigación estableció.</p></div></div>
-                <div class="col-md-4"><div class="card-di"><h6><i class="bi bi-map me-1"></i>Planes</h6><p>El producto no es solo el curso terminado, sino su arquitectura: objetivos, guiones, flujos. El curso visible es la punta del iceberg.</p></div></div>
-              </div>
-              <div class="callout-terra mt-3">
-                <strong>Distinción clave para entrevistas:</strong> El SME (docente experto) sabe <em>qué</em> enseñar. El DI sabe <em>cómo</em> estructurar la experiencia para que sea efectivamente aprendido. Son roles complementarios, no intercambiables.
-              </div>
-            </div>
-          </div>
-
-          <!-- ACORDEÓN 2 -->
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-2-circle acc-icon"></i> Origen histórico
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p>El DI nació durante la <strong>Segunda Guerra Mundial</strong>. El ejército de los EE.UU. necesitaba entrenar millones de soldados en períodos cortos con resultados verificables. Robert Gagné y otros psicólogos sistematizaron ese proceso. El aprendizaje dejó de ser intuitivo y se convirtió en un problema de ingeniería.</p>
-              <table class="table table-di table-bordered mt-3">
-                <thead><tr><th>Período</th><th>Paradigma</th><th>Aporte al DI</th></tr></thead>
+              <p>Power BI (Microsoft) es una herramienta de business intelligence para transformar datos crudos en dashboards visuales interactivos. En contexto de DI, se usa para reportar resultados de aprendizaje a audiencias ejecutivas (dirección académica, gerencia de capacitación) de forma más visual que los reportes nativos de un LMS.</p>
+              <table class="table table-di table-bordered mt-2">
+                <thead><tr><th></th><th>Detalle</th></tr></thead>
                 <tbody>
-                  <tr><td>1940–50s</td><td>Conductismo</td><td>Instrucción programada, análisis de tareas, retroalimentación inmediata</td></tr>
-                  <tr><td>1960–70s</td><td>Cognitivismo</td><td>Esquemas mentales, Nueve Eventos de Gagné, primeras versiones de ADDIE</td></tr>
-                  <tr><td>1980–90s</td><td>Constructivismo</td><td>ABP, aprendizaje colaborativo, entornos situados</td></tr>
-                  <tr><td>2000s</td><td>E-learning</td><td>LMS, SCORM, educación a distancia masificada</td></tr>
-                  <tr><td>2010s–hoy</td><td>IA y redes</td><td>MOOC, microlearning, microcredenciales, IA generativa</td></tr>
+                  <tr><td>URL</td><td>powerbi.microsoft.com</td></tr>
+                  <tr><td>Precio</td><td>Power BI Desktop es gratis (creación); Power BI Pro ~US$10/usuario/mes (compartir online); Premium por capacidad para organizaciones grandes</td></tr>
+                  <tr><td>Versión gratuita</td><td>Power BI Desktop gratis para crear reportes en tu computador; compartirlos online requiere licencia Pro</td></tr>
+                  <tr><td>Límite típico</td><td>Sin licencia Pro, compartir reportes con otros usuarios de forma colaborativa es limitado</td></tr>
                 </tbody>
               </table>
-              <div class="callout-blue">
-                <strong>Para recordar:</strong> El DI tiene raíces militares pero su evolución ha sido profundamente humanista. Hoy integra rigor empírico con sensibilidad pedagógica y diseño centrado en el estudiante.
-              </div>
-            </div>
-          </div>
-
-          <!-- ACORDEÓN 3 -->
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-3-circle acc-icon"></i> Para qué sirve el DI
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p>El DI resuelve la brecha entre lo que alguien <strong>necesita saber o hacer</strong> y lo que actualmente sabe o puede hacer. Sin un proceso de diseño, un curso puede tener contenidos correctos pero mal secuenciados, evaluaciones que no miden lo que se enseñó, o materiales que abruman cognitivamente.</p>
-              <h5>Tres tipos de brechas</h5>
-              <div class="card-di"><h6><i class="bi bi-book me-1"></i>Brecha de conocimiento</h6><p>No sabe algo que necesita saber. Se resuelve con formación.</p></div>
-              <div class="card-di"><h6><i class="bi bi-tools me-1"></i>Brecha de habilidad</h6><p>Sabe qué hacer pero no cómo. Se resuelve con práctica guiada.</p></div>
-              <div class="card-di" style="border-left:3px solid var(--terra)"><h6><i class="bi bi-exclamation-triangle me-1" style="color:var(--terra)"></i>Brecha de motivación</h6><p>Sabe y puede, pero no lo hace. <strong>La formación no resuelve esto.</strong> Es un problema de gestión, incentivos o cultura organizacional.</p></div>
+              <h5>Flujo típico en un proyecto de DI</h5>
+              <p>1. Exportar datos desde el LMS (Moodle: logs, calificaciones, finalización) en CSV. 2. Cargarlos en Power BI Desktop. 3. Construir visualizaciones (tasas de finalización por curso, promedio de puntajes, tiempo de dedicación). 4. Publicar o exportar el dashboard para presentarlo a stakeholders.</p>
               <div class="callout-terra mt-2">
-                <strong>Valor institucional:</strong> Un proceso bien diseñado puede replicarse, actualizarse y transferirse a otros equipos sin perder coherencia pedagógica. Crítico para acreditación y proyectos FDI.
+                <strong>Honestidad sobre tu brecha:</strong> si no dominas PowerBI aún, en una entrevista puedes decir con seguridad: "he trabajado con reportes de Moodle y Google Sheets/Apps Script para dashboards propios (como el de mi LMS independiente); estoy familiarizándome con PowerBI porque entiendo su lógica de transformación de datos, que es la misma que ya aplico." Eso enmarca la brecha como una extensión natural, no un vacío.
               </div>
             </div>
           </div>
 
-          <!-- ACORDEÓN 4 -->
           <div class="accordion-di">
             <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-4-circle acc-icon"></i> Perfil del Diseñador Instruccional
+              <i class="bi bi-2-circle acc-icon"></i> Google Analytics 4 (GA4)
               <i class="bi bi-chevron-down acc-chevron"></i>
             </button>
             <div class="accordion-di-body">
-              <p>El DI actúa en la intersección de la <strong>pedagogía, la tecnología y la gestión de proyectos</strong>. No es docente aunque puede serlo. No es programador aunque trabaja con tecnología.</p>
-              <table class="table table-di table-bordered">
-                <thead><tr><th>Competencia</th><th>En qué consiste</th><th>Se evidencia en...</th></tr></thead>
+              <p>GA4 es la herramienta de analítica web de Google, relevante en DI cuando los cursos o materiales viven en sitios propios (como tu curso en GitHub Pages) y se necesita entender el comportamiento de quienes acceden.</p>
+              <table class="table table-di table-bordered mt-2">
+                <thead><tr><th></th><th>Detalle</th></tr></thead>
                 <tbody>
-                  <tr><td>Análisis pedagógico</td><td>Identificar necesidades, caracterizar audiencias, definir brechas</td><td>Informes de análisis, entrevistas a SME</td></tr>
-                  <tr><td>Diseño curricular</td><td>Redactar objetivos, seleccionar estrategias, alinear evaluación</td><td>DDI, blueprint del curso</td></tr>
-                  <tr><td>Desarrollo de materiales</td><td>Producir o supervisar contenidos, actividades, guiones</td><td>Videos, H5P, Genially, rúbricas</td></tr>
-                  <tr><td>Gestión de proyectos</td><td>Coordinar equipos, manejar plazos, documentar cambios</td><td>Cronogramas, actas, versiones</td></tr>
-                  <tr><td>LMS y herramientas</td><td>Implementar cursos, configurar actividades</td><td>Moodle, Brightspace, Canvas, Storyline</td></tr>
-                  <tr><td>Acompañamiento docente</td><td>Apoyar a los SME para materializar su conocimiento en virtual</td><td>Talleres, guías, revisiones de contenido</td></tr>
+                  <tr><td>URL</td><td>analytics.google.com</td></tr>
+                  <tr><td>Precio</td><td>Gratis (GA4 estándar); GA4 360 es la versión empresarial de pago para grandes volúmenes</td></tr>
+                  <tr><td>Versión gratuita</td><td>Completa para la mayoría de los casos de un sitio educativo pequeño o mediano</td></tr>
+                  <tr><td>Límite típico</td><td>Muestreo de datos en volúmenes muy altos de eventos; retención de datos configurable (2 o 14 meses en el plan gratuito)</td></tr>
                 </tbody>
               </table>
-              <div class="callout-terra">
-                <strong>Para tus tres postulaciones:</strong> Tu perfil híbrido (artes + pedagogía + DI + LMS) es un diferenciador real. En EMMD combinas sensibilidad artística con rigor instruccional — exactamente lo que los maestros-artistas necesitan para virtualizar sin perder su identidad.
+              <h5>Métricas relevantes para un curso o portafolio</h5>
+              <div class="row g-2 mt-2">
+                <div class="col-md-6"><div class="card-di"><h6>Usuarios y sesiones</h6><p>Cuántas personas visitan, con qué frecuencia regresan.</p></div></div>
+                <div class="col-md-6"><div class="card-di"><h6>Duración de sesión / rebote</h6><p>Si la gente entra y sale de inmediato, puede indicar problema de contenido o de carga de la página.</p></div></div>
+                <div class="col-md-6"><div class="card-di"><h6>Rutas de navegación</h6><p>Qué páginas visitan en qué orden — revela si el flujo de módulos es intuitivo.</p></div></div>
+                <div class="col-md-6"><div class="card-di"><h6>Eventos personalizados</h6><p>Se pueden configurar eventos como "clic en descargar PDF" o "envío de quiz" para medir interacción específica.</p></div></div>
+              </div>
+              <div class="callout-blue mt-2">
+                <strong>Aplicación directa a tu portafolio:</strong> tienes pendiente integrar el Measurement ID de GA4 en tu sitio del curso — es la oportunidad perfecta de tener datos reales que mostrar en una entrevista ("aquí ven que el 60% de las visitas llega desde móvil, por eso prioricé diseño responsive").
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-di">
+            <button class="accordion-di-btn" onclick="toggleAcc(this)">
+              <i class="bi bi-3-circle acc-icon"></i> Reportes de Moodle como fuente de datos
+              <i class="bi bi-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-di-body">
+              <p>Como viste en la Unidad 3.2, Moodle genera reportes nativos (finalización, logs, calificaciones) que sirven como la fuente de datos cruda antes de llevarlos a PowerBI para un dashboard más visual.</p>
+              <h5>Flujo de trabajo integrado: Moodle → Excel/CSV → PowerBI</h5>
+              <div class="card-di"><h6><i class="bi bi-1-circle me-1"></i>Extracción</h6><p>Se exportan calificaciones y finalización desde Moodle en formato CSV/Excel (Calificaciones → Exportar, o Informes → Finalización de actividad).</p></div>
+              <div class="card-di"><h6><i class="bi bi-2-circle me-1"></i>Limpieza</h6><p>Se estandarizan nombres de columnas, se eliminan duplicados, se verifica consistencia de formatos de fecha.</p></div>
+              <div class="card-di"><h6><i class="bi bi-3-circle me-1"></i>Visualización</h6><p>Se cargan los datos limpios en PowerBI (o incluso en Google Sheets con gráficos, como ya haces con tu sistema de puntajes vía Apps Script) para construir el dashboard final.</p></div>
+              <div class="callout-terra mt-2">
+                <strong>Conexión directa con tu experiencia:</strong> tu propio LMS con dashboard y persistencia en Google Sheets vía Apps Script (Proyecto 01 de tu portafolio) es exactamente esta misma lógica de flujo de datos, aplicada a menor escala con herramientas gratuitas. Puedes presentarlo así en una entrevista: "ya construí este flujo con herramientas sin costo; entiendo la misma lógica que aplicaría con PowerBI en un entorno institucional."
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-di">
+            <button class="accordion-di-btn" onclick="toggleAcc(this)">
+              <i class="bi bi-4-circle acc-icon"></i> Criterios para elegir la herramienta de análisis adecuada
+              <i class="bi bi-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-di-body">
+              <p>No toda situación requiere PowerBI. Elegir la herramienta correcta depende de la audiencia del reporte y la complejidad de los datos.</p>
+              <table class="table table-di table-bordered">
+                <thead><tr><th>Situación</th><th>Herramienta recomendada</th></tr></thead>
+                <tbody>
+                  <tr><td>Reporte simple para un equipo pequeño</td><td>Google Sheets con gráficos, o el gradebook nativo de Moodle</td></tr>
+                  <tr><td>Dashboard ejecutivo recurrente con múltiples cursos</td><td>Power BI conectado a exportaciones periódicas de Moodle</td></tr>
+                  <tr><td>Entender comportamiento de visitantes en un sitio o portafolio propio</td><td>Google Analytics 4</td></tr>
+                  <tr><td>Rastrear aprendizaje distribuido (fuera del LMS, offline)</td><td>xAPI + LRS (ver Unidad 3.2), cuyos datos luego también pueden alimentar PowerBI</td></tr>
+                </tbody>
+              </table>
+              <div class="callout-blue mt-2">
+                <strong>Mensaje clave para postulaciones:</strong> mostrar que entiendes cuándo usar cada herramienta —no solo que sabes usarlas— es una señal de madurez profesional más valiosa que el dominio técnico aislado de una sola plataforma.
               </div>
             </div>
           </div>
 
           <!-- EVALUACIÓN -->
           <div class="eval-section mt-4">
-            <h4><i class="bi bi-clipboard-check me-2" style="color:var(--terra)"></i>Evaluación — Unidad 1.1</h4>
-            <p class="eval-progress-text">Preguntas respondidas: <strong><span id="answeredCount">0</span>/10</strong> — puedes enviar en cualquier momento</p>
+            <h4><i class="bi bi-clipboard-check me-2" style="color:var(--terra)"></i>Evaluación — Unidad 4.2</h4>
+            <p class="eval-progress-text">Preguntas respondidas: <strong><span id="answeredCount">0</span>/8</strong> — puedes enviar en cualquier momento</p>
 
             <div class="eval-question" data-question="q1">
-              <h6>1. ¿Cuál describe mejor al Diseño Instruccional?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q1',1)"><div class="eval-radio"></div><span>El proceso de crear materiales didácticos atractivos</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',2)"><div class="eval-radio"></div><span>El proceso sistemático de traducir principios del aprendizaje en planes para materiales, actividades y evaluaciones</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',3)"><div class="eval-radio"></div><span>La disciplina que configura plataformas LMS</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',4)"><div class="eval-radio"></div><span>La versión tecnológica de la planificación docente</span></div>
+              <h6>1. ¿Cuál es la diferencia entre Power BI Desktop y Power BI Pro?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q1',1)"><div class="eval-radio"></div><span>Desktop es de pago y Pro es gratis</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q1',2)"><div class="eval-radio"></div><span>Desktop es gratis para crear reportes localmente; Pro (de pago) permite compartirlos y colaborar online</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q1',3)"><div class="eval-radio"></div><span>No hay ninguna diferencia</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q1',4)"><div class="eval-radio"></div><span>Pro solo sirve para PowerPoint</span></div>
             </div>
 
             <div class="eval-question" data-question="q2">
-              <h6>2. ¿Qué evento histórico dio origen formal al DI?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q2',1)"><div class="eval-radio"></div><span>La creación de los primeros LMS en los años 90</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',2)"><div class="eval-radio"></div><span>El surgimiento de internet y la educación a distancia</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',3)"><div class="eval-radio"></div><span>La necesidad de entrenar soldados durante la Segunda Guerra Mundial</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',4)"><div class="eval-radio"></div><span>La publicación de la taxonomía de Bloom en 1956</span></div>
+              <h6>2. ¿Cuál sería un flujo típico para llevar datos de Moodle a un dashboard de Power BI?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q2',1)"><div class="eval-radio"></div><span>Power BI se conecta directo a Moodle sin exportar nada</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q2',2)"><div class="eval-radio"></div><span>Exportar reportes de Moodle en CSV/Excel, limpiarlos, y cargarlos en Power BI para visualizarlos</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q2',3)"><div class="eval-radio"></div><span>No es posible combinar Moodle con Power BI</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q2',4)"><div class="eval-radio"></div><span>Se requiere reprogramar Moodle por completo</span></div>
             </div>
 
             <div class="eval-question" data-question="q3">
-              <h6>3. ¿Cuál es la diferencia central entre el DI y el docente experto (SME)?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q3',1)"><div class="eval-radio"></div><span>El DI trabaja solo en virtual; el docente en presencial</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',2)"><div class="eval-radio"></div><span>El SME sabe qué enseñar; el DI sabe cómo diseñar la experiencia para que sea efectivamente aprendido</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',3)"><div class="eval-radio"></div><span>El DI es jerárquicamente superior al docente</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',4)"><div class="eval-radio"></div><span>No hay diferencia real entre ambos roles</span></div>
+              <h6>3. ¿Qué mide específicamente Google Analytics 4 en un sitio de curso propio?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q3',1)"><div class="eval-radio"></div><span>Las calificaciones de los quiz del curso</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q3',2)"><div class="eval-radio"></div><span>Comportamiento de los visitantes: usuarios, sesiones, rutas de navegación, eventos personalizados</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q3',3)"><div class="eval-radio"></div><span>El contenido pedagógico del curso</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q3',4)"><div class="eval-radio"></div><span>Los objetivos de aprendizaje redactados</span></div>
             </div>
 
             <div class="eval-question" data-question="q4">
-              <h6>4. ¿Qué significa que el DI sea "sistemático"?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q4',1)"><div class="eval-radio"></div><span>Que usa sistemas informáticos y software especializado</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',2)"><div class="eval-radio"></div><span>Que sigue una lógica ordenada y replicable donde cada decisión se justifica con criterios pedagógicos</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',3)"><div class="eval-radio"></div><span>Que se aplica solo a sistemas educativos formales</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',4)"><div class="eval-radio"></div><span>Que requiere aprobación de un comité institucional</span></div>
+              <h6>4. ¿Qué significa que una sesión tenga una duración muy corta y alta tasa de rebote en GA4?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q4',1)"><div class="eval-radio"></div><span>Que el curso tiene demasiados estudiantes</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q4',2)"><div class="eval-radio"></div><span>Puede indicar un problema de contenido o de carga de la página que hace que los visitantes se vayan rápido</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q4',3)"><div class="eval-radio"></div><span>Que el sitio está funcionando perfectamente</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q4',4)"><div class="eval-radio"></div><span>Que hay demasiados objetivos de aprendizaje</span></div>
             </div>
 
             <div class="eval-question" data-question="q5">
-              <h6>5. ¿Cuál competencia NO corresponde al perfil estándar del DI?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q5',1)"><div class="eval-radio"></div><span>Análisis de necesidades de aprendizaje</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',2)"><div class="eval-radio"></div><span>Redacción de objetivos de aprendizaje</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',3)"><div class="eval-radio"></div><span>Producción cinematográfica profesional</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',4)"><div class="eval-radio"></div><span>Manejo de LMS y herramientas de autoría</span></div>
+              <h6>5. ¿Cuál es el elemento pendiente en el portafolio de Joselyn que le permitiría tener datos reales de GA4 para mostrar en entrevistas?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q5',1)"><div class="eval-radio"></div><span>Crear una cuenta de Power BI</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q5',2)"><div class="eval-radio"></div><span>Integrar el Measurement ID de GA4 en el sitio del curso</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q5',3)"><div class="eval-radio"></div><span>Cambiar de GitHub Pages a otro hosting</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q5',4)"><div class="eval-radio"></div><span>Eliminar el sistema de puntajes de Google Sheets</span></div>
             </div>
 
             <div class="eval-question" data-question="q6">
-              <h6>6. ¿Cuál es el principal impulsor de la demanda de DI en educación superior chilena hoy?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q6',1)"><div class="eval-radio"></div><span>La obligatoriedad de virtualizar todos los programas</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',2)"><div class="eval-radio"></div><span>Los fondos FDI que financian proyectos de innovación docente y virtualización</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',3)"><div class="eval-radio"></div><span>La baja matrícula en carreras presenciales</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',4)"><div class="eval-radio"></div><span>La eliminación de la acreditación institucional</span></div>
+              <h6>6. El proyecto de LMS independiente con dashboard y persistencia en Google Sheets vía Apps Script, ¿qué demuestra en relación con el flujo Moodle → PowerBI?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q6',1)"><div class="eval-radio"></div><span>Que Joselyn no tiene experiencia con flujos de datos</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q6',2)"><div class="eval-radio"></div><span>Que ya aplicó la misma lógica de extracción-limpieza-visualización con herramientas gratuitas, a menor escala</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q6',3)"><div class="eval-radio"></div><span>Que PowerBI es innecesario en cualquier contexto</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q6',4)"><div class="eval-radio"></div><span>Que Google Sheets reemplaza completamente a un LMS</span></div>
             </div>
 
             <div class="eval-question" data-question="q7">
-              <h6>7. ¿Qué es el Documento de Diseño Instruccional (DDI)?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q7',1)"><div class="eval-radio"></div><span>El manual técnico de configuración del LMS</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',2)"><div class="eval-radio"></div><span>El plan pedagógico completo del curso producido antes de desarrollar materiales</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',3)"><div class="eval-radio"></div><span>El informe de resultados al finalizar el curso</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',4)"><div class="eval-radio"></div><span>El guión de un video educativo específico</span></div>
+              <h6>7. ¿En qué situación es más adecuado usar Google Sheets con gráficos en vez de Power BI?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q7',1)"><div class="eval-radio"></div><span>Cuando se necesita un dashboard ejecutivo recurrente con múltiples cursos</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q7',2)"><div class="eval-radio"></div><span>Cuando el reporte es simple y para un equipo pequeño</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q7',3)"><div class="eval-radio"></div><span>Cuando se requiere rastrear aprendizaje distribuido offline</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q7',4)"><div class="eval-radio"></div><span>Cuando la audiencia es la alta dirección de una gran institución</span></div>
             </div>
 
             <div class="eval-question" data-question="q8">
-              <h6>8. ¿En qué período el constructivismo comenzó a influir significativamente en el DI?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q8',1)"><div class="eval-radio"></div><span>1940s–1950s</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',2)"><div class="eval-radio"></div><span>1960s–1970s</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',3)"><div class="eval-radio"></div><span>1980s–1990s</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',4)"><div class="eval-radio"></div><span>2010s–2020s</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q9">
-              <h6>9. ¿Por qué el DI es valioso institucionalmente más allá del estudiante individual?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q9',1)"><div class="eval-radio"></div><span>Permite reducir la cantidad de docentes necesarios</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q9',2)"><div class="eval-radio"></div><span>Los procesos bien diseñados pueden replicarse, actualizarse y transferirse sin perder coherencia pedagógica</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q9',3)"><div class="eval-radio"></div><span>Obliga a los docentes a usar tecnología</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q9',4)"><div class="eval-radio"></div><span>Garantiza que todos los estudiantes aprueben</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q10">
-              <h6>10. Un equipo sabe y puede aplicar un protocolo pero no lo hace. ¿Qué tipo de problema es?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q10',1)"><div class="eval-radio"></div><span>Brecha de conocimiento — requiere un curso teórico</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q10',2)"><div class="eval-radio"></div><span>Brecha de habilidad — requiere práctica guiada</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q10',3)"><div class="eval-radio"></div><span>Problema de motivación o cultura que la formación no resuelve</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q10',4)"><div class="eval-radio"></div><span>Problema de diseño instruccional del protocolo original</span></div>
+              <h6>8. ¿Cuál es el mensaje profesional más valioso al hablar de herramientas de análisis en una entrevista?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q8',1)"><div class="eval-radio"></div><span>Afirmar dominio absoluto de todas las herramientas sin excepción</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q8',2)"><div class="eval-radio"></div><span>Demostrar criterio sobre cuándo usar cada herramienta según la audiencia y complejidad de los datos</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q8',3)"><div class="eval-radio"></div><span>Evitar mencionar cualquier herramienta que no se domine completamente</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q8',4)"><div class="eval-radio"></div><span>Insistir en que solo Power BI es válida para cualquier reporte</span></div>
             </div>
 
             <div id="evalResult" class="mt-3"></div>
@@ -429,7 +413,7 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
               <button class="btn btn-outline-terra" id="retryBtn" style="display:none" onclick="retryEval()">
                 <i class="bi bi-arrow-clockwise me-2"></i>Reintentar
               </button>
-              <a href="m1-2.html" class="btn btn-blue" id="nextBtn" style="display:none">
+              <a href="m4-3.html" class="btn btn-blue" id="nextBtn" style="display:none">
                 Siguiente unidad <i class="bi bi-arrow-right ms-2"></i>
               </a>
             </div>
@@ -444,20 +428,19 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbylYML8h2BnNgi2AXtZ8bkGaXPNRhurswPr5dfyGRldbVoCRvmoT2cHN0r3I4qGynLb/exec';
-const UNIDAD_ID = 'm1-1';
+const UNIDAD_ID = 'm4-2';
+const UNIDAD_LABEL = '4.2 Herramientas de análisis';
 
-const CORRECTAS = { q1:2, q2:3, q3:2, q4:2, q5:3, q6:2, q7:2, q8:3, q9:2, q10:3 };
+const CORRECTAS = { q1:2, q2:2, q3:2, q4:2, q5:2, q6:2, q7:2, q8:2 };
 const FEEDBACK = {
-  q1:  {ok:'Correcto. La definición técnica enfatiza: sistemático, basado en principios del aprendizaje, orientado a producir planes.',fail:'La definición técnica no se reduce a materiales ni tecnología. Enfatiza el proceso sistemático y la fundamentación pedagógica.'},
-  q2:  {ok:'Correcto. La necesidad de entrenamiento masivo y verificable obligó a sistematizar la instrucción. Gagné lideró ese proceso.',fail:'El DI nació en contexto militar. La WWII forzó la sistematización del proceso instruccional para entrenar millones en poco tiempo.'},
-  q3:  {ok:'Exacto. Son roles complementarios. El SME aporta el contenido; el DI aporta la arquitectura pedagógica.',fail:'Son complementarios: el SME aporta el qué (contenido disciplinar); el DI aporta el cómo (diseño de la experiencia).'},
-  q4:  {ok:'Correcto. Sistemático implica proceso documentado, auditable y transferible, no dependiente de la intuición.',fail:'Sistemático se refiere a la lógica pedagógica: ordenada, justificable y replicable. No a la tecnología.'},
-  q5:  {ok:'Correcto. El DI puede producir videos educativos simples, pero la producción cinematográfica profesional está fuera de su perfil.',fail:'La producción cinematográfica profesional no es parte del perfil DI. El DI produce materiales educativos, no filmes.'},
-  q6:  {ok:'Correcto. Los FDI del Mineduc son un motor real — como el proyecto en EMMD donde postulaste.',fail:'Los FDI del Mineduc financian proyectos de virtualización y microcredenciales, generando demanda directa de DI.'},
-  q7:  {ok:'Correcto. El DDI es la evidencia central del trabajo de diseño. El curso en el LMS es la ejecución de ese plan.',fail:'El DDI es el plan pedagógico completo: objetivos, estrategias, secuencia y evaluación. Se produce antes de cualquier material.'},
-  q8:  {ok:'Correcto. En los 80–90, Vygotsky y Piaget enriquecieron el DI con la idea de que el conocimiento se construye, no se transmite.',fail:'El constructivismo influyó en los 80–90, como contrapeso al conductismo y cognitivismo de décadas anteriores.'},
-  q9:  {ok:'Correcto. La escalabilidad y transferibilidad del proceso es uno de sus valores institucionales más importantes.',fail:'El valor institucional del DI es la escalabilidad: procesos documentados que se replican y transfieren a otros equipos.'},
-  q10: {ok:'Correcto. Si saben y pueden pero no lo hacen, no hay brecha de aprendizaje. La formación no resuelve problemas de motivación.',fail:'Si ya saben y pueden, no hay brecha de aprendizaje. Es un problema de motivación, incentivos o cultura.'}
+  q1: {ok:'Correcto. Power BI Desktop es gratuito para crear reportes; compartirlos de forma colaborativa online requiere licencia Pro.',fail:'Power BI Desktop es gratis para crear reportes en el computador; Power BI Pro es la licencia paga necesaria para compartirlos y colaborar online.'},
+  q2: {ok:'Correcto. El flujo típico es extracción (exportar CSV desde Moodle), limpieza de datos, y luego visualización en Power BI.',fail:'El flujo estándar es exportar los reportes de Moodle en CSV/Excel, limpiarlos y luego cargarlos en Power BI — no una conexión directa automática.'},
+  q3: {ok:'Correcto. GA4 mide comportamiento de visitantes en el sitio: tráfico, navegación y eventos, no el contenido pedagógico en sí.',fail:'GA4 mide comportamiento de visitantes (usuarios, sesiones, rutas, eventos), no las calificaciones ni el contenido pedagógico directamente.'},
+  q4: {ok:'Correcto. Una duración corta con alto rebote suele ser señal de un problema de contenido, diseño o velocidad de carga.',fail:'Una sesión corta y alta tasa de rebote suele señalar un problema (de contenido o de carga técnica), no que el sitio funcione bien ni que haya demasiados objetivos.'},
+  q5: {ok:'Correcto. Integrar el Measurement ID de GA4 permitiría empezar a recolectar datos reales de visitas al curso.',fail:'Lo pendiente es integrar el Measurement ID de GA4 en el sitio del curso; no se trata de cambiar de hosting ni de crear cuenta de Power BI para esto.'},
+  q6: {ok:'Correcto. Ese proyecto es evidencia de que ya domina la lógica del flujo de datos, aplicable luego a herramientas como PowerBI.',fail:'Ese proyecto demuestra que ya aplicó la misma lógica de flujo de datos con herramientas gratuitas, lo cual es evidencia transferible a un entorno con PowerBI, no que PowerBI sea innecesario.'},
+  q7: {ok:'Correcto. Para reportes simples y equipos pequeños, Google Sheets es suficiente y más ágil que montar un dashboard en Power BI.',fail:'Google Sheets es adecuado para reportes simples de equipos pequeños; los dashboards ejecutivos recurrentes o de alta dirección se benefician más de Power BI.'},
+  q8: {ok:'Correcto. Mostrar criterio de selección de herramienta según el contexto es más valioso que el dominio aislado de una sola plataforma.',fail:'El mensaje más valioso es demostrar criterio para elegir la herramienta adecuada según audiencia y datos, no afirmar dominio total ni evitar mencionar brechas.'}
 };
 
 let answers = {};
@@ -486,6 +469,7 @@ function submitEval() {
   }
   submitted = true;
   let score = 0;
+  const total = Object.keys(CORRECTAS).length;
 
   Object.keys(CORRECTAS).forEach(q => {
     const container = document.querySelector(`[data-question="${q}"]`);
@@ -513,12 +497,12 @@ function submitEval() {
   });
 
   const answered = Object.keys(answers).length;
-  const pct = Math.round(score / 10 * 100);
+  const pct = Math.round(score / total * 100);
   const msg = pct >= 90 ? 'Excelente dominio de esta unidad.' : pct >= 70 ? 'Buen resultado. Repasa lo que fallaste antes de avanzar.' : 'Hay conceptos que requieren repaso. Revisa las secciones donde cometiste errores.';
 
   document.getElementById('evalResult').innerHTML = `
     <div class="result-card">
-      <div class="result-score">${score}/10</div>
+      <div class="result-score">${score}/${total}</div>
       <div class="result-label">${pct}% de respuestas correctas (${answered} respondidas)</div>
       <div class="result-msg">${msg}</div>
     </div>`;
@@ -526,7 +510,7 @@ function submitEval() {
   document.getElementById('submitBtn').style.display = 'none';
   document.getElementById('retryBtn').style.display = 'inline-block';
   document.getElementById('nextBtn').style.display = 'inline-block';
-  guardarPuntaje(score / 10);
+  guardarPuntaje(score / total);
 }
 
 function retryEval() {
@@ -566,14 +550,13 @@ async function guardarPuntaje(ratio) {
   const s = getScores(); s[UNIDAD_ID] = ratio; localStorage.setItem('di_scores', JSON.stringify(s));
   updateSidebar();
   try {
-    await jsonp({ action: 'saveScore', id: UNIDAD_ID, score: ratio, label: '1.1 ¿Qué es el DI?', date: new Date().toLocaleDateString('es-CL') });
+    await jsonp({ action: 'saveScore', id: UNIDAD_ID, score: ratio, label: UNIDAD_LABEL, date: new Date().toLocaleDateString('es-CL') });
   } catch(e) {}
 }
 
 function updateSidebar() {
   const s = getScores();
-  const ids = ['m1-1','m1-2','m1-3'];
-  // Una unidad cuenta como completada solo si su puntaje es mayor a 0.
+  const ids = ['m4-1','m4-2','m4-3'];
   const done = ids.filter(id => s[id] !== undefined && s[id] > 0).length;
   document.getElementById('sidebarPct').textContent = done + '/3';
   document.getElementById('sidebarBar').style.width = Math.round(done/3*100) + '%';
@@ -598,9 +581,6 @@ function scrollToTop() { window.scrollTo({top:0,behavior:'smooth'}); }
 
 updateSidebar();
 
-// ---- Sincronización con Google Sheets al cargar el módulo ----
-// Trae los puntajes desde Sheets aunque el localStorage esté vacío
-// (otro dispositivo, modo incógnito o navegador nuevo).
 async function syncSheet() {
   try {
     const data = await jsonp({ action: 'getAll' });
@@ -616,7 +596,6 @@ async function syncSheet() {
   } catch(e) {}
 }
 
-// ---- Muestra el estado "ya completado" si esta unidad tiene puntaje ----
 function showCompletedState() {
   const ratio = getScores()[UNIDAD_ID];
   if (ratio === undefined || ratio <= 0) return;
@@ -642,8 +621,6 @@ function showCompletedState() {
     '</div>';
 }
 
-// ---- Registro de visita por pixel de imagen ----
-// Más confiable que JSONP: funciona en móvil, incógnito y cualquier navegador, sin CORS.
 function trackVisit() {
   try {
     let vid = localStorage.getItem('di_vid');
