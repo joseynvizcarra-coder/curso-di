@@ -520,8 +520,10 @@ function trackVisit(pageId) {
     if (qs.get('owner') === '0') localStorage.removeItem('di_owner');
     const owner = localStorage.getItem('di_owner') === '1' ? '1' : '0';
     const device = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'movil' : 'escritorio';
-    // Tracking por JSONP (mismo transporte que saveScore, que sí funciona).
-    jsonp({ action: 'logVisit', page: pageId, vid: vid, sid: sid, owner: owner, device: device, t: String(Date.now()) }).catch(function(){});
+    const params = new URLSearchParams({ action: 'logVisit', page: pageId, vid: vid, sid: sid, owner: owner, device: device, t: String(Date.now()) });
+    const img = new Image();
+    img.referrerPolicy = 'no-referrer';
+    img.src = SCRIPT_URL + '?' + params.toString();
   } catch(e) {}
 }
 
