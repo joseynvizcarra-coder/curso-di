@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3.1 Evaluación y diseño de actividades — Curso DI</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+:root {
+  --cream: #f5f2ec;
+  --dark: #0f1117;
+  --terra: #c85c3a;
+  --blue: #3a6b8a;
+  --muted: #7a7570;
+  --border: #ddd8d0;
+  --success: #2d7a4f;
+  --terra-light: #f7ede8;
+  --blue-light: #e8f0f5;
+}
+body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif; color: var(--dark); }
+
+/* HEADER */
+.header-di {
+  background: linear-gradient(135deg, var(--dark) 0%, #1e2030 100%);
+  border-bottom: 3px solid var(--terra);
+  padding: 0.9rem 0;
+  position: sticky; top: 0; z-index: 1030;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+.header-di .course-name { color: #fff; font-family: Georgia, serif; font-size: 1.1rem; font-weight: normal; }
+.header-di .unit-name { color: var(--terra); font-size: 0.82rem; }
+.btn-back { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; border-radius: 20px; padding: 0.4rem 1rem; font-size: 0.82rem; text-decoration: none; transition: all 0.2s; }
+.btn-back:hover { background: rgba(255,255,255,0.2); color: #fff; }
+
+/* SIDEBAR */
+.sidebar-di {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  overflow: hidden;
+}
+@media(min-width:992px){ .sidebar-di { position: sticky; top: 80px; max-height: calc(100vh - 100px); overflow-y: auto; } }
+.sidebar-header { background: var(--dark); color: #fff; padding: 1rem 1.2rem; }
+.sidebar-header h6 { font-family: Georgia, serif; font-weight: normal; font-size: 0.9rem; margin: 0; color: var(--terra); }
+.sidebar-header p { font-size: 0.75rem; color: #a09a94; margin: 0.2rem 0 0; }
+.lesson-item { display: flex; align-items: center; gap: 0.8rem; padding: 0.75rem 1.2rem; border-bottom: 1px solid var(--border); cursor: pointer; transition: all 0.2s; text-decoration: none; color: var(--dark); }
+.lesson-item:hover { background: var(--cream); }
+.lesson-item.active { background: var(--terra-light); border-left: 3px solid var(--terra); }
+.lesson-item.done { color: var(--muted); }
+.lesson-num { width: 30px; height: 30px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold; flex-shrink: 0; color: var(--muted); }
+.lesson-item.active .lesson-num { background: var(--terra); color: #fff; }
+.lesson-item.done .lesson-num { background: var(--success); color: #fff; }
+.lesson-info { flex: 1; }
+.lesson-info strong { font-size: 0.83rem; display: block; }
+.lesson-info span { font-size: 0.74rem; color: var(--muted); }
+.sidebar-progress { padding: 1rem 1.2rem; background: var(--cream); }
+.progress-di { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.progress-di-fill { height: 100%; background: linear-gradient(90deg, var(--terra), #e07a5a); border-radius: 99px; transition: width 0.5s ease; }
+.sidebar-footer { padding: 0.8rem 1.2rem; text-align: center; border-top: 1px solid var(--border); }
+
+/* CONTENT */
+.content-di { background: #fff; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow: hidden; }
+.lesson-hero { background: linear-gradient(135deg, var(--dark) 0%, #1e2030 100%); color: #fff; padding: 2rem 2rem 1.5rem; }
+.lesson-hero .unit-tag { font-size: 0.72rem; color: var(--terra); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.4rem; }
+.lesson-hero h1 { font-family: Georgia, serif; font-size: 1.6rem; font-weight: normal; margin-bottom: 0.4rem; }
+.lesson-hero p { color: #a09a94; font-size: 0.88rem; margin: 0; }
+.lesson-badges { padding: 1rem 2rem; background: var(--terra-light); border-bottom: 1px solid var(--border); display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.lbadge { font-size: 0.78rem; padding: 0.3rem 0.7rem; border-radius: 20px; border: 1px solid var(--border); background: #fff; color: var(--muted); }
+.lbadge i { color: var(--terra); }
+.lesson-body { padding: 1.8rem 2rem; }
+
+/* PRESENTACIÓN placeholder */
+.presentacion { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
+.presentacion-head { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; flex-wrap: wrap; background: var(--dark); color: #fff; padding: 0.8rem 1.2rem; }
+.pres-title { font-size: 0.95rem; font-weight: bold; display: flex; align-items: center; gap: 0.6rem; }
+.pres-title i { color: var(--terra); font-size: 1.1rem; }
+.pres-tag { font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: #a09a94; border: 1px solid rgba(255,255,255,0.18); border-radius: 20px; padding: 0.12rem 0.55rem; }
+.presentacion-viewer { height: 220px; background: var(--cream); }
+.pres-placeholder { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: var(--muted); padding: 2rem; }
+.pres-placeholder i { font-size: 2.4rem; color: #c9c2b8; margin-bottom: 0.8rem; }
+.pres-placeholder p { font-size: 0.98rem; font-weight: bold; color: var(--dark); margin-bottom: 0.3rem; }
+.pres-placeholder small { font-size: 0.82rem; line-height: 1.6; max-width: 420px; }
+
+/* ACCORDION */
+.accordion-di { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1rem; }
+.accordion-di-btn { background: var(--cream); border: none; width: 100%; text-align: left; padding: 1rem 1.2rem; display: flex; align-items: center; gap: 0.8rem; cursor: pointer; transition: background 0.2s; font-size: 0.95rem; font-weight: bold; color: var(--dark); }
+.accordion-di-btn:hover { background: #ede9e2; }
+.accordion-di-btn.open { background: var(--dark); color: #fff; }
+.accordion-di-btn.open .acc-icon { color: var(--terra); }
+.accordion-di-btn .acc-chevron { margin-left: auto; transition: transform 0.25s; font-size: 0.8rem; }
+.accordion-di-btn.open .acc-chevron { transform: rotate(180deg); }
+.acc-icon { font-size: 1rem; color: var(--terra); }
+.accordion-di-body { display: none; padding: 1.2rem 1.4rem; border-top: 1px solid var(--border); background: #fff; font-size: 0.92rem; line-height: 1.7; }
+.accordion-di-body.show { display: block; }
+.accordion-di-body h5 { font-family: Georgia, serif; font-size: 1rem; font-weight: normal; color: var(--blue); margin: 1.2rem 0 0.5rem; }
+.accordion-di-body h5:first-child { margin-top: 0; }
+
+/* CARDS */
+.card-di { background: var(--cream); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; margin-bottom: 0.7rem; }
+.card-di h6 { font-size: 0.85rem; font-weight: bold; color: var(--blue); margin-bottom: 0.3rem; }
+.card-di p { font-size: 0.88rem; margin: 0; }
+.callout-terra { border-left: 4px solid var(--terra); background: var(--terra-light); padding: 0.9rem 1.1rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: 0.88rem; }
+.callout-terra strong { color: var(--terra); }
+.callout-blue { border-left: 4px solid var(--blue); background: var(--blue-light); padding: 0.9rem 1.1rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: 0.88rem; }
+.callout-blue strong { color: var(--blue); }
+.table-di { font-size: 0.85rem; }
+.table-di th { background: var(--dark); color: #fff; font-weight: normal; }
+.table-di td { vertical-align: top; }
+
+/* EVALUACIÓN */
+.eval-section { background: var(--cream); border-radius: 10px; border: 1px solid var(--border); padding: 1.5rem; margin-top: 2rem; }
+.eval-section h4 { font-family: Georgia, serif; font-weight: normal; color: var(--dark); font-size: 1.1rem; margin-bottom: 0.3rem; }
+.eval-progress-text { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.2rem; }
+.eval-question { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem 1.3rem; margin-bottom: 1rem; }
+.eval-question h6 { font-size: 0.9rem; font-weight: bold; color: var(--dark); margin-bottom: 0.8rem; line-height: 1.5; }
+.eval-option { display: flex; align-items: flex-start; gap: 0.7rem; padding: 0.6rem 0.8rem; border-radius: 7px; border: 1px solid var(--border); margin-bottom: 0.5rem; cursor: pointer; font-size: 0.88rem; transition: all 0.15s; background: var(--cream); }
+.eval-option:hover { border-color: var(--blue); background: var(--blue-light); }
+.eval-option.selected { border-color: var(--blue); background: var(--blue-light); }
+.eval-option.correct { border-color: var(--success); background: #edf7f2; pointer-events: none; }
+.eval-option.incorrect { border-color: var(--terra); background: var(--terra-light); pointer-events: none; }
+.eval-option.disabled { pointer-events: none; opacity: 0.7; }
+.eval-radio { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px; transition: all 0.15s; }
+.eval-option.selected .eval-radio { border-color: var(--blue); background: var(--blue); }
+.eval-option.correct .eval-radio { border-color: var(--success); background: var(--success); }
+.eval-option.incorrect .eval-radio { border-color: var(--terra); background: var(--terra); }
+.feedback-box { font-size: 0.84rem; padding: 0.7rem 1rem; border-radius: 7px; margin-top: 0.5rem; line-height: 1.6; }
+.feedback-ok { background: #edf7f2; color: var(--success); border: 1px solid #b0ddc5; }
+.feedback-fail { background: var(--terra-light); color: #8a3020; border: 1px solid #e0b0a0; }
+
+/* RESULT */
+.result-card { text-align: center; padding: 2rem; background: #fff; border-radius: 12px; border: 1px solid var(--border); margin-top: 1rem; }
+.result-score { font-family: Georgia, serif; font-size: 4rem; color: var(--terra); line-height: 1; }
+.result-label { font-size: 0.85rem; color: var(--muted); margin: 0.3rem 0 0.8rem; }
+.result-msg { font-size: 0.92rem; max-width: 400px; margin: 0 auto 1.5rem; line-height: 1.6; }
+
+/* BTN */
+.btn-terra { background: var(--terra); border-color: var(--terra); color: #fff; border-radius: 8px; padding: 0.6rem 1.4rem; }
+.btn-terra:hover { background: #a8492d; border-color: #a8492d; color: #fff; }
+.btn-blue { background: var(--blue); border-color: var(--blue); color: #fff; border-radius: 8px; }
+.btn-blue:hover { background: #2d5570; border-color: #2d5570; color: #fff; }
+.btn-outline-terra { border-color: var(--terra); color: var(--terra); border-radius: 8px; }
+.btn-outline-terra:hover { background: var(--terra); color: #fff; }
+
+/* TOAST */
+.toast-di { position: fixed; top: 80px; right: 20px; padding: 0.9rem 1.3rem; border-radius: 8px; color: #fff; z-index: 9999; font-size: 0.88rem; box-shadow: 0 4px 16px rgba(0,0,0,0.2); animation: slideIn 0.3s ease; }
+@keyframes slideIn { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:translateX(0); } }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header-di">
+  <div class="container-fluid px-3">
+    <div class="d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center gap-3">
+        <a href="../index.html" class="btn-back"><i class="bi bi-arrow-left me-1"></i>Inicio</a>
+        <div>
+          <div class="course-name">Diseño Instruccional</div>
+          <div class="unit-name">Módulo 3 · Unidad 3.1</div>
+        </div>
+      </div>
+      <div class="d-none d-md-flex align-items-center gap-2">
+        <span id="headerProgress" style="font-size:0.8rem;color:#a09a94"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid px-3 py-4" style="max-width:1200px;margin:0 auto">
+  <div class="row g-4">
+
+    <!-- SIDEBAR -->
+    <div class="col-lg-3">
+      <div class="sidebar-di">
+        <div class="sidebar-header">
+          <h6>Módulo 3</h6>
+          <p>Implementación y contexto actual</p>
+        </div>
+        <a class="lesson-item active" onclick="scrollToTop()">
+          <div class="lesson-num">1</div>
+          <div class="lesson-info"><strong>Evaluación y diseño de actividades</strong><span>Evaluación auténtica · rúbricas</span></div>
+        </a>
+        <a class="lesson-item" href="m3-2.html">
+          <div class="lesson-num" id="num-m3-2">2</div>
+          <div class="lesson-info"><strong>LMS, SCORM, xAPI, SLA y reportes</strong><span>Estándares · Moodle · SLA</span></div>
+        </a>
+        <a class="lesson-item" href="m3-3.html">
+          <div class="lesson-num" id="num-m3-3">3</div>
+          <div class="lesson-info"><strong>Microcredenciales e IA aplicada al DI</strong><span>Mineduc · microcredenciales · IA</span></div>
+        </a>
+        <div class="sidebar-progress">
+          <div class="d-flex justify-content-between mb-1">
+            <small style="color:var(--muted);font-size:0.75rem">Módulo 3</small>
+            <small id="sidebarPct" style="color:var(--terra);font-size:0.75rem;font-weight:bold">0/3</small>
+          </div>
+          <div class="progress-di"><div class="progress-di-fill" id="sidebarBar" style="width:0%"></div></div>
+        </div>
+        <div class="sidebar-footer">
+          <a href="../index.html" style="font-size:0.8rem;color:var(--muted);text-decoration:none"><i class="bi bi-grid me-1"></i>Ver todos los módulos</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="col-lg-9">
+      <div class="content-di">
+        <div class="lesson-hero">
+          <div class="unit-tag">Módulo 3 · Unidad 3.1</div>
+          <h1>Evaluación y diseño de actividades</h1>
+          <p>De la teoría a la práctica: tipos de evaluación · evaluación auténtica · rúbricas paso a paso · alineamiento constructivo · retroalimentación efectiva</p>
+        </div>
+        <div class="lesson-badges">
+          <span class="lbadge"><i class="bi bi-book me-1"></i>5 bloques de contenido</span>
+          <span class="lbadge"><i class="bi bi-clipboard-check me-1"></i>8 preguntas de certificación</span>
+          <span class="lbadge"><i class="bi bi-clock me-1"></i>~60 min</span>
+        </div>
+
+        <div class="lesson-body">
+
+          <div class="presentacion">
+            <div class="presentacion-head">
+              <div class="pres-title"><i class="bi bi-easel2"></i> Presentación del tema <span class="pres-tag">Próximamente</span></div>
+            </div>
+            <div class="presentacion-viewer">
+              <div class="pres-placeholder">
+                <i class="bi bi-file-earmark-slides"></i>
+                <p>Material audiovisual en preparación</p>
+                <small>Por ahora, revisa el contenido en los bloques de esta unidad.</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-di">
+            <button class="accordion-di-btn open" onclick="toggleAcc(this)">
+              <i class="bi bi-1-circle acc-icon"></i> Los tres momentos de la evaluación: diagnóstica, formativa y sumativa
+              <i class="bi bi-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-di-body show">
+              <p>Antes de diseñar cualquier actividad hay que responder una pregunta: <strong>¿para qué estoy evaluando?</strong> La respuesta define el tipo de evaluación, el momento en que se aplica y — muy importante — si lleva nota o no. Confundir estos tres propósitos es el error de diseño evaluativo más común.</p>
+              <table class="table table-di table-bordered mt-2">
+                <thead><tr><th>Tipo</th><th>Cuándo</th><th>Para qué sirve</th><th>¿Lleva calificación?</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Diagnóstica</strong></td><td>Antes de empezar</td><td>Conocer el punto de partida: qué saben, qué creen saber mal (preconcepciones), qué habilidades traen</td><td>No — calificarla castiga al estudiante por lo que aún no le has enseñado</td></tr>
+                  <tr><td><strong>Formativa</strong></td><td>Durante el proceso</td><td>Dar información al estudiante y al docente para <em>ajustar</em> mientras todavía hay tiempo de corregir</td><td>Idealmente no (o con peso mínimo) — su valor está en el feedback, no en la nota</td></tr>
+                  <tr><td><strong>Sumativa</strong></td><td>Al cierre</td><td>Certificar el nivel de logro alcanzado respecto de los resultados de aprendizaje</td><td>Sí — es la que acredita y se reporta</td></tr>
+                </tbody>
+              </table>
+              <div class="callout-blue mt-2">
+                <strong>La metáfora clásica:</strong> cuando el chef prueba la sopa mientras cocina, es evaluación formativa; cuando el cliente la prueba en la mesa, es sumativa. La diferencia no es el instrumento — la misma pregunta puede ser formativa o sumativa — sino <em>qué se hace con el resultado</em>.</div>
+
+              <h5>Cómo se traduce esto a un curso e-learning</h5>
+              <div class="card-di"><h6><i class="bi bi-1-circle me-1"></i>Diagnóstica → quiz de entrada sin nota</h6><p>Un cuestionario autocorregido al inicio del curso (en Moodle: cuestionario con calificación "sin categoría" o peso 0). Sus resultados le sirven al DI para saber qué reforzar y al estudiante para activar conocimientos previos.</p></div>
+              <div class="card-di"><h6><i class="bi bi-2-circle me-1"></i>Formativa → práctica con intentos ilimitados y feedback inmediato</h6><p>Actividades H5P, quizzes de práctica con retroalimentación por alternativa, foros de discusión con comentarios del docente. La clave técnica: intentos ilimitados + feedback específico por error.</p></div>
+              <div class="card-di"><h6><i class="bi bi-3-circle me-1"></i>Sumativa → evaluación con condiciones controladas</h6><p>Examen con intentos limitados, ventana de tiempo, banco de preguntas aleatorizado — o mejor aún, un producto auténtico evaluado con rúbrica (siguiente bloque).</p></div>
+
+              <div class="callout-terra mt-2">
+                <strong>Error de diseño que debes saber detectar:</strong> un curso donde <em>todo</em> lleva nota no tiene evaluación formativa real — el estudiante no puede equivocarse sin costo, así que deja de arriesgarse y aprende menos. Un buen diseño reserva espacios seguros de práctica antes de cada evaluación que califica. Si auditas un curso ajeno, esta es una de las primeras cosas que hay que mirar.
+              </div>
+
+              <h5>Alineamiento: la evaluación no se diseña al final</h5>
+              <p>En un diseño instruccional bien hecho (modelo <em>backward design</em> de Wiggins y McTighe), la secuencia es: <strong>1) definir los resultados de aprendizaje → 2) definir qué evidencia demostraría que se lograron (la evaluación) → 3) recién entonces diseñar las actividades y contenidos</strong>. Diseñar el examen al final, "cuando ya está listo el contenido", produce el desalineamiento clásico: se enseña una cosa y se evalúa otra.</p>
+              <div class="callout-blue">
+                <strong>Cómo aplicarlo en entrevista:</strong> si te piden describir tu proceso de diseño, menciona explícitamente que defines la evaluación <em>antes</em> que las actividades. Es una señal inequívoca de formación en DI — la mayoría de quienes improvisan diseñan al revés.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-di">
+            <button class="accordion-di-btn" onclick="toggleAcc(this)">
+              <i class="bi bi-2-circle acc-icon"></i> Evaluación auténtica: evaluar como se trabaja, no como se rinde
+              <i class="bi bi-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-di-body">
+              <p>La <strong>evaluación auténtica</strong> pide al estudiante demostrar la competencia en una tarea lo más parecida posible a cómo esa competencia se usa en la vida real o profesional. En vez de preguntar <em>sobre</em> el desempeño, pide <em>el desempeño</em>.</p>
+              <table class="table table-di table-bordered mt-2">
+                <thead><tr><th>Evaluación tradicional</th><th>Versión auténtica de lo mismo</th></tr></thead>
+                <tbody>
+                  <tr><td>Prueba de alternativas sobre normas de atención al cliente</td><td>Simulación de un cliente molesto (rol play o escenario ramificado en Storyline) donde el estudiante decide qué responder</td></tr>
+                  <tr><td>Definir "rúbrica analítica" en un examen</td><td>Construir una rúbrica real para una tarea de su propia asignatura y aplicarla a dos trabajos de muestra</td></tr>
+                  <tr><td>Listar los huesos del carpo</td><td>Identificarlos en una imagen radiográfica real y justificar un diagnóstico diferencial simple</td></tr>
+                  <tr><td>Ensayo sobre seguridad en laboratorio</td><td>Video del propio estudiante ejecutando el protocolo, autoevaluado con checklist antes de entregar</td></tr>
+                </tbody>
+              </table>
+
+              <h5>Los criterios que hacen "auténtica" una tarea</h5>
+              <div class="card-di"><h6><i class="bi bi-globe me-1"></i>Realismo del contexto</h6><p>La tarea replica condiciones, restricciones y "ruido" del mundo real: información incompleta, tiempo limitado, un destinatario concreto (un cliente, un paciente, un jefe) en vez de "el profesor".</p></div>
+              <div class="card-di"><h6><i class="bi bi-lightbulb me-1"></i>Juicio e innovación</h6><p>No basta aplicar una fórmula: el estudiante debe decidir <em>qué</em> conocimiento usar y cómo, entre varias opciones defendibles.</p></div>
+              <div class="card-di"><h6><i class="bi bi-box-seam me-1"></i>Producto o desempeño observable</h6><p>El resultado es algo que se puede mostrar: un informe, un prototipo, una presentación, una simulación resuelta — no solo respuestas marcadas.</p></div>
+              <div class="card-di"><h6><i class="bi bi-arrow-repeat me-1"></i>Oportunidad de ensayar y pulir</h6><p>Como en el trabajo real, hay borradores, feedback y una versión final — la evaluación auténtica convive naturalmente con la formativa.</p></div>
+
+              <div class="callout-terra mt-2">
+                <strong>El costo que hay que administrar:</strong> la evaluación auténtica es más válida pero más cara de corregir — no se autocorrige como un quiz. Por eso la decisión profesional no es "todo auténtico": es reservar la evaluación auténtica para los resultados de aprendizaje de mayor nivel (aplicar, analizar, crear) y usar quizzes autocorregidos para el conocimiento base. Esa combinación es defendible pedagógica y operativamente.
+              </div>
+
+              <h5>Cómo implementarla en un LMS, paso a paso</h5>
+              <div class="card-di"><h6><i class="bi bi-1-circle me-1"></i>Definir el producto y el destinatario ficticio</h6><p>Redactar el encargo como un brief profesional: "La jefa de capacitación te pide un módulo de inducción de 15 minutos para…" — el destinatario da contexto y criterios de calidad implícitos.</p></div>
+              <div class="card-di"><h6><i class="bi bi-2-circle me-1"></i>Publicar la rúbrica junto con el encargo</h6><p>El estudiante debe conocer los criterios <em>antes</em> de empezar — en Moodle, la rúbrica se adjunta a la actividad Tarea y es visible desde el día uno.</p></div>
+              <div class="card-di"><h6><i class="bi bi-3-circle me-1"></i>Configurar la entrega</h6><p>Actividad "Tarea" en Moodle con tipo de entrega según el producto (archivo, texto en línea, URL de video). Para productos colaborativos, entrega por grupo.</p></div>
+              <div class="card-di"><h6><i class="bi bi-4-circle me-1"></i>Incluir un hito intermedio con feedback</h6><p>Una entrega parcial (borrador, esquema, guion) con retroalimentación sin nota o con peso bajo — es lo que convierte la tarea en experiencia de aprendizaje y no solo en filtro.</p></div>
+            </div>
+          </div>
+
+          <div class="accordion-di">
+            <button class="accordion-di-btn" onclick="toggleAcc(this)">
+              <i class="bi bi-3-circle acc-icon"></i> Rúbricas: construcción paso a paso
+              <i class="bi bi-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-di-body">
+              <p>Una <strong>rúbrica</strong> es una matriz que cruza <strong>criterios de evaluación</strong> (las dimensiones del desempeño) con <strong>niveles de logro</strong> (cuán bien se logró cada una), describiendo en cada celda qué se observa en ese nivel. Su función es doble: hace la corrección más justa y consistente, y le comunica al estudiante qué significa "hacerlo bien" antes de empezar.</p>
+
+              <h5>Analítica vs. holística: cuándo usar cada una</h5>
+              <table class="table table-di table-bordered">
+                <thead><tr><th></th><th>Rúbrica analítica</th><th>Rúbrica holística</th></tr></thead>
+                <tbody>
+                  <tr><td>Estructura</td><td>Un puntaje por cada criterio, por separado</td><td>Un único juicio global con descriptores por nivel</td></tr>
+                  <tr><td>Fortaleza</td><td>Feedback detallado: el estudiante sabe exactamente qué dimensión falló</td><td>Rápida de aplicar; útil con muchos trabajos y poco tiempo</td></tr>
+                  <tr><td>Debilidad</td><td>Más lenta de construir y aplicar</td><td>Feedback pobre: "nivel 3" no dice qué mejorar</td></tr>
+                  <tr><td>Cuándo usarla</td><td>Evaluaciones sumativas importantes, tareas auténticas complejas</td><td>Filtros rápidos, evaluación de participación, tareas de bajo peso</td></tr>
+                </tbody>
+              </table>
+
+              <h5>Construcción de una rúbrica analítica en 5 pasos</h5>
+              <div class="card-di"><h6><i class="bi bi-1-circle me-1"></i>Derivar los criterios del resultado de aprendizaje</h6><p>Si el resultado es "diseñar una actividad e-learning alineada a un objetivo", los criterios salen de descomponerlo: alineamiento con el objetivo, calidad de las instrucciones, pertinencia del recurso, viabilidad técnica. Regla práctica: entre 3 y 6 criterios — más de 6 diluye el peso de cada uno y hace la corrección eterna.</p></div>
+              <div class="card-di"><h6><i class="bi bi-2-circle me-1"></i>Definir los niveles</h6><p>Lo habitual: 4 niveles (ej. Insuficiente / En desarrollo / Logrado / Destacado). Un número par evita la tentación del corrector de marcar siempre el nivel central.</p></div>
+              <div class="card-di"><h6><i class="bi bi-3-circle me-1"></i>Redactar primero la celda "Logrado"</h6><p>Describe el desempeño esperado en conducta observable. Luego se escala hacia arriba (qué agrega el destacado) y hacia abajo (qué falta en cada nivel inferior). Redactar desde el nivel máximo produce rúbricas infladas donde casi nadie alcanza el tope.</p></div>
+              <div class="card-di"><h6><i class="bi bi-4-circle me-1"></i>Describir conductas, no adjetivos</h6><p>"Buena redacción" no es un descriptor — no es observable ni discutible. "El texto no presenta errores ortográficos y cada párrafo desarrolla una sola idea" sí lo es. La prueba de fuego: dos correctores distintos, con la misma rúbrica y el mismo trabajo, deberían llegar a la misma nota (eso se llama <em>confiabilidad entre evaluadores</em>).</p></div>
+              <div class="card-di"><h6><i class="bi bi-5-circle me-1"></i>Pilotear y ajustar</h6><p>Aplicar la rúbrica a 2-3 trabajos reales (o de una cohorte anterior) antes de publicarla. Si dos celdas resultan indistinguibles en la práctica, se fusionan o se reescriben.</p></div>
+
+              <h5>Ejemplo real: fragmento de rúbrica para un módulo e-learning</h5>
+              <table class="table table-di table-bordered">
+                <thead><tr><th>Criterio</th><th>Insuficiente (1)</th><th>Logrado (3)</th><th>Destacado (4)</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Alineamiento</strong></td><td>Las actividades no se relacionan con el objetivo declarado</td><td>Cada actividad practica directamente la conducta del objetivo</td><td>Además, la evaluación replica el contexto real de uso de la competencia</td></tr>
+                  <tr><td><strong>Instrucciones</strong></td><td>El estudiante necesita preguntar qué hay que hacer</td><td>Instrucciones completas: qué entregar, cómo, cuándo y con qué criterios</td><td>Además, incluye un ejemplo resuelto o modelo de referencia</td></tr>
+                </tbody>
+              </table>
+              <div class="callout-blue mt-2">
+                <strong>En Moodle:</strong> la rúbrica se configura dentro de la actividad Tarea → Calificación → Método de calificación → "Rúbrica". El docente corrige haciendo clic en las celdas y Moodle calcula la nota automáticamente según los puntajes definidos — y el estudiante ve la rúbrica marcada como retroalimentación, celda por celda.
+              </div>
+              <div class="callout-terra">
+                <strong>Para tu portafolio:</strong> una rúbrica bien construida es un artefacto de portafolio excelente — muestra dominio técnico en una página. Lleva una a la entrevista y explica una decisión de diseño concreta ("elegí 4 niveles para evitar el sesgo central").
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-di">
+            <button class="accordion-di-btn" onclick="toggleAcc(this)">
+              <i class="bi bi-4-circle acc-icon"></i> Diseño de actividades: alineamiento constructivo y Bloom en acción
+              <i class="bi bi-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-di-body">
+              <p>El <strong>alineamiento constructivo</strong> (John Biggs) es el principio que ordena todo el diseño de actividades: <strong>resultados de aprendizaje, actividades y evaluación deben apuntar al mismo verbo</strong>. Si el resultado dice "el estudiante será capaz de <em>aplicar</em> el protocolo X", pero las actividades son solo lecturas y la evaluación es un quiz de definiciones, el curso está desalineado — se declara una cosa, se practica otra y se certifica una tercera.</p>
+
+              <h5>El verbo manda: Bloom como herramienta de diseño (no como póster)</h5>
+              <p>La taxonomía de Bloom (revisada por Anderson y Krathwohl) ordena los procesos cognitivos de menor a mayor complejidad. Su uso profesional no es decorativo: <strong>el verbo del resultado de aprendizaje determina qué tipo de actividad y de evaluación son válidas</strong>.</p>
+              <table class="table table-di table-bordered mt-2">
+                <thead><tr><th>Nivel</th><th>Verbos típicos</th><th>Actividad e-learning coherente</th><th>Evaluación coherente</th></tr></thead>
+                <tbody>
+                  <tr><td>Recordar</td><td>identificar, listar, nombrar</td><td>Flashcards, H5P de emparejamiento</td><td>Quiz autocorregido</td></tr>
+                  <tr><td>Comprender</td><td>explicar, clasificar, resumir</td><td>Video interactivo con preguntas insertas, foro de parafraseo</td><td>Quiz con casos breves ("¿cuál ejemplo corresponde a…?")</td></tr>
+                  <tr><td>Aplicar</td><td>ejecutar, implementar, usar</td><td>Simulación, ejercicio guiado con datos reales</td><td>Tarea con producto + checklist</td></tr>
+                  <tr><td>Analizar</td><td>comparar, diferenciar, organizar</td><td>Estudio de caso, tabla comparativa colaborativa</td><td>Informe de análisis con rúbrica</td></tr>
+                  <tr><td>Evaluar</td><td>juzgar, criticar, justificar</td><td>Evaluación de pares con rúbrica, debate estructurado</td><td>Dictamen fundamentado con rúbrica</td></tr>
+                  <tr><td>Crear</td><td>diseñar, producir, construir</td><td>Proyecto integrador con hitos y feedback</td><td>Producto final auténtico con rúbrica analítica</td></tr>
+                </tbody>
+              </table>
+              <div class="callout-terra mt-2">
+                <strong>El test de alineamiento en 10 segundos:</strong> toma cualquier unidad de un curso y pregunta: ¿el verbo del objetivo, el verbo de la actividad principal y el verbo de la evaluación son el mismo (o del mismo nivel)? Si el objetivo dice "diseñar", la actividad es "leer" y la evaluación es "seleccionar la alternativa correcta", encontraste el problema. Este test sirve para auditar cursos ajenos — una tarea frecuente al llegar a un equipo de DI.
+              </div>
+
+              <h5>Anatomía de una buena consigna de actividad</h5>
+              <p>Gran parte del abandono en e-learning no es desmotivación: es <strong>fricción por instrucciones ambiguas</strong>. Una consigna completa responde siempre estas seis preguntas:</p>
+              <div class="card-di"><h6><i class="bi bi-bullseye me-1"></i>Qué y para qué</h6><p>Qué hay que producir y qué resultado de aprendizaje practica ("Esta actividad te prepara para…"). Conectar la tarea con su propósito aumenta la disposición a hacerla.</p></div>
+              <div class="card-di"><h6><i class="bi bi-list-check me-1"></i>Cómo y con qué</h6><p>Pasos sugeridos, formato de entrega (extensión, tipo de archivo), y recursos permitidos o requeridos — incluyendo si se puede usar IA y en qué condiciones (tema de la Unidad 3.3).</p></div>
+              <div class="card-di"><h6><i class="bi bi-calendar-check me-1"></i>Cuándo y con qué criterios</h6><p>Plazo, política de atrasos, y la rúbrica o checklist visible desde el inicio. Si el estudiante descubre los criterios después de entregar, el diseño falló.</p></div>
+              <div class="callout-blue mt-2">
+                <strong>Práctica recomendada:</strong> antes de publicar una consigna, léela con el "test del estudiante nuevo": ¿alguien que llega al curso hoy, sin contexto, podría empezar la tarea sin hacer ninguna pregunta? Cada pregunta que tendría que hacer es una frase que falta en la consigna.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-di">
+            <button class="accordion-di-btn" onclick="toggleAcc(this)">
+              <i class="bi bi-5-circle acc-icon"></i> Retroalimentación efectiva: el motor del aprendizaje
+              <i class="bi bi-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-di-body">
+              <p>La investigación educativa (Hattie y Timperley, <em>The Power of Feedback</em>) sitúa la retroalimentación entre las influencias más potentes sobre el aprendizaje — pero solo cuando está bien diseñada. Feedback tardío, genérico o solo evaluativo ("6.2 — buen trabajo") tiene efecto casi nulo.</p>
+
+              <h5>Las tres preguntas que responde un buen feedback</h5>
+              <div class="card-di"><h6><i class="bi bi-flag me-1"></i>1. ¿Hacia dónde voy? (Feed Up)</h6><p>Reconectar con el criterio: "el objetivo de esta tarea era que la rúbrica fuera aplicable por otro corrector sin ambigüedad".</p></div>
+              <div class="card-di"><h6><i class="bi bi-geo-alt me-1"></i>2. ¿Cómo voy? (Feed Back)</h6><p>Evidencia específica del desempeño actual: "tus criterios 1 y 2 son observables; el criterio 3 ('creatividad') todavía es un adjetivo sin descriptor".</p></div>
+              <div class="card-di"><h6><i class="bi bi-signpost-2 me-1"></i>3. ¿Qué sigue? (Feed Forward)</h6><p>La acción concreta siguiente: "reescribe el criterio 3 describiendo qué haría un trabajo creativo que uno no creativo no haría". Esta es la parte que casi siempre falta — y la que produce mejora.</p></div>
+
+              <h5>Diseñar el feedback en el LMS (no improvisarlo)</h5>
+              <div class="card-di"><h6><i class="bi bi-robot me-1"></i>Feedback automático por alternativa</h6><p>En quizzes de Moodle y en Storyline, cada alternativa incorrecta puede llevar retroalimentación específica que explica <em>por qué</em> es incorrecta y a qué error conceptual corresponde — exactamente como el quiz de esta unidad. Escribir ese feedback es trabajo del DI, no un extra opcional: es la diferencia entre un quiz que enseña y uno que solo mide.</p></div>
+              <div class="card-di"><h6><i class="bi bi-grid-3x3 me-1"></i>Feedback por rúbrica</h6><p>La rúbrica marcada celda a celda ya es feedback estructurado; se complementa con 2-3 líneas de comentario global siguiendo el esquema Feed Up / Back / Forward.</p></div>
+              <div class="card-di"><h6><i class="bi bi-people me-1"></i>Feedback entre pares</h6><p>La actividad Taller (Workshop) de Moodle organiza evaluación de pares con rúbrica: cada estudiante corrige 2-3 trabajos ajenos. Doble beneficio — recibe más feedback del que un docente podría dar, y aprende evaluando (nivel "Evaluar" de Bloom).</p></div>
+              <div class="card-di"><h6><i class="bi bi-clock-history me-1"></i>Oportunidad</h6><p>Feedback que llega cuando ya no se puede usar no es feedback, es autopsia. Regla de diseño: toda evaluación formativa debe tener feedback antes de la siguiente evaluación que califica.</p></div>
+
+              <div class="callout-terra mt-2">
+                <strong>Cómo aplicarlo en entrevista:</strong> si te preguntan cómo asegurar calidad en cursos asincrónicos (donde no hay docente en vivo), la respuesta fuerte es: "diseño el feedback como parte del contenido — retroalimentación específica por alternativa en cada quiz, rúbricas visibles desde el inicio, e hitos intermedios con revisión". Demuestra que entiendes que en e-learning asincrónico <em>el feedback hay que diseñarlo por adelantado</em>.
+              </div>
+            </div>
+          </div>
+
+          <!-- EVALUACIÓN -->
+          <div class="eval-section mt-4">
+            <h4><i class="bi bi-clipboard-check me-2" style="color:var(--terra)"></i>Evaluación — Unidad 3.1</h4>
+            <p class="eval-progress-text">Preguntas respondidas: <strong><span id="answeredCount">0</span>/8</strong> — puedes enviar en cualquier momento</p>
+
+            <div class="eval-question" data-question="q1">
+              <h6>1. Un curso online tiene nota en absolutamente todas sus actividades, incluido el quiz de la primera semana. ¿Cuál es el problema de diseño evaluativo?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q1',1)"><div class="eval-radio"></div><span>Ninguno; mientras más evaluaciones calificadas, más aprende el estudiante</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q1',2)"><div class="eval-radio"></div><span>Faltan espacios de práctica formativa sin costo: el estudiante no puede equivocarse sin penalización, lo que desincentiva arriesgarse y aprender del error</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q1',3)"><div class="eval-radio"></div><span>El problema es solo administrativo: demasiadas notas que registrar</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q1',4)"><div class="eval-radio"></div><span>Las evaluaciones online no deberían llevar nota nunca</span></div>
+            </div>
+
+            <div class="eval-question" data-question="q2">
+              <h6>2. Según el enfoque de backward design, ¿en qué momento del proceso de diseño instruccional se define la evaluación sumativa?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q2',1)"><div class="eval-radio"></div><span>Después de los resultados de aprendizaje y antes de diseñar las actividades y contenidos</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q2',2)"><div class="eval-radio"></div><span>Al final, cuando el contenido ya está producido y se sabe qué se alcanzó a cubrir</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q2',3)"><div class="eval-radio"></div><span>Antes de definir los resultados de aprendizaje, para que estos se ajusten al examen</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q2',4)"><div class="eval-radio"></div><span>Es indiferente: el orden del diseño no afecta el alineamiento</span></div>
+            </div>
+
+            <div class="eval-question" data-question="q3">
+              <h6>3. ¿Cuál de estas opciones es una versión auténtica de evaluar "manejo de objeciones en ventas", en un curso asincrónico?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q3',1)"><div class="eval-radio"></div><span>Un ensayo teórico sobre la importancia de escuchar al cliente</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q3',2)"><div class="eval-radio"></div><span>Un quiz de alternativas sobre los 5 tipos de objeciones</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q3',3)"><div class="eval-radio"></div><span>Un escenario ramificado donde un cliente simulado objeta y el estudiante decide qué responder, con consecuencias según su elección</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q3',4)"><div class="eval-radio"></div><span>Pedir al estudiante que memorice un guion de ventas y lo transcriba</span></div>
+            </div>
+
+            <div class="eval-question" data-question="q4">
+              <h6>4. Tienes 120 entregas de una tarea de bajo peso (5% de la nota) y dos días para corregir. Para la evaluación final del curso (40%), en cambio, necesitas dar feedback detallado por dimensión. ¿Qué combinación de rúbricas corresponde?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q4',1)"><div class="eval-radio"></div><span>Holística para la tarea de bajo peso; analítica para la evaluación final</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q4',2)"><div class="eval-radio"></div><span>Analítica para ambas, porque siempre es superior</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q4',3)"><div class="eval-radio"></div><span>Holística para ambas, porque es más rápida</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q4',4)"><div class="eval-radio"></div><span>Ninguna rúbrica: corregir por impresión general es igual de confiable</span></div>
+            </div>
+
+            <div class="eval-question" data-question="q5">
+              <h6>5. En una rúbrica, el descriptor de un criterio dice: "Buena presentación general del trabajo". ¿Cuál es el defecto técnico y cómo se corrige?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q5',1)"><div class="eval-radio"></div><span>Es demasiado exigente; hay que bajar el estándar</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q5',2)"><div class="eval-radio"></div><span>Está bien: los correctores expertos saben qué significa "buena"</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q5',3)"><div class="eval-radio"></div><span>Le falta puntaje numérico; agregando "(3 puntos)" queda resuelto</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q5',4)"><div class="eval-radio"></div><span>Es un adjetivo no observable: dos correctores llegarían a notas distintas. Se corrige describiendo conductas verificables (ej. "sin errores ortográficos, un párrafo por idea, fuentes citadas")</span></div>
+            </div>
+
+            <div class="eval-question" data-question="q6">
+              <h6>6. Un curso declara el resultado "el estudiante será capaz de diseñar una secuencia didáctica". Las actividades son videos y lecturas, y la evaluación es un quiz de alternativas sobre teorías del aprendizaje. Según el alineamiento constructivo, ¿cuál es el diagnóstico?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q6',1)"><div class="eval-radio"></div><span>El curso está alineado, porque todos los elementos tratan el mismo tema</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q6',2)"><div class="eval-radio"></div><span>Desalineado: el objetivo pide "crear" (diseñar), pero las actividades solo ejercitan "comprender" y la evaluación mide "recordar" — hay que agregar práctica de diseño y evaluar con un producto y rúbrica</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q6',3)"><div class="eval-radio"></div><span>El problema es el quiz: con más preguntas quedaría alineado</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q6',4)"><div class="eval-radio"></div><span>El problema es el objetivo: hay que bajarlo a "recordar teorías" para que coincida con el quiz</span></div>
+            </div>
+
+            <div class="eval-question" data-question="q7">
+              <h6>7. ¿Cuál de estos comentarios de feedback cumple con las tres preguntas del modelo de Hattie y Timperley (Feed Up / Feed Back / Feed Forward)?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q7',1)"><div class="eval-radio"></div><span>"5.8. Buen trabajo, sigue así."</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q7',2)"><div class="eval-radio"></div><span>"Tu rúbrica tiene errores en los descriptores."</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q7',3)"><div class="eval-radio"></div><span>"El objetivo era que otro corrector pudiera aplicar tu rúbrica sin ambigüedad. Tus criterios 1 y 2 lo logran; el 3 usa adjetivos sin descriptor. Para la próxima entrega, reescríbelo describiendo la conducta observable."</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q7',4)"><div class="eval-radio"></div><span>"Revisa el material de la unidad y vuelve a intentarlo."</span></div>
+            </div>
+
+            <div class="eval-question" data-question="q8">
+              <h6>8. En un curso 100% asincrónico sin docente en vivo, ¿cuál es la estrategia correcta para que los estudiantes igual reciban retroalimentación oportuna?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q8',1)"><div class="eval-radio"></div><span>No es posible dar feedback en cursos asincrónicos; se compensa con más contenido</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q8',2)"><div class="eval-radio"></div><span>Diseñar el feedback por adelantado: retroalimentación específica por alternativa en los quizzes, rúbricas visibles desde el inicio, y actividades de evaluación entre pares con rúbrica</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q8',3)"><div class="eval-radio"></div><span>Publicar las respuestas correctas al final del curso, para que cada uno se autocorrija</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q8',4)"><div class="eval-radio"></div><span>Reemplazar todas las evaluaciones por encuestas de satisfacción</span></div>
+            </div>
+
+            <div id="evalResult" class="mt-3"></div>
+
+            <div class="d-flex flex-wrap gap-2 mt-3">
+              <button class="btn btn-terra" id="submitBtn" onclick="submitEval()">
+                <i class="bi bi-check-circle me-2"></i>Enviar evaluación
+              </button>
+              <button class="btn btn-outline-terra" id="retryBtn" style="display:none" onclick="retryEval()">
+                <i class="bi bi-arrow-clockwise me-2"></i>Reintentar
+              </button>
+              <a href="m3-2.html" class="btn btn-blue" id="nextBtn" style="display:none">
+                Siguiente unidad <i class="bi bi-arrow-right ms-2"></i>
+              </a>
+            </div>
+          </div>
+
+        </div><!-- /lesson-body -->
+      </div><!-- /content-di -->
+    </div><!-- /col -->
+  </div><!-- /row -->
+</div><!-- /container -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbylYML8h2BnNgi2AXtZ8bkGaXPNRhurswPr5dfyGRldbVoCRvmoT2cHN0r3I4qGynLb/exec';
+const UNIDAD_ID = 'm3-1';
+const UNIDAD_LABEL = '3.1 Evaluación y diseño de actividades';
+
+const CORRECTAS = { q1:2, q2:1, q3:3, q4:1, q5:4, q6:2, q7:3, q8:2 };
+const FEEDBACK = {
+  q1: {ok:'Correcto. Un curso donde todo califica no tiene evaluación formativa real: el estudiante evita arriesgarse porque cada error cuesta nota. Un buen diseño reserva espacios seguros de práctica (intentos ilimitados, feedback inmediato, sin nota) antes de cada evaluación sumativa.',fail:'Más notas no significa más aprendizaje. El problema es la ausencia de práctica formativa sin costo: si cada error penaliza, el estudiante deja de arriesgarse y aprende menos. La evaluación formativa necesita espacios sin calificación (o con peso mínimo) donde equivocarse sea parte del proceso.'},
+  q2: {ok:'Correcto. En backward design la secuencia es: resultados de aprendizaje → evidencia de logro (evaluación) → actividades y contenidos. Definir la evaluación antes que las actividades es lo que garantiza el alineamiento.',fail:'Diseñar el examen al final, "cuando el contenido está listo", produce el desalineamiento clásico: se enseña una cosa y se evalúa otra. En backward design la evaluación se define inmediatamente después de los resultados de aprendizaje y antes de diseñar actividades.'},
+  q3: {ok:'Correcto. El escenario ramificado pide el desempeño mismo (decidir qué responder ante una objeción real simulada), con contexto realista y consecuencias — los rasgos definitorios de la evaluación auténtica. Las otras opciones preguntan sobre el desempeño en vez de pedirlo.',fail:'La evaluación auténtica pide el desempeño, no información sobre el desempeño. Ensayos, quizzes y memorización miden conocimiento declarativo; el escenario ramificado con un cliente simulado es el que replica cómo se usa la competencia en la realidad.'},
+  q4: {ok:'Correcto. La rúbrica holística es rápida y suficiente para tareas de bajo peso con muchos trabajos; la analítica entrega el feedback detallado por dimensión que exige una evaluación final de alto peso. Elegir el instrumento según el propósito y el costo de corrección es el criterio profesional.',fail:'Ninguna rúbrica es "siempre superior": la analítica da feedback detallado pero es lenta; la holística es rápida pero da feedback pobre. Con 120 entregas de bajo peso corresponde holística; para la evaluación final de alto peso, analítica.'},
+  q5: {ok:'Correcto. "Buena presentación" es un adjetivo, no una conducta observable: cada corrector lo interpretará distinto y la nota pierde confiabilidad entre evaluadores. El descriptor debe listar lo verificable: ortografía, estructura de párrafos, citas.',fail:'El defecto no es de exigencia ni de puntaje: es que "buena" no es observable. Dos correctores con ese descriptor llegarían a notas distintas. Se corrige describiendo conductas verificables — la prueba de fuego de toda rúbrica es que correctores distintos lleguen a la misma nota.'},
+  q6: {ok:'Correcto. El verbo del objetivo ("diseñar" = crear) exige actividades donde se practique diseñando y una evaluación con producto y rúbrica. Videos + lecturas + quiz cubren solo comprender y recordar: el curso certifica algo que nunca se practicó.',fail:'El curso trata el mismo tema en todos sus elementos, pero el alineamiento constructivo se verifica por el nivel cognitivo del verbo, no por el tema. "Diseñar" exige práctica de diseño y evaluación por producto; bajar el objetivo a "recordar" traicionaría la competencia que se quiere formar.'},
+  q7: {ok:'Correcto. Ese comentario responde las tres preguntas: reconecta con el criterio (Feed Up: "que otro corrector pudiera aplicarla"), da evidencia específica del estado actual (Feed Back: "criterios 1 y 2 lo logran; el 3 usa adjetivos") y define la acción siguiente (Feed Forward: "reescríbelo describiendo la conducta observable").',fail:'Una nota con elogio genérico, un señalamiento sin especificar, o un "revisa el material" no responden las tres preguntas del modelo. El feedback efectivo necesita: hacia dónde voy (criterio), cómo voy (evidencia específica) y qué sigue (acción concreta) — la opción correcta es la única que incluye las tres.'},
+  q8: {ok:'Correcto. En asincronía el feedback no puede improvisarse: se diseña por adelantado como parte del contenido — retroalimentación específica por alternativa en quizzes, rúbricas visibles desde el día uno, y evaluación de pares que multiplica el feedback disponible.',fail:'Sí es posible — pero hay que diseñarlo por adelantado. El feedback automático por alternativa, las rúbricas publicadas desde el inicio y la evaluación entre pares con rúbrica son las estrategias que garantizan retroalimentación oportuna sin docente en vivo. Publicar respuestas al final llega demasiado tarde para ser útil.'}
+};
+
+let answers = {};
+let submitted = false;
+
+function toggleAcc(btn) {
+  const body = btn.nextElementSibling;
+  const isOpen = body.classList.contains('show');
+  body.classList.toggle('show', !isOpen);
+  btn.classList.toggle('open', !isOpen);
+}
+
+function selectOpt(el, question, optNum) {
+  if (submitted) return;
+  const container = el.closest('[data-question]');
+  container.querySelectorAll('.eval-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  answers[question] = optNum;
+  document.getElementById('answeredCount').textContent = Object.keys(answers).length;
+}
+
+function submitEval() {
+  if (Object.keys(answers).length === 0) {
+    showToast('Responde al menos una pregunta para enviar', 'warning');
+    return;
+  }
+  submitted = true;
+  let score = 0;
+  const total = Object.keys(CORRECTAS).length;
+
+  Object.keys(CORRECTAS).forEach(q => {
+    const container = document.querySelector(`[data-question="${q}"]`);
+    if (!container) return;
+    const userAns = answers[q];
+    const correctAns = CORRECTAS[q];
+    const opts = container.querySelectorAll('.eval-option');
+
+    opts.forEach((opt, idx) => {
+      opt.style.pointerEvents = 'none';
+      if (idx + 1 === userAns) {
+        if (userAns === correctAns) { opt.classList.add('correct'); score++; }
+        else opt.classList.add('incorrect');
+      }
+    });
+
+    if (userAns !== undefined) {
+      const fb = FEEDBACK[q];
+      const isOk = userAns === correctAns;
+      const fbEl = document.createElement('div');
+      fbEl.className = 'feedback-box ' + (isOk ? 'feedback-ok' : 'feedback-fail');
+      fbEl.innerHTML = (isOk ? '<i class="bi bi-check-circle me-1"></i>' : '<i class="bi bi-x-circle me-1"></i>') + (isOk ? fb.ok : fb.fail);
+      container.appendChild(fbEl);
+    }
+  });
+
+  const answered = Object.keys(answers).length;
+  const pct = Math.round(score / total * 100);
+  const msg = pct >= 90 ? 'Excelente dominio de esta unidad.' : pct >= 70 ? 'Buen resultado. Repasa lo que fallaste antes de avanzar.' : 'Hay conceptos que requieren repaso. Revisa las secciones donde cometiste errores.';
+
+  document.getElementById('evalResult').innerHTML = `
+    <div class="result-card">
+      <div class="result-score">${score}/${total}</div>
+      <div class="result-label">${pct}% de respuestas correctas (${answered} respondidas)</div>
+      <div class="result-msg">${msg}</div>
+    </div>`;
+
+  document.getElementById('submitBtn').style.display = 'none';
+  document.getElementById('retryBtn').style.display = 'inline-block';
+  document.getElementById('nextBtn').style.display = 'inline-block';
+  guardarPuntaje(score / total);
+}
+
+function retryEval() {
+  submitted = false;
+  answers = {};
+  document.querySelectorAll('.eval-option').forEach(o => {
+    o.classList.remove('selected','correct','incorrect');
+    o.style.pointerEvents = '';
+  });
+  document.querySelectorAll('.feedback-box').forEach(f => f.remove());
+  document.getElementById('evalResult').innerHTML = '';
+  document.getElementById('answeredCount').textContent = '0';
+  document.getElementById('submitBtn').style.display = 'inline-block';
+  document.getElementById('retryBtn').style.display = 'none';
+  document.getElementById('nextBtn').style.display = 'none';
+  showToast('Inténtalo de nuevo — repasa el contenido antes de responder', 'info');
+  document.querySelector('.eval-section').scrollIntoView({ behavior:'smooth' });
+}
+
+function getScores() { try { return JSON.parse(localStorage.getItem('di_scores')||'{}'); } catch(e) { return {}; } }
+
+function jsonp(params) {
+  return new Promise(function(resolve, reject) {
+    var cb = 'cb_' + Date.now() + '_' + Math.floor(Math.random()*1e6);
+    var script = document.createElement('script');
+    function cleanup(){ try { delete window[cb]; } catch(e) { window[cb] = undefined; } if (script.parentNode) script.parentNode.removeChild(script); }
+    window[cb] = function(data){ cleanup(); resolve(data); };
+    var qp = new URLSearchParams(Object.assign({}, params, { callback: cb }));
+    script.src = SCRIPT_URL + '?' + qp.toString();
+    script.onerror = function(){ cleanup(); reject(new Error('conexion')); };
+    setTimeout(function(){ if (window[cb]) { cleanup(); reject(new Error('timeout')); } }, 20000);
+    document.head.appendChild(script);
+  });
+}
+
+async function guardarPuntaje(ratio) {
+  const s = getScores(); s[UNIDAD_ID] = ratio; localStorage.setItem('di_scores', JSON.stringify(s));
+  updateSidebar();
+  try {
+    await jsonp({ action: 'saveScore', id: UNIDAD_ID, score: ratio, label: UNIDAD_LABEL, date: new Date().toLocaleDateString('es-CL') });
+  } catch(e) {}
+}
+
+function updateSidebar() {
+  const s = getScores();
+  const ids = ['m3-1','m3-2','m3-3'];
+  const done = ids.filter(id => s[id] !== undefined && s[id] > 0).length;
+  document.getElementById('sidebarPct').textContent = done + '/3';
+  document.getElementById('sidebarBar').style.width = Math.round(done/3*100) + '%';
+  ids.forEach(id => {
+    const el = document.getElementById('num-' + id);
+    if (el && s[id] !== undefined && s[id] > 0) { el.style.background = 'var(--success)'; el.style.color = '#fff'; }
+  });
+  document.getElementById('headerProgress').textContent = done + '/3 completadas';
+}
+
+function showToast(msg, type) {
+  const colors = { warning:'#c85c3a', info:'#3a6b8a', success:'#2d7a4f' };
+  const t = document.createElement('div');
+  t.className = 'toast-di';
+  t.style.background = colors[type] || colors.info;
+  t.innerHTML = msg;
+  document.body.appendChild(t);
+  setTimeout(() => { t.style.opacity='0'; t.style.transition='opacity 0.3s'; setTimeout(()=>t.remove(),300); }, 3000);
+}
+
+function scrollToTop() { window.scrollTo({top:0,behavior:'smooth'}); }
+
+updateSidebar();
+
+async function syncSheet() {
+  try {
+    const data = await jsonp({ action: 'getAll' });
+    if (data && data.ok) {
+      const s = getScores();
+      (data.scores || []).forEach(function(row){
+        if (row.id && row.score !== undefined) s[row.id] = parseFloat(row.score);
+      });
+      localStorage.setItem('di_scores', JSON.stringify(s));
+      updateSidebar();
+      showCompletedState();
+    }
+  } catch(e) {}
+}
+
+function showCompletedState() {
+  const ratio = getScores()[UNIDAD_ID];
+  if (ratio === undefined || ratio <= 0) return;
+  const pct = Math.round(ratio * 100);
+  const ok = pct >= 70;
+  const sec = document.querySelector('.eval-section');
+  if (!sec) return;
+  let banner = document.getElementById('completedBanner');
+  if (!banner) {
+    banner = document.createElement('div');
+    banner.id = 'completedBanner';
+    sec.insertBefore(banner, sec.firstChild);
+  }
+  banner.innerHTML =
+    '<div style="display:flex;align-items:center;gap:0.9rem;background:' + (ok ? '#edf7f2' : 'var(--terra-light)') +
+    ';border:1px solid ' + (ok ? '#b0ddc5' : '#e0b0a0') + ';border-left:4px solid ' + (ok ? 'var(--success)' : 'var(--terra)') +
+    ';border-radius:8px;padding:0.9rem 1.1rem;margin-bottom:1.2rem">' +
+      '<i class="bi bi-' + (ok ? 'check-circle-fill' : 'arrow-repeat') + '" style="color:' + (ok ? 'var(--success)' : 'var(--terra)') + ';font-size:1.5rem"></i>' +
+      '<div style="flex:1">' +
+        '<div style="font-weight:bold;font-size:0.9rem;color:var(--dark)">Ya completaste esta unidad</div>' +
+        '<div style="font-size:0.82rem;color:var(--muted)">Puntaje guardado: <strong>' + pct + '%</strong>. Puedes repasar el contenido o volver a responder más abajo.</div>' +
+      '</div>' +
+    '</div>';
+}
+
+function trackVisit() {
+  try {
+    let vid = localStorage.getItem('di_vid');
+    if (!vid) { vid = 'v' + Date.now().toString(36) + Math.random().toString(36).slice(2,8); localStorage.setItem('di_vid', vid); }
+    let sid = sessionStorage.getItem('di_sid');
+    if (!sid) { sid = 's' + Date.now().toString(36) + Math.random().toString(36).slice(2,8); sessionStorage.setItem('di_sid', sid); }
+    const qs = new URLSearchParams(location.search);
+    if (qs.get('owner') === '1') localStorage.setItem('di_owner', '1');
+    if (qs.get('owner') === '0') localStorage.removeItem('di_owner');
+    const owner = localStorage.getItem('di_owner') === '1' ? '1' : '0';
+    const device = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'movil' : 'escritorio';
+    const params = new URLSearchParams({ action: 'logVisit', page: UNIDAD_ID, vid: vid, sid: sid, owner: owner, device: device, t: String(Date.now()) });
+    const img = new Image();
+    img.referrerPolicy = 'no-referrer';
+    img.src = SCRIPT_URL + '?' + params.toString();
+  } catch(e) {}
+}
+
+trackVisit();
+syncSheet();
+</script>
+</body>
+</html>
