@@ -371,7 +371,7 @@ footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.78
         <div class="modulo-head-sub">Autoría · video · IA generativa · colaboración · gestión de proyectos</div>
       </div>
       <div class="modulo-head-progress">
-        <div class="modulo-pct" id="pct-m4">0/3 completadas</div>
+        <div class="modulo-pct" id="pct-m4">0/4 completadas</div>
         <div class="modulo-mini-bar"><div class="modulo-mini-fill" id="bar-m4" style="width:0%"></div></div>
       </div>
     </div>
@@ -412,6 +412,18 @@ footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.78
           <i class="bi bi-arrow-right-short unidad-arrow"></i>
         </div>
       </a>
+      <a class="unidad-item" href="modulos/m4-4.html">
+        <div class="unidad-top">
+          <div class="unidad-badge" id="badge-m4-4">4.4</div>
+          <div class="unidad-num">Unidad 4.4</div>
+        </div>
+        <div class="unidad-title">Colaboración y gestión de proyectos</div>
+        <div class="unidad-desc">Waterfall vs Agile, Miro, Trello, Notion — gestión de proyectos de DI</div>
+        <div class="unidad-score">
+          <span class="unidad-score-num pending" id="score-m4-4">Pendiente</span>
+          <i class="bi bi-arrow-right-short unidad-arrow"></i>
+        </div>
+      </a>
     </div>
   </div>
 
@@ -422,8 +434,8 @@ footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.78
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbylYML8h2BnNgi2AXtZ8bkGaXPNRhurswPr5dfyGRldbVoCRvmoT2cHN0r3I4qGynLb/exec';
-const UNIDADES = ['m1-1','m1-2','m1-3','m2-1','m2-2','m2-3','m3-1','m3-2','m3-3','m4-1','m4-2','m4-3'];
-const MODULOS = { m1:['m1-1','m1-2','m1-3'], m2:['m2-1','m2-2','m2-3'], m3:['m3-1','m3-2','m3-3'], m4:['m4-1','m4-2','m4-3'] };
+const UNIDADES = ['m1-1','m1-2','m1-3','m2-1','m2-2','m2-3','m3-1','m3-2','m3-3','m4-1','m4-2','m4-3','m4-4'];
+const MODULOS = { m1:['m1-1','m1-2','m1-3'], m2:['m2-1','m2-2','m2-3'], m3:['m3-1','m3-2','m3-3'], m4:['m4-1','m4-2','m4-3','m4-4'] };
 
 function jsonp(params) {
   return new Promise(function(resolve, reject) {
@@ -482,8 +494,8 @@ function updateUI() {
     const done = ids.filter(id => scores[id] !== undefined && scores[id] > 0).length;
     const pctEl = document.getElementById('pct-' + mod);
     const barEl = document.getElementById('bar-' + mod);
-    if (pctEl) pctEl.textContent = done + '/3 completadas';
-    if (barEl) barEl.style.width = Math.round(done/3*100) + '%';
+    if (pctEl) pctEl.textContent = done + '/' + ids.length + ' completadas';
+    if (barEl) barEl.style.width = Math.round(done/ids.length*100) + '%';
   });
 }
 
