@@ -109,16 +109,12 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
 .table-di th { background: var(--dark); color: #fff; font-weight: normal; }
 .table-di td { vertical-align: top; }
 
-/* HERRAMIENTA card (módulo 4) */
-.tool-di { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; margin-bottom: 0.8rem; }
-.tool-di-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; }
-.tool-di-head h6 { font-family: Georgia, serif; font-size: 1rem; font-weight: normal; color: var(--dark); margin: 0; }
-.tool-price { font-size: 0.72rem; padding: 0.2rem 0.6rem; border-radius: 20px; background: var(--terra-light); color: var(--terra); border: 1px solid var(--border); }
-.tool-di a.tool-link { font-size: 0.8rem; color: var(--blue); text-decoration: none; }
-.tool-di a.tool-link:hover { text-decoration: underline; }
-.tool-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; margin-top: 0.6rem; font-size: 0.82rem; }
-@media(max-width:640px) { .tool-grid { grid-template-columns: 1fr; } }
-.tool-grid div strong { display: block; color: var(--muted); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.15rem; }
+/* CODE BLOCK (JSON / variables técnicas) */
+.code-block { background: var(--dark); color: #d8d4cc; border-radius: 8px; padding: 1rem 1.2rem; font-family: 'Consolas', 'Courier New', monospace; font-size: 0.82rem; line-height: 1.6; overflow-x: auto; margin: 0.8rem 0; }
+.code-block .ck { color: #7ab8d9; }
+.code-block .cv { color: #e0a95a; }
+.code-block .cs { color: #a3d99a; }
+.code-block .cc { color: #7a7570; }
 
 /* EVALUACIÓN */
 .eval-section { background: var(--cream); border-radius: 10px; border: 1px solid var(--border); padding: 1.5rem; margin-top: 2rem; }
@@ -220,12 +216,12 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
         <div class="lesson-hero">
           <div class="unit-tag">Módulo 3 · Unidad 3.2</div>
           <h1>LMS, herramientas de autoría, SCORM, xAPI y SLA</h1>
-          <p>Plataformas · estándares de empaquetado · gestión de SLA · reportes de Moodle</p>
+          <p>Guía técnica exhaustiva: arquitectura de plataformas · estándares de empaquetado · ITIL aplicado a SLA · ETL de reportes</p>
         </div>
         <div class="lesson-badges">
           <span class="lbadge"><i class="bi bi-book me-1"></i>5 bloques de contenido</span>
-          <span class="lbadge"><i class="bi bi-clipboard-check me-1"></i>8 preguntas al final</span>
-          <span class="lbadge"><i class="bi bi-clock me-1"></i>~30 min</span>
+          <span class="lbadge"><i class="bi bi-clipboard-check me-1"></i>8 preguntas de certificación</span>
+          <span class="lbadge"><i class="bi bi-clock me-1"></i>~60 min</span>
         </div>
 
         <div class="lesson-body">
@@ -276,6 +272,19 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
               <div class="callout-blue mt-2">
                 <strong>Cómo aplicarlo si te preguntan en una entrevista:</strong> no describas el LMS solo como "la plataforma donde se sube el curso". Explica el flujo completo — estructurar, cargar, evaluar, matricular, monitorear — porque eso demuestra que entiendes el LMS como herramienta de gestión pedagógica, no solo de alojamiento de archivos.
               </div>
+
+              <h5>Arquitectura avanzada: Cohortes y Agrupamientos (Groupings)</h5>
+              <p>El error más común de un DI sin experiencia de escala es <strong>duplicar el curso</strong> por cada paralelo o sección. Si tienes 7 paralelos de séptimo básico, crear 7 cursos idénticos en Moodle significa mantener 7 copias del mismo contenido: cada corrección, cada actualización de material, hay que repetirla 7 veces. La arquitectura correcta usa un <strong>curso maestro único</strong> con dos mecanismos de segmentación:</p>
+              <div class="card-di"><h6><i class="bi bi-people-fill me-1"></i>Cohortes (a nivel de sitio)</h6><p>Son listas de usuarios definidas a nivel de toda la plataforma (no de un curso específico) — por ejemplo, "7ºA 2026", "7ºB 2026". Se crean una vez en Administración del sitio y sirven para matricular masivamente a un grupo completo en uno o varios cursos con un solo clic, en vez de inscribir estudiante por estudiante.</p></div>
+              <div class="card-di"><h6><i class="bi bi-diagram-2 me-1"></i>Grupos y Agrupamientos (a nivel de curso)</h6><p>Dentro del curso maestro, cada cohorte se asigna a un <strong>Grupo</strong> (ej. "Grupo 7ºA"). Los "Agrupamientos" (Groupings) permiten reunir varios grupos bajo una misma etiqueta cuando una actividad debe compartirse entre algunos paralelos pero no todos.</p></div>
+              <div class="card-di"><h6><i class="bi bi-eye-slash me-1"></i>Modo "Grupos separados"</h6><p>Al activar este modo en el curso (o en una actividad específica, como un foro), cada paralelo solo ve las publicaciones, entregas y compañeros de su propio grupo — aunque todos comparten literalmente el mismo curso y el mismo contenido base.</p></div>
+
+              <div class="callout-terra mt-2">
+                <strong>Por qué esto importa para tu rol:</strong> esta arquitectura es lo que separa a un DI que "sabe usar Moodle" de uno que sabe <em>diseñar la estructura de un curso a escala</em>. Un solo curso maestro con grupos separados significa un solo lugar donde corregir un error, una sola vez que actualizar un recurso, y reportes de finalización que se pueden filtrar por paralelo sin perder la vista consolidada del séptimo básico completo.
+              </div>
+              <div class="callout-blue">
+                <strong>Cómo se opera:</strong> Administración del sitio → Usuarios → Cohortes (crear y asignar estudiantes) → dentro del curso: Participantes → Cohortes de matriculación (para autoinscribir la cohorte completa) → Configuración del curso → Grupos (crear un grupo por cohorte y activar "Grupos separados" donde corresponda).
+              </div>
             </div>
           </div>
 
@@ -314,6 +323,28 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
               <div class="callout-terra mt-2">
                 <strong>Error típico que debes saber detectar:</strong> si un estudiante dice "vi todo el módulo pero me sigue apareciendo como incompleto", casi siempre es un problema de configuración del criterio de finalización en la publicación del SCORM, no un error del LMS. Es una de las fallas más frecuentes que un DI resuelve en el día a día.
               </div>
+
+              <h5>Dentro del paquete: el imsmanifest.xml y las variables de comunicación (API)</h5>
+              <p>El archivo <code>imsmanifest.xml</code> es la "ficha técnica" que declara la estructura del paquete: qué archivo abrir primero, cómo se organizan las secciones (los "SCOs", Sharable Content Objects) y qué versión de SCORM se está usando. Pero lo que realmente conecta el contenido con el LMS mientras el estudiante interactúa son las <strong>variables del modelo de datos SCORM (CMI)</strong>, que el paquete "escribe" y el LMS "lee" en tiempo real:</p>
+              <table class="table table-di table-bordered mt-2">
+                <thead><tr><th>Variable</th><th>Qué guarda</th><th>Por qué le importa a un DI</th></tr></thead>
+                <tbody>
+                  <tr><td><code>cmi.core.lesson_status</code></td><td>El estado del intento: <em>incomplete, completed, passed, failed</em></td><td>Es la variable que determina si el curso aparece como "completado" para el estudiante — la causa más común de reclamos.</td></tr>
+                  <tr><td><code>cmi.core.score.raw</code></td><td>El puntaje numérico obtenido en el intento</td><td>Es lo que se refleja en el gradebook de Moodle; si no coincide, el problema suele estar en cómo se configuró el quiz dentro de Storyline.</td></tr>
+                  <tr><td><code>cmi.suspend_data</code></td><td>Un "punto de guardado": en qué pantalla exacta quedó el estudiante</td><td>Permite retomar donde quedó en vez de empezar de cero — si esta variable se corrompe o excede el límite de caracteres que soporta el LMS, el estudiante pierde el avance.</td></tr>
+                  <tr><td><code>cmi.core.session_time</code></td><td>Tiempo que duró esa sesión específica de uso</td><td>Se usa para reportar tiempos de dedicación reales, útil para justificar la duración estimada de un curso.</td></tr>
+                </tbody>
+              </table>
+
+              <h5>Cómo hacer debugging cuando una nota no se guarda</h5>
+              <div class="card-di"><h6><i class="bi bi-1-circle me-1"></i>Confirmar el síntoma exacto</h6><p>¿No se guarda el estado de completado, o se guarda pero con el puntaje en cero? Son dos problemas distintos: el primero suele ser el criterio de finalización mal definido en Storyline; el segundo, un desajuste entre cómo el quiz calcula el puntaje y qué variable CMI se está reportando.</p></div>
+              <div class="card-di"><h6><i class="bi bi-2-circle me-1"></i>Revisar el reporte SCORM en Moodle</h6><p>Dentro de la actividad SCORM: Informes → ver el intento del estudiante — Moodle muestra el valor crudo de <code>lesson_status</code> y <code>score.raw</code> que recibió, lo que permite distinguir si el problema está en el paquete o en la configuración del LMS.</p></div>
+              <div class="card-di"><h6><i class="bi bi-3-circle me-1"></i>Probar en modo incógnito</h6><p>El navegador a veces cachea una versión antigua del paquete SCORM; probar en una ventana de incógnito descarta ese factor antes de escalar el problema como un error real.</p></div>
+              <div class="card-di"><h6><i class="bi bi-4-circle me-1"></i>Revisar el límite de suspend_data</h6><p>Algunos LMS truncan <code>cmi.suspend_data</code> si el paquete guarda demasiada información de estado (común en simulaciones muy largas o con muchas variables internas) — si el estudiante "pierde el avance" a mitad de curso, este es el primer sospechoso.</p></div>
+
+              <div class="callout-blue mt-2">
+                <strong>Cómo aplicarlo:</strong> no necesitas leer XML ni programar el SCO. Lo que se espera de un DI es que, ante "a un estudiante no le guardó la nota", sepa hacer las preguntas correctas y ubicar el dato exacto (¿qué dice el reporte SCORM del intento?) antes de derivar el caso a soporte técnico como una caja negra.
+              </div>
             </div>
           </div>
 
@@ -336,12 +367,24 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
               </div>
 
               <h5>Cómo se ve un statement de xAPI (para perder el miedo al formato)</h5>
-              <p>Cada declaración sigue la estructura <strong>actor – verbo – objeto</strong>, con datos adicionales opcionales de resultado y contexto:</p>
-              <div class="card-di">
-                <h6><i class="bi bi-code-slash me-1"></i>Ejemplo en lenguaje simple</h6>
-                <p><strong>Actor:</strong> Joselyn Vizcarra · <strong>Verbo:</strong> completó · <strong>Objeto:</strong> "Módulo de Anatomía Ósea" · <strong>Resultado:</strong> puntaje 85/100 · <strong>Contexto:</strong> plataforma móvil, fuera de línea.</p>
-              </div>
-              <p>Ese statement se transmite como un objeto JSON al LRS a través de una API REST — el detalle técnico exacto lo maneja normalmente un desarrollador o el administrador de plataforma, pero el DI debe poder leerlo y entender qué información aporta.</p>
+              <p>Cada declaración sigue la estructura <strong>actor – verbo – objeto</strong>, con datos adicionales opcionales de resultado y contexto. Así viaja realmente ese dato, como objeto JSON, desde una app móvil sin conexión hacia el LRS en cuanto vuelve la señal:</p>
+              <div class="code-block">{<br>
+&nbsp;&nbsp;<span class="ck">"actor"</span>: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="ck">"name"</span>: <span class="cs">"Joselyn Vizcarra"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="ck">"mbox"</span>: <span class="cs">"mailto:joselyn@correo.cl"</span><br>
+&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;<span class="ck">"verb"</span>: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="ck">"id"</span>: <span class="cs">"http://adlnet.gov/expapi/verbs/completed"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="ck">"display"</span>: { <span class="ck">"es-CL"</span>: <span class="cs">"completó"</span> }<br>
+&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;<span class="ck">"object"</span>: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="ck">"id"</span>: <span class="cs">"https://curso.di/modulo-anatomia-osea"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="ck">"definition"</span>: { <span class="ck">"name"</span>: { <span class="ck">"es-CL"</span>: <span class="cs">"Módulo de Anatomía Ósea"</span> } }<br>
+&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;<span class="ck">"result"</span>: { <span class="ck">"score"</span>: { <span class="ck">"raw"</span>: <span class="cv">85</span>, <span class="ck">"max"</span>: <span class="cv">100</span> } },<br>
+&nbsp;&nbsp;<span class="ck">"context"</span>: { <span class="ck">"platform"</span>: <span class="cs">"App móvil — offline"</span> } <span class="cc">// se guarda local y sincroniza al reconectar</span><br>
+}</div>
+              <p>Ese objeto JSON se envía al LRS a través de una API REST cuando el dispositivo recupera conexión — el detalle técnico exacto lo maneja normalmente un desarrollador o el administrador de plataforma, pero el DI debe poder leer esta estructura e identificar qué información aporta cada campo.</p>
 
               <h5>Cómo se aplica esto en un proyecto real (flujo conceptual)</h5>
               <div class="card-di"><h6><i class="bi bi-1-circle me-1"></i>Definir qué se quiere medir</h6><p>El DI decide qué comportamientos o hitos importan pedagógicamente: "intentó la simulación 3 veces", "revisó el material de apoyo antes del examen", "practicó en la app fuera del horario de clases".</p></div>
@@ -391,6 +434,20 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
               <div class="callout-terra mt-2">
                 <strong>Cómo aplicarlo:</strong> si te preguntan "¿qué harías si el LMS se cae un lunes en la mañana antes de un examen?", la respuesta esperada sigue este flujo: registrar el ticket con severidad crítica, comunicar de inmediato a la comunidad con una alternativa (posponer, usar canal de respaldo), y dar seguimiento activo hasta el cierre — no simplemente "esperar a que TI lo resuelva".
               </div>
+
+              <h5>Vocabulario ITIL que un SLA de LMS maduro debe incluir</h5>
+              <p>Los compromisos de un SLA bien redactado no se limitan a "tiempo de respuesta". Tres conceptos del marco <strong>ITIL</strong> (el estándar de gestión de servicios de TI) son los que distinguen un SLA operativo de uno solo administrativo:</p>
+              <table class="table table-di table-bordered mt-2">
+                <thead><tr><th>Concepto</th><th>Qué significa</th><th>Por qué debe estar en el SLA</th></tr></thead>
+                <tbody>
+                  <tr><td>Concurrencia máxima</td><td>Número máximo de usuarios usando la plataforma <strong>al mismo tiempo</strong> sin que se degrade el rendimiento</td><td>Un LMS puede soportar 5.000 usuarios registrados pero solo 300 concurrentes — si toda una cohorte rinde examen a la misma hora, este número (no el total de matriculados) es el que puede tumbar la plataforma.</td></tr>
+                  <tr><td>RPO (Recovery Point Objective)</td><td>Cuánta información como máximo se puede perder, medida en tiempo, si el sistema falla</td><td>Un RPO de 24 horas significa que, en el peor caso, se pierde hasta un día de calificaciones y actividad si no hubo backup más reciente — es distinto de "cuánto tarda en volver el sistema" (eso es el RTO, Recovery Time Objective).</td></tr>
+                  <tr><td>Los "Tres Nueves" (99.9% uptime)</td><td>Un compromiso de disponibilidad del 99.9% equivale a un máximo de ~8,7 horas de caída <strong>al año</strong></td><td>Sirve para contrastar promesas de marketing ("alta disponibilidad") con un número verificable y exigible contractualmente.</td></tr>
+                </tbody>
+              </table>
+              <div class="callout-blue mt-2">
+                <strong>Cómo aplicarlo:</strong> si en una negociación de contrato con un proveedor de LMS solo se habla de "tiempo de respuesta a tickets", falta exigir también el RPO (qué tan atrás se puede perder información) y la concurrencia máxima garantizada (no solo el total de usuarios permitidos) — son las dos preguntas técnicas que revelan si el proveedor entiende de verdad el uso real de la plataforma en época de exámenes o matrícula masiva.
+              </div>
             </div>
           </div>
 
@@ -423,6 +480,16 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
               <div class="callout-terra mt-2">
                 <strong>Cómo aplicarlo en tu portafolio de entrevista:</strong> si tienes acceso a tus cursos de MoodleCloud, exporta una captura de un reporte de finalización real y ten lista una frase tipo: "detecté que el X% abandonaba en la unidad Y, y ajusté Z" — eso convierte una competencia técnica en una historia de impacto pedagógico, que es lo que de verdad se evalúa en una entrevista de DI.
               </div>
+
+              <h5>De datos crudos a dashboard: el proceso ETL para un tablero de deserción</h5>
+              <p>Cuando un reporte nativo de Moodle no basta y se necesita un dashboard ejecutivo en PowerBI, el camino no es "exportar y listo" — sigue el proceso estándar de <strong>ETL: Extracción, Transformación y Carga</strong>.</p>
+              <div class="card-di"><h6><i class="bi bi-database me-1"></i>Extracción (Extract)</h6><p>Los datos crudos de comportamiento viven en tablas internas de la base de datos de Moodle, como <code>mdl_logstore_standard_log</code> (el registro de cada clic y acción de cada usuario) y <code>mdl_course_modules_completion</code> (el detalle de finalización). Se extraen vía consulta SQL directa, el reporte de Logs exportado a CSV, o la API web de Moodle.</p></div>
+              <div class="card-di"><h6><i class="bi bi-funnel me-1"></i>Transformación (Transform)</h6><p>Los datos crudos vienen con IDs numéricos en vez de nombres, timestamps en formato Unix, y registros duplicados o irrelevantes (como accesos de administradores). En Power Query (dentro de PowerBI) se limpian: se cruzan los IDs con las tablas de usuarios y cursos, se convierten las fechas a formato legible, y se filtran los eventos que no aportan al análisis.</p></div>
+              <div class="card-di"><h6><i class="bi bi-bar-chart-line me-1"></i>Carga (Load) y modelado con DAX</h6><p>Ya en PowerBI, se construyen medidas con <strong>DAX</strong> (Data Analysis Expressions, el lenguaje de fórmulas de PowerBI) para calcular indicadores que Moodle no entrega directo — por ejemplo, una medida que calcule el <em>% de deserción por unidad</em> comparando estudiantes activos en la Unidad 1 versus la Unidad 4, o el promedio de días de inactividad antes del abandono.</p></div>
+
+              <div class="callout-blue mt-2">
+                <strong>Cómo aplicarlo:</strong> no se espera que un DI escriba las consultas SQL o las fórmulas DAX desde cero sin apoyo, pero sí que entienda el flujo completo para poder <em>especificarle a un analista de datos</em> qué necesita ver: "quiero un tablero que cruce el log de acceso con la finalización por unidad, para identificar en qué punto exacto se desconectan los estudiantes que después desertan" — esa es la traducción de una necesidad pedagógica en un requerimiento de ETL.
+              </div>
             </div>
           </div>
 
@@ -432,67 +499,67 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
             <p class="eval-progress-text">Preguntas respondidas: <strong><span id="answeredCount">0</span>/8</strong> — puedes enviar en cualquier momento</p>
 
             <div class="eval-question" data-question="q1">
-              <h6>1. ¿Cuál es la principal fortaleza de Moodle frente a plataformas comerciales como Blackboard?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q1',1)"><div class="eval-radio"></div><span>Tiene mejor soporte técnico incluido</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',2)"><div class="eval-radio"></div><span>Es open source, configurable y de bajo costo, con una comunidad amplia de plugins</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',3)"><div class="eval-radio"></div><span>No requiere ningún tipo de administración</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',4)"><div class="eval-radio"></div><span>Solo funciona en dispositivos móviles</span></div>
+              <h6>1. Tienes 7 paralelos de séptimo básico que deben ver exactamente el mismo curso, pero cada docente solo debe ver y calificar a su propio paralelo. ¿Cómo estructuras esto en Moodle sin duplicar trabajo?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q1',1)"><div class="eval-radio"></div><span>Creando 7 copias idénticas del curso, una por paralelo</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q1',2)"><div class="eval-radio"></div><span>Un curso maestro único, con una Cohorte y un Grupo por paralelo, activando el modo "Grupos separados"</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q1',3)"><div class="eval-radio"></div><span>Un curso maestro sin grupos, confiando en que cada docente ignore a los otros paralelos</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q1',4)"><div class="eval-radio"></div><span>Matriculando a todos los estudiantes como profesores para que administren su propio contenido</span></div>
             </div>
 
             <div class="eval-question" data-question="q2">
-              <h6>2. ¿Cuál es la limitación clave de SCORM frente a xAPI?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q2',1)"><div class="eval-radio"></div><span>SCORM no puede registrar puntajes</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',2)"><div class="eval-radio"></div><span>SCORM requiere conexión constante al LMS y registra datos limitados (completó/no completó)</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',3)"><div class="eval-radio"></div><span>SCORM solo funciona en Canvas</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',4)"><div class="eval-radio"></div><span>SCORM no es compatible con ningún LMS</span></div>
+              <h6>2. Un estudiante reclama: "vi todo el módulo de Storyline pero me sigue apareciendo como incompleto en Moodle". ¿Cuál es la causa más probable y dónde la verificas primero?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q2',1)"><div class="eval-radio"></div><span>El LMS está caído; hay que escalar el caso a TI de inmediato como incidente crítico</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q2',2)"><div class="eval-radio"></div><span>El criterio de finalización quedó mal configurado al publicar el SCORM; se revisa el valor de <code>cmi.core.lesson_status</code> en el reporte del intento dentro de la actividad SCORM</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q2',3)"><div class="eval-radio"></div><span>SCORM no permite marcar cursos como completados, es una limitación sin solución</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q2',4)"><div class="eval-radio"></div><span>El estudiante debe reinstalar su navegador</span></div>
             </div>
 
             <div class="eval-question" data-question="q3">
-              <h6>3. ¿Qué es un LRS en el contexto de xAPI?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q3',1)"><div class="eval-radio"></div><span>Un tipo de LMS gratuito</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',2)"><div class="eval-radio"></div><span>Un Learning Record Store, donde se almacenan las declaraciones de xAPI</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',3)"><div class="eval-radio"></div><span>Un lenguaje de programación para SCORM</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',4)"><div class="eval-radio"></div><span>Un reporte estándar de Moodle</span></div>
+              <h6>3. Necesitas registrar que un aprendiz practicó una simulación clínica en una app móvil, sin conexión a internet, y que ese dato se sincronice después con la plataforma de la institución. ¿Qué combinación de estándar y componente usarías?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q3',1)"><div class="eval-radio"></div><span>SCORM 1.2, porque es el más compatible con todos los LMS</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q3',2)"><div class="eval-radio"></div><span>xAPI, enviando statements a un LRS (Learning Record Store) cuando la app recupera conexión</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q3',3)"><div class="eval-radio"></div><span>Un reporte manual del docente al final del semestre, ya que ningún estándar cubre el uso offline</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q3',4)"><div class="eval-radio"></div><span>SCORM 2004, porque su secuenciación avanzada resuelve el problema de la conexión</span></div>
             </div>
 
             <div class="eval-question" data-question="q4">
-              <h6>4. ¿En qué escenario xAPI ofrece una ventaja clara sobre SCORM?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q4',1)"><div class="eval-radio"></div><span>Cuando el curso es un PDF simple sin interactividad</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',2)"><div class="eval-radio"></div><span>Cuando se necesita rastrear aprendizaje offline o fuera del LMS, como en simulaciones o apps móviles</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',3)"><div class="eval-radio"></div><span>Cuando el LMS es muy antiguo y no soporta estándares modernos</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',4)"><div class="eval-radio"></div><span>Cuando no hay necesidad de registrar ningún dato</span></div>
+              <h6>4. En un statement de xAPI en formato JSON, el campo <code>"result": {"score": {"raw": 85, "max": 100}}</code> — ¿qué información pedagógica específica está aportando?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q4',1)"><div class="eval-radio"></div><span>El nombre del curso que se está registrando</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q4',2)"><div class="eval-radio"></div><span>El puntaje obtenido por el actor en esa experiencia específica, sobre el puntaje máximo posible</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q4',3)"><div class="eval-radio"></div><span>La fecha en que se creó la cuenta del estudiante</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q4',4)"><div class="eval-radio"></div><span>El identificador del LRS donde se guardó el dato</span></div>
             </div>
 
             <div class="eval-question" data-question="q5">
-              <h6>5. ¿Qué mide la métrica de 'disponibilidad' (uptime) en un SLA de LMS?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q5',1)"><div class="eval-radio"></div><span>El número de usuarios registrados</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',2)"><div class="eval-radio"></div><span>El porcentaje de tiempo que la plataforma está operativa</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',3)"><div class="eval-radio"></div><span>El tiempo que tarda un estudiante en completar un curso</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',4)"><div class="eval-radio"></div><span>La cantidad de cursos publicados</span></div>
+              <h6>5. Un proveedor de LMS ofrece un SLA con "99.9% de disponibilidad" y "500 usuarios registrados soportados". Como coordinador, ¿qué pregunta técnica adicional es indispensable antes de firmar, pensando en la semana de exámenes?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q5',1)"><div class="eval-radio"></div><span>Ninguna; esos dos datos ya garantizan que la plataforma funcionará bien en exámenes</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q5',2)"><div class="eval-radio"></div><span>Cuál es la concurrencia máxima garantizada (usuarios simultáneos) y el RPO en caso de falla de la base de datos</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q5',3)"><div class="eval-radio"></div><span>Cuál es el color corporativo de la interfaz del proveedor</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q5',4)"><div class="eval-radio"></div><span>Cuántos empleados tiene la empresa proveedora</span></div>
             </div>
 
             <div class="eval-question" data-question="q6">
-              <h6>6. En una institución con LMS propio, ¿cuál es típicamente el rol de un coordinador de DI respecto al SLA?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q6',1)"><div class="eval-radio"></div><span>Configurar el servidor y la infraestructura de red</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',2)"><div class="eval-radio"></div><span>Gestionar la relación con TI/proveedor: reportar incidentes, dar seguimiento y comunicar interrupciones</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',3)"><div class="eval-radio"></div><span>Redactar el contrato legal del SLA</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',4)"><div class="eval-radio"></div><span>Ignorar el SLA porque no le compete</span></div>
+              <h6>6. Ocurre una falla que corrompe parte de la base de datos del LMS un martes a mediodía. ¿Qué métrica del SLA determina cuántas horas de actividad (calificaciones, entregas) se perderán como máximo, y cuál determina cuánto tardará en volver a estar disponible?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q6',1)"><div class="eval-radio"></div><span>Ambas cosas las determina el uptime (99.9%)</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q6',2)"><div class="eval-radio"></div><span>El RPO (Recovery Point Objective) determina cuánto se pierde; el RTO (Recovery Time Objective) determina cuánto tarda en volver</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q6',3)"><div class="eval-radio"></div><span>La concurrencia máxima determina ambas cosas</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q6',4)"><div class="eval-radio"></div><span>Ninguna métrica de un SLA cubre este escenario</span></div>
             </div>
 
             <div class="eval-question" data-question="q7">
-              <h6>7. ¿Qué reporte de Moodle mostraría una caída abrupta de estudiantes que avanzan en una unidad específica?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q7',1)"><div class="eval-radio"></div><span>El informe de calificaciones únicamente</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',2)"><div class="eval-radio"></div><span>El reporte de finalización de curso (Completion)</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',3)"><div class="eval-radio"></div><span>El registro de creación de usuarios</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',4)"><div class="eval-radio"></div><span>El catálogo de cursos</span></div>
+              <h6>7. El reporte de Finalización muestra que el 90% de una cohorte completa la Unidad 1, pero solo el 40% completa la Unidad 2. ¿Cuál es la interpretación y siguiente paso correctos?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q7',1)"><div class="eval-radio"></div><span>Concluir de inmediato que los estudiantes de esa cohorte son menos comprometidos y no hacer nada más</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q7',2)"><div class="eval-radio"></div><span>Tratar la caída como una señal de posible problema de diseño en la Unidad 2, comparar duración/claridad con la Unidad 1, ajustar y volver a medir en la siguiente cohorte</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q7',3)"><div class="eval-radio"></div><span>Ignorar el dato porque el reporte de finalización no es confiable</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q7',4)"><div class="eval-radio"></div><span>Eliminar la Unidad 2 del curso sin más análisis</span></div>
             </div>
 
             <div class="eval-question" data-question="q8">
-              <h6>8. ¿Por qué se exportan a veces los datos de Moodle hacia PowerBI?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q8',1)"><div class="eval-radio"></div><span>Porque Moodle no puede generar ningún reporte</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',2)"><div class="eval-radio"></div><span>Porque PowerBI permite dashboards más visuales y ejecutivos que los reportes nativos de Moodle</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',3)"><div class="eval-radio"></div><span>Porque Moodle no permite exportar datos</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',4)"><div class="eval-radio"></div><span>Porque PowerBI reemplaza completamente al LMS</span></div>
+              <h6>8. Necesitas un tablero en PowerBI que muestre el % de deserción por unidad, cruzando el log de accesos con la finalización de actividades. ¿Cuál es la secuencia correcta del proceso ETL para construirlo?</h6>
+              <div class="eval-option" onclick="selectOpt(this,'q8',1)"><div class="eval-radio"></div><span>Cargar directamente el archivo <code>mdl_logstore_standard_log</code> a PowerBI sin ningún procesamiento previo</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q8',2)"><div class="eval-radio"></div><span>Extraer los datos crudos de las tablas de Moodle → transformarlos y limpiarlos en Power Query (cruzar IDs, formatear fechas) → cargarlos y construir medidas DAX para calcular la deserción</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q8',3)"><div class="eval-radio"></div><span>Pedirle al docente que cuente manualmente cuántos estudiantes abandonaron cada unidad</span></div>
+              <div class="eval-option" onclick="selectOpt(this,'q8',4)"><div class="eval-radio"></div><span>DAX se usa para extraer los datos, no existe una etapa de transformación</span></div>
             </div>
 
             <div id="evalResult" class="mt-3"></div>
@@ -524,14 +591,14 @@ const UNIDAD_LABEL = '3.2 LMS, SCORM, xAPI y SLA';
 
 const CORRECTAS = { q1:2, q2:2, q3:2, q4:2, q5:2, q6:2, q7:2, q8:2 };
 const FEEDBACK = {
-  q1: {ok:'Correcto. Moodle destaca por ser open source, altamente configurable y con una comunidad activa de desarrollo de plugins.',fail:'La fortaleza de Moodle es ser open source, configurable y de bajo costo, con una gran comunidad de plugins — no la ausencia de administración.'},
-  q2: {ok:'Correcto. SCORM depende de conexión constante y registra datos básicos de finalización y puntaje, sin la granularidad de xAPI.',fail:'SCORM sí registra puntajes y es ampliamente compatible; su limitación es que requiere conexión constante y ofrece datos menos granulares que xAPI.'},
-  q3: {ok:'Correcto. El LRS almacena las declaraciones sujeto-verbo-objeto generadas por xAPI.',fail:'Un LRS (Learning Record Store) es donde se almacenan las declaraciones de xAPI, no un tipo de LMS ni un lenguaje de programación.'},
-  q4: {ok:'Correcto. xAPI permite rastrear experiencias de aprendizaje distribuidas y funciona offline, algo que SCORM no soporta bien.',fail:'xAPI destaca cuando se necesita rastrear aprendizaje offline o en plataformas fuera del LMS, no en escenarios simples sin interactividad.'},
-  q5: {ok:'Correcto. La disponibilidad mide el porcentaje de tiempo en que el sistema está funcionando correctamente.',fail:'La disponibilidad (uptime) mide el porcentaje de tiempo que la plataforma está operativa, no la cantidad de usuarios o cursos.'},
-  q6: {ok:'Correcto. El coordinador gestiona la relación operativa con TI o el proveedor, sin administrar directamente la infraestructura técnica.',fail:'El rol típico del coordinador es gestionar la relación con TI/proveedor y comunicar incidentes, no configurar servidores ni redactar contratos legales.'},
-  q7: {ok:'Correcto. El reporte de finalización muestra el porcentaje de estudiantes que completan cada actividad, revelando puntos de abandono.',fail:'El reporte de finalización (Completion) es el que muestra el avance por actividad y permite detectar caídas en una unidad específica.'},
-  q8: {ok:'Correcto. Los reportes nativos de Moodle son funcionales pero poco visuales; PowerBI permite dashboards más sofisticados para audiencias ejecutivas.',fail:'Moodle sí genera reportes funcionales y permite exportar datos; se usa PowerBI para lograr dashboards más visuales y ejecutivos, no porque Moodle carezca de reportes.'}
+  q1: {ok:'Correcto. Un curso maestro único con Cohortes (para matricular masivamente) y Grupos por paralelo en modo "Grupos separados" evita duplicar contenido: cada corrección o actualización se hace una sola vez, y cada docente ve solo a su paralelo.',fail:'Duplicar el curso 7 veces multiplica el trabajo de mantención por 7. La arquitectura correcta es un curso maestro único, con una Cohorte y un Grupo por paralelo, y el modo "Grupos separados" activado para que cada docente vea solo a su paralelo sin perder la vista consolidada del nivel completo.'},
+  q2: {ok:'Correcto. La variable cmi.core.lesson_status es la que determina si el LMS marca el intento como completado; revisar el reporte del intento en la actividad SCORM permite distinguir si el problema está en el paquete (criterio mal definido en Storyline) o en la configuración del LMS, antes de escalar como un incidente de infraestructura.',fail:'No es un problema de disponibilidad del LMS ni una limitación irresoluble de SCORM. La causa más común es que el criterio de finalización se configuró mal al publicar el paquete; se diagnostica revisando el valor de cmi.core.lesson_status en el reporte del intento, dentro de la propia actividad SCORM en Moodle.'},
+  q3: {ok:'Correcto. xAPI está diseñado justamente para este caso: las declaraciones se guardan localmente en el dispositivo sin conexión y se sincronizan al LRS apenas vuelve la señal — algo que SCORM no soporta, porque depende de conexión constante con el LMS.',fail:'SCORM requiere conexión constante al LMS y no está diseñado para funcionar offline ni fuera de la plataforma. El estándar correcto para este escenario es xAPI, enviando statements a un LRS cuando la app recupera conexión.'},
+  q4: {ok:'Correcto. El bloque "result.score" registra el puntaje obtenido (raw) sobre el puntaje máximo posible (max) para esa experiencia específica — es el equivalente xAPI a la nota de un intento.',fail:'Ese campo no identifica el curso, la fecha de creación de cuenta ni el LRS. El campo "result.score" registra específicamente el puntaje logrado (raw) sobre el puntaje máximo posible (max) en esa experiencia de aprendizaje.'},
+  q5: {ok:'Correcto. El uptime y el total de usuarios registrados no dicen nada sobre cuántos pueden usar el sistema al mismo tiempo, ni cuánta información se perdería ante una falla — la concurrencia máxima y el RPO son las preguntas que revelan si el proveedor realmente soporta un uso masivo simultáneo como una semana de exámenes.',fail:'El uptime y el número de usuarios registrados no garantizan que la plataforma resista a todos conectados a la misma hora. Antes de firmar, hay que exigir la concurrencia máxima garantizada y el RPO (cuánta información se podría perder ante una falla de base de datos).'},
+  q6: {ok:'Correcto. El RPO (Recovery Point Objective) acota cuánta información se pierde en el peor caso; el RTO (Recovery Time Objective) acota cuánto tiempo tarda el sistema en volver a estar disponible. Son dos compromisos distintos y ambos deben estar en un SLA maduro.',fail:'El uptime y la concurrencia máxima no responden a este escenario. Ante una falla que corrompe datos, el RPO determina cuánta información como máximo se pierde, y el RTO determina cuánto tiempo tarda el sistema en restablecerse — son las dos métricas relevantes.'},
+  q7: {ok:'Correcto. Un reporte de finalización con caída abrupta es una señal de diseño antes que un juicio sobre los estudiantes: se compara la unidad problemática con las anteriores, se ajusta y se vuelve a medir en la siguiente cohorte para cerrar el ciclo.',fail:'Concluir sin analizar, ignorar el dato o eliminar la unidad sin evidencia son respuestas apresuradas. Lo correcto es tratar la caída como una alerta de posible problema de diseño, comparar la unidad con las anteriores, ajustar y volver a medir.'},
+  q8: {ok:'Correcto. El proceso ETL sigue ese orden: Extracción de las tablas crudas de Moodle, Transformación/limpieza en Power Query, y Carga con medidas DAX que calculan indicadores como el % de deserción — saltarse la limpieza produce un tablero con datos sucios e inconsistentes.',fail:'DAX no extrae datos, y cargar tablas crudas sin limpiar produce un tablero poco confiable. El orden correcto es Extracción (tablas de Moodle) → Transformación en Power Query (limpieza, cruce de IDs, formato de fechas) → Carga y cálculo de medidas DAX.'}
 };
 
 let answers = {};
