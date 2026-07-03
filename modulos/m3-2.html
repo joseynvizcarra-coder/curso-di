@@ -262,6 +262,20 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
               <div class="callout-terra mt-2">
                 <strong>Tu experiencia real:</strong> tienes MoodleCloud (curso "Dibujo Anatómico" con H5P y quiz) y virtualización en Brightspace (5 cursos). Eso te permite hablar con propiedad de ambas familias — open source configurable vs. comercial con soporte — en una entrevista.
               </div>
+
+              <h5>Por qué existe un LMS (y por qué no basta con "subir archivos a una nube")</h5>
+              <p>Un repositorio de archivos (Drive, Dropbox) almacena contenido, pero no sabe quién lo vio, cuánto avanzó, si aprobó una evaluación ni cuándo vence una inscripción. El LMS existe para resolver tres problemas a la vez: <strong>distribución</strong> (que cada estudiante vea solo lo que le corresponde), <strong>seguimiento</strong> (registrar avance y notas) y <strong>gestión</strong> (matrículas, roles, comunicaciones). Por eso ninguna institución seria reemplaza el LMS por una carpeta compartida, por ordenada que esté.</p>
+
+              <h5>Cómo se opera un LMS en el día a día (flujo típico de un DI/coordinador)</h5>
+              <div class="card-di"><h6><i class="bi bi-1-circle me-1"></i>Estructurar el curso</h6><p>Crear el "shell" del curso, definir el formato (semanal, por temas, social) y organizar secciones según el diseño instruccional ya definido — no al revés: primero se diseña, luego se estructura en el LMS.</p></div>
+              <div class="card-di"><h6><i class="bi bi-2-circle me-1"></i>Cargar y enlazar recursos</h6><p>Subir archivos, insertar paquetes SCORM/H5P, enlazar videos, y configurar la secuencia (a veces con restricciones de acceso: "no ver la Unidad 2 sin completar la Unidad 1").</p></div>
+              <div class="card-di"><h6><i class="bi bi-3-circle me-1"></i>Configurar evaluaciones y calificaciones</h6><p>Definir cuestionarios, rúbricas, ponderaciones y el libro de calificaciones (gradebook), que es lo que finalmente reporta la institución.</p></div>
+              <div class="card-di"><h6><i class="bi bi-4-circle me-1"></i>Matricular y comunicar</h6><p>Inscribir estudiantes (manual, por cohorte o vía sincronización con el sistema académico), y usar los foros/anuncios del LMS para comunicación oficial del curso.</p></div>
+              <div class="card-di"><h6><i class="bi bi-5-circle me-1"></i>Monitorear y ajustar</h6><p>Revisar reportes de avance durante el curso (no solo al final) para detectar quién se está quedando atrás o qué contenido genera fricción — este punto se profundiza en el bloque de Reportes de Moodle.</p></div>
+
+              <div class="callout-blue mt-2">
+                <strong>Cómo aplicarlo si te preguntan en una entrevista:</strong> no describas el LMS solo como "la plataforma donde se sube el curso". Explica el flujo completo — estructurar, cargar, evaluar, matricular, monitorear — porque eso demuestra que entiendes el LMS como herramienta de gestión pedagógica, no solo de alojamiento de archivos.
+              </div>
             </div>
           </div>
 
@@ -286,6 +300,20 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
                 <strong>Limitación clave de SCORM:</strong> requiere conexión constante al LMS (no funciona bien offline), registra datos limitados (esencialmente "completó / no completó" y puntaje final), y no rastrea aprendizaje fuera del LMS (por ejemplo, una simulación en otra plataforma o una práctica en el mundo real).
               </div>
               <p>En Articulate Storyline y Rise, el paquete final se exporta típicamente como SCORM 1.2 o 2004 para subirlo a un LMS como Moodle.</p>
+
+              <h5>Para qué sirve en la práctica (el problema que resuelve)</h5>
+              <p>SCORM permite crear un contenido interactivo <strong>una sola vez</strong> (en Storyline, Rise, iSpring, etc.) y que ese mismo paquete funcione en cualquier LMS compatible sin reprogramarlo. Sin SCORM, cada LMS necesitaría su propio formato y el contenido no sería portable entre instituciones.</p>
+
+              <h5>Cómo operarlo: de Storyline a Moodle, paso a paso</h5>
+              <div class="card-di"><h6><i class="bi bi-1-circle me-1"></i>Publicar el proyecto</h6><p>En Storyline: Archivo → Publicar → pestaña LMS → elegir SCORM 1.2 o 2004 → definir criterio de finalización (por ejemplo, "completado" al llegar a la última diapositiva, o por puntaje del quiz).</p></div>
+              <div class="card-di"><h6><i class="bi bi-2-circle me-1"></i>Generar el paquete .zip</h6><p>Storyline exporta una carpeta con un archivo <code>imsmanifest.xml</code> (la "ficha técnica" que el LMS lee para saber cómo reproducir el contenido) — todo comprimido en un único .zip, sin descomprimir.</p></div>
+              <div class="card-di"><h6><i class="bi bi-3-circle me-1"></i>Subir a Moodle</h6><p>Dentro del curso: Activar edición → Agregar actividad → "Paquete SCORM" → subir el .zip directamente (Moodle lo descomprime automáticamente).</p></div>
+              <div class="card-di"><h6><i class="bi bi-4-circle me-1"></i>Configurar el registro de intentos</h6><p>Definir si se permite un intento o varios, y qué calificación se guarda (el más alto, el promedio, el último intento) — esto determina qué ve el docente en el gradebook.</p></div>
+              <div class="card-di"><h6><i class="bi bi-5-circle me-1"></i>Probar antes de publicar</h6><p>Siempre revisar el paquete como estudiante de prueba: un error común es que el criterio de "completado" quede mal configurado y el sistema nunca marque el curso como terminado aunque el estudiante lo haya visto entero.</p></div>
+
+              <div class="callout-terra mt-2">
+                <strong>Error típico que debes saber detectar:</strong> si un estudiante dice "vi todo el módulo pero me sigue apareciendo como incompleto", casi siempre es un problema de configuración del criterio de finalización en la publicación del SCORM, no un error del LMS. Es una de las fallas más frecuentes que un DI resuelve en el día a día.
+              </div>
             </div>
           </div>
 
@@ -305,6 +333,24 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
               </div>
               <div class="callout-blue">
                 <strong>Para entrevistas:</strong> si te preguntan "¿SCORM o xAPI?", la respuesta correcta no es elegir uno — es explicar que SCORM sigue siendo el estándar más compatible y suficiente para cursos e-learning tradicionales, mientras que xAPI se justifica cuando se necesita rastrear aprendizaje distribuido en múltiples plataformas o fuera de línea.
+              </div>
+
+              <h5>Cómo se ve un statement de xAPI (para perder el miedo al formato)</h5>
+              <p>Cada declaración sigue la estructura <strong>actor – verbo – objeto</strong>, con datos adicionales opcionales de resultado y contexto:</p>
+              <div class="card-di">
+                <h6><i class="bi bi-code-slash me-1"></i>Ejemplo en lenguaje simple</h6>
+                <p><strong>Actor:</strong> Joselyn Vizcarra · <strong>Verbo:</strong> completó · <strong>Objeto:</strong> "Módulo de Anatomía Ósea" · <strong>Resultado:</strong> puntaje 85/100 · <strong>Contexto:</strong> plataforma móvil, fuera de línea.</p>
+              </div>
+              <p>Ese statement se transmite como un objeto JSON al LRS a través de una API REST — el detalle técnico exacto lo maneja normalmente un desarrollador o el administrador de plataforma, pero el DI debe poder leerlo y entender qué información aporta.</p>
+
+              <h5>Cómo se aplica esto en un proyecto real (flujo conceptual)</h5>
+              <div class="card-di"><h6><i class="bi bi-1-circle me-1"></i>Definir qué se quiere medir</h6><p>El DI decide qué comportamientos o hitos importan pedagógicamente: "intentó la simulación 3 veces", "revisó el material de apoyo antes del examen", "practicó en la app fuera del horario de clases".</p></div>
+              <div class="card-di"><h6><i class="bi bi-2-circle me-1"></i>Especificar los verbos y objetos</h6><p>Junto al equipo técnico, se define el vocabulario xAPI a usar (existen "perfiles" estándar reutilizables, como el ADL Vocabulary, para no inventar verbos desde cero).</p></div>
+              <div class="card-di"><h6><i class="bi bi-3-circle me-1"></i>Configurar el LRS</h6><p>Se conecta la herramienta de autoría o app con un LRS (puede ser un plugin de Moodle o uno externo como Learning Locker), que queda como el repositorio central de todas las declaraciones.</p></div>
+              <div class="card-di"><h6><i class="bi bi-4-circle me-1"></i>Analizar los datos</h6><p>El DI o el equipo de analítica consulta el LRS (o lo conecta a un dashboard) para responder preguntas pedagógicas: ¿el material opcional se está usando?, ¿hay correlación entre práctica extra y mejor desempeño?</p></div>
+
+              <div class="callout-terra mt-2">
+                <strong>Cómo aplicarlo en tu discurso profesional:</strong> no necesitas saber programar el LRS. Lo que se evalúa en tu rol es que puedas <em>traducir una necesidad pedagógica en un requerimiento de datos</em> — decirle al equipo técnico "necesito saber si practican fuera del LMS" y entender la respuesta que te entregan.
               </div>
             </div>
           </div>
@@ -333,6 +379,18 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
               <div class="callout-blue">
                 <strong>Para INACAP:</strong> si preguntan por gestión de SLA, enfócate en tu rol de coordinación — escalar incidentes, dar seguimiento a tickets, comunicar interrupciones — más que en aspectos puramente técnicos de servidor, que corresponden a TI.
               </div>
+
+              <h5>Cómo se opera un SLA en la práctica: flujo de un incidente</h5>
+              <div class="card-di"><h6><i class="bi bi-1-circle me-1"></i>Detección</h6><p>Un docente o estudiante reporta un problema (no puede acceder, un video no carga, el LMS está lento) — o el propio coordinador lo detecta al monitorear la plataforma.</p></div>
+              <div class="card-di"><h6><i class="bi bi-2-circle me-1"></i>Registro (ticket)</h6><p>Se abre un ticket formal en el sistema de soporte de TI/proveedor, con fecha, hora y descripción clara del problema — esto es lo que activa el cronómetro del SLA.</p></div>
+              <div class="card-di"><h6><i class="bi bi-3-circle me-1"></i>Clasificación de severidad</h6><p>Se define si es crítico (el LMS completo caído), alto (una función específica falla para muchos usuarios) o bajo (un caso puntual) — la severidad determina el tiempo de respuesta comprometido en el SLA.</p></div>
+              <div class="card-di"><h6><i class="bi bi-4-circle me-1"></i>Seguimiento y escalamiento</h6><p>El coordinador da seguimiento al ticket; si el proveedor no responde dentro del plazo pactado, corresponde escalar (contactar a un nivel superior de soporte o al encargado de la cuenta).</p></div>
+              <div class="card-di"><h6><i class="bi bi-5-circle me-1"></i>Comunicación a la comunidad</h6><p>Mientras se resuelve, el coordinador informa a docentes y estudiantes con lenguaje claro: qué pasó, desde cuándo, y una estimación de cuándo se resuelve — esta comunicación es tan parte del rol como el ticket mismo.</p></div>
+              <div class="card-di"><h6><i class="bi bi-6-circle me-1"></i>Cierre y registro</h6><p>Una vez resuelto, se documenta el incidente (causa, tiempo real de resolución vs. comprometido) — este historial sirve para negociar renovaciones de contrato o evaluar si el proveedor cumple sistemáticamente.</p></div>
+
+              <div class="callout-terra mt-2">
+                <strong>Cómo aplicarlo:</strong> si te preguntan "¿qué harías si el LMS se cae un lunes en la mañana antes de un examen?", la respuesta esperada sigue este flujo: registrar el ticket con severidad crítica, comunicar de inmediato a la comunidad con una alternativa (posponer, usar canal de respaldo), y dar seguimiento activo hasta el cierre — no simplemente "esperar a que TI lo resuelva".
+              </div>
             </div>
           </div>
 
@@ -354,6 +412,16 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
               </div>
               <div class="callout-blue">
                 <strong>Limitación a mencionar con honestidad:</strong> los reportes nativos de Moodle son funcionales pero poco visuales comparados con un dashboard de PowerBI. Para reportes ejecutivos más sofisticados, se exportan los datos de Moodle (vía CSV o su API) hacia PowerBI — tema que se profundiza en la Unidad 4.2.
+              </div>
+
+              <h5>Cómo operar los reportes: ruta de navegación y flujo de lectura</h5>
+              <div class="card-di"><h6><i class="bi bi-1-circle me-1"></i>Dónde encontrarlos</h6><p>Dentro del curso: Participantes → Finalización de actividad (para Completion), o Informes → Registros (para Logs), o Calificaciones → Vista de calificador (para el Gradebook). En Moodle 4.x el menú "Informes" del curso centraliza la mayoría de estas vistas.</p></div>
+              <div class="card-di"><h6><i class="bi bi-2-circle me-1"></i>Qué mirar primero</h6><p>Empieza por el reporte de Finalización: te da la foto general de dónde está el curso en su conjunto antes de bajar al detalle de un estudiante o actividad específica.</p></div>
+              <div class="card-di"><h6><i class="bi bi-3-circle me-1"></i>Cómo interpretar una caída</h6><p>Si el 90% completa la Unidad 1 pero solo el 40% la Unidad 2, compara duración, tipo de actividad y claridad de instrucciones entre ambas unidades antes de asumir que "los estudiantes no se esfuerzan" — el dato apunta primero al diseño.</p></div>
+              <div class="card-di"><h6><i class="bi bi-4-circle me-1"></i>Cómo actuar sobre el hallazgo</h6><p>Documenta el hallazgo con datos concretos, propón un ajuste (acortar la unidad, dividir la actividad, agregar un ejemplo) y vuelve a medir en la siguiente cohorte — cerrar el ciclo es lo que distingue un reporte útil de un dato archivado.</p></div>
+
+              <div class="callout-terra mt-2">
+                <strong>Cómo aplicarlo en tu portafolio de entrevista:</strong> si tienes acceso a tus cursos de MoodleCloud, exporta una captura de un reporte de finalización real y ten lista una frase tipo: "detecté que el X% abandonaba en la unidad Y, y ajusté Z" — eso convierte una competencia técnica en una historia de impacto pedagógico, que es lo que de verdad se evalúa en una entrevista de DI.
               </div>
             </div>
           </div>
