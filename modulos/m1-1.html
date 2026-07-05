@@ -223,9 +223,10 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
           <p>Definición técnica · origen histórico · para qué sirve · perfil profesional</p>
         </div>
         <div class="lesson-badges">
-          <span class="lbadge"><i class="bi bi-book me-1"></i>4 bloques de contenido</span>
+          <span class="lbadge"><i class="bi bi-book me-1"></i>5 bloques de contenido</span>
+          <span class="lbadge"><i class="bi bi-chat-square-text me-1"></i>3 preguntas de práctica oral</span>
           <span class="lbadge"><i class="bi bi-clipboard-check me-1"></i>10 preguntas al final</span>
-          <span class="lbadge"><i class="bi bi-clock me-1"></i>~20 min</span>
+          <span class="lbadge"><i class="bi bi-clock me-1"></i>~25 min</span>
         </div>
 
         <div class="lesson-body">
@@ -329,8 +330,83 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
                   <tr><td>Acompañamiento docente</td><td>Apoyar a los SME para materializar su conocimiento en virtual</td><td>Talleres, guías, revisiones de contenido</td></tr>
                 </tbody>
               </table>
-              <div class="callout-terra">
-                <strong>Para tus tres postulaciones:</strong> Tu perfil híbrido (artes + pedagogía + DI + LMS) es un diferenciador real. En EMMD combinas sensibilidad artística con rigor instruccional — exactamente lo que los maestros-artistas necesitan para virtualizar sin perder su identidad.
+          <!-- ACORDEÓN 5 -->
+          <div class="accordion-di">
+            <button class="accordion-di-btn" onclick="toggleAcc(this)">
+              <i class="bi bi-5-circle acc-icon"></i> Roles afines: no confundirlos en una entrevista
+              <i class="bi bi-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-di-body">
+              <p>Es común que en un proceso de selección pidan distinguir el rol de DI de otros roles con los que se solapa. Confundirlos en una entrevista se lee como falta de claridad sobre tu propio perfil.</p>
+              <table class="table table-di table-bordered">
+                <thead><tr><th>Rol</th><th>Foco principal</th><th>Diferencia clave con el DI</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Instructional Designer (DI)</strong></td><td>Arquitectura pedagógica completa: análisis, objetivos, estrategia, evaluación</td><td>Es el rol "ancla" — piensa el diseño de principio a fin</td></tr>
+                  <tr><td>E-learning Developer</td><td>Construcción técnica del curso (Storyline, H5P, SCORM)</td><td>Ejecuta el diseño que el DI ya definió; no decide la estrategia pedagógica</td></tr>
+                  <tr><td>Learning Experience Designer (LXD)</td><td>Experiencia de usuario y usabilidad del aprendizaje</td><td>Aporta una capa de UX/diseño de interacción sobre la base pedagógica del DI</td></tr>
+                  <tr><td>Instructional Technologist</td><td>Selección, integración y soporte de LMS y herramientas</td><td>Resuelve el "con qué"; el DI resuelve el "qué y cómo enseñar"</td></tr>
+                  <tr><td>Facilitador / Capacitador</td><td>Ejecuta la instrucción en vivo (presencial o sincrónica)</td><td>Entrega lo que el DI diseñó; no necesariamente participa en el diseño</td></tr>
+                  <tr><td>Curriculum Designer</td><td>Diseño a nivel de programa o malla completa (varios cursos)</td><td>Trabaja un nivel de zoom más amplio que el DI, que suele diseñar cursos o módulos específicos</td></tr>
+                </tbody>
+              </table>
+              <div class="callout-blue">
+                <strong>Por qué importa:</strong> En instituciones chilenas (INACAP, universidades, fundaciones) estos roles muchas veces se fusionan en una sola persona por falta de equipo. Poder nombrar la distinción — aunque tú hagas varios de estos roles a la vez — demuestra que entiendes la arquitectura completa del trabajo, no solo tu porción de él.
+              </div>
+              <div class="callout-terra mt-2">
+                <strong>Para tus postulaciones:</strong> En INACAP el cargo es "Coordinador LMS / Jefe de Diseño Instruccional" — combina DI + Instructional Technologist. En U. de Chile es "Diseñador Instruccional E-Learning" — más cercano al DI + e-learning developer. Nombrar esta lectura del cargo en la entrevista muestra que leíste la descripción con criterio técnico, no solo motivacional.
+              </div>
+            </div>
+          </div>
+
+          <!-- AUTOEVALUACIÓN AUTOINSTRUCCIONAL -->
+          <div class="accordion-di" style="border-color:var(--blue)">
+            <button class="accordion-di-btn" onclick="toggleAcc(this)" style="background:var(--blue-light)">
+              <i class="bi bi-chat-square-text acc-icon" style="color:var(--blue)"></i> Practica como en una entrevista
+              <i class="bi bi-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-di-body">
+              <p style="color:var(--muted);font-size:0.85rem">Responde primero con tus propias palabras — en voz alta o por escrito — antes de revelar la respuesta modelo. El valor está en formular tu propia respuesta, no en leer la mía.</p>
+
+              <div class="card-di" style="border-left:3px solid var(--blue)">
+                <h6><i class="bi bi-question-circle me-1"></i>1. Un entrevistador te pregunta: "¿Qué es el Diseño Instruccional?" en 30 segundos. ¿Qué le dirías?</h6>
+                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
+                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
+                  <p style="font-size:0.87rem"><em>"Es el proceso sistemático de traducir principios del aprendizaje en planes concretos para materiales, actividades y evaluaciones. No es hacer diapositivas bonitas ni configurar un LMS — es tomar decisiones pedagógicas fundamentadas para cerrar una brecha específica entre lo que alguien sabe y lo que necesita saber."</em></p>
+                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
+                  <ul style="font-size:0.83rem;color:var(--muted)">
+                    <li>¿Usaste la palabra "sistemático" o equivalente?</li>
+                    <li>¿Distinguiste el DI de "hacer materiales" o "usar tecnología"?</li>
+                    <li>¿Mencionaste que resuelve una brecha o necesidad concreta?</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="card-di" style="border-left:3px solid var(--blue)">
+                <h6><i class="bi bi-question-circle me-1"></i>2. Te preguntan la diferencia entre tu rol como DI y el de un e-learning developer con el que trabajarías. ¿Qué respondes?</h6>
+                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
+                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
+                  <p style="font-size:0.87rem"><em>"Yo defino qué se va a enseñar, en qué secuencia, con qué estrategia y cómo se va a evaluar — el DDI. El e-learning developer toma ese diseño y lo construye técnicamente en Storyline, H5P o el LMS. Trabajamos en cascada: mi output es su input. En proyectos chicos, como los que he liderado de forma independiente, hago ambos roles, pero entiendo dónde termina uno y empieza el otro."</em></p>
+                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
+                  <ul style="font-size:0.83rem;color:var(--muted)">
+                    <li>¿Explicaste qué decide cada rol, no solo qué "hace"?</li>
+                    <li>¿Diste un ejemplo propio (tus Brightspace, tu LMS)?</li>
+                    <li>¿Evitaste sonar como que un rol es "superior" al otro?</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="card-di" style="border-left:3px solid var(--blue)">
+                <h6><i class="bi bi-question-circle me-1"></i>3. Caso: un jefe de área te dice "el equipo sabe hacer el protocolo de seguridad, pero no lo aplica en terreno. Necesitamos un curso." ¿Cómo respondes como DI?</h6>
+                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
+                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
+                  <p style="font-size:0.87rem"><em>"Antes de diseñar nada, yo diagnosticaría el tipo de brecha. Si dicen que 'saben hacerlo pero no lo aplican', probablemente no es una brecha de conocimiento ni de habilidad — es una brecha de motivación, cultura o incentivos. Un curso no la resuelve. Le propondría al jefe de área investigar la causa raíz antes de invertir en formación que no va a cambiar el comportamiento."</em></p>
+                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
+                  <ul style="font-size:0.83rem;color:var(--muted)">
+                    <li>¿Identificaste que no es automáticamente un problema de capacitación?</li>
+                    <li>¿Nombraste el tipo de brecha correcto (motivación/cultura)?</li>
+                    <li>¿Mostraste criterio para decir "no" a un curso cuando no es la solución?</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
@@ -468,6 +544,13 @@ function toggleAcc(btn) {
   const isOpen = body.classList.contains('show');
   body.classList.toggle('show', !isOpen);
   btn.classList.toggle('open', !isOpen);
+}
+
+function toggleModelo(btn) {
+  const box = btn.nextElementSibling;
+  const isOpen = box.style.display === 'block';
+  box.style.display = isOpen ? 'none' : 'block';
+  btn.textContent = isOpen ? 'Ver respuesta modelo' : 'Ocultar respuesta modelo';
 }
 
 function selectOpt(el, question, optNum) {
