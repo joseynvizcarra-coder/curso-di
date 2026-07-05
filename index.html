@@ -184,7 +184,7 @@ footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.78
           <div class="stat-label">Puntaje promedio</div>
         </div>
         <div class="stat-item">
-          <div class="stat-num">13</div>
+          <div class="stat-num">14</div>
           <div class="stat-label">Unidades totales</div>
         </div>
       </div>
@@ -251,7 +251,7 @@ footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.78
         <div class="modulo-head-sub">Definición · historia · teorías del aprendizaje · Gagné · carga cognitiva</div>
       </div>
       <div class="modulo-head-progress">
-        <div class="modulo-pct" id="pct-m1">0/3 completadas</div>
+        <div class="modulo-pct" id="pct-m1">0/4 completadas</div>
         <div class="modulo-mini-bar"><div class="modulo-mini-fill" id="bar-m1" style="width:0%"></div></div>
       </div>
     </div>
@@ -289,6 +289,18 @@ footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.78
         <div class="unidad-desc">Nueve eventos de instrucción, teoría de Sweller y principios de diseño</div>
         <div class="unidad-score">
           <span class="unidad-score-num pending" id="score-m1-3">Pendiente</span>
+          <i class="bi bi-arrow-right-short unidad-arrow"></i>
+        </div>
+      </a>
+      <a class="unidad-item" href="modulos/m1-4.html">
+        <div class="unidad-top">
+          <div class="unidad-badge" id="badge-m1-4">1.4</div>
+          <div class="unidad-num">Unidad 1.4</div>
+        </div>
+        <div class="unidad-title">Artefactos y documentos del DI</div>
+        <div class="unidad-desc">Syllabus, guía didáctica y DDI, ruta de aprendizaje, APA, diversificación y DUA</div>
+        <div class="unidad-score">
+          <span class="unidad-score-num pending" id="score-m1-4">Pendiente</span>
           <i class="bi bi-arrow-right-short unidad-arrow"></i>
         </div>
       </a>
@@ -473,8 +485,8 @@ footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.78
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbylYML8h2BnNgi2AXtZ8bkGaXPNRhurswPr5dfyGRldbVoCRvmoT2cHN0r3I4qGynLb/exec';
-const UNIDADES = ['m1-1','m1-2','m1-3','m2-1','m2-2','m2-3','m3-1','m3-2','m3-3','m4-1','m4-2','m4-3','m4-4'];
-const MODULOS = { m1:['m1-1','m1-2','m1-3'], m2:['m2-1','m2-2','m2-3'], m3:['m3-1','m3-2','m3-3'], m4:['m4-1','m4-2','m4-3','m4-4'] };
+const UNIDADES = ['m1-1','m1-2','m1-3','m1-4','m2-1','m2-2','m2-3','m3-1','m3-2','m3-3','m4-1','m4-2','m4-3','m4-4'];
+const MODULOS = { m1:['m1-1','m1-2','m1-3','m1-4'], m2:['m2-1','m2-2','m2-3'], m3:['m3-1','m3-2','m3-3'], m4:['m4-1','m4-2','m4-3','m4-4'] };
 
 function jsonp(params) {
   return new Promise(function(resolve, reject) {
