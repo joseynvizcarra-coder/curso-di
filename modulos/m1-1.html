@@ -201,10 +201,14 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
           <div class="lesson-num" id="num-m1-3">3</div>
           <div class="lesson-info"><strong>Gagné y carga cognitiva</strong><span>Nueve eventos · Sweller</span></div>
         </a>
+        <a class="lesson-item" href="m1-4.html">
+          <div class="lesson-num" id="num-m1-4">4</div>
+          <div class="lesson-info"><strong>Artefactos y documentos del DI</strong><span>Syllabus · APA · diversificación</span></div>
+        </a>
         <div class="sidebar-progress">
           <div class="d-flex justify-content-between mb-1">
             <small style="color:var(--muted);font-size:0.75rem">Módulo 1</small>
-            <small id="sidebarPct" style="color:var(--terra);font-size:0.75rem;font-weight:bold">0/3</small>
+            <small id="sidebarPct" style="color:var(--terra);font-size:0.75rem;font-weight:bold">0/4</small>
           </div>
           <div class="progress-di"><div class="progress-di-fill" id="sidebarBar" style="width:0%"></div></div>
         </div>
@@ -757,16 +761,16 @@ async function guardarPuntaje(ratio) {
 
 function updateSidebar() {
   const s = getScores();
-  const ids = ['m1-1','m1-2','m1-3'];
+  const ids = ['m1-1','m1-2','m1-3','m1-4'];
   // Una unidad cuenta como completada solo si su puntaje es mayor a 0.
   const done = ids.filter(id => s[id] !== undefined && s[id] > 0).length;
-  document.getElementById('sidebarPct').textContent = done + '/3';
-  document.getElementById('sidebarBar').style.width = Math.round(done/3*100) + '%';
+  document.getElementById('sidebarPct').textContent = done + '/4';
+  document.getElementById('sidebarBar').style.width = Math.round(done/4*100) + '%';
   ids.forEach(id => {
     const el = document.getElementById('num-' + id);
     if (el && s[id] !== undefined && s[id] > 0) { el.style.background = 'var(--success)'; el.style.color = '#fff'; }
   });
-  document.getElementById('headerProgress').textContent = done + '/3 completadas';
+  document.getElementById('headerProgress').textContent = done + '/4 completadas';
 }
 
 function showToast(msg, type) {

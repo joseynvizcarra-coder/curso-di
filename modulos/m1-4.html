@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1.4 Artefactos y documentos del DI — Curso DI</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+:root {
+  --cream: #f5f2ec;
+  --dark: #0f1117;
+  --terra: #c85c3a;
+  --blue: #3a6b8a;
+  --muted: #7a7570;
+  --border: #ddd8d0;
+  --success: #2d7a4f;
+  --terra-light: #f7ede8;
+  --blue-light: #e8f0f5;
+}
+body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif; color: var(--dark); }
+
+/* HEADER */
+.header-di {
+  background: linear-gradient(135deg, var(--dark) 0%, #1e2030 100%);
+  border-bottom: 3px solid var(--terra);
+  padding: 0.9rem 0;
+  position: sticky; top: 0; z-index: 1030;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+.header-di .course-name { color: #fff; font-family: Georgia, serif; font-size: 1.1rem; font-weight: normal; }
+.header-di .unit-name { color: var(--terra); font-size: 0.82rem; }
+.btn-back { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; border-radius: 20px; padding: 0.4rem 1rem; font-size: 0.82rem; text-decoration: none; transition: all 0.2s; }
+.btn-back:hover { background: rgba(255,255,255,0.2); color: #fff; }
+
+/* SIDEBAR */
+.sidebar-di {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  overflow: hidden;
+}
+@media(min-width:992px){ .sidebar-di { position: sticky; top: 80px; max-height: calc(100vh - 100px); overflow-y: auto; } }
+.sidebar-header { background: var(--dark); color: #fff; padding: 1rem 1.2rem; }
+.sidebar-header h6 { font-family: Georgia, serif; font-weight: normal; font-size: 0.9rem; margin: 0; color: var(--terra); }
+.sidebar-header p { font-size: 0.75rem; color: #a09a94; margin: 0.2rem 0 0; }
+.lesson-item { display: flex; align-items: center; gap: 0.8rem; padding: 0.75rem 1.2rem; border-bottom: 1px solid var(--border); cursor: pointer; transition: all 0.2s; text-decoration: none; color: var(--dark); }
+.lesson-item:hover { background: var(--cream); }
+.lesson-item.active { background: var(--terra-light); border-left: 3px solid var(--terra); }
+.lesson-item.done { color: var(--muted); }
+.lesson-num { width: 30px; height: 30px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold; flex-shrink: 0; color: var(--muted); }
+.lesson-item.active .lesson-num { background: var(--terra); color: #fff; }
+.lesson-item.done .lesson-num { background: var(--success); color: #fff; }
+.lesson-info { flex: 1; }
+.lesson-info strong { font-size: 0.83rem; display: block; }
+.lesson-info span { font-size: 0.74rem; color: var(--muted); }
+.sidebar-progress { padding: 1rem 1.2rem; background: var(--cream); }
+.progress-di { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.progress-di-fill { height: 100%; background: linear-gradient(90deg, var(--terra), #e07a5a); border-radius: 99px; transition: width 0.5s ease; }
+.sidebar-footer { padding: 0.8rem 1.2rem; text-align: center; border-top: 1px solid var(--border); }
+
+/* CONTENT */
+.content-di { background: #fff; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow: hidden; }
+.lesson-hero { background: linear-gradient(135deg, var(--dark) 0%, #1e2030 100%); color: #fff; padding: 2rem 2rem 1.5rem; }
+.lesson-hero .unit-tag { font-size: 0.72rem; color: var(--terra); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.4rem; }
+.lesson-hero h1 { font-family: Georgia, serif; font-size: 1.6rem; font-weight: normal; margin-bottom: 0.4rem; }
+.lesson-hero p { color: #a09a94; font-size: 0.88rem; margin: 0; }
+.lesson-badges { padding: 1rem 2rem; background: var(--terra-light); border-bottom: 1px solid var(--border); display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.lbadge { font-size: 0.78rem; padding: 0.3rem 0.7rem; border-radius: 20px; border: 1px solid var(--border); background: #fff; color: var(--muted); }
+.lbadge i { color: var(--terra); }
+.lesson-body { padding: 1.8rem 2rem; }
+
+/* PRESENTACIÓN */
+.presentacion { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
+.presentacion-head { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; flex-wrap: wrap; background: var(--dark); color: #fff; padding: 0.8rem 1.2rem; }
+.pres-title { font-size: 0.95rem; font-weight: bold; display: flex; align-items: center; gap: 0.6rem; }
+.pres-title i { color: var(--terra); font-size: 1.1rem; }
+.pres-tag { font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: #a09a94; border: 1px solid rgba(255,255,255,0.18); border-radius: 20px; padding: 0.12rem 0.55rem; }
+.presentacion-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.pres-btn { font-size: 0.78rem; color: #fff; text-decoration: none; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.08); border-radius: 20px; padding: 0.35rem 0.9rem; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.4rem; }
+.pres-btn:hover { background: var(--terra); border-color: var(--terra); color: #fff; }
+.presentacion-viewer { height: 520px; background: var(--cream); }
+.presentacion-viewer object, .presentacion-viewer iframe { width: 100%; height: 100%; border: none; display: block; }
+.pres-placeholder { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: var(--muted); padding: 2rem; }
+.pres-placeholder i { font-size: 2.4rem; color: #c9c2b8; margin-bottom: 0.8rem; }
+.pres-placeholder p { font-size: 0.98rem; font-weight: bold; color: var(--dark); margin-bottom: 0.3rem; }
+.pres-placeholder small { font-size: 0.82rem; line-height: 1.6; max-width: 360px; }
+.pres-placeholder code { background: #fff; border: 1px solid var(--border); border-radius: 4px; padding: 0.1rem 0.4rem; color: var(--terra); }
+@media(max-width:600px){ .presentacion-viewer { height: 380px; } }
+.pres-audio { display: flex; align-items: center; gap: 0.9rem; padding: 0.85rem 1.2rem; background: var(--terra-light); border-top: 1px solid var(--border); }
+.pres-audio-label { font-size: 0.82rem; color: var(--dark); font-weight: bold; display: flex; align-items: center; gap: 0.5rem; white-space: nowrap; }
+.pres-audio-label i { color: var(--terra); font-size: 1rem; }
+.pres-audio audio { flex: 1; height: 38px; min-width: 0; }
+@media(max-width:600px){ .pres-audio { flex-direction: column; align-items: stretch; gap: 0.55rem; } }
+
+/* ACCORDION */
+.accordion-di { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1rem; }
+.accordion-di-btn { background: var(--cream); border: none; width: 100%; text-align: left; padding: 1rem 1.2rem; display: flex; align-items: center; gap: 0.8rem; cursor: pointer; transition: background 0.2s; font-size: 0.95rem; font-weight: bold; color: var(--dark); }
+.accordion-di-btn:hover { background: #ede9e2; }
+.accordion-di-btn.open { background: var(--dark); color: #fff; }
+.accordion-di-btn.open .acc-icon { color: var(--terra); }
+.accordion-di-btn .acc-chevron { margin-left: auto; transition: transform 0.25s; font-size: 0.8rem; }
+.accordion-di-btn.open .acc-chevron { transform: rotate(180deg); }
+.acc-icon { font-size: 1rem; color: var(--terra); }
+.accordion-di-body { display: none; padding: 1.2rem 1.4rem; border-top: 1px solid var(--border); background: #fff; font-size: 0.92rem; line-height: 1.7; }
+.accordion-di-body.show { display: block; }
+.accordion-di-body h5 { font-family: Georgia, serif; font-size: 1rem; font-weight: normal; color: var(--blue); margin: 1.2rem 0 0.5rem; }
+.accordion-di-body h5:first-child { margin-top: 0; }
+
+/* CARDS */
+.card-di { background: var(--cream); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; margin-bottom: 0.7rem; height: 100%; }
+.card-di h6 { font-size: 0.85rem; font-weight: bold; color: var(--blue); margin-bottom: 0.3rem; }
+.card-di p { font-size: 0.88rem; margin: 0; }
+.callout-terra { border-left: 4px solid var(--terra); background: var(--terra-light); padding: 0.9rem 1.1rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: 0.88rem; }
+.callout-terra strong { color: var(--terra); }
+.callout-blue { border-left: 4px solid var(--blue); background: var(--blue-light); padding: 0.9rem 1.1rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: 0.88rem; }
+.callout-blue strong { color: var(--blue); }
+.table-di { font-size: 0.85rem; }
+.table-di th { background: var(--dark); color: #fff; font-weight: normal; }
+.table-di td { vertical-align: top; }
+
+/* EVENTOS GAGNÉ */
+.evento { display: grid; grid-template-columns: 46px 1fr; gap: 0; margin-bottom: 0.6rem; }
+.ev-num { background: var(--terra); color: #fff; display: flex; align-items: center; justify-content: center; font-family: Georgia, serif; font-size: 1.1rem; border-radius: 8px 0 0 8px; }
+.ev-body { background: var(--cream); border: 1px solid var(--border); border-left: none; border-radius: 0 8px 8px 0; padding: 0.7rem 1rem; }
+.ev-body h6 { font-size: 0.86rem; font-weight: bold; color: var(--dark); margin-bottom: 0.25rem; }
+.ev-body p { font-size: 0.85rem; margin: 0; color: #444; }
+.ev-body .proceso { font-size: 0.78rem; color: var(--blue); margin-top: 0.3rem; font-style: italic; }
+
+/* CARGA */
+.carga-card { border-radius: 10px; padding: 1rem 1.2rem; height: 100%; border: 1px solid var(--border); background: #fff; }
+.carga-card h6 { font-size: 0.85rem; font-weight: bold; margin-bottom: 0.35rem; }
+.carga-card p { font-size: 0.84rem; margin: 0; color: var(--muted); }
+.carga-card.malo { border-left: 4px solid var(--terra); }
+.carga-card.malo h6 { color: var(--terra); }
+.carga-card.bueno { border-left: 4px solid var(--success); }
+.carga-card.bueno h6 { color: var(--success); }
+.carga-card.neutral { border-left: 4px solid var(--blue); }
+.carga-card.neutral h6 { color: var(--blue); }
+
+/* PRINCIPIOS MAYER */
+.principio { background: var(--cream); border: 1px solid var(--border); border-radius: 8px; padding: 0.8rem 1.1rem; margin: 0.5rem 0; display: grid; grid-template-columns: 150px 1fr; gap: 1rem; align-items: start; }
+.principio-nombre { font-size: 0.85rem; font-weight: bold; color: var(--blue); }
+.principio-desc { font-size: 0.86rem; color: var(--dark); }
+@media(max-width:600px){ .principio { grid-template-columns: 1fr; gap: 0.3rem; } }
+
+/* EVALUACIÓN */
+.eval-section { background: var(--cream); border-radius: 10px; border: 1px solid var(--border); padding: 1.5rem; margin-top: 2rem; }
+.eval-section h4 { font-family: Georgia, serif; font-weight: normal; color: var(--dark); font-size: 1.1rem; margin-bottom: 0.3rem; }
+.eval-progress-text { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.2rem; }
+.eval-question { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem 1.3rem; margin-bottom: 1rem; }
+.eval-question h6 { font-size: 0.9rem; font-weight: bold; color: var(--dark); margin-bottom: 0.8rem; line-height: 1.5; }
+.eval-option { display: flex; align-items: flex-start; gap: 0.7rem; padding: 0.6rem 0.8rem; border-radius: 7px; border: 1px solid var(--border); margin-bottom: 0.5rem; cursor: pointer; font-size: 0.88rem; transition: all 0.15s; background: var(--cream); }
+.eval-option:hover { border-color: var(--blue); background: var(--blue-light); }
+.eval-option.selected { border-color: var(--blue); background: var(--blue-light); }
+.eval-option.correct { border-color: var(--success); background: #edf7f2; pointer-events: none; }
+.eval-option.incorrect { border-color: var(--terra); background: var(--terra-light); pointer-events: none; }
+.eval-option.disabled { pointer-events: none; opacity: 0.7; }
+.eval-radio { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px; transition: all 0.15s; }
+.eval-option.selected .eval-radio { border-color: var(--blue); background: var(--blue); }
+.eval-option.correct .eval-radio { border-color: var(--success); background: var(--success); }
+.eval-option.incorrect .eval-radio { border-color: var(--terra); background: var(--terra); }
+.feedback-box { font-size: 0.84rem; padding: 0.7rem 1rem; border-radius: 7px; margin-top: 0.5rem; line-height: 1.6; }
+.feedback-ok { background: #edf7f2; color: var(--success); border: 1px solid #b0ddc5; }
+.feedback-fail { background: var(--terra-light); color: #8a3020; border: 1px solid #e0b0a0; }
+
+/* RESULT */
+.result-card { text-align: center; padding: 2rem; background: #fff; border-radius: 12px; border: 1px solid var(--border); margin-top: 1rem; }
+.result-score { font-family: Georgia, serif; font-size: 4rem; color: var(--terra); line-height: 1; }
+.result-label { font-size: 0.85rem; color: var(--muted); margin: 0.3rem 0 0.8rem; }
+.result-msg { font-size: 0.92rem; max-width: 400px; margin: 0 auto 1.5rem; line-height: 1.6; }
+
+/* BTN */
+.btn-terra { background: var(--terra); border-color: var(--terra); color: #fff; border-radius: 8px; padding: 0.6rem 1.4rem; }
+.btn-terra:hover { background: #a8492d; border-color: #a8492d; color: #fff; }
+.btn-blue { background: var(--blue); border-color: var(--blue); color: #fff; border-radius: 8px; }
+.btn-blue:hover { background: #2d5570; border-color: #2d5570; color: #fff; }
+.btn-outline-terra { border-color: var(--terra); color: var(--terra); border-radius: 8px; }
+.btn-outline-terra:hover { background: var(--terra); color: #fff; }
+
+/* TOAST */
+.toast-di { position: fixed; top: 80px; right: 20px; padding: 0.9rem 1.3rem; border-radius: 8px; color: #fff; z-index: 9999; font-size: 0.88rem; box-shadow: 0 4px 16px rgba(0,0,0,0.2); animation: slideIn 0.3s ease; }
+@keyframes slideIn { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:translateX(0); } }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header-di">
+  <div class="container-fluid px-3">
+    <div class="d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center gap-3">
+        <a href="../index.html" class="btn-back"><i class="bi bi-arrow-left me-1"></i>Inicio</a>
+        <div>
+          <div class="course-name">Diseño Instruccional</div>
+          <div class="unit-name">Módulo 1 · Unidad 1.4</div>
+        </div>
+      </div>
+      <div class="d-none d-md-flex align-items-center gap-2">
+        <span id="headerProgress" style="font-size:0.8rem;color:#a09a94"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid px-3 py-4" style="max-width:1200px;margin:0 auto">
+  <div class="row g-4">
+
+    <!-- SIDEBAR -->
+    <div class="col-lg-3">
+      <div class="sidebar-di">
+        <div class="sidebar-header">
+          <h6>Módulo 1</h6>
+          <p>Fundamentos teóricos</p>
+        </div>
+        <a class="lesson-item" href="m1-1.html">
+          <div class="lesson-num" id="num-m1-1">1</div>
+          <div class="lesson-info"><strong>¿Qué es el DI?</strong><span>Definición · historia · perfil</span></div>
+        </a>
+        <a class="lesson-item" href="m1-2.html">
+          <div class="lesson-num" id="num-m1-2">2</div>
+          <div class="lesson-info"><strong>Teorías del aprendizaje</strong><span>Conductismo · constructivismo</span></div>
+        </a>
+        <a class="lesson-item" href="m1-3.html">
+          <div class="lesson-num" id="num-m1-3">3</div>
+          <div class="lesson-info"><strong>Gagné y carga cognitiva</strong><span>Nueve eventos · Sweller</span></div>
+        </a>
+        <a class="lesson-item active" onclick="scrollToTop()">
+          <div class="lesson-num">4</div>
+          <div class="lesson-info"><strong>Artefactos y documentos del DI</strong><span>Syllabus · APA · diversificación</span></div>
+        </a>
+        <div class="sidebar-progress">
+          <div class="d-flex justify-content-between mb-1">
+            <small style="color:var(--muted);font-size:0.75rem">Módulo 1</small>
+            <small id="sidebarPct" style="color:var(--terra);font-size:0.75rem;font-weight:bold">0/4</small>
+          </div>
+          <div class="progress-di"><div class="progress-di-fill" id="sidebarBar" style="width:0%"></div></div>
+        </div>
+        <div class="sidebar-footer">
+          <a href="../index.html" style="font-size:0.8rem;color:var(--muted);text-decoration:none"><i class="bi bi-grid me-1"></i>Ver todos los módulos</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="col-lg-9">
+      <div class="content-di">
+        <div class="lesson-hero">
+          <div class="unit-tag">Módulo 1 · Unidad 1.4</div>
+          <h1>Artefactos y documentos del DI</h1>
+          <p>Syllabus, guía didáctica y DDI · ruta de aprendizaje y material de lectura · normas APA · diversificación de materiales y evaluaciones · DUA</p>
+        </div>
+        <div class="lesson-badges">
+          <span class="lbadge"><i class="bi bi-book me-1"></i>5 bloques de contenido</span>
+          <span class="lbadge"><i class="bi bi-chat-square-text me-1"></i>3 preguntas de práctica oral</span>
+          <span class="lbadge"><i class="bi bi-clipboard-check me-1"></i>9 preguntas al final</span>
+          <span class="lbadge"><i class="bi bi-clock me-1"></i>~30 min</span>
+        </div>
+
+        <div class="lesson-body">
+
+          <!-- MAPA CONCEPTUAL (organizador previo) -->
+          <div class="presentacion mb-4">
+            <div class="presentacion-head">
+              <div class="pres-title"><i class="bi bi-diagram-3"></i> Mapa de esta unidad</div>
+              <span class="pres-tag">Organizador previo</span>
+            </div>
+            <div style="background:#fff;padding:1.2rem">
+              <svg width="100%" viewBox="0 0 680 460" style="display:block">
+                <line x1="340" y1="192" x2="220" y2="96" stroke="#ddd8d0" stroke-width="1"/>
+                <line x1="340" y1="192" x2="460" y2="96" stroke="#ddd8d0" stroke-width="1"/>
+                <line x1="260" y1="220" x2="210" y2="220" stroke="#ddd8d0" stroke-width="1"/>
+                <line x1="420" y1="220" x2="470" y2="220" stroke="#ddd8d0" stroke-width="1"/>
+                <line x1="340" y1="248" x2="340" y2="360" stroke="#ddd8d0" stroke-width="1"/>
+                <rect x="240" y="192" width="200" height="56" rx="8" fill="#f7ede8" stroke="#c85c3a" stroke-width="1"/>
+                <text x="340" y="212" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Artefactos del DI</text>
+                <text x="340" y="230" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#c85c3a">unidad 1.4</text>
+                <rect x="30" y="40" width="200" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
+                <text x="130" y="60" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Syllabus, guía, DDI</text>
+                <text x="130" y="78" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">tres documentos distintos</text>
+                <rect x="450" y="40" width="200" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
+                <text x="550" y="60" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Ruta y lecturas</text>
+                <text x="550" y="78" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">navegación del curso</text>
+                <rect x="10" y="192" width="200" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
+                <text x="110" y="212" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Normas APA</text>
+                <text x="110" y="230" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">citar con criterio</text>
+                <rect x="470" y="192" width="200" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
+                <text x="570" y="212" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Diversificar material</text>
+                <text x="570" y="230" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">texto, video, audio</text>
+                <rect x="230" y="360" width="220" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
+                <text x="340" y="380" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Diversificar evaluación + DUA</text>
+                <text x="340" y="398" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">equidad en cómo demostrar</text>
+              </svg>
+              <p style="font-size:0.8rem;color:var(--muted);text-align:center;margin-top:0.5rem">Estos 5 conceptos son vocabulario operativo: lo que un DI produce y aplica en el día a día, más allá de la teoría del aprendizaje.</p>
+            </div>
+          </div>
+
+          <!-- PRESENTACIÓN -->
+          <div class="presentacion">
+            <div class="presentacion-head">
+              <div class="pres-title"><i class="bi bi-easel2"></i> Presentación del tema <span class="pres-tag">NotebookLM</span></div>
+              <div class="presentacion-actions">
+                <a class="pres-btn" href="m1-4.pdf" target="_blank" rel="noopener"><i class="bi bi-arrows-fullscreen"></i> Pantalla completa</a>
+                <a class="pres-btn" href="m1-4.pdf" download><i class="bi bi-download"></i> Descargar</a>
+              </div>
+            </div>
+            <div class="presentacion-viewer">
+              <iframe src="m1-4.pdf#view=FitH" title="Presentación del tema" loading="lazy"></iframe>
+            </div>
+            <div class="pres-audio">
+              <span class="pres-audio-label"><i class="bi bi-headphones"></i> Resumen en audio</span>
+              <audio controls preload="metadata" src="m1-4-audio.mp3"></audio>
+            </div>
+          </div>
+
+          <!-- ACORDEÓN 1 -->
+          <div class="accordion-di">
+            <button class="accordion-di-btn open" onclick="toggleAcc(this)">
+              <i class="bi bi-1-circle acc-icon"></i> Syllabus, guía didáctica y DDI: tres documentos que se confunden
+              <i class="bi bi-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-di-body show">
+              <p>Estos tres documentos aparecen constantemente en ofertas laborales de DI y se confunden porque todos "describen el curso" — pero cada uno tiene una audiencia y un propósito distinto. Confundirlos en una entrevista se lee igual que confundir DI con e-learning developer: falta de precisión sobre tus propios entregables.</p>
+              <table class="table table-di table-bordered">
+                <thead><tr><th>Documento</th><th>Audiencia</th><th>Contenido típico</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Syllabus</strong></td><td>Estudiante (contrato pedagógico público)</td><td>Objetivos generales, unidades, metodología, criterios de evaluación, bibliografía, cronograma de entregas</td></tr>
+                  <tr><td><strong>Guía didáctica</strong></td><td>Estudiante (más detallada que el syllabus)</td><td>Orientaciones de estudio unidad por unidad: cómo abordar cada lectura, qué hacer si algo no se entiende, tiempos sugeridos</td></tr>
+                  <tr><td><strong>DDI (Documento de Diseño Instruccional)</strong></td><td>Equipo interno (DI, developer, SME)</td><td>Análisis de audiencia, objetivos operacionalizados, justificación pedagógica de cada decisión, guiones, blueprint técnico</td></tr>
+                </tbody>
+              </table>
+              <div class="callout-terra">
+                <strong>La prueba rápida:</strong> si el documento lo lee el estudiante para saber qué hacer, es syllabus o guía didáctica. Si lo lee otro diseñador o desarrollador para saber qué construir, es el DDI. El DDI casi nunca se le muestra al estudiante final.
+              </div>
+              <div class="card-di">
+                <h6><i class="bi bi-briefcase me-1"></i>Ejemplo</h6>
+                <p>Para un diplomado en una universidad, el syllabus es el PDF de 2 páginas que se sube al portal antes de matricularse. La guía didáctica es el documento de 15 páginas dentro del curso que le dice al estudiante "esta semana lee el capítulo 3, luego resuelve el foro, y si tienes dudas revisa el glosario". El DDI es el documento que tú como DI le entregaste al equipo de desarrollo con la justificación pedagógica de por qué el foro va después de la lectura y no antes.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- ACORDEÓN 2 -->
+          <div class="accordion-di">
+            <button class="accordion-di-btn" onclick="toggleAcc(this)">
+              <i class="bi bi-signpost-split acc-icon"></i> Ruta de aprendizaje y material de lectura
+              <i class="bi bi-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-di-body">
+              <p>La <strong>ruta de aprendizaje</strong> es el documento (o vista visual, como la que ves en la portada de este curso) que muestra al estudiante cómo se recorre el curso: en qué orden, con qué prerrequisitos, y cuánto tiempo tomará cada tramo. Es distinta del DDI porque es de cara al estudiante, y distinta del syllabus porque su foco es la navegación, no el contrato de evaluación.</p>
+              <h5>Tipos de material de lectura</h5>
+              <div class="row g-2">
+                <div class="col-md-6"><div class="card-di"><h6><i class="bi bi-bookmark-star me-1"></i>Obligatoria vs. complementaria</h6><p>La obligatoria es la mínima para aprobar y cumplir el objetivo. La complementaria es para quien quiere profundizar. Mezclarlas sin distinguirlas genera sobrecarga — el estudiante no sabe qué es indispensable.</p></div></div>
+                <div class="col-md-6"><div class="card-di"><h6><i class="bi bi-journal-text me-1"></i>Primaria vs. secundaria</h6><p>La primaria es la fuente original (el paper de Gagné, la ley, el manual técnico). La secundaria la resume o interpreta (un artículo de blog, un resumen tuyo). Un curso bien diseñado casi siempre da la secundaria como entrada y la primaria como profundización opcional.</p></div></div>
+              </div>
+              <div class="callout-blue mt-2">
+                <strong>Error común:</strong> copiar y pegar la bibliografía completa de un curso presencial a uno virtual sin curarla. Un estudiante virtual autónomo no tiene un profesor que le diga en clase "esto no es tan importante, sáltenlo". El DI tiene que hacer esa curación explícitamente en la guía didáctica.
+              </div>
+            </div>
+          </div>
+
+          <!-- ACORDEÓN 3 -->
+          <div class="accordion-di">
+            <button class="accordion-di-btn" onclick="toggleAcc(this)">
+              <i class="bi bi-quote acc-icon"></i> Normas APA aplicadas al diseño de cursos
+              <i class="bi bi-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-di-body">
+              <p>APA (American Psychological Association, 7ª edición) es el sistema de citación más usado en educación y ciencias sociales en Chile. Para un DI no es solo "cómo se cita un libro en un ensayo" — es una herramienta de trabajo diario: cada vez que usas una imagen, un video, una teoría o un dato de otra fuente dentro de un curso, necesitas dar crédito correctamente, tanto por ética profesional como por resguardo legal de derechos de autor de la institución.</p>
+              <table class="table table-di table-bordered">
+                <thead><tr><th>Situación</th><th>Formato APA básico</th></tr></thead>
+                <tbody>
+                  <tr><td>Cita en el texto (parafraseando)</td><td>(Gagné, 1965) al final de la idea</td></tr>
+                  <tr><td>Cita textual corta</td><td>"texto exacto" (Gagné, 1965, p. 34)</td></tr>
+                  <tr><td>Entrada en referencias — libro</td><td>Apellido, Inicial. (Año). <em>Título en cursiva</em>. Editorial.</td></tr>
+                  <tr><td>Entrada en referencias — página web / video</td><td>Apellido o Institución. (Año, día de mes). <em>Título</em> [Tipo de recurso]. Plataforma. URL</td></tr>
+                </tbody>
+              </table>
+              <div class="callout-terra">
+                <strong>Para tu portafolio:</strong> revisa que las imágenes, videos y datos que usaste en tus cursos de Brightspace y en tu LMS de dibujo anatómico tengan su fuente citada donde corresponda. Es un detalle que un evaluador técnico revisa y que comunica profesionalismo.
+              </div>
+            </div>
+          </div>
+
+          <!-- ACORDEÓN 4 -->
+          <div class="accordion-di">
+            <button class="accordion-di-btn" onclick="toggleAcc(this)">
+              <i class="bi bi-collection-play acc-icon"></i> Diversificación del material educativo
+              <i class="bi bi-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-di-body">
+              <p>Diversificar no significa "agregar variedad porque se ve más completo". Significa ofrecer el mismo contenido en distintos formatos porque distintos estudiantes acceden mejor a través de canales distintos — esto conecta directamente con los principios de Mayer de la Unidad 1.3 (modalidad, redundancia) y anticipa el DUA que verás al final de esta unidad.</p>
+              <div class="row g-2">
+                <div class="col-md-4"><div class="card-di"><h6><i class="bi bi-file-text me-1"></i>Texto</h6><p>Ideal para consulta rápida y para quien prefiere su propio ritmo de lectura.</p></div></div>
+                <div class="col-md-4"><div class="card-di"><h6><i class="bi bi-camera-video me-1"></i>Video</h6><p>Ideal para procesos, demostraciones y contenido secuencial con apoyo visual.</p></div></div>
+                <div class="col-md-4"><div class="card-di"><h6><i class="bi bi-mic me-1"></i>Audio / podcast</h6><p>Ideal para repaso en movimiento — como tú misma usas NotebookLM para estudiar.</p></div></div>
+                <div class="col-md-4"><div class="card-di"><h6><i class="bi bi-bar-chart-steps me-1"></i>Infografía</h6><p>Ideal para relaciones y jerarquías — comprimir mucha información en poco espacio visual.</p></div></div>
+                <div class="col-md-4"><div class="card-di"><h6><i class="bi bi-controller me-1"></i>Interactivo (H5P, Genially)</h6><p>Ideal para practicar con retroalimentación inmediata antes de la evaluación formal.</p></div></div>
+                <div class="col-md-4"><div class="card-di"><h6><i class="bi bi-people me-1"></i>Sincrónico</h6><p>Ideal para resolver dudas complejas y generar comunidad — no reemplaza al material asincrónico, lo complementa.</p></div></div>
+              </div>
+              <div class="callout-blue mt-2">
+                <strong>Criterio, no colección:</strong> diversificar mal es poner un video, un PDF y un H5P del mismo contenido "porque hay que variar". Diversificar bien es elegir el formato que mejor sirve a ese objetivo específico, y usar los demás solo si agregan una función distinta (repaso, profundización, práctica).
+              </div>
+            </div>
+          </div>
+
+          <!-- ACORDEÓN 5 -->
+          <div class="accordion-di">
+            <button class="accordion-di-btn" onclick="toggleAcc(this)">
+              <i class="bi bi-universal-access acc-icon"></i> Diversificación de evaluaciones y Diseño Universal de Aprendizaje (DUA)
+              <i class="bi bi-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-di-body">
+              <p>El error más común en evaluación es asumir que "evaluar" significa "hacer un cuestionario". Un DI competente diversifica también cómo se demuestra el aprendizaje, no solo cómo se presenta el contenido.</p>
+              <table class="table table-di table-bordered">
+                <thead><tr><th>Formato de evaluación</th><th>Sirve especialmente para</th></tr></thead>
+                <tbody>
+                  <tr><td>Opción múltiple con feedback</td><td>Verificar comprensión conceptual a gran escala, autocorrección inmediata</td></tr>
+                  <tr><td>Portafolio</td><td>Mostrar evolución de un proceso o habilidad a lo largo del tiempo (ideal en artes, como tu propio trabajo)</td></tr>
+                  <tr><td>Proyecto o estudio de caso</td><td>Evaluar transferencia a una situación realista, no solo memoria</td></tr>
+                  <tr><td>Autoevaluación con rúbrica</td><td>Cursos autoinstruccionales sin corrector — como el que estás construyendo tú misma</td></tr>
+                  <tr><td>Defensa oral o grabada</td><td>Verificar comprensión profunda cuando escribir no es la habilidad central a evaluar</td></tr>
+                </tbody>
+              </table>
+              <h5>Diseño Universal para el Aprendizaje (DUA / CAST)</h5>
+              <p>El DUA es el marco que sustenta por qué diversificar materiales y evaluaciones no es "un plus", sino un principio de diseño inclusivo desde el inicio. Propone tres principios:</p>
+              <div class="card-di"><h6><i class="bi bi-eye me-1"></i>Múltiples formas de representación</h6><p>El "qué" del aprendizaje: ofrecer el contenido en más de un formato (el acordeón anterior es exactamente esto).</p></div>
+              <div class="card-di"><h6><i class="bi bi-pencil-square me-1"></i>Múltiples formas de acción y expresión</h6><p>El "cómo" demuestra el estudiante lo que aprendió: dejar elegir entre informe escrito, video explicativo o infografía para la misma evaluación.</p></div>
+              <div class="card-di"><h6><i class="bi bi-fire me-1"></i>Múltiples formas de motivación y compromiso</h6><p>El "por qué" se involucra el estudiante: dar opciones de contexto o ejemplos relevantes a distintos intereses, no un solo caso genérico para todos.</p></div>
+              <div class="callout-terra mt-2">
+                <strong>Por qué esto importa en tus postulaciones:</strong> DUA es casi obligatorio de nombrar cuando preguntan por inclusión o accesibilidad en el diseño de cursos. No es lo mismo que "estilos de aprendizaje" (que es un mito sin respaldo científico) — DUA no asume perfiles fijos de estudiante, ofrece opciones para todos.
+              </div>
+            </div>
+          </div>
+
+          <!-- AUTOEVALUACIÓN AUTOINSTRUCCIONAL -->
+          <div class="accordion-di" style="border-color:var(--blue)">
+            <button class="accordion-di-btn" onclick="toggleAcc(this)" style="background:var(--blue-light)">
+              <i class="bi bi-chat-square-text acc-icon" style="color:var(--blue)"></i> Practica como en una entrevista
+              <i class="bi bi-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-di-body">
+              <p style="color:var(--muted);font-size:0.85rem">Responde primero con tus propias palabras antes de revelar la respuesta modelo.</p>
+
+              <div class="card-di" style="border-left:3px solid var(--blue)">
+                <h6><i class="bi bi-question-circle me-1"></i>1. Te piden explicar la diferencia entre un syllabus y un DDI. ¿Qué respondes?</h6>
+                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
+                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
+                  <p style="font-size:0.87rem"><em>"El syllabus lo lee el estudiante: es el contrato pedagógico público con objetivos, metodología y evaluación. El DDI es interno, lo usa el equipo de diseño y desarrollo, e incluye la justificación pedagógica detrás de cada decisión — el estudiante normalmente nunca lo ve."</em></p>
+                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
+                  <ul style="font-size:0.83rem;color:var(--muted)">
+                    <li>¿Distinguiste la audiencia de cada documento?</li>
+                    <li>¿Mencionaste que el DDI incluye justificación pedagógica?</li>
+                    <li>¿Evitaste decir que son lo mismo con otro nombre?</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="card-di" style="border-left:3px solid var(--blue)">
+                <h6><i class="bi bi-question-circle me-1"></i>2. Un jefe te pide "diversificar" el material de un curso muy denso en texto. ¿Qué le propones?</h6>
+                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
+                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
+                  <p style="font-size:0.87rem"><em>"Antes de agregar formatos, identificaría qué función cumple cada bloque de contenido: si es un proceso, lo llevaría a video corto; si son relaciones o cifras, a infografía; si necesita práctica, a un interactivo con feedback. No agregaría formatos porque sí — cada uno debe justificar por qué sirve mejor que el texto para ese contenido específico."</em></p>
+                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
+                  <ul style="font-size:0.83rem;color:var(--muted)">
+                    <li>¿Explicaste que la elección de formato depende del tipo de contenido?</li>
+                    <li>¿Evitaste sonar como que "más formatos siempre es mejor"?</li>
+                    <li>¿Conectaste con algún principio de Mayer o DUA?</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="card-di" style="border-left:3px solid var(--blue)">
+                <h6><i class="bi bi-question-circle me-1"></i>3. Te preguntan qué es el DUA y por qué lo aplicarías en un curso que estás diseñando. ¿Qué respondes?</h6>
+                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
+                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
+                  <p style="font-size:0.87rem"><em>"El DUA es un marco de diseño inclusivo con tres principios: múltiples formas de representar el contenido, múltiples formas de que el estudiante demuestre lo aprendido, y múltiples formas de motivarlo. Lo aplicaría, por ejemplo, dejando elegir entre un informe escrito o un video como evidencia de una misma evaluación, en vez de forzar un único formato para todos."</em></p>
+                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
+                  <ul style="font-size:0.83rem;color:var(--muted)">
+                    <li>¿Nombraste los tres principios, aunque sea brevemente?</li>
+                    <li>¿Diste un ejemplo concreto de aplicación?</li>
+                    <li>¿Evitaste confundirlo con "estilos de aprendizaje"?</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- EVALUACIÓN -->
+          <div class="eval-section mt-4">
+            <h4><i class="bi bi-clipboard-check me-2" style="color:var(--terra)"></i>Evaluación — Unidad 1.4</h4>
+            <p class="eval-progress-text">Preguntas respondidas: <strong><span id="answeredCount">0</span>/9</strong> — puedes enviar en cualquier momento</p>
+
+            <div id="quizBody"></div>
+
+            <div id="evalResult" class="mt-3"></div>
+
+            <div class="d-flex flex-wrap gap-2 mt-3">
+              <button class="btn btn-terra" id="submitBtn" onclick="submitEval()">
+                <i class="bi bi-check-circle me-2"></i>Enviar evaluación
+              </button>
+              <button class="btn btn-outline-terra" id="retryBtn" style="display:none" onclick="retryEval()">
+                <i class="bi bi-arrow-clockwise me-2"></i>Reintentar
+              </button>
+            </div>
+            <div id="moduleCompleteZone"></div>
+          </div>
+
+        </div><!-- /lesson-body -->
+      </div><!-- /content-di -->
+    </div><!-- /col -->
+  </div><!-- /row -->
+</div><!-- /container -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbylYML8h2BnNgi2AXtZ8bkGaXPNRhurswPr5dfyGRldbVoCRvmoT2cHN0r3I4qGynLb/exec';
+const UNIDAD_ID = 'm1-4';
+const UNIDAD_LABEL = '1.4 Artefactos y documentos del DI';
+
+const PREGUNTAS = [
+  { q:"¿Cuál es la diferencia principal entre un syllabus y un DDI (Documento de Diseño Instruccional)?", opts:["Son el mismo documento con nombres distintos en distintos países","El syllabus es de cara al estudiante (contrato pedagógico); el DDI es interno, para el equipo, e incluye la justificación pedagógica de cada decisión","El DDI se usa solo en educación presencial","El syllabus lo escribe el developer y el DDI lo escribe el DI"], c:1, fb_ok:"Correcto. El syllabus es público y orientado al estudiante; el DDI es un documento de trabajo interno que normalmente el estudiante nunca ve.", fb_fail:"El syllabus es el contrato pedagógico que lee el estudiante. El DDI es interno, dirigido al equipo de diseño y desarrollo, con la justificación pedagógica de cada decisión." },
+  { q:"¿Qué distingue a la guía didáctica del syllabus?", opts:["La guía didáctica es más breve que el syllabus","La guía didáctica da orientaciones de estudio unidad por unidad; el syllabus es la descripción general del curso", "No existe diferencia real entre ambos","La guía didáctica se usa solo para evaluar, no para enseñar"], c:1, fb_ok:"Correcto. La guía didáctica opera a un nivel de detalle mayor: acompaña al estudiante semana a semana o unidad a unidad.", fb_fail:"La guía didáctica detalla cómo abordar cada unidad (qué leer, qué hacer, tiempos sugeridos), mientras el syllabus da la visión general del curso completo." },
+  { q:"¿Cuál es el propósito principal de una ruta de aprendizaje visible para el estudiante?", opts:["Reemplazar la evaluación del curso","Mostrar el orden, los prerrequisitos y el tiempo estimado para recorrer el curso","Sustituir al syllabus por completo","Servir únicamente como decoración de la página principal"], c:1, fb_ok:"Correcto. La ruta de aprendizaje comunica navegación y secuencia — de qué manera se recorre el curso — más que contenido de evaluación.", fb_fail:"Su función es mostrar cómo se navega el curso: secuencia, prerrequisitos y duración estimada de cada tramo, no evaluar ni reemplazar el syllabus." },
+  { q:"Un curso virtual copia toda la bibliografía de la versión presencial sin filtrarla. ¿Qué error de diseño instruccional comete?", opts:["Ninguno, mientras esté completa es mejor","No distinguió entre lectura obligatoria y complementaria, generando sobrecarga en un estudiante que ya no tiene un profesor presencial que indique qué priorizar","El error es no traducir la bibliografía al inglés","El error es no citarla en formato APA"], c:1, fb_ok:"Correcto. Sin la curación explícita entre obligatoria y complementaria, el estudiante autónomo no sabe qué es indispensable y se sobrecarga.", fb_fail:"El error es no diferenciar lectura obligatoria de complementaria. En presencial el profesor filtra en vivo; en virtual esa curación debe estar explícita en el diseño." },
+  { q:"¿Por qué es relevante que un diseñador instruccional maneje normas APA, más allá de escribir un ensayo académico?", opts:["Porque todos los LMS exigen formato APA para funcionar","Porque debe dar crédito correcto a fuentes, imágenes y datos usados dentro de los cursos, por ética profesional y resguardo de derechos de autor","Porque APA es un requisito solo en Chile","Porque reemplaza la necesidad de un DDI"], c:1, fb_ok:"Correcto. Citar correctamente protege a la institución y al DI de problemas de derechos de autor, además de ser buena práctica profesional.", fb_fail:"APA importa porque cada imagen, video o dato usado en un curso proveniente de otra fuente debe citarse — por ética y por resguardo legal de derechos de autor." },
+  { q:"Un DI reemplaza un documento de texto largo por un video, un H5P y un audio del mismo contenido, solo para que 'se vea más variado'. ¿Qué está haciendo mal?", opts:["Nada, mientras haya más formatos el curso es mejor","Diversificó por diversificar, sin que cada formato cumpla una función pedagógica distinta y justificada","Debió usar solo video, sin otros formatos","El error es no haber usado gamificación"], c:1, fb_ok:"Correcto. Diversificar bien significa elegir el formato que mejor sirve a un objetivo específico, no acumular formatos sin criterio.", fb_fail:"El error es diversificar sin criterio pedagógico. Cada formato adicional debe cumplir una función distinta (repaso, profundización, práctica), no solo aportar variedad visual." },
+  { q:"¿Cuáles son los tres principios del Diseño Universal para el Aprendizaje (DUA)?", opts:["Visual, auditivo y kinestésico","Múltiples formas de representación, de acción/expresión, y de motivación/compromiso","Conductismo, cognitivismo y constructivismo","Análisis, diseño y desarrollo"], c:1, fb_ok:"Correcto. El DUA no asume perfiles fijos de estudiante — ofrece múltiples caminos en representación, expresión y motivación para todos.", fb_fail:"Los tres principios son: múltiples formas de representación (el qué), de acción y expresión (el cómo), y de motivación (el por qué). No confundir con estilos de aprendizaje." },
+  { q:"¿Por qué el DUA se diferencia del concepto (desmentido) de 'estilos de aprendizaje'?", opts:["Son exactamente lo mismo con otro nombre","El DUA no asume perfiles fijos de estudiante; ofrece múltiples opciones a todos en vez de asignar un formato único según un supuesto estilo personal","Los estilos de aprendizaje sí tienen respaldo cientifico y el DUA no","El DUA solo aplica en educación presencial"], c:1, fb_ok:"Correcto. Los estilos de aprendizaje (visual/auditivo/kinestésico) carecen de respaldo empírico sólido. El DUA en cambio da opciones a todos sin etiquetar al estudiante.", fb_fail:"El DUA no cataloga estudiantes en perfiles fijos como hacen los (desmentidos) estilos de aprendizaje; en cambio ofrece múltiples opciones disponibles para cualquiera." },
+  { q:"Una evaluación permite entregar el mismo trabajo como informe escrito, video explicativo o infografía, a elección del estudiante. ¿Qué principio del DUA aplica directamente?", opts:["Múltiples formas de representación","Múltiples formas de acción y expresión","Múltiples formas de motivación","Ninguno, esto no es parte del DUA"], c:1, fb_ok:"Correcto. Dejar elegir el formato en que se demuestra el aprendizaje es el principio de acción y expresión.", fb_fail:"Es el principio de acción y expresión: dar opciones sobre cómo el estudiante demuestra lo aprendido, no sobre cómo se le presenta el contenido." }
+];
+
+let answers = {};
+let submitted = false;
+
+function toggleAcc(btn) {
+  const body = btn.nextElementSibling;
+  const isOpen = body.classList.contains('show');
+  body.classList.toggle('show', !isOpen);
+  btn.classList.toggle('open', !isOpen);
+}
+
+function toggleModelo(btn) {
+  const box = btn.nextElementSibling;
+  const isOpen = box.style.display === 'block';
+  box.style.display = isOpen ? 'none' : 'block';
+  btn.textContent = isOpen ? 'Ver respuesta modelo' : 'Ocultar respuesta modelo';
+}
+
+function renderQuiz() {
+  const body = document.getElementById('quizBody');
+  body.innerHTML = PREGUNTAS.map((p, qi) => {
+    const opts = p.opts.map((o, oi) =>
+      `<div class="eval-option" onclick="selectOpt(this,${qi},${oi})"><div class="eval-radio"></div><span>${o}</span></div>`
+    ).join('');
+    return `<div class="eval-question" data-question="${qi}"><h6>${qi+1}. ${p.q}</h6>${opts}</div>`;
+  }).join('');
+}
+
+function selectOpt(el, qi, oi) {
+  if (submitted) return;
+  const container = el.closest('[data-question]');
+  container.querySelectorAll('.eval-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  answers[qi] = oi;
+  document.getElementById('answeredCount').textContent = Object.keys(answers).length;
+}
+
+function submitEval() {
+  if (Object.keys(answers).length === 0) {
+    showToast('Responde al menos una pregunta para enviar', 'warning');
+    return;
+  }
+  submitted = true;
+  let score = 0;
+
+  PREGUNTAS.forEach((p, qi) => {
+    const container = document.querySelector(`[data-question="${qi}"]`);
+    if (!container) return;
+    const userAns = answers[qi];
+    const opts = container.querySelectorAll('.eval-option');
+    opts.forEach((opt, idx) => {
+      opt.style.pointerEvents = 'none';
+      if (idx === userAns) {
+        if (userAns === p.c) { opt.classList.add('correct'); score++; }
+        else opt.classList.add('incorrect');
+      } else if (idx === p.c && userAns !== undefined) {
+        opt.classList.add('correct');
+      }
+    });
+    if (userAns !== undefined) {
+      const isOk = userAns === p.c;
+      const fbEl = document.createElement('div');
+      fbEl.className = 'feedback-box ' + (isOk ? 'feedback-ok' : 'feedback-fail');
+      fbEl.innerHTML = (isOk ? '<i class="bi bi-check-circle me-1"></i>' : '<i class="bi bi-x-circle me-1"></i>') + (isOk ? p.fb_ok : p.fb_fail);
+      container.appendChild(fbEl);
+    }
+  });
+
+  const answered = Object.keys(answers).length;
+  const pct = Math.round(score / PREGUNTAS.length * 100);
+  const msg = pct >= 90 ? 'Excelente. Manejas con precisión los artefactos y el vocabulario operativo del DI.' : pct >= 70 ? 'Buen resultado. Repasa la diferencia entre syllabus, guía didáctica y DDI.' : 'Vuelve a repasar los documentos del DI y los principios del DUA.';
+
+  document.getElementById('evalResult').innerHTML = `
+    <div class="result-card">
+      <div class="result-score">${score}/${PREGUNTAS.length}</div>
+      <div class="result-label">${pct}% de respuestas correctas (${answered} respondidas)</div>
+      <div class="result-msg">${msg}</div>
+    </div>`;
+
+  document.getElementById('submitBtn').style.display = 'none';
+  document.getElementById('retryBtn').style.display = 'inline-block';
+  guardarPuntaje(score / PREGUNTAS.length);
+  renderModuleComplete();
+}
+
+function retryEval() {
+  submitted = false;
+  answers = {};
+  renderQuiz();
+  document.getElementById('evalResult').innerHTML = '';
+  document.getElementById('answeredCount').textContent = '0';
+  document.getElementById('submitBtn').style.display = 'inline-block';
+  document.getElementById('retryBtn').style.display = 'none';
+  document.getElementById('moduleCompleteZone').innerHTML = '';
+  showToast('Inténtalo de nuevo — repasa el contenido antes de responder', 'info');
+  document.querySelector('.eval-section').scrollIntoView({ behavior:'smooth' });
+}
+
+// ---- Cierre de módulo: aparece cuando las 4 unidades del Módulo 1 están aprobadas ----
+function renderModuleComplete() {
+  const zone = document.getElementById('moduleCompleteZone');
+  if (!zone) return;
+  const s = getScores();
+  const ids = ['m1-1','m1-2','m1-3','m1-4'];
+  const labels = { 'm1-1':'1.1 ¿Qué es el DI?', 'm1-2':'1.2 Teorías del aprendizaje', 'm1-3':'1.3 Gagné y carga cognitiva', 'm1-4':'1.4 Artefactos y documentos del DI' };
+  const done = ids.filter(id => s[id] !== undefined && s[id] > 0);
+  const pendientes = ids.filter(id => !(s[id] !== undefined && s[id] > 0));
+
+  if (pendientes.length === 0) {
+    zone.innerHTML = `
+      <div style="background:var(--terra-light);border:1px solid #e0b0a0;border-left:4px solid var(--terra);border-radius:10px;padding:1.3rem 1.5rem;margin-top:1.2rem">
+        <h5 style="font-family:Georgia,serif;font-weight:normal;color:var(--dark);margin-bottom:0.6rem">
+          <i class="bi bi-trophy-fill me-2" style="color:var(--terra)"></i>Módulo 1 completo
+        </h5>
+        <p style="font-size:0.88rem;color:var(--muted);margin-bottom:0.9rem">Aprobaste las 4 unidades de Fundamentos teóricos:</p>
+        <ul style="font-size:0.85rem;margin-bottom:1rem">
+          ${ids.map(id => `<li>${labels[id]} — <strong>${Math.round(s[id]*100)}%</strong></li>`).join('')}
+        </ul>
+        <a href="m2-1.html" class="btn btn-terra">
+          <i class="bi bi-arrow-right-circle me-2"></i>Ir al Módulo 2: Proceso de diseño
+        </a>
+      </div>`;
+  } else {
+    zone.innerHTML = `
+      <div style="background:var(--cream);border:1px solid var(--border);border-radius:10px;padding:1rem 1.3rem;margin-top:1.2rem;font-size:0.85rem;color:var(--muted)">
+        <i class="bi bi-hourglass-split me-2"></i>Te falta${pendientes.length>1?'n':''} <strong>${pendientes.length}</strong> unidad${pendientes.length>1?'es':''} del Módulo 1 antes de avanzar al Módulo 2: ${pendientes.map(id=>labels[id]).join(', ')}.
+      </div>`;
+  }
+}
+
+function getScores() { try { return JSON.parse(localStorage.getItem('di_scores')||'{}'); } catch(e) { return {}; } }
+
+function jsonp(params) {
+  return new Promise(function(resolve, reject) {
+    var cb = 'cb_' + Date.now() + '_' + Math.floor(Math.random()*1e6);
+    var script = document.createElement('script');
+    function cleanup(){ try { delete window[cb]; } catch(e) { window[cb] = undefined; } if (script.parentNode) script.parentNode.removeChild(script); }
+    window[cb] = function(data){ cleanup(); resolve(data); };
+    var qp = new URLSearchParams(Object.assign({}, params, { callback: cb }));
+    script.src = SCRIPT_URL + '?' + qp.toString();
+    script.onerror = function(){ cleanup(); reject(new Error('conexion')); };
+    setTimeout(function(){ if (window[cb]) { cleanup(); reject(new Error('timeout')); } }, 20000);
+    document.head.appendChild(script);
+  });
+}
+
+async function guardarPuntaje(ratio) {
+  const s = getScores(); s[UNIDAD_ID] = ratio; localStorage.setItem('di_scores', JSON.stringify(s));
+  updateSidebar();
+  try {
+    await jsonp({ action: 'saveScore', id: UNIDAD_ID, score: ratio, label: UNIDAD_LABEL, date: new Date().toLocaleDateString('es-CL') });
+  } catch(e) {}
+}
+
+function updateSidebar() {
+  const s = getScores();
+  const ids = ['m1-1','m1-2','m1-3','m1-4'];
+  // Una unidad cuenta como completada solo si su puntaje es mayor a 0.
+  const done = ids.filter(id => s[id] !== undefined && s[id] > 0).length;
+  document.getElementById('sidebarPct').textContent = done + '/4';
+  document.getElementById('sidebarBar').style.width = Math.round(done/4*100) + '%';
+  ids.forEach(id => {
+    const el = document.getElementById('num-' + id);
+    if (el && s[id] !== undefined && s[id] > 0) { el.style.background = 'var(--success)'; el.style.color = '#fff'; }
+  });
+  document.getElementById('headerProgress').textContent = done + '/4 completadas';
+}
+
+function showToast(msg, type) {
+  const colors = { warning:'#c85c3a', info:'#3a6b8a', success:'#2d7a4f' };
+  const t = document.createElement('div');
+  t.className = 'toast-di';
+  t.style.background = colors[type] || colors.info;
+  t.innerHTML = msg;
+  document.body.appendChild(t);
+  setTimeout(() => { t.style.opacity='0'; t.style.transition='opacity 0.3s'; setTimeout(()=>t.remove(),300); }, 3000);
+}
+
+function scrollToTop() { window.scrollTo({top:0,behavior:'smooth'}); }
+
+renderQuiz();
+updateSidebar();
+
+// ---- Sincronización con Google Sheets al cargar el módulo ----
+// Trae los puntajes desde Sheets aunque el localStorage esté vacío
+// (otro dispositivo, modo incógnito o navegador nuevo).
+async function syncSheet() {
+  try {
+    const data = await jsonp({ action: 'getAll' });
+    if (data && data.ok) {
+      const s = getScores();
+      (data.scores || []).forEach(function(row){
+        if (row.id && row.score !== undefined) s[row.id] = parseFloat(row.score);
+      });
+      localStorage.setItem('di_scores', JSON.stringify(s));
+      updateSidebar();
+      showCompletedState();
+    }
+  } catch(e) {}
+}
+
+// ---- Muestra el estado "ya completado" si esta unidad tiene puntaje ----
+function showCompletedState() {
+  renderModuleComplete();
+  const ratio = getScores()[UNIDAD_ID];
+  if (ratio === undefined || ratio <= 0) return;
+  const pct = Math.round(ratio * 100);
+  const ok = pct >= 70;
+  const sec = document.querySelector('.eval-section');
+  if (!sec) return;
+  let banner = document.getElementById('completedBanner');
+  if (!banner) {
+    banner = document.createElement('div');
+    banner.id = 'completedBanner';
+    sec.insertBefore(banner, sec.firstChild);
+  }
+  banner.innerHTML =
+    '<div style="display:flex;align-items:center;gap:0.9rem;background:' + (ok ? '#edf7f2' : 'var(--terra-light)') +
+    ';border:1px solid ' + (ok ? '#b0ddc5' : '#e0b0a0') + ';border-left:4px solid ' + (ok ? 'var(--success)' : 'var(--terra)') +
+    ';border-radius:8px;padding:0.9rem 1.1rem;margin-bottom:1.2rem">' +
+      '<i class="bi bi-' + (ok ? 'check-circle-fill' : 'arrow-repeat') + '" style="color:' + (ok ? 'var(--success)' : 'var(--terra)') + ';font-size:1.5rem"></i>' +
+      '<div style="flex:1">' +
+        '<div style="font-weight:bold;font-size:0.9rem;color:var(--dark)">Ya completaste esta unidad</div>' +
+        '<div style="font-size:0.82rem;color:var(--muted)">Puntaje guardado: <strong>' + pct + '%</strong>. Puedes repasar el contenido o volver a responder más abajo.</div>' +
+      '</div>' +
+    '</div>';
+}
+
+// ---- Registro de visita por pixel de imagen ----
+// Más confiable que JSONP: funciona en móvil, incógnito y cualquier navegador, sin CORS.
+function trackVisit() {
+  try {
+    let vid = localStorage.getItem('di_vid');
+    if (!vid) { vid = 'v' + Date.now().toString(36) + Math.random().toString(36).slice(2,8); localStorage.setItem('di_vid', vid); }
+    let sid = sessionStorage.getItem('di_sid');
+    if (!sid) { sid = 's' + Date.now().toString(36) + Math.random().toString(36).slice(2,8); sessionStorage.setItem('di_sid', sid); }
+    const qs = new URLSearchParams(location.search);
+    if (qs.get('owner') === '1') localStorage.setItem('di_owner', '1');
+    if (qs.get('owner') === '0') localStorage.removeItem('di_owner');
+    const owner = localStorage.getItem('di_owner') === '1' ? '1' : '0';
+    const device = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'movil' : 'escritorio';
+    const params = new URLSearchParams({ action: 'logVisit', page: UNIDAD_ID, vid: vid, sid: sid, owner: owner, device: device, t: String(Date.now()) });
+    const img = new Image();
+    img.referrerPolicy = 'no-referrer';
+    img.src = SCRIPT_URL + '?' + params.toString();
+  } catch(e) {}
+}
+
+trackVisit();
+syncSheet();
+</script>
+</body>
+</html>
