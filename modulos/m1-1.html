@@ -226,10 +226,46 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
           <span class="lbadge"><i class="bi bi-book me-1"></i>5 bloques de contenido</span>
           <span class="lbadge"><i class="bi bi-chat-square-text me-1"></i>3 preguntas de práctica oral</span>
           <span class="lbadge"><i class="bi bi-clipboard-check me-1"></i>10 preguntas al final</span>
-          <span class="lbadge"><i class="bi bi-clock me-1"></i>~25 min</span>
+          <span class="lbadge"><i class="bi bi-clock me-1"></i>~35 min</span>
         </div>
 
         <div class="lesson-body">
+
+          <!-- MAPA CONCEPTUAL (organizador previo) -->
+          <div class="presentacion mb-4">
+            <div class="presentacion-head">
+              <div class="pres-title"><i class="bi bi-diagram-3"></i> Mapa de esta unidad</div>
+              <span class="pres-tag">Organizador previo</span>
+            </div>
+            <div style="background:#fff;padding:1.2rem">
+              <svg width="100%" viewBox="0 0 680 460" style="display:block">
+                <line x1="340" y1="192" x2="220" y2="96" stroke="#ddd8d0" stroke-width="1"/>
+                <line x1="340" y1="192" x2="460" y2="96" stroke="#ddd8d0" stroke-width="1"/>
+                <line x1="260" y1="220" x2="210" y2="220" stroke="#ddd8d0" stroke-width="1"/>
+                <line x1="420" y1="220" x2="470" y2="220" stroke="#ddd8d0" stroke-width="1"/>
+                <line x1="340" y1="248" x2="340" y2="360" stroke="#ddd8d0" stroke-width="1"/>
+                <rect x="250" y="192" width="180" height="56" rx="8" fill="#f7ede8" stroke="#c85c3a" stroke-width="1"/>
+                <text x="340" y="212" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Diseño Instruccional</text>
+                <text x="340" y="230" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#c85c3a">unidad 1.1</text>
+                <rect x="40" y="40" width="190" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
+                <text x="135" y="60" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Definición técnica</text>
+                <text x="135" y="78" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">principios en planes</text>
+                <rect x="450" y="40" width="190" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
+                <text x="545" y="60" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Origen histórico</text>
+                <text x="545" y="78" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">WWII y Gagné</text>
+                <rect x="20" y="192" width="190" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
+                <text x="115" y="212" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Tipos de brechas</text>
+                <text x="115" y="230" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">tres tipos posibles</text>
+                <rect x="470" y="192" width="190" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
+                <text x="565" y="212" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Perfil del DI</text>
+                <text x="565" y="230" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">pedagogía + tecnología</text>
+                <rect x="250" y="360" width="180" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
+                <text x="340" y="380" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Roles afines</text>
+                <text x="340" y="398" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">distinguir de LXD y dev</text>
+              </svg>
+              <p style="font-size:0.8rem;color:var(--muted);text-align:center;margin-top:0.5rem">Estos 5 conceptos son las piezas que necesitas dominar en esta unidad. Vuelve a este mapa al terminar para verificar que puedes explicar cada conexión.</p>
+            </div>
+          </div>
 
           <!-- PRESENTACIÓN -->
           <div class="presentacion">
@@ -266,6 +302,27 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
               <div class="callout-terra mt-3">
                 <strong>Distinción clave para entrevistas:</strong> El SME (docente experto) sabe <em>qué</em> enseñar. El DI sabe <em>cómo</em> estructurar la experiencia para que sea efectivamente aprendido. Son roles complementarios, no intercambiables.
               </div>
+
+              <h5>Qué SÍ es y qué NO es el DI</h5>
+              <table class="table table-di table-bordered">
+                <thead><tr><th>Sí es</th><th>No es</th></tr></thead>
+                <tbody>
+                  <tr><td>Un proceso de análisis, diseño, desarrollo, implementación y evaluación (ADDIE u otro modelo)</td><td>"Hacer que el PowerPoint se vea más bonito"</td></tr>
+                  <tr><td>Decisiones fundamentadas en cómo funciona la memoria, la motivación y la atención</td><td>Aplicar intuición o gusto personal sobre qué "se ve bien"</td></tr>
+                  <tr><td>Un producto documentado (DDI) que otro profesional podría ejecutar</td><td>Un conocimiento que vive solo en la cabeza de quien diseñó el curso</td></tr>
+                  <tr><td>Diseñar para que el aprendizaje ocurra y sea medible</td><td>Configurar el LMS o subir archivos a una plataforma</td></tr>
+                </tbody>
+              </table>
+
+              <h5>Dos ejemplos para fijar la definición</h5>
+              <div class="card-di">
+                <h6><i class="bi bi-briefcase me-1"></i>Ejemplo institucional (tu contexto EMMD)</h6>
+                <p>Un maestro-artista sabe tallar en piedra a nivel de excelencia (es el SME), pero no sabe cómo secuenciar ese conocimiento para que un estudiante virtual lo aprenda sin verlo en persona. El DI no talla piedra: diseña la secuencia de videos, ejercicios de observación y retroalimentación que permite que ese saber tácito se transmita a distancia sin perder su identidad artística.</p>
+              </div>
+              <div class="card-di">
+                <h6><i class="bi bi-building me-1"></i>Ejemplo corporativo</h6>
+                <p>Una empresa de retail necesita que 200 vendedores en 15 sucursales aprendan un nuevo protocolo de atención. Sin DI, alguien graba un video de 40 minutos y lo sube a un Drive — nadie lo termina. Con DI, se analiza la brecha (¿es de conocimiento o de práctica?), se fragmenta en microlearning de 5 minutos, se agregan simulaciones de casos y se mide con indicadores de desempeño en tienda, no solo con "visto/no visto".</p>
+              </div>
             </div>
           </div>
 
@@ -277,6 +334,38 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
             </button>
             <div class="accordion-di-body">
               <p>El DI nació durante la <strong>Segunda Guerra Mundial</strong>. El ejército de los EE.UU. necesitaba entrenar millones de soldados en períodos cortos con resultados verificables. Robert Gagné y otros psicólogos sistematizaron ese proceso. El aprendizaje dejó de ser intuitivo y se convirtió en un problema de ingeniería.</p>
+
+              <div style="background:var(--cream);border-radius:8px;padding:1rem 0.5rem;margin:1rem 0">
+                <svg width="100%" viewBox="0 0 680 170" style="display:block">
+                  <line x1="50" y1="100" x2="630" y2="100" stroke="#ddd8d0" stroke-width="1.5"/>
+                  <circle cx="60" cy="100" r="6" fill="#c85c3a"/>
+                  <circle cx="192" cy="100" r="6" fill="#c85c3a"/>
+                  <circle cx="324" cy="100" r="6" fill="#c85c3a"/>
+                  <circle cx="456" cy="100" r="6" fill="#c85c3a"/>
+                  <circle cx="588" cy="100" r="6" fill="#c85c3a"/>
+                  <text x="60" y="70" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#0f1117">1940–50s</text>
+                  <text x="60" y="86" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#c85c3a">Conductismo</text>
+                  <text x="60" y="125" text-anchor="middle" font-family="Calibri,sans-serif" font-size="10.5" fill="#7a7570">retroalimentación</text>
+                  <text x="60" y="138" text-anchor="middle" font-family="Calibri,sans-serif" font-size="10.5" fill="#7a7570">inmediata</text>
+                  <text x="192" y="70" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#0f1117">1960–70s</text>
+                  <text x="192" y="86" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#c85c3a">Cognitivismo</text>
+                  <text x="192" y="125" text-anchor="middle" font-family="Calibri,sans-serif" font-size="10.5" fill="#7a7570">Nueve Eventos</text>
+                  <text x="192" y="138" text-anchor="middle" font-family="Calibri,sans-serif" font-size="10.5" fill="#7a7570">de Gagné</text>
+                  <text x="324" y="70" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#0f1117">1980–90s</text>
+                  <text x="324" y="86" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#c85c3a">Constructivismo</text>
+                  <text x="324" y="125" text-anchor="middle" font-family="Calibri,sans-serif" font-size="10.5" fill="#7a7570">ABP y aprendizaje</text>
+                  <text x="324" y="138" text-anchor="middle" font-family="Calibri,sans-serif" font-size="10.5" fill="#7a7570">colaborativo</text>
+                  <text x="456" y="70" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#0f1117">2000s</text>
+                  <text x="456" y="86" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#c85c3a">E-learning</text>
+                  <text x="456" y="125" text-anchor="middle" font-family="Calibri,sans-serif" font-size="10.5" fill="#7a7570">LMS y</text>
+                  <text x="456" y="138" text-anchor="middle" font-family="Calibri,sans-serif" font-size="10.5" fill="#7a7570">SCORM</text>
+                  <text x="588" y="70" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#0f1117">2010s–hoy</text>
+                  <text x="588" y="86" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#c85c3a">IA y redes</text>
+                  <text x="588" y="125" text-anchor="middle" font-family="Calibri,sans-serif" font-size="10.5" fill="#7a7570">microcredenciales,</text>
+                  <text x="588" y="138" text-anchor="middle" font-family="Calibri,sans-serif" font-size="10.5" fill="#7a7570">IA generativa</text>
+                </svg>
+              </div>
+
               <table class="table table-di table-bordered mt-3">
                 <thead><tr><th>Período</th><th>Paradigma</th><th>Aporte al DI</th></tr></thead>
                 <tbody>
@@ -290,6 +379,10 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
               <div class="callout-blue">
                 <strong>Para recordar:</strong> El DI tiene raíces militares pero su evolución ha sido profundamente humanista. Hoy integra rigor empírico con sensibilidad pedagógica y diseño centrado en el estudiante.
               </div>
+              <div class="card-di mt-2">
+                <h6><i class="bi bi-lightbulb me-1"></i>Ejemplo para fijarlo</h6>
+                <p>Los "Programas de Entrenamiento de Vuelo" de la fuerza aérea de EE.UU. en los años 40 son el caso fundacional citado en casi toda la literatura de DI: pilotos entrenados en simuladores con instrucción fragmentada en pasos verificables, en vez de solo "mira y aprende" de un piloto experto. Ese mismo principio —fragmentar, verificar, retroalimentar— es el que hoy usas cuando divides un curso en microlearning de 5 minutos en vez de un video de 40.</p>
+              </div>
             </div>
           </div>
 
@@ -302,11 +395,14 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
             <div class="accordion-di-body">
               <p>El DI resuelve la brecha entre lo que alguien <strong>necesita saber o hacer</strong> y lo que actualmente sabe o puede hacer. Sin un proceso de diseño, un curso puede tener contenidos correctos pero mal secuenciados, evaluaciones que no miden lo que se enseñó, o materiales que abruman cognitivamente.</p>
               <h5>Tres tipos de brechas</h5>
-              <div class="card-di"><h6><i class="bi bi-book me-1"></i>Brecha de conocimiento</h6><p>No sabe algo que necesita saber. Se resuelve con formación.</p></div>
-              <div class="card-di"><h6><i class="bi bi-tools me-1"></i>Brecha de habilidad</h6><p>Sabe qué hacer pero no cómo. Se resuelve con práctica guiada.</p></div>
-              <div class="card-di" style="border-left:3px solid var(--terra)"><h6><i class="bi bi-exclamation-triangle me-1" style="color:var(--terra)"></i>Brecha de motivación</h6><p>Sabe y puede, pero no lo hace. <strong>La formación no resuelve esto.</strong> Es un problema de gestión, incentivos o cultura organizacional.</p></div>
+              <div class="card-di"><h6><i class="bi bi-book me-1"></i>Brecha de conocimiento</h6><p>No sabe algo que necesita saber. Se resuelve con formación. <em>Ejemplo: un docente no conoce la normativa de evaluación diferenciada — un curso corto con la normativa explicada cierra la brecha.</em></p></div>
+              <div class="card-di"><h6><i class="bi bi-tools me-1"></i>Brecha de habilidad</h6><p>Sabe qué hacer pero no cómo. Se resuelve con práctica guiada. <em>Ejemplo: un profesor sabe que debe dar retroalimentación efectiva, pero nunca ha practicado formularla — necesita simulaciones y feedback sobre su propia redacción, no solo teoría.</em></p></div>
+              <div class="card-di" style="border-left:3px solid var(--terra)"><h6><i class="bi bi-exclamation-triangle me-1" style="color:var(--terra)"></i>Brecha de motivación</h6><p>Sabe y puede, pero no lo hace. <strong>La formación no resuelve esto.</strong> Es un problema de gestión, incentivos o cultura organizacional. <em>Ejemplo: los docentes saben usar la plataforma virtual y saben cómo hacerlo, pero no la usan porque no hay ningún reconocimiento ni consecuencia por no hacerlo — un curso adicional sobre "cómo usar la plataforma" no cambiará nada.</em></p></div>
               <div class="callout-terra mt-2">
                 <strong>Valor institucional:</strong> Un proceso bien diseñado puede replicarse, actualizarse y transferirse a otros equipos sin perder coherencia pedagógica. Crítico para acreditación y proyectos FDI.
+              </div>
+              <div class="callout-blue mt-2">
+                <strong>Error común en entrevistas:</strong> Cuando te presenten un caso, resiste el impulso de proponer "un curso" de inmediato. Un buen DI primero diagnostica el tipo de brecha — a veces la respuesta correcta es "esto no se resuelve con capacitación".
               </div>
             </div>
           </div>
@@ -330,6 +426,12 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
                   <tr><td>Acompañamiento docente</td><td>Apoyar a los SME para materializar su conocimiento en virtual</td><td>Talleres, guías, revisiones de contenido</td></tr>
                 </tbody>
               </table>
+              <div class="callout-terra">
+                <strong>Para tus tres postulaciones:</strong> Tu perfil híbrido (artes + pedagogía + DI + LMS) es un diferenciador real. En EMMD combinas sensibilidad artística con rigor instruccional — exactamente lo que los maestros-artistas necesitan para virtualizar sin perder su identidad.
+              </div>
+            </div>
+          </div>
+
           <!-- ACORDEÓN 5 -->
           <div class="accordion-di">
             <button class="accordion-di-btn" onclick="toggleAcc(this)">
