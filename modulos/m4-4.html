@@ -500,10 +500,8 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
               <button class="btn btn-outline-terra" id="retryBtn" style="display:none" onclick="retryEval()">
                 <i class="bi bi-arrow-clockwise me-2"></i>Reintentar
               </button>
-              <a href="../index.html" class="btn btn-blue" id="nextBtn" style="display:none">
-                Volver al inicio <i class="bi bi-arrow-right ms-2"></i>
-              </a>
             </div>
+            <div id="moduleCompleteZone"></div>
           </div>
 
         </div><!-- /lesson-body -->
@@ -596,8 +594,8 @@ function submitEval() {
 
   document.getElementById('submitBtn').style.display = 'none';
   document.getElementById('retryBtn').style.display = 'inline-block';
-  document.getElementById('nextBtn').style.display = 'inline-block';
   guardarPuntaje(score / total);
+  renderModuleComplete();
 }
 
 function retryEval() {
@@ -612,9 +610,55 @@ function retryEval() {
   document.getElementById('answeredCount').textContent = '0';
   document.getElementById('submitBtn').style.display = 'inline-block';
   document.getElementById('retryBtn').style.display = 'none';
-  document.getElementById('nextBtn').style.display = 'none';
+  document.getElementById('moduleCompleteZone').innerHTML = '';
   showToast('Inténtalo de nuevo — repasa el contenido antes de responder', 'info');
   document.querySelector('.eval-section').scrollIntoView({ behavior:'smooth' });
+}
+
+// ---- Cierre de curso: aparece cuando las 13 unidades están aprobadas ----
+function renderModuleComplete() {
+  const zone = document.getElementById('moduleCompleteZone');
+  if (!zone) return;
+  const s = getScores();
+  const idsM4 = ['m4-1','m4-2','m4-3','m4-4'];
+  const labelsM4 = { 'm4-1':'4.1 Autoría e interactividad', 'm4-2':'4.2 Herramientas de análisis', 'm4-3':'4.3 Producción multimedia y video con IA', 'm4-4':'4.4 Colaboración y gestión de proyectos' };
+  const pendientesM4 = idsM4.filter(id => !(s[id] !== undefined && s[id] > 0));
+
+  if (pendientesM4.length > 0) {
+    zone.innerHTML = `
+      <div style="background:var(--cream);border:1px solid var(--border);border-radius:10px;padding:1rem 1.3rem;margin-top:1.2rem;font-size:0.85rem;color:var(--muted)">
+        <i class="bi bi-hourglass-split me-2"></i>Te falta${pendientesM4.length>1?'n':''} <strong>${pendientesM4.length}</strong> unidad${pendientesM4.length>1?'es':''} del Módulo 4: ${pendientesM4.map(id=>labelsM4[id]).join(', ')}.
+      </div>`;
+    return;
+  }
+
+  const TODAS = ['m1-1','m1-2','m1-3','m2-1','m2-2','m2-3','m3-1','m3-2','m3-3','m4-1','m4-2','m4-3','m4-4'];
+  const pendientesCurso = TODAS.filter(id => !(s[id] !== undefined && s[id] > 0));
+
+  if (pendientesCurso.length === 0) {
+    const prom = Math.round(TODAS.reduce((a,id) => a + s[id], 0) / TODAS.length * 100);
+    zone.innerHTML = `
+      <div style="background:var(--terra-light);border:1px solid #e0b0a0;border-left:4px solid var(--terra);border-radius:10px;padding:1.3rem 1.5rem;margin-top:1.2rem">
+        <h5 style="font-family:Georgia,serif;font-weight:normal;color:var(--dark);margin-bottom:0.6rem">
+          <i class="bi bi-trophy-fill me-2" style="color:var(--terra)"></i>Curso completo — 13/13 unidades
+        </h5>
+        <p style="font-size:0.88rem;color:var(--muted);margin-bottom:1rem">Repasaste Fundamentos, Proceso de diseño, Implementación y Herramientas del DI. Puntaje promedio general: <strong>${prom}%</strong>.</p>
+        <a href="../index.html" class="btn btn-terra">
+          <i class="bi bi-grid-3x3-gap me-2"></i>Volver al panel del curso
+        </a>
+      </div>`;
+  } else {
+    zone.innerHTML = `
+      <div style="background:var(--terra-light);border:1px solid #e0b0a0;border-left:4px solid var(--terra);border-radius:10px;padding:1.3rem 1.5rem;margin-top:1.2rem">
+        <h5 style="font-family:Georgia,serif;font-weight:normal;color:var(--dark);margin-bottom:0.6rem">
+          <i class="bi bi-check-circle-fill me-2" style="color:var(--terra)"></i>Módulo 4 completo
+        </h5>
+        <p style="font-size:0.88rem;color:var(--muted);margin-bottom:1rem">Aún te falta${pendientesCurso.length>1?'n':''} <strong>${pendientesCurso.length}</strong> unidad${pendientesCurso.length>1?'es':''} de módulos anteriores para dar el curso por completo.</p>
+        <a href="../index.html" class="btn btn-terra">
+          <i class="bi bi-grid-3x3-gap me-2"></i>Ver panel del curso
+        </a>
+      </div>`;
+  }
 }
 
 function getScores() { try { return JSON.parse(localStorage.getItem('di_scores')||'{}'); } catch(e) { return {}; } }
@@ -684,6 +728,7 @@ async function syncSheet() {
 }
 
 function showCompletedState() {
+  renderModuleComplete();
   const ratio = getScores()[UNIDAD_ID];
   if (ratio === undefined || ratio <= 0) return;
   const pct = Math.round(ratio * 100);
