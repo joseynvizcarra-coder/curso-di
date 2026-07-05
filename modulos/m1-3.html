@@ -253,11 +253,40 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
         </div>
         <div class="lesson-badges">
           <span class="lbadge"><i class="bi bi-list-ol me-1"></i>9 eventos + 7 principios</span>
+          <span class="lbadge"><i class="bi bi-chat-square-text me-1"></i>3 preguntas de práctica oral</span>
           <span class="lbadge"><i class="bi bi-clipboard-check me-1"></i>10 preguntas al final</span>
-          <span class="lbadge"><i class="bi bi-clock me-1"></i>~25 min</span>
+          <span class="lbadge"><i class="bi bi-clock me-1"></i>~30 min</span>
         </div>
 
         <div class="lesson-body">
+
+          <!-- MAPA CONCEPTUAL (organizador previo) -->
+          <div class="presentacion mb-4">
+            <div class="presentacion-head">
+              <div class="pres-title"><i class="bi bi-diagram-3"></i> Mapa de esta unidad</div>
+              <span class="pres-tag">Organizador previo</span>
+            </div>
+            <div style="background:#fff;padding:1.2rem">
+              <svg width="100%" viewBox="0 0 680 300" style="display:block">
+                <rect x="245" y="20" width="190" height="60" rx="8" fill="#f7ede8" stroke="#c85c3a" stroke-width="1"/>
+                <text x="340" y="44" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Gagné y carga cognitiva</text>
+                <text x="340" y="63" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#c85c3a">unidad 1.3</text>
+                <line x1="340" y1="80" x2="130" y2="150" stroke="#ddd8d0" stroke-width="1"/>
+                <line x1="340" y1="80" x2="340" y2="150" stroke="#ddd8d0" stroke-width="1"/>
+                <line x1="340" y1="80" x2="550" y2="150" stroke="#ddd8d0" stroke-width="1"/>
+                <rect x="30" y="150" width="200" height="70" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
+                <text x="130" y="178" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#0f1117">Nueve Eventos de Gagné</text>
+                <text x="130" y="196" text-anchor="middle" font-family="Calibri,sans-serif" font-size="10.5" fill="#3a6b8a">estructura de cada unidad</text>
+                <rect x="240" y="150" width="200" height="70" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
+                <text x="340" y="178" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#0f1117">Carga cognitiva (Sweller)</text>
+                <text x="340" y="196" text-anchor="middle" font-family="Calibri,sans-serif" font-size="10.5" fill="#3a6b8a">intrínseca, extrínseca, germana</text>
+                <rect x="450" y="150" width="200" height="70" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
+                <text x="550" y="178" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#0f1117">Principios de Mayer</text>
+                <text x="550" y="196" text-anchor="middle" font-family="Calibri,sans-serif" font-size="10.5" fill="#3a6b8a">diseño de materiales</text>
+              </svg>
+              <p style="font-size:0.8rem;color:var(--muted);text-align:center;margin-top:0.5rem">Los tres bloques comparten una misma raíz: la memoria de trabajo tiene límites, y el diseño (secuencia, señalización, formato) determina si esos límites se respetan o se saturan.</p>
+            </div>
+          </div>
 
           <!-- PRESENTACIÓN -->
           <div class="presentacion">
@@ -363,6 +392,59 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
             </div>
           </div>
 
+          <!-- AUTOEVALUACIÓN AUTOINSTRUCCIONAL -->
+          <div class="accordion-di" style="border-color:var(--blue)">
+            <button class="accordion-di-btn" onclick="toggleAcc(this)" style="background:var(--blue-light)">
+              <i class="bi bi-chat-square-text acc-icon" style="color:var(--blue)"></i> Practica como en una entrevista
+              <i class="bi bi-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-di-body">
+              <p style="color:var(--muted);font-size:0.85rem">Responde primero con tus propias palabras antes de revelar la respuesta modelo.</p>
+
+              <div class="card-di" style="border-left:3px solid var(--blue)">
+                <h6><i class="bi bi-question-circle me-1"></i>1. Te preguntan cómo estructurarías una cápsula corta de capacitación desde cero. ¿Qué le respondes?</h6>
+                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
+                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
+                  <p style="font-size:0.87rem"><em>"La estructuraría siguiendo la lógica de los Nueve Eventos de Gagné: parto captando atención con un caso real, informo el objetivo concreto, activo conocimiento previo, presento el contenido segmentado, doy orientación con ejemplos resueltos, incluyo práctica con retroalimentación, y cierro con una actividad de transferencia — no solo un quiz de memoria."</em></p>
+                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
+                  <ul style="font-size:0.83rem;color:var(--muted)">
+                    <li>¿Nombraste los eventos en la secuencia correcta, no como una lista suelta?</li>
+                    <li>¿Mencionaste específicamente el Evento 3 y el Evento 9, los más omitidos?</li>
+                    <li>¿Diste al menos un ejemplo concreto de cómo aplicarías un evento?</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="card-di" style="border-left:3px solid var(--blue)">
+                <h6><i class="bi bi-question-circle me-1"></i>2. Un SME te entrega una diapositiva con 400 palabras de texto que además narra en voz alta palabra por palabra. ¿Qué le dirías y por qué?</h6>
+                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
+                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
+                  <p style="font-size:0.87rem"><em>"Le explicaría que está violando el principio de redundancia de Mayer: el mismo contenido compite dos veces por el canal visual (leyendo y escuchando el mismo texto), lo que genera carga extrínseca innecesaria. Le propondría elegir un canal — narración con imágenes de apoyo — en vez de duplicar el texto en pantalla y en audio."</em></p>
+                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
+                  <ul style="font-size:0.83rem;color:var(--muted)">
+                    <li>¿Nombraste el principio de redundancia específicamente?</li>
+                    <li>¿Explicaste por qué genera carga extrínseca, no solo que "está mal"?</li>
+                    <li>¿Propusiste una alternativa concreta (modalidad: audio + imagen)?</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="card-di" style="border-left:3px solid var(--blue)">
+                <h6><i class="bi bi-question-circle me-1"></i>3. ¿Cuál es la diferencia entre carga intrínseca y carga extrínseca, y por qué esa distinción es la más importante de la unidad?</h6>
+                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
+                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
+                  <p style="font-size:0.87rem"><em>"La carga intrínseca es inherente a la complejidad del contenido — no la puedo eliminar, solo secuenciarla bien. La carga extrínseca la genera un mal diseño: navegación confusa, texto redundante, animaciones decorativas. Es la más importante porque es la única que el DI controla directamente; la intrínseca depende del tema, no del diseño."</em></p>
+                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
+                  <ul style="font-size:0.83rem;color:var(--muted)">
+                    <li>¿Distinguiste claramente qué se puede y qué no se puede eliminar?</li>
+                    <li>¿Explicaste por qué la extrínseca es la responsabilidad directa del DI?</li>
+                    <li>¿Evitaste confundirla con la carga germana (la que sí es deseable)?</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- EVALUACIÓN -->
           <div class="eval-section mt-4">
             <h4><i class="bi bi-clipboard-check me-2" style="color:var(--terra)"></i>Evaluación — Unidad 1.3</h4>
@@ -418,6 +500,13 @@ function toggleAcc(btn) {
   const isOpen = body.classList.contains('show');
   body.classList.toggle('show', !isOpen);
   btn.classList.toggle('open', !isOpen);
+}
+
+function toggleModelo(btn) {
+  const box = btn.nextElementSibling;
+  const isOpen = box.style.display === 'block';
+  box.style.display = isOpen ? 'none' : 'block';
+  btn.textContent = isOpen ? 'Ver respuesta modelo' : 'Ocultar respuesta modelo';
 }
 
 function renderQuiz() {
