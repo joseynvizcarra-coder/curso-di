@@ -228,11 +228,48 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
         </div>
         <div class="lesson-badges">
           <span class="lbadge"><i class="bi bi-book me-1"></i>6 bloques de contenido</span>
+          <span class="lbadge"><i class="bi bi-chat-square-text me-1"></i>3 preguntas de práctica oral</span>
           <span class="lbadge"><i class="bi bi-clipboard-check me-1"></i>8 preguntas de certificación</span>
-          <span class="lbadge"><i class="bi bi-clock me-1"></i>~50 min</span>
+          <span class="lbadge"><i class="bi bi-clock me-1"></i>~55 min</span>
         </div>
 
         <div class="lesson-body">
+
+          <!-- MAPA CONCEPTUAL (organizador previo) -->
+          <div class="presentacion mb-4">
+            <div class="presentacion-head">
+              <div class="pres-title"><i class="bi bi-diagram-3"></i> Mapa de esta unidad</div>
+              <span class="pres-tag">Organizador previo</span>
+            </div>
+            <div style="background:#fff;padding:1.2rem">
+              <svg width="100%" viewBox="0 0 680 460" style="display:block">
+                <line x1="340" y1="192" x2="220" y2="96" stroke="#ddd8d0" stroke-width="1"/>
+                <line x1="340" y1="192" x2="460" y2="96" stroke="#ddd8d0" stroke-width="1"/>
+                <line x1="260" y1="220" x2="210" y2="220" stroke="#ddd8d0" stroke-width="1"/>
+                <line x1="420" y1="220" x2="470" y2="220" stroke="#ddd8d0" stroke-width="1"/>
+                <line x1="340" y1="248" x2="340" y2="360" stroke="#ddd8d0" stroke-width="1"/>
+                <rect x="245" y="192" width="190" height="56" rx="8" fill="#f7ede8" stroke="#c85c3a" stroke-width="1"/>
+                <text x="340" y="212" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Herramientas de análisis</text>
+                <text x="340" y="230" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#c85c3a">unidad 4.2</text>
+                <rect x="40" y="40" width="190" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
+                <text x="135" y="60" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Fundamento</text>
+                <text x="135" y="78" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">para qué sirve la analítica</text>
+                <rect x="450" y="40" width="190" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
+                <text x="545" y="60" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Métricas que importan</text>
+                <text x="545" y="78" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">vs. métricas de vanidad</text>
+                <rect x="20" y="192" width="190" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
+                <text x="115" y="212" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Power BI, GA4, Moodle</text>
+                <text x="115" y="230" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">catálogo de herramientas</text>
+                <rect x="470" y="192" width="190" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
+                <text x="565" y="212" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Criterios de elección</text>
+                <text x="565" y="230" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">cuál usar y cuándo</text>
+                <rect x="250" y="360" width="180" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
+                <text x="340" y="380" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Del dato a la decisión</text>
+                <text x="340" y="398" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">el ciclo accionable</text>
+              </svg>
+              <p style="font-size:0.8rem;color:var(--muted);text-align:center;margin-top:0.5rem">Un dato sin decisión asociada es solo un número. El eje de esta unidad es cerrar siempre el ciclo: dato → interpretación → acción de rediseño.</p>
+            </div>
+          </div>
 
           <div class="presentacion">
             <div class="presentacion-head">
@@ -411,6 +448,59 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
             </div>
           </div>
 
+          <!-- AUTOEVALUACIÓN AUTOINSTRUCCIONAL -->
+          <div class="accordion-di" style="border-color:var(--blue)">
+            <button class="accordion-di-btn" onclick="toggleAcc(this)" style="background:var(--blue-light)">
+              <i class="bi bi-chat-square-text acc-icon" style="color:var(--blue)"></i> Practica como en una entrevista
+              <i class="bi bi-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-di-body">
+              <p style="color:var(--muted);font-size:0.85rem">Responde primero con tus propias palabras antes de revelar la respuesta modelo.</p>
+
+              <div class="card-di" style="border-left:3px solid var(--blue)">
+                <h6><i class="bi bi-question-circle me-1"></i>1. ¿Cuál es la diferencia entre una métrica de vanidad y una métrica que realmente importa para el DI?</h6>
+                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
+                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
+                  <p style="font-size:0.87rem"><em>"Una métrica de vanidad se ve bien pero no orienta ninguna decisión — por ejemplo, 'número total de accesos al curso'. Una métrica que importa está conectada a una acción posible, como la tasa de finalización por unidad, que me dice exactamente dónde rediseñar. Si un dato no cambia lo que haría después, probablemente es de vanidad."</em></p>
+                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
+                  <ul style="font-size:0.83rem;color:var(--muted)">
+                    <li>¿Diste un ejemplo de cada tipo de métrica?</li>
+                    <li>¿Explicaste el criterio de "orienta una decisión" o similar?</li>
+                    <li>¿Evitaste decir simplemente que unas son "mejores" sin justificar por qué?</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="card-di" style="border-left:3px solid var(--blue)">
+                <h6><i class="bi bi-question-circle me-1"></i>2. Ves en un reporte que el 60% abandona en la Unidad 2. Tu jefe dice "hagámosla más entretenida". ¿Qué le respondes?</h6>
+                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
+                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
+                  <p style="font-size:0.87rem"><em>"Le propondría no saltar directo a una solución sin diagnosticar la causa: cruzaría ese dato con otros —por ejemplo, cuánto dura esa actividad y si tiene puntos de guardado— para formular una hipótesis concreta antes de decidir qué cambiar. 'Más entretenida' no es una hipótesis, es una corazonada disfrazada de decisión informada."</em></p>
+                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
+                  <ul style="font-size:0.83rem;color:var(--muted)">
+                    <li>¿Identificaste que se está saltando el paso de diagnóstico?</li>
+                    <li>¿Propusiste cruzar datos para formular una hipótesis?</li>
+                    <li>¿Evitaste aceptar la solución del jefe sin cuestionarla?</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="card-di" style="border-left:3px solid var(--blue)">
+                <h6><i class="bi bi-question-circle me-1"></i>3. ¿Cuándo usarías Power BI en vez de simplemente mirar los reportes nativos de Moodle?</h6>
+                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
+                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
+                  <p style="font-size:0.87rem"><em>"Los reportes nativos de Moodle sirven para preguntas simples y puntuales. Usaría Power BI cuando necesito cruzar datos de varias fuentes o cursos, construir indicadores que Moodle no entrega directo, o presentar un tablero ejecutivo a stakeholders que necesitan ver tendencias, no tablas crudas."</em></p>
+                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
+                  <ul style="font-size:0.83rem;color:var(--muted)">
+                    <li>¿Diste un criterio claro de cuándo cada herramienta basta o no?</li>
+                    <li>¿Mencionaste el cruce de fuentes o la presentación ejecutiva?</li>
+                    <li>¿Evitaste decir que Power BI es "siempre mejor"?</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- EVALUACIÓN -->
           <div class="eval-section mt-4">
             <h4><i class="bi bi-clipboard-check me-2" style="color:var(--terra)"></i>Evaluación — Unidad 4.2</h4>
@@ -527,6 +617,13 @@ function toggleAcc(btn) {
   const isOpen = body.classList.contains('show');
   body.classList.toggle('show', !isOpen);
   btn.classList.toggle('open', !isOpen);
+}
+
+function toggleModelo(btn) {
+  const box = btn.nextElementSibling;
+  const isOpen = box.style.display === 'block';
+  box.style.display = isOpen ? 'none' : 'block';
+  btn.textContent = isOpen ? 'Ver respuesta modelo' : 'Ocultar respuesta modelo';
 }
 
 function selectOpt(el, question, optNum) {

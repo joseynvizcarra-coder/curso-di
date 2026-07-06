@@ -228,11 +228,48 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
         </div>
         <div class="lesson-badges">
           <span class="lbadge"><i class="bi bi-book me-1"></i>7 bloques de contenido</span>
+          <span class="lbadge"><i class="bi bi-chat-square-text me-1"></i>3 preguntas de práctica oral</span>
           <span class="lbadge"><i class="bi bi-clipboard-check me-1"></i>8 preguntas de certificación</span>
-          <span class="lbadge"><i class="bi bi-clock me-1"></i>~50 min</span>
+          <span class="lbadge"><i class="bi bi-clock me-1"></i>~55 min</span>
         </div>
 
         <div class="lesson-body">
+
+          <!-- MAPA CONCEPTUAL (organizador previo) -->
+          <div class="presentacion mb-4">
+            <div class="presentacion-head">
+              <div class="pres-title"><i class="bi bi-diagram-3"></i> Mapa de esta unidad</div>
+              <span class="pres-tag">Organizador previo</span>
+            </div>
+            <div style="background:#fff;padding:1.2rem">
+              <svg width="100%" viewBox="0 0 680 460" style="display:block">
+                <line x1="340" y1="192" x2="220" y2="96" stroke="#ddd8d0" stroke-width="1"/>
+                <line x1="340" y1="192" x2="460" y2="96" stroke="#ddd8d0" stroke-width="1"/>
+                <line x1="260" y1="220" x2="210" y2="220" stroke="#ddd8d0" stroke-width="1"/>
+                <line x1="420" y1="220" x2="470" y2="220" stroke="#ddd8d0" stroke-width="1"/>
+                <line x1="340" y1="248" x2="340" y2="360" stroke="#ddd8d0" stroke-width="1"/>
+                <rect x="245" y="192" width="190" height="56" rx="8" fill="#f7ede8" stroke="#c85c3a" stroke-width="1"/>
+                <text x="340" y="212" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Gestión de proyectos DI</text>
+                <text x="340" y="230" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#c85c3a">unidad 4.4 · cierre del curso</text>
+                <rect x="40" y="40" width="190" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
+                <text x="135" y="60" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Fundamento</text>
+                <text x="135" y="78" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">por qué gestionar, no solo diseñar</text>
+                <rect x="450" y="40" width="190" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
+                <text x="545" y="60" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Waterfall vs. Agile</text>
+                <text x="545" y="78" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">metodologías aplicadas al DI</text>
+                <rect x="20" y="192" width="190" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
+                <text x="115" y="212" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Miro, Trello, Notion</text>
+                <text x="115" y="230" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">catálogo de herramientas</text>
+                <rect x="470" y="192" width="190" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
+                <text x="565" y="212" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Comunicación con stakeholders</text>
+                <text x="565" y="230" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">cadencia y reportes</text>
+                <rect x="250" y="360" width="180" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
+                <text x="340" y="380" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Checklist de kickoff</text>
+                <text x="340" y="398" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">antes de lanzar un proyecto</text>
+              </svg>
+              <p style="font-size:0.8rem;color:var(--muted);text-align:center;margin-top:0.5rem">Esta es la última unidad del curso completo. Cierra con la habilidad que conecta todo lo anterior: llevar un proyecto de DI de la idea al proyecto entregado, no solo diseñar contenido aislado.</p>
+            </div>
+          </div>
 
           <div class="presentacion">
             <div class="presentacion-head">
@@ -422,6 +459,59 @@ body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif;
             </div>
           </div>
 
+          <!-- AUTOEVALUACIÓN AUTOINSTRUCCIONAL -->
+          <div class="accordion-di" style="border-color:var(--blue)">
+            <button class="accordion-di-btn" onclick="toggleAcc(this)" style="background:var(--blue-light)">
+              <i class="bi bi-chat-square-text acc-icon" style="color:var(--blue)"></i> Practica como en una entrevista
+              <i class="bi bi-chevron-down acc-chevron"></i>
+            </button>
+            <div class="accordion-di-body">
+              <p style="color:var(--muted);font-size:0.85rem">Responde primero con tus propias palabras antes de revelar la respuesta modelo.</p>
+
+              <div class="card-di" style="border-left:3px solid var(--blue)">
+                <h6><i class="bi bi-question-circle me-1"></i>1. Un jefe de proyecto te pregunta por qué un DI necesita saber de metodologías de gestión de proyectos y no solo de pedagogía. ¿Qué le respondes?</h6>
+                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
+                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
+                  <p style="font-size:0.87rem"><em>"Porque el mejor diseño pedagógico no sirve si el proyecto se atrasa, se descoordina con el SME o el stakeholder no sabe en qué va el avance. Gestionar el proceso —plazos, ciclos de revisión, comunicación— es lo que permite que el diseño pedagógico realmente llegue a producción."</em></p>
+                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
+                  <ul style="font-size:0.83rem;color:var(--muted)">
+                    <li>¿Conectaste gestión de proyecto con que el diseño realmente se entregue?</li>
+                    <li>¿Diste un ejemplo de qué falla sin gestión (atrasos, descoordinación)?</li>
+                    <li>¿Evitaste decir que "el DI solo diseña, otro gestiona"?</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="card-di" style="border-left:3px solid var(--blue)">
+                <h6><i class="bi bi-question-circle me-1"></i>2. Un proyecto de virtualización de 15 cursos tiene contenidos que cambian cada semana según feedback de los SME. ¿Waterfall o Agile? ¿Por qué?</h6>
+                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
+                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
+                  <p style="font-size:0.87rem"><em>"Agile, en sprints cortos. Con contenido que cambia semanalmente, un plan Waterfall rígido con fases secuenciales largas generaría retrabajo constante cada vez que el SME da feedback nuevo. Sprints cortos permiten incorporar cambios sin descarrilar todo el cronograma del proyecto."</em></p>
+                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
+                  <ul style="font-size:0.83rem;color:var(--muted)">
+                    <li>¿Elegiste Agile y no Waterfall?</li>
+                    <li>¿Justificaste con la variable específica del caso (cambios semanales)?</li>
+                    <li>¿Explicaste el riesgo concreto de usar Waterfall en este caso?</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="card-di" style="border-left:3px solid var(--blue)">
+                <h6><i class="bi bi-question-circle me-1"></i>3. ¿Qué revisas antes de dar por iniciado ("kickoff") un proyecto de DI, más allá de tener listo el primer entregable de contenido?</h6>
+                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
+                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
+                  <p style="font-size:0.87rem"><em>"Reviso que la metodología esté definida y todos la conozcan, que el tablero y espacio de trabajo ya existan con acceso para el equipo y el SME, que los ciclos de revisión del SME estén acordados con plazos claros, y que la cadencia de reporte al stakeholder esté definida desde el inicio, no improvisada después."</em></p>
+                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
+                  <ul style="font-size:0.83rem;color:var(--muted)">
+                    <li>¿Nombraste al menos 3 de los 4 puntos del checklist de kickoff?</li>
+                    <li>¿Mencionaste explícitamente los plazos de revisión del SME?</li>
+                    <li>¿Distinguiste esto de simplemente "empezar a producir contenido"?</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- EVALUACIÓN -->
           <div class="eval-section mt-4">
             <h4><i class="bi bi-clipboard-check me-2" style="color:var(--terra)"></i>Evaluación — Unidad 4.4</h4>
@@ -536,6 +626,13 @@ function toggleAcc(btn) {
   const isOpen = body.classList.contains('show');
   body.classList.toggle('show', !isOpen);
   btn.classList.toggle('open', !isOpen);
+}
+
+function toggleModelo(btn) {
+  const box = btn.nextElementSibling;
+  const isOpen = box.style.display === 'block';
+  box.style.display = isOpen ? 'none' : 'block';
+  btn.textContent = isOpen ? 'Ver respuesta modelo' : 'Ocultar respuesta modelo';
 }
 
 function selectOpt(el, question, optNum) {
