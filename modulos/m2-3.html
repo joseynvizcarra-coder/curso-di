@@ -3,768 +3,754 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>2.3 Objetivos de aprendizaje y taxonomías — Curso DI</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<title>2.3 Backward Design y alineamiento constructivo — Cuaderno de taller</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --cream: #f5f2ec;
-  --dark: #0f1117;
-  --terra: #c85c3a;
-  --blue: #3a6b8a;
-  --muted: #7a7570;
-  --border: #ddd8d0;
-  --success: #2d7a4f;
-  --terra-light: #f7ede8;
-  --blue-light: #e8f0f5;
+  --paper: #EDEAE3; --paper-alt: #E4DFD3; --card: #F8F6F1;
+  --ink: #1C1A17; --ink-muted: #6B665D; --border: #D8D1C0; --border-soft: #E2DCCC;
+  --mc: #2A5CAA; --msoft: #DCE5F2;
+  --ia: #A85B32; --ia-soft: #F1E2D6;
+  --done: #4A6B3E; --done-soft: #E9F0E5;
+  --warn: #B9862C; --warn-soft: #F1E5CC;
 }
-body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif; color: var(--dark); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--paper); color: var(--ink); font-family: 'IBM Plex Sans', sans-serif; line-height: 1.55; }
+a { color: inherit; }
 
-/* HEADER */
-.header-di {
-  background: linear-gradient(135deg, var(--dark) 0%, #1e2030 100%);
-  border-bottom: 3px solid var(--terra);
-  padding: 0.9rem 0;
-  position: sticky; top: 0; z-index: 1030;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+.topbar {
+  background: var(--ink); color: #EDEAE3;
+  padding: 0.7rem 1.5rem;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem;
+  position: sticky; top: 0; z-index: 50;
 }
-.header-di .course-name { color: #fff; font-family: Georgia, serif; font-size: 1.1rem; font-weight: normal; }
-.header-di .unit-name { color: var(--terra); font-size: 0.82rem; }
-.btn-back { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; border-radius: 20px; padding: 0.4rem 1rem; font-size: 0.82rem; text-decoration: none; transition: all 0.2s; }
-.btn-back:hover { background: rgba(255,255,255,0.2); color: #fff; }
+.topbar a.back { color: #C9C3B5; text-decoration: none; }
+.topbar a.back:hover { color: #fff; }
+.gami-chips { display: flex; gap: 0.9rem; color: #C9C3B5; flex-wrap: wrap; }
 
-/* SIDEBAR */
-.sidebar-di {
-  background: #fff;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  overflow: hidden;
+.layout { display: grid; grid-template-columns: 250px 1fr; max-width: 1120px; margin: 0 auto; }
+@media (max-width: 880px) { .layout { grid-template-columns: 1fr; } .sidebar { order: 2; } }
+.sidebar { border-right: 1px solid var(--border); padding: 1.4rem 1.2rem; }
+@media (max-width: 880px) { .sidebar { border-right: none; border-top: 1px solid var(--border); } }
+.sidebar h6 { font-family: 'Fraunces', serif; font-size: 0.95rem; color: var(--mc); margin-bottom: 0.2rem; }
+.sidebar .sidebar-sub { font-size: 0.74rem; color: var(--ink-muted); margin-bottom: 1rem; }
+.side-item {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.55rem 0.5rem; border-radius: 3px; text-decoration: none; color: var(--ink);
+  font-size: 0.84rem; margin-bottom: 0.15rem;
 }
-@media(min-width:992px){ .sidebar-di { position: sticky; top: 80px; max-height: calc(100vh - 100px); overflow-y: auto; } }
-.sidebar-header { background: var(--dark); color: #fff; padding: 1rem 1.2rem; }
-.sidebar-header h6 { font-family: Georgia, serif; font-weight: normal; font-size: 0.9rem; margin: 0; color: var(--terra); }
-.sidebar-header p { font-size: 0.75rem; color: #a09a94; margin: 0.2rem 0 0; }
-.lesson-item { display: flex; align-items: center; gap: 0.8rem; padding: 0.75rem 1.2rem; border-bottom: 1px solid var(--border); cursor: pointer; transition: all 0.2s; text-decoration: none; color: var(--dark); }
-.lesson-item:hover { background: var(--cream); }
-.lesson-item.active { background: var(--terra-light); border-left: 3px solid var(--terra); }
-.lesson-item.done { color: var(--muted); }
-.lesson-num { width: 30px; height: 30px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold; flex-shrink: 0; color: var(--muted); }
-.lesson-item.active .lesson-num { background: var(--terra); color: #fff; }
-.lesson-item.done .lesson-num { background: var(--success); color: #fff; }
-.lesson-info { flex: 1; }
-.lesson-info strong { font-size: 0.83rem; display: block; }
-.lesson-info span { font-size: 0.74rem; color: var(--muted); }
-.sidebar-progress { padding: 1rem 1.2rem; background: var(--cream); }
-.progress-di { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
-.progress-di-fill { height: 100%; background: linear-gradient(90deg, var(--terra), #e07a5a); border-radius: 99px; transition: width 0.5s ease; }
-.sidebar-footer { padding: 0.8rem 1.2rem; text-align: center; border-top: 1px solid var(--border); }
+.side-item.active { background: var(--msoft); font-weight: 600; color: var(--mc); }
+.side-mark { width: 22px; height: 22px; border-radius: 3px; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; flex-shrink: 0; }
+.side-item.active .side-mark { background: var(--mc); border-color: var(--mc); color: #fff; }
+.side-toc { margin-top: 1.4rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+.side-toc .toc-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.64rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); margin-bottom: 0.5rem; }
+.side-toc a { display: block; font-size: 0.78rem; color: var(--ink-muted); text-decoration: none; padding: 0.3rem 0; }
+.side-toc a:hover { color: var(--mc); }
 
-/* CONTENT */
-.content-di { background: #fff; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow: hidden; }
-.lesson-hero { background: linear-gradient(135deg, var(--dark) 0%, #1e2030 100%); color: #fff; padding: 2rem 2rem 1.5rem; }
-.lesson-hero .unit-tag { font-size: 0.72rem; color: var(--terra); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.4rem; }
-.lesson-hero h1 { font-family: Georgia, serif; font-size: 1.6rem; font-weight: normal; margin-bottom: 0.4rem; }
-.lesson-hero p { color: #a09a94; font-size: 0.88rem; margin: 0; }
-.lesson-badges { padding: 1rem 2rem; background: var(--terra-light); border-bottom: 1px solid var(--border); display: flex; gap: 0.6rem; flex-wrap: wrap; }
-.lbadge { font-size: 0.78rem; padding: 0.3rem 0.7rem; border-radius: 20px; border: 1px solid var(--border); background: #fff; color: var(--muted); }
-.lbadge i { color: var(--terra); }
-.lesson-body { padding: 1.8rem 2rem; }
+main { padding: 2.2rem 2rem 4rem; min-width: 0; }
+.unit-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--mc); margin-bottom: 0.5rem; }
+h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(1.5rem, 3.5vw, 2.1rem); margin-bottom: 0.6rem; max-width: 24ch; }
+.lesson-dek { color: #423E37; max-width: 64ch; margin-bottom: 1rem; }
+.lesson-badges { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.6rem; }
+.lbadge { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; border: 1px solid var(--border); background: var(--card); border-radius: 3px; padding: 0.25rem 0.6rem; color: var(--ink-muted); }
 
-/* PRESENTACIÓN placeholder */
-.presentacion { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
-.presentacion-head { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; flex-wrap: wrap; background: var(--dark); color: #fff; padding: 0.8rem 1.2rem; }
-.pres-title { font-size: 0.95rem; font-weight: bold; display: flex; align-items: center; gap: 0.6rem; }
-.pres-title i { color: var(--terra); font-size: 1.1rem; }
-.pres-tag { font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: #a09a94; border: 1px solid rgba(255,255,255,0.18); border-radius: 20px; padding: 0.12rem 0.55rem; }
-.presentacion-viewer { height: 220px; background: var(--cream); }
-.pres-placeholder { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: var(--muted); padding: 2rem; }
-.pres-placeholder i { font-size: 2.4rem; color: #c9c2b8; margin-bottom: 0.8rem; }
-.pres-placeholder p { font-size: 0.98rem; font-weight: bold; color: var(--dark); margin-bottom: 0.3rem; }
-.pres-placeholder small { font-size: 0.82rem; line-height: 1.6; max-width: 420px; }
+.objetivo-box {
+  background: var(--card); border: 1px solid var(--border); border-left: 4px solid var(--mc);
+  border-radius: 4px; padding: 1.1rem 1.3rem; margin-bottom: 2rem;
+}
+.objetivo-box .label { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mc); margin-bottom: 0.4rem; }
+.objetivo-box p { font-size: 0.92rem; font-style: italic; color: #322E28; }
 
-/* ACCORDION */
-.accordion-di { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1rem; }
-.accordion-di-btn { background: var(--cream); border: none; width: 100%; text-align: left; padding: 1rem 1.2rem; display: flex; align-items: center; gap: 0.8rem; cursor: pointer; transition: background 0.2s; font-size: 0.95rem; font-weight: bold; color: var(--dark); }
-.accordion-di-btn:hover { background: #ede9e2; }
-.accordion-di-btn.open { background: var(--dark); color: #fff; }
-.accordion-di-btn.open .acc-icon { color: var(--terra); }
-.accordion-di-btn .acc-chevron { margin-left: auto; transition: transform 0.25s; font-size: 0.8rem; }
-.accordion-di-btn.open .acc-chevron { transform: rotate(180deg); }
-.acc-icon { font-size: 1rem; color: var(--terra); }
-.accordion-di-body { display: none; padding: 1.2rem 1.4rem; border-top: 1px solid var(--border); background: #fff; font-size: 0.92rem; line-height: 1.7; }
-.accordion-di-body.show { display: block; }
-.accordion-di-body h5 { font-family: Georgia, serif; font-size: 1rem; font-weight: normal; color: var(--blue); margin: 1.2rem 0 0.5rem; }
-.accordion-di-body h5:first-child { margin-top: 0; }
+/* mapa de unidad */
+.mapa-block { border: 1px solid var(--border); border-radius: 4px; background: var(--card); margin-bottom: 2rem; overflow: hidden; }
+.mapa-head { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); padding: 0.7rem 1rem; border-bottom: 1px solid var(--border-soft); }
+.mapa-body { padding: 1rem; background: #fff; }
+.mapa-note { font-size: 0.78rem; color: var(--ink-muted); padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
 
-/* CARDS */
-.card-di { background: var(--cream); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; margin-bottom: 0.7rem; }
-.card-di h6 { font-size: 0.85rem; font-weight: bold; color: var(--blue); margin-bottom: 0.3rem; }
-.card-di p { font-size: 0.88rem; margin: 0; }
-.callout-terra { border-left: 4px solid var(--terra); background: var(--terra-light); padding: 0.9rem 1.1rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: 0.88rem; }
-.callout-terra strong { color: var(--terra); }
-.callout-blue { border-left: 4px solid var(--blue); background: var(--blue-light); padding: 0.9rem 1.1rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: 0.88rem; }
-.callout-blue strong { color: var(--blue); }
-.table-di { font-size: 0.85rem; }
-.table-di th { background: var(--dark); color: #fff; font-weight: normal; }
-.table-di td { vertical-align: top; }
+/* multimodal */
+.media-block { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin-bottom: 2.2rem; background: var(--card); }
+.media-tabs { display: flex; border-bottom: 1px solid var(--border); background: var(--paper-alt); flex-wrap: wrap; }
+.media-tab {
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; padding: 0.7rem 1rem;
+  cursor: pointer; border: none; background: none; color: var(--ink-muted);
+  border-bottom: 2px solid transparent;
+}
+.media-tab.active { color: var(--mc); border-bottom-color: var(--mc); background: var(--card); }
+.media-pane { display: none; }
+.media-pane.active { display: block; }
+.media-note { font-size: 0.76rem; color: var(--ink-muted); padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
+.pdf-frame { width: 100%; height: 480px; border: none; display: block; background: #fff; }
+.pdf-actions { display: flex; gap: 0.6rem; padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
+.pdf-actions a { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--mc); text-decoration: none; border: 1px solid var(--border); border-radius: 3px; padding: 0.3rem 0.7rem; }
+.audio-pane { padding: 1.2rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.audio-pane audio { flex: 1; min-width: 240px; }
+.audio-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: var(--ink-muted); }
+.video-wrap { position: relative; padding-top: 56.25%; background: #111; }
+.video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+.video-empty {
+  position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 0.5rem; color: #C9C3B5; font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; text-align: center; padding: 1rem;
+}
 
-/* HERRAMIENTA card (módulo 4) */
-.tool-di { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; margin-bottom: 0.8rem; }
-.tool-di-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; }
-.tool-di-head h6 { font-family: Georgia, serif; font-size: 1rem; font-weight: normal; color: var(--dark); margin: 0; }
-.tool-price { font-size: 0.72rem; padding: 0.2rem 0.6rem; border-radius: 20px; background: var(--terra-light); color: var(--terra); border: 1px solid var(--border); }
-.tool-di a.tool-link { font-size: 0.8rem; color: var(--blue); text-decoration: none; }
-.tool-di a.tool-link:hover { text-decoration: underline; }
-.tool-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; margin-top: 0.6rem; font-size: 0.82rem; }
-@media(max-width:640px) { .tool-grid { grid-template-columns: 1fr; } }
-.tool-grid div strong { display: block; color: var(--muted); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.15rem; }
+/* content */
+.content-section { margin-bottom: 2.6rem; }
+.content-section h2 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.3rem; margin-bottom: 0.8rem; padding-bottom: 0.4rem; border-bottom: 2px solid var(--mc); display: flex; align-items: baseline; gap: 0.6rem; }
+.content-section h2 .sec-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--mc); }
+.content-section h3 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.05rem; margin: 1.2rem 0 0.5rem; }
+.content-section p { margin-bottom: 0.8rem; font-size: 0.94rem; color: #2B2823; }
+.content-section ul { margin: 0.6rem 0 0.9rem 1.3rem; font-size: 0.92rem; }
+.content-section li { margin-bottom: 0.4rem; }
+.content-section strong { color: var(--mc); font-weight: 600; }
+.defbox { background: var(--msoft); border-radius: 4px; padding: 0.9rem 1.1rem; font-style: italic; font-size: 0.93rem; margin: 0.8rem 0 1.2rem; }
 
-/* EVALUACIÓN */
-.eval-section { background: var(--cream); border-radius: 10px; border: 1px solid var(--border); padding: 1.5rem; margin-top: 2rem; }
-.eval-section h4 { font-family: Georgia, serif; font-weight: normal; color: var(--dark); font-size: 1.1rem; margin-bottom: 0.3rem; }
-.eval-progress-text { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.2rem; }
-.eval-question { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem 1.3rem; margin-bottom: 1rem; }
-.eval-question h6 { font-size: 0.9rem; font-weight: bold; color: var(--dark); margin-bottom: 0.8rem; line-height: 1.5; }
-.eval-option { display: flex; align-items: flex-start; gap: 0.7rem; padding: 0.6rem 0.8rem; border-radius: 7px; border: 1px solid var(--border); margin-bottom: 0.5rem; cursor: pointer; font-size: 0.88rem; transition: all 0.15s; background: var(--cream); }
-.eval-option:hover { border-color: var(--blue); background: var(--blue-light); }
-.eval-option.selected { border-color: var(--blue); background: var(--blue-light); }
-.eval-option.correct { border-color: var(--success); background: #edf7f2; pointer-events: none; }
-.eval-option.incorrect { border-color: var(--terra); background: var(--terra-light); pointer-events: none; }
-.eval-option.disabled { pointer-events: none; opacity: 0.7; }
-.eval-radio { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px; transition: all 0.15s; }
-.eval-option.selected .eval-radio { border-color: var(--blue); background: var(--blue); }
-.eval-option.correct .eval-radio { border-color: var(--success); background: var(--success); }
-.eval-option.incorrect .eval-radio { border-color: var(--terra); background: var(--terra); }
-.feedback-box { font-size: 0.84rem; padding: 0.7rem 1rem; border-radius: 7px; margin-top: 0.5rem; line-height: 1.6; }
-.feedback-ok { background: #edf7f2; color: var(--success); border: 1px solid #b0ddc5; }
-.feedback-fail { background: var(--terra-light); color: #8a3020; border: 1px solid #e0b0a0; }
+/* pilares */
+.pilares { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; margin: 1rem 0 1.4rem; }
+@media (max-width: 700px) { .pilares { grid-template-columns: 1fr; } }
+.pilar { background: var(--card); border: 1px solid var(--border); border-top: 3px solid var(--mc); border-radius: 4px; padding: 0.9rem 1rem; }
+.pilar h4 { font-family: 'Fraunces', serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 0.4rem; }
+.pilar p { font-size: 0.82rem; color: #3A362F; margin: 0; }
+.pilar .p-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--mc); display: block; margin-bottom: 0.2rem; }
 
-/* RESULT */
-.result-card { text-align: center; padding: 2rem; background: #fff; border-radius: 12px; border: 1px solid var(--border); margin-top: 1rem; }
-.result-score { font-family: Georgia, serif; font-size: 4rem; color: var(--terra); line-height: 1; }
-.result-label { font-size: 0.85rem; color: var(--muted); margin: 0.3rem 0 0.8rem; }
-.result-msg { font-size: 0.92rem; max-width: 400px; margin: 0 auto 1.5rem; line-height: 1.6; }
+/* nota destacada */
+.nota { border-radius: 4px; padding: 0.9rem 1.1rem; font-size: 0.88rem; margin: 1.1rem 0; border: 1px solid var(--border); }
+.nota .nota-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.07em; display: block; margin-bottom: 0.35rem; }
+.nota.clave { background: var(--done-soft); } .nota.clave .nota-tag { color: var(--done); }
+.nota.alerta { background: var(--warn-soft); } .nota.alerta .nota-tag { color: #8A6318; }
+.nota.contexto { background: var(--ia-soft); } .nota.contexto .nota-tag { color: var(--ia); }
 
-/* BTN */
-.btn-terra { background: var(--terra); border-color: var(--terra); color: #fff; border-radius: 8px; padding: 0.6rem 1.4rem; }
-.btn-terra:hover { background: #a8492d; border-color: #a8492d; color: #fff; }
-.btn-blue { background: var(--blue); border-color: var(--blue); color: #fff; border-radius: 8px; }
-.btn-blue:hover { background: #2d5570; border-color: #2d5570; color: #fff; }
-.btn-outline-terra { border-color: var(--terra); color: var(--terra); border-radius: 8px; }
-.btn-outline-terra:hover { background: var(--terra); color: #fff; }
+/* tablas */
+.compare-table { width: 100%; border-collapse: collapse; margin: 0.8rem 0 1.4rem; font-size: 0.86rem; }
+.compare-table th, .compare-table td { border: 1px solid var(--border); padding: 0.55rem 0.7rem; text-align: left; vertical-align: top; }
+.compare-table th { background: var(--card); font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-muted); }
+.compare-table td:first-child { font-weight: 600; }
+.si-no td.si { background: var(--done-soft); }
+.si-no td.no { background: #F5E5E2; }
 
-/* TOAST */
-.toast-di { position: fixed; top: 80px; right: 20px; padding: 0.9rem 1.3rem; border-radius: 8px; color: #fff; z-index: 9999; font-size: 0.88rem; box-shadow: 0 4px 16px rgba(0,0,0,0.2); animation: slideIn 0.3s ease; }
-@keyframes slideIn { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:translateX(0); } }
+/* timeline (reutilizado como secuencia de etapas) */
+.timeline { border-left: 2px solid var(--border); margin: 1rem 0 1.5rem 0.4rem; padding-left: 1.2rem; }
+.tl-item { position: relative; margin-bottom: 1.1rem; }
+.tl-item::before { content: ''; position: absolute; left: -1.53rem; top: 0.3rem; width: 9px; height: 9px; border-radius: 50%; background: var(--mc); }
+.tl-year { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: var(--mc); font-weight: 500; }
+.tl-text { font-size: 0.88rem; color: #2B2823; }
+
+/* viñeta de taller (caso con think-first) */
+.vineta { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin: 1.2rem 0; }
+.vineta-head { background: var(--ink); color: #EDEAE3; font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.6rem 1rem; }
+.vineta-body { background: var(--card); padding: 1rem 1.2rem; font-size: 0.9rem; }
+.vineta-reveal-btn {
+  display: block; width: 100%; text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem;
+  background: var(--msoft); border: none; border-top: 1px solid var(--border); padding: 0.7rem; cursor: pointer; color: var(--mc);
+}
+.vineta-solution { display: none; background: #fff; border-top: 1px dashed var(--border); padding: 1rem 1.2rem; font-size: 0.9rem; }
+.vineta.revealed .vineta-solution { display: block; }
+.vineta.revealed .vineta-reveal-btn { display: none; }
+
+/* círculos de priorización (etapa 1) */
+.circulos { display: flex; flex-direction: column; align-items: center; gap: 0; margin: 1.2rem 0 1.6rem; }
+.circulo { width: 100%; max-width: 520px; border-radius: 8px; padding: 1rem 1.3rem; text-align: center; border: 1px solid var(--border); }
+.circulo.c1 { background: var(--card); }
+.circulo.c2 { background: var(--msoft); margin-top: -0.4rem; max-width: 400px; }
+.circulo.c3 { background: var(--mc); color: #fff; margin-top: -0.4rem; max-width: 270px; border-radius: 50px; padding: 1.1rem 1rem; }
+.circulo h4 { font-family: 'Fraunces', serif; font-size: 0.94rem; font-weight: 600; margin-bottom: 0.25rem; }
+.circulo p { font-size: 0.78rem; margin: 0; }
+.circulo.c3 p { color: #EDEAE3; }
+
+/* alineamiento — triángulo */
+.triangulo-wrap { display: flex; justify-content: center; margin: 1rem 0 1.6rem; }
+
+/* actividad clasificación */
+.activity { border: 1px solid var(--border); border-radius: 4px; background: var(--card); padding: 1.3rem; margin: 2rem 0; }
+.activity h2 { font-family: 'Fraunces', serif; font-size: 1.1rem; margin-bottom: 0.3rem; }
+.activity .act-sub { font-size: 0.8rem; color: var(--ink-muted); margin-bottom: 1rem; }
+.act-card { border: 1px solid var(--border); border-radius: 4px; background: var(--paper); padding: 0.9rem 1rem; margin-bottom: 0.8rem; }
+.act-statement { font-size: 0.9rem; margin-bottom: 0.7rem; }
+.act-buttons { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.act-btn { flex: 1; min-width: 110px; font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; padding: 0.5rem; border: 1px solid var(--border); border-radius: 3px; background: var(--card); cursor: pointer; transition: all 0.15s; }
+.act-btn:hover { border-color: var(--mc); }
+.act-card.ok { border-color: var(--done); background: var(--done-soft); }
+.act-card.ok .act-buttons { display: none; }
+.act-card.no { border-color: #A83232; }
+.act-verdict { font-size: 0.78rem; margin-top: 0.4rem; display: none; }
+.act-card.ok .act-verdict, .act-card.no .act-verdict { display: block; }
+.act-progress { font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; color: var(--ink-muted); margin-top: 0.4rem; }
+
+/* callouts */
+.callout { position: relative; border-radius: 4px; margin: 1.6rem 0; overflow: hidden; border: 1px solid var(--border); }
+.callout-header { display: flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.05em; color: #fff; }
+.callout.ia .callout-header { background: var(--ia); }
+.callout.entrevista .callout-header { background: var(--mc); }
+.callout-body { background: var(--card); padding: 1.1rem 1.3rem; font-size: 0.9rem; position: relative; }
+.callout-body p { margin-bottom: 0.7rem; }
+.callout-body p:last-child { margin-bottom: 0; }
+.capa {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+  cursor: pointer; user-select: none;
+  transition: transform 0.5s cubic-bezier(.65,0,.35,1), opacity 0.4s ease;
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--ink-muted);
+}
+.callout.ia .capa { background: var(--ia-soft); }
+.callout.entrevista .capa { background: var(--msoft); }
+.callout.revealed .capa { transform: translateX(105%); opacity: 0; pointer-events: none; }
+
+/* práctica de entrevista */
+.practica { border: 1px solid var(--border); border-radius: 4px; background: var(--card); margin: 1.4rem 0; overflow: hidden; }
+.practica-head { padding: 0.9rem 1.1rem; border-bottom: 1px solid var(--border-soft); }
+.practica-head .p-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--mc); text-transform: uppercase; letter-spacing: 0.06em; }
+.practica-head .p-q { font-size: 0.94rem; font-weight: 500; margin-top: 0.25rem; }
+.practica-body { padding: 1rem 1.1rem; }
+.practica-body textarea { width: 100%; min-height: 80px; font-family: 'IBM Plex Sans', sans-serif; font-size: 0.88rem; border: 1px solid var(--border); border-radius: 3px; padding: 0.7rem; resize: vertical; background: var(--paper); margin-bottom: 0.7rem; }
+.rm-toggle { font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; color: var(--mc); cursor: pointer; text-decoration: underline; background: none; border: none; padding: 0; }
+.rm { display: none; margin-top: 0.7rem; padding: 0.8rem 1rem; background: var(--msoft); border-radius: 3px; font-size: 0.87rem; }
+.rm.show { display: block; }
+.checklist { margin-top: 0.8rem; border-top: 1px dashed var(--border); padding-top: 0.8rem; }
+.checklist .cl-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); margin-bottom: 0.5rem; }
+.cl-item { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.84rem; padding: 0.35rem 0; cursor: pointer; }
+.cl-item input { accent-color: var(--done); margin-top: 0.2rem; }
+
+/* evaluación final */
+.eval-block { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 1.3rem; margin-top: 2.2rem; }
+.eval-block h2 { font-family: 'Fraunces', serif; font-size: 1.15rem; margin-bottom: 0.3rem; }
+.eval-sub { font-size: 0.8rem; color: var(--ink-muted); margin-bottom: 1.1rem; }
+.eval-q { font-size: 0.92rem; font-weight: 500; margin: 1.2rem 0 0.6rem; }
+.eval-option { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.6rem 0.8rem; border: 1px solid var(--border); border-radius: 3px; margin-bottom: 0.45rem; cursor: pointer; font-size: 0.87rem; background: var(--paper); transition: border-color 0.15s; }
+.eval-option:hover { border-color: var(--mc); }
+.eval-option input { accent-color: var(--mc); margin-top: 0.2rem; }
+.eval-option.correct { border-color: var(--done); background: var(--done-soft); }
+.eval-option.incorrect { border-color: #A83232; background: #F5E5E2; }
+.eval-submit { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; background: var(--mc); color: #fff; border: none; border-radius: 3px; padding: 0.7rem 1.4rem; cursor: pointer; margin-top: 1.2rem; }
+.eval-submit:disabled { opacity: 0.5; cursor: default; }
+.eval-counter { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: var(--ink-muted); margin-top: 0.5rem; }
+.result-card { display: none; margin-top: 1.2rem; padding: 1.1rem; border-radius: 4px; text-align: center; }
+.result-card.show { display: block; }
+.result-score { font-family: 'Fraunces', serif; font-size: 1.7rem; font-weight: 600; }
+
+.next-nav { display: flex; justify-content: space-between; margin-top: 2.5rem; padding-top: 1.2rem; border-top: 1px solid var(--border); font-size: 0.86rem; }
+.next-nav a { color: var(--mc); font-weight: 500; text-decoration: none; }
+.next-nav .disabled { color: var(--ink-muted); }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<div class="header-di">
-  <div class="container-fluid px-3">
-    <div class="d-flex align-items-center justify-content-between">
-      <div class="d-flex align-items-center gap-3">
-        <a href="../index.html" class="btn-back"><i class="bi bi-arrow-left me-1"></i>Inicio</a>
-        <div>
-          <div class="course-name">Diseño Instruccional</div>
-          <div class="unit-name">Módulo 2 · Unidad 2.3</div>
-        </div>
-      </div>
-      <div class="d-none d-md-flex align-items-center gap-2">
-        <span id="headerProgress" style="font-size:0.8rem;color:#a09a94"></span>
-      </div>
-    </div>
+<div class="topbar">
+  <a class="back" href="../index.html">← Ruta de aprendizaje</a>
+  <div class="gami-chips">
+    <span id="gamiNivel">Nivel 1 · Boceto</span>
+    <span id="gamiPoints">0 pts</span>
+    <span id="gamiStreak">0 días</span>
   </div>
 </div>
 
-<div class="container-fluid px-3 py-4" style="max-width:1200px;margin:0 auto">
-  <div class="row g-4">
+<div class="layout">
+  <aside class="sidebar">
+    <h6>Módulo 2</h6>
+    <div class="sidebar-sub">Análisis y definición</div>
+    <a class="side-item" href="m2-1.html"><span class="side-mark">2.1</span> Análisis de necesidades</a>
+    <a class="side-item" href="m2-2.html"><span class="side-mark">2.2</span> Objetivos y taxonomías</a>
+    <a class="side-item active" href="m2-3.html"><span class="side-mark">2.3</span> Backward Design</a>
+    <a class="side-item" href="m2-4.html"><span class="side-mark">2.4</span> Artefactos del DI</a>
+    <div class="side-toc">
+      <div class="toc-label">En esta unidad</div>
+      <a href="#s1">1 · Qué es backward design</a>
+      <a href="#s2">2 · Etapa 1 — Resultados</a>
+      <a href="#s3">3 · Etapa 2 — Evidencia</a>
+      <a href="#s4">4 · Etapa 3 — Experiencias</a>
+      <a href="#s5">5 · Alineamiento constructivo</a>
+      <a href="#s6">6 · Los dos pecados</a>
+      <a href="#practica">Práctica de entrevista</a>
+      <a href="#evaluacion">Evaluación (10)</a>
+    </div>
+  </aside>
 
-    <!-- SIDEBAR -->
-    <div class="col-lg-3">
-      <div class="sidebar-di">
-        <div class="sidebar-header">
-          <h6>Módulo 2</h6>
-          <p>Proceso de diseño</p>
+  <main>
+    <div class="unit-eyebrow">Módulo 2 · Unidad 2.3</div>
+    <h1 class="lesson-title">Backward Design y alineamiento constructivo</h1>
+    <p class="lesson-dek">Ya sabes redactar un objetivo bien formado (2.2). Ahora viene la pregunta que separa un curso coherente de uno que solo lo parece: si empiezas por el final —qué debe poder demostrar la persona— ¿tu evaluación y tu actividad realmente miden y practican lo mismo que dice el objetivo?</p>
+    <div class="lesson-badges">
+      <span class="lbadge">6 bloques de contenido</span>
+      <span class="lbadge">1 actividad interactiva</span>
+      <span class="lbadge">3 prácticas de entrevista</span>
+      <span class="lbadge">10 preguntas de evaluación</span>
+      <span class="lbadge">~45 min</span>
+    </div>
+
+    <div class="objetivo-box">
+      <div class="label">Objetivo de aprendizaje</div>
+      <p>Serás capaz de aplicar las tres etapas de backward design (resultados deseados, evidencia aceptable, experiencias de aprendizaje) a un objetivo dado, y de verificar el alineamiento constructivo entre ese objetivo, su evaluación y su actividad, identificando con precisión cuándo los tres elementos miden y practican el mismo nivel cognitivo y cuándo no.</p>
+    </div>
+
+    <!-- MAPA DE LA UNIDAD -->
+    <div class="mapa-block">
+      <div class="mapa-head">Mapa de esta unidad · organizador previo</div>
+      <div class="mapa-body">
+        <svg width="100%" viewBox="0 0 680 300" style="display:block" role="img" aria-label="Mapa conceptual de la unidad">
+          <line x1="340" y1="150" x2="150" y2="60" stroke="#D8D1C0" stroke-width="1.2"/>
+          <line x1="340" y1="150" x2="530" y2="60" stroke="#D8D1C0" stroke-width="1.2"/>
+          <line x1="340" y1="150" x2="110" y2="240" stroke="#D8D1C0" stroke-width="1.2"/>
+          <line x1="340" y1="150" x2="340" y2="245" stroke="#D8D1C0" stroke-width="1.2"/>
+          <line x1="340" y1="150" x2="570" y2="240" stroke="#D8D1C0" stroke-width="1.2"/>
+          <rect x="255" y="122" width="170" height="52" rx="5" fill="#DCE5F2" stroke="#2A5CAA" stroke-width="1.4"/>
+          <text x="340" y="144" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#1C1A17">Backward Design</text>
+          <text x="340" y="162" text-anchor="middle" font-family="monospace" font-size="10" fill="#2A5CAA">unidad 2.3</text>
+          <rect x="60" y="30" width="180" height="46" rx="5" fill="#F8F6F1" stroke="#A85B32" stroke-width="1.2"/>
+          <text x="150" y="49" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1C1A17">Etapa 1 · Resultados</text>
+          <text x="150" y="66" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#A85B32">objetivos · ideas perdurables</text>
+          <rect x="440" y="30" width="180" height="46" rx="5" fill="#F8F6F1" stroke="#A85B32" stroke-width="1.2"/>
+          <text x="530" y="49" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1C1A17">Etapa 2 · Evidencia</text>
+          <text x="530" y="66" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#A85B32">evaluación antes que actividad</text>
+          <rect x="20" y="216" width="180" height="46" rx="5" fill="#F8F6F1" stroke="#A85B32" stroke-width="1.2"/>
+          <text x="110" y="235" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1C1A17">Etapa 3 · Experiencias</text>
+          <text x="110" y="252" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#A85B32">actividades · WHERETO</text>
+          <rect x="250" y="216" width="180" height="46" rx="5" fill="#F8F6F1" stroke="#A85B32" stroke-width="1.2"/>
+          <text x="340" y="235" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1C1A17">Alineamiento constructivo</text>
+          <text x="340" y="252" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#A85B32">objetivo · evaluación · actividad</text>
+          <rect x="480" y="216" width="180" height="46" rx="5" fill="#F8F6F1" stroke="#A85B32" stroke-width="1.2"/>
+          <text x="570" y="235" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1C1A17">Los dos pecados</text>
+          <text x="570" y="252" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#A85B32">activity trap · coverage trap</text>
+        </svg>
+      </div>
+      <div class="mapa-note">Estos 5 conceptos son las piezas de esta unidad. Vuelve a este mapa al terminar y verifica que puedes explicar cada conexión en voz alta.</div>
+    </div>
+
+    <!-- MULTIMODAL -->
+    <div class="media-block">
+      <div class="media-tabs">
+        <button class="media-tab active" data-pane="pdf" onclick="switchMedia(this)">📑 Presentación</button>
+        <button class="media-tab" data-pane="audio" onclick="switchMedia(this)">🎧 Audio NotebookLM</button>
+        <button class="media-tab" data-pane="video" onclick="switchMedia(this)">▶ Video</button>
+      </div>
+      <div class="media-pane active" id="pane-pdf">
+        <iframe class="pdf-frame" src="m2-3.pdf#view=FitH" title="Presentación del tema" loading="lazy" onload="Gami.award('m2-3_pdf', 5, 'Revisaste la presentación'); checkMultimodal();"></iframe>
+        <div class="pdf-actions">
+          <a href="m2-3.pdf" target="_blank" rel="noopener">Pantalla completa</a>
+          <a href="m2-3.pdf" download>Descargar</a>
         </div>
-        <a class="lesson-item" href="m2-1.html">
-          <div class="lesson-num" id="num-m2-1">1</div>
-          <div class="lesson-info"><strong>Modelos de DI: ADDIE, SAM, UbD</strong><span>Fases · diferencias · cuándo usar</span></div>
-        </a>
-        <a class="lesson-item" href="m2-2.html">
-          <div class="lesson-num" id="num-m2-2">2</div>
-          <div class="lesson-info"><strong>Análisis de necesidades y audiencia</strong><span>Diagnóstico · brechas · métodos</span></div>
-        </a>
-        <a class="lesson-item active" onclick="scrollToTop()">
-          <div class="lesson-num">3</div>
-          <div class="lesson-info"><strong>Objetivos de aprendizaje y taxonomías</strong><span>Bloom · ABCD · alineación</span></div>
-        </a>
-        <div class="sidebar-progress">
-          <div class="d-flex justify-content-between mb-1">
-            <small style="color:var(--muted);font-size:0.75rem">Módulo 2</small>
-            <small id="sidebarPct" style="color:var(--terra);font-size:0.75rem;font-weight:bold">0/3</small>
+      </div>
+      <div class="media-pane" id="pane-audio">
+        <div class="audio-pane">
+          <span class="audio-label">Resumen en audio · NotebookLM</span>
+          <audio controls preload="metadata" src="m2-3-audio.mp3" onplay="Gami.award('m2-3_audio', 5, 'Escuchaste el resumen en audio'); checkMultimodal();"></audio>
+        </div>
+      </div>
+      <div class="media-pane" id="pane-video">
+        <div class="video-wrap" id="videoWrap">
+          <div class="video-empty" id="videoEmpty">
+            <span>▶ Espacio para video de YouTube</span>
+            <span style="opacity:0.6">Edita la constante YT_VIDEO_ID en este archivo con el ID del video que elijas.</span>
           </div>
-          <div class="progress-di"><div class="progress-di-fill" id="sidebarBar" style="width:0%"></div></div>
         </div>
-        <div class="sidebar-footer">
-          <a href="../index.html" style="font-size:0.8rem;color:var(--muted);text-decoration:none"><i class="bi bi-grid me-1"></i>Ver todos los módulos</a>
+      </div>
+      <div class="media-note">Misma unidad, cuatro formatos — elige el medio que te acomode hoy (diversificación de la representación, DUA pauta 1). El texto completo está abajo, siempre visible.</div>
+    </div>
+
+    <!-- ============ SECCIÓN 1: QUÉ ES BACKWARD DESIGN ============ -->
+    <div class="content-section" id="s1">
+      <h2><span class="sec-num">01</span> Qué es backward design y por qué "al revés"</h2>
+      <p>La forma intuitiva de planificar un curso es esta: primero pensar en los <strong>contenidos</strong> que hay que cubrir, después diseñar <strong>actividades</strong> para presentarlos, y al final —casi como trámite— armar una <strong>evaluación</strong> que revise "algo" de lo visto. A este orden se le llama <strong>forward design</strong> (diseño hacia adelante), y es la causa más común de cursos que se sienten completos pero no enseñan lo que dicen enseñar.</p>
+      <p><strong>Backward design</strong> invierte ese orden. En vez de preguntar "¿qué contenido tengo que pasar?", pregunta primero "¿qué necesita poder <em>hacer</em> la persona al final, y cómo lo voy a comprobar?". El contenido y las actividades se seleccionan después, en función de esa evidencia — no al revés.</p>
+      <div class="defbox">Definición técnica: <strong>proceso de planificación curricular en tres etapas secuenciales — (1) identificar los resultados deseados, (2) determinar la evidencia aceptable de que esos resultados se lograron, y (3) planificar las experiencias de aprendizaje e instrucción — de modo que cada etapa se derive lógicamente de la anterior.</strong></div>
+
+      <div class="pilares">
+        <div class="pilar"><span class="p-num">Etapa 1</span><h4>Resultados deseados</h4><p>¿Qué debe entender, saber hacer o valorar la persona al terminar? Se prioriza, no se lista todo.</p></div>
+        <div class="pilar"><span class="p-num">Etapa 2</span><h4>Evidencia aceptable</h4><p>Antes de diseñar ninguna actividad: ¿cómo sabré, de forma verificable, que el resultado se logró?</p></div>
+        <div class="pilar"><span class="p-num">Etapa 3</span><h4>Experiencias de aprendizaje</h4><p>Recién aquí se eligen actividades, recursos y secuencia — al servicio de producir esa evidencia.</p></div>
+      </div>
+
+      <div class="nota clave"><span class="nota-tag">Origen</span>El modelo proviene del libro <em>Understanding by Design</em> (1998) de Grant Wiggins y Jay McTighe — el mismo marco UbD que ya viste en la unidad 1.2 al comparar ADDIE, SAM y UbD. Backward design es el corazón operativo de UbD: la secuencia de tres pasos que lo distingue de otros modelos.</div>
+
+      <h3>Forward design vs. backward design</h3>
+      <table class="compare-table si-no">
+        <tr><th>Backward design</th><th>Forward design (el hábito por defecto)</th></tr>
+        <tr><td class="si">Define primero qué debe demostrar la persona</td><td class="no">Define primero qué temas hay que "pasar"</td></tr>
+        <tr><td class="si">Diseña la evaluación antes que la actividad</td><td class="no">Diseña la evaluación al final, casi como trámite</td></tr>
+        <tr><td class="si">Cada actividad existe para producir evidencia de un resultado</td><td class="no">Las actividades se eligen por ser interesantes o por costumbre</td></tr>
+        <tr><td class="si">El contenido se prioriza según su valor perdurable</td><td class="no">Se intenta "cubrir" todo el temario disponible</td></tr>
+      </table>
+
+      <div class="vineta">
+        <div class="vineta-head">Viñeta de taller · caso institucional (contexto EMMD)</div>
+        <div class="vineta-body">Un jefe de carrera te entrega el temario completo de un curso presencial de 16 semanas y te pide "conviértelo en un curso virtual de 6 semanas". Si aplicas forward design, ¿qué es lo primero que harías, y por qué es un error empezar así?</div>
+        <button class="vineta-reveal-btn" onclick="revealVineta(this, 'v1')">Piénsalo primero → ver resolución</button>
+        <div class="vineta-solution">El error de forward design sería abrir el temario y empezar a "recortar contenido a la mitad" para que quepa en 6 semanas. Con backward design, primero preguntas: ¿qué debe poder demostrar un egresado de este curso, sin importar cuántas semanas dure? A partir de esa lista priorizada (Etapa 1) decides qué contenido es perdurable y cuál era solo "relleno" del formato presencial — y ahí sí, el recorte tiene un criterio pedagógico, no solo de tiempo disponible.</div>
+      </div>
+      <div class="vineta">
+        <div class="vineta-head">Viñeta de taller · caso corporativo</div>
+        <div class="vineta-body">Una gerencia te pide "un curso de liderazgo de 3 módulos" sin más detalle. Si les preguntas una sola cosa antes de aceptar el encargo, ¿cuál sería, según backward design?</div>
+        <button class="vineta-reveal-btn" onclick="revealVineta(this, 'v2')">Piénsalo primero → ver resolución</button>
+        <div class="vineta-solution">"¿Qué tendría que ser capaz de hacer distinto un líder al salir de este curso, y cómo lo van a notar ustedes?" Esa pregunta obliga a definir la Etapa 1 (resultado) y anticipa la Etapa 2 (evidencia) antes de comprometerte a construir "3 módulos" de contenido que podrían no producir ningún cambio observable.</div>
+      </div>
+    </div>
+
+    <!-- ============ SECCIÓN 2: ETAPA 1 ============ -->
+    <div class="content-section" id="s2">
+      <h2><span class="sec-num">02</span> Etapa 1 — Identificar los resultados deseados</h2>
+      <p>El error más común al iniciar esta etapa es tratar todo el contenido disponible como igualmente importante. Wiggins y McTighe proponen un modelo de <strong>priorización en tres círculos concéntricos</strong> para decidir qué merece convertirse en objetivo, qué merece mencionarse, y qué se descarta.</p>
+
+      <div class="circulos">
+        <div class="circulo c1"><h4>Worth being familiar with</h4><p>Contenido de contexto — se menciona, no se evalúa a profundidad. El estudiante lo reconoce si vuelve a verlo.</p></div>
+        <div class="circulo c2"><h4>Important to know and do</h4><p>Conceptos y destrezas centrales del área — sí se enseñan y se evalúan, pero no son el núcleo del curso.</p></div>
+        <div class="circulo c3"><h4>Enduring understanding</h4><p>Las 2–3 ideas que la persona debe seguir usando años después de olvidar el resto. Aquí van los objetivos principales.</p></div>
+      </div>
+
+      <p>Aplicado a un curso real, esto significa que no todos los objetivos pesan igual. Una <strong>comprensión perdurable</strong> (círculo central) típica de un curso de retail sería algo como "diagnosticar si una queja de cliente es un problema de proceso o de comunicación" — algo que el vendedor seguirá usando en cualquier situación futura, no solo en el examen del curso.</p>
+
+      <div class="nota alerta"><span class="nota-tag">Error común en el diseño</span>Confundir "temas del programa" con "resultados deseados". Un temario lista <em>qué se va a hablar</em>; los resultados deseados definen <em>qué va a poder hacer la persona</em>. Si tu lista de objetivos se parece demasiado al índice de un libro, probablemente sigues en modo forward design.</div>
+
+      <h3>Preguntas esenciales</h3>
+      <p>Además de las comprensiones perdurables, la Etapa 1 suele incluir <strong>preguntas esenciales</strong>: preguntas abiertas, sin una única respuesta correcta, que mantienen viva la comprensión perdurable a lo largo del curso. Por ejemplo, para la unidad 2.1 de este mismo curso, una pregunta esencial podría ser: "¿Cómo distingo si un problema de desempeño se resuelve con formación o no?" — es la misma pregunta que reaparece en distintos casos y niveles de complejidad.</p>
+    </div>
+
+    <!-- ============ SECCIÓN 3: ETAPA 2 ============ -->
+    <div class="content-section" id="s3">
+      <h2><span class="sec-num">03</span> Etapa 2 — Determinar la evidencia aceptable</h2>
+      <p>Esta es la etapa que más distingue a backward design del hábito por defecto: <strong>antes de imaginar ninguna actividad</strong>, defines qué desempeño o producto te va a convencer de que el resultado de la Etapa 1 se logró. Si no puedes describir esa evidencia con claridad, es señal de que el objetivo de la Etapa 1 todavía está mal definido — no hay dónde avanzar.</p>
+
+      <table class="compare-table">
+        <tr><th>Tipo de evidencia</th><th>En qué consiste</th><th>Ejemplo</th></tr>
+        <tr><td>Tareas de desempeño auténtico</td><td>La persona aplica el aprendizaje en una situación realista, con un producto observable</td><td>Diseñar un DDI real para un caso, redactar y defender una rúbrica, simular una entrevista de necesidades</td></tr>
+        <tr><td>Evidencia adicional</td><td>Instrumentos más tradicionales que complementan — no reemplazan — la evidencia auténtica</td><td>Quiz, prueba escrita, observación estructurada, autoevaluación</td></tr>
+      </table>
+
+      <p>Una forma práctica de diseñar tareas de desempeño auténtico es el acrónimo <strong>GRASPS</strong> (Goal, Role, Audience, Situation, Product, Standards): definir una meta realista, un rol que la persona asume, una audiencia real o simulada, una situación con contexto, un producto concreto y los estándares con que se evaluará. No es obligatorio usarlo siempre, pero obliga a salir de la pregunta de examen genérica.</p>
+
+      <div class="nota clave"><span class="nota-tag">Para recordar</span>La secuencia importa: primero decides <em>cómo vas a saber</em> que la persona aprendió, y solo después diseñas la actividad que la prepara para producir esa evidencia. Si inviertes el orden —diseñas la actividad primero y luego "armas alguna evaluación" para justificarla— volviste a forward design sin darte cuenta.</div>
+
+      <div class="nota alerta"><span class="nota-tag">Error común en entrevistas</span>Cuando te pidan diseñar una evaluación, resiste el impulso de proponer directamente "un quiz de 10 preguntas". Empieza describiendo qué evidencia demostraría el resultado deseado — a veces la respuesta correcta es una tarea de desempeño, no un instrumento de opción múltiple.</div>
+    </div>
+
+    <!-- ============ SECCIÓN 4: ETAPA 3 ============ -->
+    <div class="content-section" id="s4">
+      <h2><span class="sec-num">04</span> Etapa 3 — Planificar experiencias de aprendizaje e instrucción</h2>
+      <p>Solo cuando las Etapas 1 y 2 están definidas se seleccionan las actividades, los recursos y la secuencia de instrucción. Wiggins y McTighe resumen los criterios de esta etapa con el acrónimo <strong>WHERETO</strong>, que funciona como checklist de diseño más que como pasos rígidos.</p>
+
+      <table class="compare-table">
+        <tr><th>Letra</th><th>Criterio</th><th>Pregunta que responde</th></tr>
+        <tr><td>W</td><td>Where / Why</td><td>¿La persona sabe hacia dónde va este curso y por qué le importa?</td></tr>
+        <tr><td>H</td><td>Hook</td><td>¿Cómo engancho el interés desde el inicio, con un caso o pregunta real?</td></tr>
+        <tr><td>E</td><td>Equip / Experience</td><td>¿Qué necesita practicar y explorar para llegar preparada a la evidencia de la Etapa 2?</td></tr>
+        <tr><td>R</td><td>Rethink / Revise</td><td>¿Dónde hay oportunidad de reflexionar y corregir antes de la evaluación final?</td></tr>
+        <tr><td>E</td><td>Evaluate</td><td>¿Dónde practica autoevaluarse con los mismos criterios de la evidencia definida?</td></tr>
+        <tr><td>T</td><td>Tailor</td><td>¿Cómo se adapta la experiencia a distintos ritmos o necesidades?</td></tr>
+        <tr><td>O</td><td>Organize</td><td>¿La secuencia sigue una lógica de complejidad creciente hacia la evidencia final?</td></tr>
+      </table>
+
+      <div class="nota contexto"><span class="nota-tag">Conexión con Gagné y Mayer</span>WHERETO no reemplaza los Nueve Eventos de Gagné ni los principios de Mayer (unidad 1.4) — opera en un nivel más arriba, como criterio de diseño de la unidad completa, mientras Gagné y Mayer te ayudan a construir cada actividad específica dentro de esa estructura.</div>
+    </div>
+
+    <!-- ============ SECCIÓN 5: ALINEAMIENTO CONSTRUCTIVO ============ -->
+    <div class="content-section" id="s5">
+      <h2><span class="sec-num">05</span> Alineamiento constructivo — el criterio que lo verifica todo</h2>
+      <p>Backward design te da el <em>orden</em> en que se diseña. El <strong>alineamiento constructivo</strong> (concepto de John Biggs, 1996) es el <em>criterio de calidad</em> que verifica si el resultado de ese proceso realmente quedó coherente. La idea central: <strong>objetivo, evaluación y actividad deben pedir y practicar el mismo nivel cognitivo</strong> — no basta con que "hablen del mismo tema".</p>
+
+      <div class="defbox">Definición técnica: <strong>alineamiento constructivo es la coherencia interna de un diseño instruccional en la que el verbo del objetivo de aprendizaje, el verbo de la tarea de evaluación y el verbo de la actividad de práctica corresponden al mismo nivel de la taxonomía — de modo que se enseña, se practica y se evalúa exactamente lo que se dijo que se iba a lograr.</strong></div>
+
+      <p>En la práctica, esto se revisa con una pregunta simple aplicada a los tres elementos de un diseño: si el objetivo usa el verbo "aplicar" (unidad 2.2, nivel Bloom aplicar), ¿la actividad hace que la persona practique aplicar, y la evaluación mide si aplicó — o la evaluación en realidad solo pide recordar una definición?</p>
+
+      <table class="compare-table si-no">
+        <tr><th>Alineado</th><th>Desalineado</th></tr>
+        <tr><td class="si">Objetivo "aplicar", actividad de práctica aplicada, evaluación que pide aplicar en un caso nuevo</td><td class="no">Objetivo "aplicar", pero la evaluación es un quiz de definiciones — mide recordar, no aplicar</td></tr>
+        <tr><td class="si">Objetivo "analizar", actividad de estudio de caso, evaluación que pide analizar una situación real</td><td class="no">Objetivo "analizar", pero la actividad es solo una lectura pasiva sin ningún análisis practicado</td></tr>
+        <tr><td class="si">La rúbrica de evaluación usa los mismos criterios que se modelaron en la actividad</td><td class="no">La rúbrica introduce criterios nuevos que nunca se practicaron ni se enseñaron</td></tr>
+      </table>
+
+      <div class="vineta">
+        <div class="vineta-head">Viñeta de taller · desalineamiento típico</div>
+        <div class="vineta-body">Revisas un curso ya diseñado por otro equipo: el objetivo dice "el estudiante será capaz de <strong>diseñar</strong> una rúbrica alineada a un objetivo". La actividad es un video explicativo de 20 minutos sobre qué es una rúbrica. La evaluación es un examen de selección múltiple que pregunta "¿cuál de estas NO es una característica de una buena rúbrica?". ¿Dónde está el desalineamiento y cómo lo corregirías?</div>
+        <button class="vineta-reveal-btn" onclick="revealVineta(this, 'v3')">Piénsalo primero → ver resolución</button>
+        <div class="vineta-solution">El objetivo pide "diseñar" (nivel crear/aplicar), pero ni la actividad ni la evaluación llegan a ese nivel: la actividad es pasiva (ver un video) y la evaluación mide reconocer (nivel recordar/comprender). Para alinear, la actividad debería ser un taller donde la persona construye una rúbrica real con retroalimentación, y la evaluación debería pedirle entregar una rúbrica propia aplicada a un objetivo dado, evaluada con un checklist de criterios — no un examen de opción múltiple.</div>
+      </div>
+    </div>
+
+    <!-- ============ SECCIÓN 6: LOS DOS PECADOS ============ -->
+    <div class="content-section" id="s6">
+      <h2><span class="sec-num">06</span> Los dos pecados que backward design busca evitar</h2>
+      <p>Wiggins describe dos formas —igualmente comunes— en que un diseño se desvía sin que quien lo diseña se dé cuenta, porque ambas "se sienten" como un curso completo y bien hecho.</p>
+
+      <div class="pilares">
+        <div class="pilar"><h4>Activity trap</h4><p>Actividades entretenidas, participativas, incluso divertidas — pero sin un propósito de aprendizaje claro detrás. "Hands-on" sin ser "minds-on". El estudiante sale contento pero no puede demostrar nada nuevo.</p></div>
+        <div class="pilar"><h4>Coverage trap</h4><p>Avanzar por todo el temario o el libro de principio a fin, contenido tras contenido, sin criterio de qué es perdurable. El curso "se ve completo" pero nadie recuerda qué debía quedar al final.</p></div>
+      </div>
+
+      <div class="nota clave"><span class="nota-tag">Cómo detectarlos en tu propio diseño</span>Pregúntate, actividad por actividad: "si eliminara esta actividad, ¿cambiaría la evidencia que la persona puede producir al final?" Si la respuesta es no, es señal de activity trap. Y por cada bloque de contenido: "¿esto es una comprensión perdurable, o solo estoy 'pasando' el temario?" — si es lo segundo, es señal de coverage trap.</div>
+    </div>
+
+    <div class="activity">
+      <h2>Actividad — ¿Alineado o desalineado?</h2>
+      <div class="act-sub">Cada tarjeta describe un objetivo, su evaluación y su actividad. Clasifica si el trío está alineado constructivamente o no. Cada acierto suma puntos.</div>
+      <div id="actRoot"></div>
+      <div class="act-progress" id="actProgress"></div>
+    </div>
+
+    <!-- CALLOUTS -->
+    <div class="callout ia">
+      <div class="callout-header">🖌 IA en esta fase</div>
+      <div class="callout-body">
+        <div class="capa">＋ Toca para levantar la capa</div>
+        <p>En la fase de backward design, la IA generativa es útil sobre todo como <strong>auditora de coherencia</strong>, no como generadora de contenido final. Ejemplos concretos:</p>
+        <p>• Pegarle el trío objetivo–evaluación–actividad y pedirle explícitamente que identifique si los tres verbos corresponden al mismo nivel de Bloom, y que señale cuál de los tres "se queda corto" respecto a los otros dos.</p>
+        <p>• Pedirle candidatas de preguntas esenciales para una comprensión perdurable que ya definiste, para elegir la que genera más discusión genuina en vez de tener una sola respuesta obvia.</p>
+        <p>• Pedirle que redacte una tarea de desempeño auténtico usando la estructura GRASPS a partir de un objetivo que le entregas, como borrador de partida — no como versión final.</p>
+      </div>
+    </div>
+
+    <div class="callout entrevista">
+      <div class="callout-header">🎤 Nota de entrevista</div>
+      <div class="callout-body">
+        <div class="capa">＋ Toca para levantar la capa</div>
+        <p>Cuando te pregunten "¿cómo diseñas un curso?", mencionar backward design por nombre y en el orden correcto (resultados → evidencia → experiencias) es una señal fuerte de que no improvisas el proceso. Una respuesta sólida nombra las tres etapas y agrega, en una frase, el criterio que las conecta: el alineamiento constructivo.</p>
+        <p>Evita decir solo "primero pienso los objetivos y después hago actividades" sin mencionar la evidencia — es la forma más común de sonar como que conoces el concepto de nombre, pero no dominas la etapa que más distingue este modelo: definir la evaluación antes que la actividad.</p>
+      </div>
+    </div>
+
+    <!-- ============ PRÁCTICA DE ENTREVISTA ============ -->
+    <div class="content-section" id="practica">
+      <h2><span class="sec-num">◆</span> Practica como en una entrevista</h2>
+      <p>Responde primero con tus propias palabras — <strong>en voz alta o por escrito</strong> — antes de revelar la respuesta modelo. Después usa el checklist: cada ítem que marques suma a tu autoevaluación.</p>
+
+      <div class="practica">
+        <div class="practica-head">
+          <div class="p-num">Práctica 1</div>
+          <div class="p-q">Un entrevistador te pregunta: "¿Qué es backward design y por qué lo usarías?" en menos de un minuto. ¿Qué le dirías?</div>
+        </div>
+        <div class="practica-body">
+          <textarea placeholder="Escribe o practica en voz alta tu respuesta antes de revelar la modelo…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p1', 'p1')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p1">"Es un proceso de diseño en tres etapas: primero defino qué debe poder demostrar la persona al final —los resultados deseados—, después determino cómo voy a comprobar que lo logró —la evidencia aceptable—, y solo entonces diseño las actividades y recursos. Lo uso porque evita el error más común de diseñar cursos: crear actividades entretenidas o cubrir todo el temario sin haber definido antes qué evidencia real va a demostrar el aprendizaje."</div>
+          <div class="checklist">
+            <div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1a')"> ¿Nombraste las tres etapas en el orden correcto?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1b')"> ¿Explicaste que la evidencia se define antes que la actividad?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1c')"> ¿Diste una razón concreta de por qué lo usas, no solo la definición?</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="practica">
+        <div class="practica-head">
+          <div class="p-num">Práctica 2</div>
+          <div class="p-q">Te muestran un objetivo, una evaluación y una actividad de un curso ya hecho, y te piden: "revísalo y dime si está bien diseñado." ¿Qué haces primero?</div>
+        </div>
+        <div class="practica-body">
+          <textarea placeholder="Tu respuesta…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p2', 'p2')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p2">"Reviso el alineamiento constructivo: identifico el verbo del objetivo, el verbo que realmente exige la evaluación, y el verbo que practica la actividad. Si los tres corresponden al mismo nivel cognitivo, está alineado. Si la evaluación pide menos de lo que el objetivo promete —por ejemplo, el objetivo dice 'aplicar' pero la evaluación solo pide recordar una definición— ahí está el problema, aunque el curso 'se vea' completo y bien producido."</div>
+          <div class="checklist">
+            <div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2a')"> ¿Mencionaste el alineamiento constructivo por nombre?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2b')"> ¿Explicaste que se revisa comparando el nivel cognitivo de los tres verbos?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2c')"> ¿Diste un ejemplo de cómo se ve un desalineamiento?</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="practica">
+        <div class="practica-head">
+          <div class="p-num">Práctica 3</div>
+          <div class="p-q">Caso: un SME te entrega su curso ya armado y te dice "solo falta que le agregues la evaluación al final." ¿Cómo respondes como DI aplicando backward design?</div>
+        </div>
+        <div class="practica-body">
+          <textarea placeholder="Tu respuesta…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p3', 'p3')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p3">"Antes de agregar cualquier evaluación, necesito volver un paso atrás: ¿qué resultado deseado está sirviendo este contenido? Si eso no está claro, corro el riesgo de diseñar una evaluación que no mide nada relevante — o peor, de descubrir que el contenido ya armado no lleva a ningún resultado verificable. Le propondría revisar juntos los resultados deseados antes de 'agregar' una evaluación al final, aunque eso signifique ajustar contenido ya hecho."</div>
+          <div class="checklist">
+            <div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3a')"> ¿Identificaste que "agregar evaluación al final" es forward design?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3b')"> ¿Propusiste volver a los resultados deseados antes de avanzar?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3c')"> ¿Mostraste criterio para cuestionar un encargo sin sonar rígido?</label>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- CONTENT -->
-    <div class="col-lg-9">
-      <div class="content-di">
-        <div class="lesson-hero">
-          <div class="unit-tag">Módulo 2 · Unidad 2.3</div>
-          <h1>Objetivos de aprendizaje y taxonomías</h1>
-          <p>Bloom revisado · modelo ABCD · alineación constructiva · SOLO y Fink</p>
-        </div>
-        <div class="lesson-badges">
-          <span class="lbadge"><i class="bi bi-book me-1"></i>4 bloques de contenido</span>
-          <span class="lbadge"><i class="bi bi-chat-square-text me-1"></i>3 preguntas de práctica oral</span>
-          <span class="lbadge"><i class="bi bi-clipboard-check me-1"></i>8 preguntas al final</span>
-          <span class="lbadge"><i class="bi bi-clock me-1"></i>~30 min</span>
-        </div>
+    <!-- ============ EVALUACIÓN FINAL (10) ============ -->
+    <div class="eval-block" id="evaluacion">
+      <h2>Evaluación — Unidad 2.3</h2>
+      <div class="eval-sub">10 preguntas. El puntaje se guarda en tu ruta de aprendizaje. Puedes reintentar sin límite.</div>
+      <div id="quizRoot"></div>
+      <div class="eval-counter" id="quizCounter">Respondidas: 0/10</div>
+      <button class="eval-submit" id="quizSubmit" onclick="submitQuiz()" disabled>Enviar evaluación</button>
+      <div class="result-card" id="resultCard">
+        <div class="result-score" id="resultScore">0%</div>
+        <div id="resultMsg" style="font-size:0.85rem;color:var(--ink-muted);margin-top:0.3rem;"></div>
+      </div>
+    </div>
 
-        <div class="lesson-body">
+    <div class="next-nav">
+      <a href="m2-2.html">← 2.2 Objetivos de aprendizaje y taxonomías</a>
+      <a href="m2-4.html">2.4 Artefactos y documentos del DI →</a>
+    </div>
+  </main>
+</div>
 
-          <!-- MAPA CONCEPTUAL (organizador previo) -->
-          <div class="presentacion mb-4">
-            <div class="presentacion-head">
-              <div class="pres-title"><i class="bi bi-diagram-3"></i> Mapa de esta unidad</div>
-              <span class="pres-tag">Organizador previo</span>
-            </div>
-            <div style="background:#fff;padding:1.2rem">
-              <svg width="100%" viewBox="0 0 680 300" style="display:block">
-                <rect x="245" y="20" width="190" height="60" rx="8" fill="#f7ede8" stroke="#c85c3a" stroke-width="1"/>
-                <text x="340" y="44" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Objetivos y taxonomías</text>
-                <text x="340" y="63" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#c85c3a">unidad 2.3</text>
-                <line x1="170" y1="80" x2="170" y2="150" stroke="#ddd8d0" stroke-width="1"/>
-                <line x1="340" y1="80" x2="340" y2="150" stroke="#ddd8d0" stroke-width="1"/>
-                <line x1="510" y1="80" x2="510" y2="150" stroke="#ddd8d0" stroke-width="1"/>
-                <rect x="75" y="150" width="190" height="70" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="170" y="178" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#0f1117">Bloom revisada</text>
-                <text x="170" y="196" text-anchor="middle" font-family="Calibri,sans-serif" font-size="10.5" fill="#3a6b8a">6 niveles cognitivos</text>
-                <rect x="245" y="150" width="190" height="70" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="340" y="178" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#0f1117">Modelo ABCD</text>
-                <text x="340" y="196" text-anchor="middle" font-family="Calibri,sans-serif" font-size="10.5" fill="#3a6b8a">redactar objetivos</text>
-                <rect x="415" y="150" width="190" height="70" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="510" y="178" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#0f1117">Alineación constructiva</text>
-                <text x="510" y="196" text-anchor="middle" font-family="Calibri,sans-serif" font-size="10.5" fill="#3a6b8a">objetivo-actividad-evaluación</text>
-              </svg>
-              <p style="font-size:0.8rem;color:var(--muted);text-align:center;margin-top:0.5rem">Redactar un objetivo bien formulado (ABCD, con verbo de Bloom) solo tiene valor si actividad y evaluación quedan alineadas a ese mismo nivel — y esta unidad también cubre SOLO y Fink como taxonomías complementarias.</p>
-            </div>
-          </div>
-
-          <div class="presentacion">
-            <div class="presentacion-head">
-              <div class="pres-title"><i class="bi bi-easel2"></i> Presentación del tema <span class="pres-tag">Próximamente</span></div>
-            </div>
-            <div class="presentacion-viewer">
-              <div class="pres-placeholder">
-                <i class="bi bi-file-earmark-slides"></i>
-                <p>Material audiovisual en preparación</p>
-                <small>Por ahora, revisa el contenido en los bloques de esta unidad.</small>
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-di">
-            <button class="accordion-di-btn open" onclick="toggleAcc(this)">
-              <i class="bi bi-1-circle acc-icon"></i> Taxonomía de Bloom revisada
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body show">
-              <p>La taxonomía original de Bloom (1956) fue revisada por Anderson y Krathwohl en 2001. La versión revisada cambia sustantivos por verbos (más útil para redactar objetivos de acción) e invierte el orden de las dos categorías superiores.</p>
-              <table class="table table-di table-bordered mt-2">
-                <thead><tr><th>Nivel</th><th>Verbo típico</th><th>Ejemplo de objetivo</th></tr></thead>
-                <tbody>
-                  <tr><td>1. Recordar</td><td>Listar, definir, identificar</td><td>Listar las fases del modelo ADDIE</td></tr>
-                  <tr><td>2. Comprender</td><td>Explicar, resumir, clasificar</td><td>Explicar la diferencia entre SCORM y xAPI</td></tr>
-                  <tr><td>3. Aplicar</td><td>Ejecutar, implementar, usar</td><td>Implementar un objetivo con el modelo ABCD</td></tr>
-                  <tr><td>4. Analizar</td><td>Comparar, diferenciar, organizar</td><td>Comparar ADDIE y SAM según el contexto de un proyecto</td></tr>
-                  <tr><td>5. Evaluar</td><td>Justificar, criticar, valorar</td><td>Justificar la elección de un LMS para un caso dado</td></tr>
-                  <tr><td>6. Crear</td><td>Diseñar, construir, producir</td><td>Diseñar un curso completo aplicando UbD</td></tr>
-                </tbody>
-              </table>
-              <div class="callout-terra mt-2">
-                <strong>Error común de DI junior:</strong> escribir todos los objetivos en niveles 1-2 (recordar, comprender) porque son fáciles de evaluar con quiz de alternativas. Un curso profesional debe tener al menos algunos objetivos en niveles 4-6, aunque eso obligue a diseñar evaluaciones más ricas que un test de opción múltiple.
-              </div>
-              <div class="callout-blue">
-                <strong>Verbos a evitar en objetivos:</strong> "entender", "conocer", "apreciar" — son intenciones, no comportamientos observables. Todo objetivo bien redactado debe describir algo que se pueda ver u observar en el desempeño del estudiante.
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-2-circle acc-icon"></i> Modelo ABCD para redactar objetivos
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p>El modelo ABCD (Heinich et al.) da una fórmula práctica para redactar objetivos de aprendizaje completos y evaluables.</p>
-              <div class="row g-2 mt-2">
-                <div class="col-md-3"><div class="card-di"><h6>A — Audience</h6><p>¿Quién realiza la acción? (el estudiante, el participante)</p></div></div>
-                <div class="col-md-3"><div class="card-di"><h6>B — Behavior</h6><p>¿Qué comportamiento observable demostrará? (verbo de acción medible)</p></div></div>
-                <div class="col-md-3"><div class="card-di"><h6>C — Condition</h6><p>¿Bajo qué condiciones? (con qué recursos, en qué contexto)</p></div></div>
-                <div class="col-md-3"><div class="card-di"><h6>D — Degree</h6><p>¿Con qué nivel de exigencia o criterio de éxito?</p></div></div>
-              </div>
-              <div class="callout-blue mt-3">
-                <strong>Ejemplo completo:</strong> "El participante (A) redactará (B) un objetivo de aprendizaje usando el modelo ABCD, dado un caso de análisis de necesidades (C), cumpliendo con los cuatro componentes correctamente (D)."
-              </div>
-              <p class="mt-2">No todos los objetivos requieren los cuatro componentes explícitos en cada frase — pero un buen DI los tiene claros al diseñar, aunque en el documento final se simplifique la redacción por legibilidad.</p>
-              <div class="callout-terra">
-                <strong>Diferencia clave con un "tema" de contenido:</strong> "Comprender ADDIE" no es un objetivo, es un tema. "Explicar las cinco fases de ADDIE y su entregable en cada una" sí es un objetivo evaluable.
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-3-circle acc-icon"></i> Alineación constructiva (Biggs)
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p>La alineación constructiva, propuesta por John Biggs, establece que <strong>objetivos, actividades de aprendizaje y evaluación deben estar coherentemente conectados</strong>. Es el mismo principio que vimos en UbD (Unidad 2.1), formulado desde la pedagogía universitaria.</p>
-              <div class="callout-terra">
-                <strong>El problema que resuelve:</strong> cursos donde el objetivo dice "analizar" pero la evaluación es un quiz de memorización, o donde las actividades entretienen pero no practican lo que luego se evalúa. Esa desalineación es una de las razones más frecuentes por las que un curso "se ve bien" pero no logra resultados.
-              </div>
-              <table class="table table-di table-bordered mt-2">
-                <thead><tr><th>Objetivo (nivel Bloom)</th><th>Actividad coherente</th><th>Evaluación coherente</th></tr></thead>
-                <tbody>
-                  <tr><td>Recordar / Comprender</td><td>Lectura, video, infografía con quiz formativo</td><td>Preguntas de alternativas o verdadero/falso</td></tr>
-                  <tr><td>Aplicar</td><td>Ejercicio práctico guiado, simulación</td><td>Estudio de caso resuelto por el estudiante</td></tr>
-                  <tr><td>Analizar / Evaluar</td><td>Comparación de casos, debate, análisis crítico</td><td>Ensayo breve, rúbrica de análisis</td></tr>
-                  <tr><td>Crear</td><td>Proyecto aplicado con retroalimentación iterativa</td><td>Rúbrica de producto final o portafolio</td></tr>
-                </tbody>
-              </table>
-              <div class="callout-blue mt-2">
-                <strong>Checklist rápido de alineación:</strong> antes de finalizar el diseño de una unidad, pregúntate: "¿el verbo del objetivo, el tipo de actividad y el formato de evaluación apuntan al mismo nivel cognitivo?" Si no coinciden, hay que ajustar uno de los tres.
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-4-circle acc-icon"></i> Taxonomías alternativas: SOLO y Fink
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p>Bloom no es la única taxonomía útil. Dos alternativas complementan distintos aspectos del diseño de objetivos.</p>
-              <h5>Taxonomía SOLO (Structure of Observed Learning Outcomes)</h5>
-              <p>Describe niveles de <strong>complejidad estructural</strong> de la comprensión, útil para evaluar calidad de respuestas abiertas o ensayos:</p>
-              <div class="card-di"><h6>Preestructural → Uniestructural → Multiestructural → Relacional → Abstracto ampliado</h6><p>Desde respuestas sin sentido, pasando por datos aislados, luego varios datos sin conectar, hasta integrarlos en una estructura coherente, y finalmente generalizar a nuevos contextos.</p></div>
-              <div class="callout-blue mt-2">
-                <strong>Uso práctico:</strong> SOLO es especialmente útil para construir rúbricas de evaluación de ensayos o proyectos, porque describe "calidad creciente de comprensión" más que "tipos de tarea cognitiva" como Bloom.
-              </div>
-              <h5>Taxonomía de aprendizaje significativo de Fink</h5>
-              <p>Fink propone seis dimensiones no jerárquicas (a diferencia de Bloom, no van de lo simple a lo complejo, sino que se refuerzan entre sí): <strong>conocimiento fundacional, aplicación, integración, dimensión humana, cuidado (caring) y aprender a aprender</strong>.</p>
-              <div class="callout-terra mt-2">
-                <strong>Por qué importa para tu perfil:</strong> Fink es particularmente relevante en formación de adultos y educación superior, porque incorpora explícitamente motivación y desarrollo personal — dimensiones que Bloom no cubre y que conectan con tu experiencia en andragogía.
-              </div>
-            </div>
-          </div>
-
-          <!-- AUTOEVALUACIÓN AUTOINSTRUCCIONAL -->
-          <div class="accordion-di" style="border-color:var(--blue)">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)" style="background:var(--blue-light)">
-              <i class="bi bi-chat-square-text acc-icon" style="color:var(--blue)"></i> Practica como en una entrevista
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p style="color:var(--muted);font-size:0.85rem">Responde primero con tus propias palabras antes de revelar la respuesta modelo.</p>
-
-              <div class="card-di" style="border-left:3px solid var(--blue)">
-                <h6><i class="bi bi-question-circle me-1"></i>1. Un SME te entrega como objetivo: "los estudiantes van a entender la importancia de la seguridad laboral". ¿Qué le dices?</h6>
-                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
-                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
-                  <p style="font-size:0.87rem"><em>"Le explicaría que 'entender' no es un objetivo evaluable — es una intención, no un comportamiento observable. Lo reformularía usando el modelo ABCD: por ejemplo, 'el trabajador (A) identificará (B) los tres riesgos principales de su puesto dado un recorrido por su área de trabajo (C), nombrando al menos dos medidas de mitigación por riesgo (D)'."</em></p>
-                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
-                  <ul style="font-size:0.83rem;color:var(--muted)">
-                    <li>¿Identificaste "entender" como un verbo no observable?</li>
-                    <li>¿Reformulaste usando un verbo de Bloom medible?</li>
-                    <li>¿Aplicaste al menos parcialmente la estructura ABCD?</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="card-di" style="border-left:3px solid var(--blue)">
-                <h6><i class="bi bi-question-circle me-1"></i>2. Revisas un curso donde el objetivo dice "analizar casos de atención al cliente", pero la evaluación es un quiz de alternativas sobre definiciones. ¿Qué le dirías al equipo?</h6>
-                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
-                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
-                  <p style="font-size:0.87rem"><em>"Les diría que hay una desalineación constructiva: el objetivo pide un nivel de 'analizar' (Bloom nivel 4), pero la evaluación solo mide 'recordar' (nivel 1). Un quiz de alternativas no puede verificar si alguien sabe analizar un caso — necesitarían un estudio de caso o una rúbrica de análisis para que evaluación y objetivo apunten al mismo nivel cognitivo."</em></p>
-                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
-                  <ul style="font-size:0.83rem;color:var(--muted)">
-                    <li>¿Nombraste "alineación constructiva" o el concepto aunque sea con otras palabras?</li>
-                    <li>¿Identificaste el nivel de Bloom de cada elemento (objetivo vs. evaluación)?</li>
-                    <li>¿Propusiste un formato de evaluación coherente con el objetivo?</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="card-di" style="border-left:3px solid var(--blue)">
-                <h6><i class="bi bi-question-circle me-1"></i>3. ¿Cuándo usarías la taxonomía SOLO en vez de Bloom para evaluar un trabajo?</h6>
-                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
-                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
-                  <p style="font-size:0.87rem"><em>"Usaría SOLO cuando necesito evaluar la calidad estructural de una respuesta abierta o un ensayo, no solo qué tipo de tarea cognitiva se pidió. Bloom me dice si el objetivo pide 'analizar' o 'crear'; SOLO me ayuda a construir la rúbrica que distingue una respuesta con datos sueltos de una que integra todo en una estructura coherente."</em></p>
-                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
-                  <ul style="font-size:0.83rem;color:var(--muted)">
-                    <li>¿Distinguiste que Bloom clasifica tareas y SOLO clasifica calidad de respuestas?</li>
-                    <li>¿Mencionaste su uso concreto en rúbricas?</li>
-                    <li>¿Evitaste decir que son intercambiables?</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- EVALUACIÓN -->
-          <div class="eval-section mt-4">
-            <h4><i class="bi bi-clipboard-check me-2" style="color:var(--terra)"></i>Evaluación — Unidad 2.3</h4>
-            <p class="eval-progress-text">Preguntas respondidas: <strong><span id="answeredCount">0</span>/8</strong> — puedes enviar en cualquier momento</p>
-
-            <div class="eval-question" data-question="q1">
-              <h6>1. ¿Qué cambio introdujo la revisión de Anderson y Krathwohl (2001) respecto a la taxonomía original de Bloom?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q1',1)"><div class="eval-radio"></div><span>Eliminó el nivel 'Evaluar'</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',2)"><div class="eval-radio"></div><span>Cambió sustantivos por verbos e invirtió el orden de las dos categorías superiores</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',3)"><div class="eval-radio"></div><span>Agregó un séptimo nivel</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',4)"><div class="eval-radio"></div><span>Eliminó por completo los niveles cognitivos</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q2">
-              <h6>2. ¿Cuál es el error común de un DI junior al redactar objetivos?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q2',1)"><div class="eval-radio"></div><span>Usar verbos de acción observables</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',2)"><div class="eval-radio"></div><span>Concentrar todos los objetivos en los niveles bajos (recordar, comprender) porque son fáciles de evaluar</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',3)"><div class="eval-radio"></div><span>Incluir condiciones y criterios de éxito</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',4)"><div class="eval-radio"></div><span>Alinear objetivos con evaluaciones</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q3">
-              <h6>3. En el modelo ABCD, ¿qué representa la 'D'?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q3',1)"><div class="eval-radio"></div><span>Duración del curso</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',2)"><div class="eval-radio"></div><span>Degree — el criterio de éxito o nivel de exigencia</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',3)"><div class="eval-radio"></div><span>Dificultad del contenido</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',4)"><div class="eval-radio"></div><span>Diseño instruccional</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q4">
-              <h6>4. ¿Por qué 'Comprender ADDIE' no se considera un objetivo de aprendizaje bien redactado?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q4',1)"><div class="eval-radio"></div><span>Porque es demasiado largo</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',2)"><div class="eval-radio"></div><span>Porque describe un tema, no un comportamiento observable y evaluable</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',3)"><div class="eval-radio"></div><span>Porque menciona un modelo específico</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',4)"><div class="eval-radio"></div><span>Porque no incluye la palabra 'aprender'</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q5">
-              <h6>5. ¿Qué establece el principio de alineación constructiva de Biggs?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q5',1)"><div class="eval-radio"></div><span>Que los objetivos deben redactarse en inglés</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',2)"><div class="eval-radio"></div><span>Que objetivos, actividades y evaluación deben estar coherentemente conectados entre sí</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',3)"><div class="eval-radio"></div><span>Que todo curso debe tener exactamente 10 objetivos</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',4)"><div class="eval-radio"></div><span>Que la evaluación debe ser siempre de alternativas</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q6">
-              <h6>6. Un objetivo dice 'analizar casos de análisis de necesidades', pero la evaluación es un quiz de memorización de definiciones. ¿Qué problema hay?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q6',1)"><div class="eval-radio"></div><span>Ninguno, es válido combinar niveles</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',2)"><div class="eval-radio"></div><span>Falta de alineación constructiva: el nivel cognitivo del objetivo y la evaluación no coinciden</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',3)"><div class="eval-radio"></div><span>El objetivo está mal redactado por ser muy corto</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',4)"><div class="eval-radio"></div><span>La evaluación es demasiado difícil</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q7">
-              <h6>7. ¿Para qué es especialmente útil la taxonomía SOLO?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q7',1)"><div class="eval-radio"></div><span>Para diseñar cronogramas de proyecto</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',2)"><div class="eval-radio"></div><span>Para construir rúbricas que describan calidad creciente de comprensión en respuestas abiertas o ensayos</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',3)"><div class="eval-radio"></div><span>Para elegir el LMS adecuado</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',4)"><div class="eval-radio"></div><span>Para calcular el puntaje de un quiz de alternativas</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q8">
-              <h6>8. ¿Qué característica distingue a la taxonomía de Fink de la de Bloom?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q8',1)"><div class="eval-radio"></div><span>Fink solo aplica a educación infantil</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',2)"><div class="eval-radio"></div><span>Las dimensiones de Fink no son jerárquicas y se refuerzan entre sí, incluyendo motivación y desarrollo personal</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',3)"><div class="eval-radio"></div><span>Fink elimina la dimensión cognitiva por completo</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',4)"><div class="eval-radio"></div><span>Fink solo se usa para evaluaciones de opción múltiple</span></div>
-            </div>
-
-            <div id="evalResult" class="mt-3"></div>
-
-            <div class="d-flex flex-wrap gap-2 mt-3">
-              <button class="btn btn-terra" id="submitBtn" onclick="submitEval()">
-                <i class="bi bi-check-circle me-2"></i>Enviar evaluación
-              </button>
-              <button class="btn btn-outline-terra" id="retryBtn" style="display:none" onclick="retryEval()">
-                <i class="bi bi-arrow-clockwise me-2"></i>Reintentar
-              </button>
-            </div>
-            <div id="moduleCompleteZone"></div>
-          </div>
-
-        </div><!-- /lesson-body -->
-      </div><!-- /content-di -->
-    </div><!-- /col -->
-  </div><!-- /row -->
-</div><!-- /container -->
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../gami.js"></script>
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbylYML8h2BnNgi2AXtZ8bkGaXPNRhurswPr5dfyGRldbVoCRvmoT2cHN0r3I4qGynLb/exec';
-const UNIDAD_ID = 'm2-3';
-const UNIDAD_LABEL = '2.3 Objetivos y taxonomías';
+const UNIT_ID = 'm2-3';
 
-const CORRECTAS = { q1:2, q2:2, q3:2, q4:2, q5:2, q6:2, q7:2, q8:2 };
-const FEEDBACK = {
-  q1: {ok:'Correcto. La versión revisada usa verbos de acción y ubica \'Crear\' como el nivel más alto, por encima de \'Evaluar\'.',fail:'La revisión cambió los sustantivos por verbos y reordenó las dos categorías superiores, ubicando \'Crear\' como el nivel más alto.'},
-  q2: {ok:'Correcto. Es común quedarse en niveles bajos porque son más fáciles de evaluar con quiz simples, evitando niveles superiores como analizar o crear.',fail:'El error común es concentrarse en niveles bajos de Bloom por facilidad de evaluación, no en usar verbos observables o incluir condiciones.'},
-  q3: {ok:'Correcto. Degree se refiere al criterio de éxito con el que se evaluará el desempeño.',fail:'La \'D\' corresponde a Degree: el nivel de exigencia o criterio de éxito, no a duración ni dificultad.'},
-  q4: {ok:'Correcto. \'Comprender\' no describe una acción observable; un objetivo debe indicar qué hará el estudiante de forma verificable.',fail:'El problema es que describe un tema general en lugar de un comportamiento observable y medible — no tiene que ver con su extensión.'},
-  q5: {ok:'Correcto. La alineación constructiva exige coherencia entre lo que se plantea como objetivo, lo que se practica y lo que se evalúa.',fail:'La alineación constructiva se refiere a la coherencia entre objetivos, actividades y evaluación, no a la cantidad de objetivos ni al idioma.'},
-  q6: {ok:'Correcto. Un objetivo de nivel \'analizar\' requiere una evaluación que exija análisis, no solo memorización.',fail:'El problema central es la falta de alineación: el objetivo pide análisis pero la evaluación mide solo memorización, un nivel cognitivo distinto.'},
-  q7: {ok:'Correcto. SOLO describe niveles de complejidad estructural de la comprensión, ideal para rubricar respuestas abiertas.',fail:'SOLO es útil para construir rúbricas de calidad de comprensión en respuestas abiertas, no para cronogramas ni selección de LMS.'},
-  q8: {ok:'Correcto. Fink propone seis dimensiones no jerárquicas que incluyen la dimensión humana y aprender a aprender, algo que Bloom no cubre.',fail:'Fink se distingue por tener dimensiones no jerárquicas que se refuerzan mutuamente, incorporando explícitamente motivación y desarrollo personal.'}
-};
-
-let answers = {};
-let submitted = false;
-
-function toggleAcc(btn) {
-  const body = btn.nextElementSibling;
-  const isOpen = body.classList.contains('show');
-  body.classList.toggle('show', !isOpen);
-  btn.classList.toggle('open', !isOpen);
+// ===== VIDEO: pega aquí el ID de YouTube =====
+const YT_VIDEO_ID = '';
+if (YT_VIDEO_ID) {
+  document.getElementById('videoWrap').innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + YT_VIDEO_ID + '" title="Video de la unidad" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
 }
 
-function toggleModelo(btn) {
-  const box = btn.nextElementSibling;
-  const isOpen = box.style.display === 'block';
-  box.style.display = isOpen ? 'none' : 'block';
-  btn.textContent = isOpen ? 'Ver respuesta modelo' : 'Ocultar respuesta modelo';
+function switchMedia(btn) {
+  document.querySelectorAll('.media-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.media-pane').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('pane-' + btn.dataset.pane).classList.add('active');
+  if (btn.dataset.pane === 'video' && YT_VIDEO_ID) { Gami.award('m2-3_video', 5, 'Viste el video de la unidad'); checkMultimodal(); }
+}
+function checkMultimodal() {
+  if (Gami.hasSeen('m2-3_pdf') && Gami.hasSeen('m2-3_audio') && (YT_VIDEO_ID ? Gami.hasSeen('m2-3_video') : true)) Gami.badge('multimodal');
 }
 
-function selectOpt(el, question, optNum) {
-  if (submitted) return;
-  const container = el.closest('[data-question]');
-  container.querySelectorAll('.eval-option').forEach(o => o.classList.remove('selected'));
-  el.classList.add('selected');
-  answers[question] = optNum;
-  document.getElementById('answeredCount').textContent = Object.keys(answers).length;
+// Viñetas think-first
+function revealVineta(btn, id) {
+  btn.closest('.vineta').classList.add('revealed');
+  Gami.award('m2-3_vineta_' + id, 5, 'Resolviste una viñeta de taller');
 }
 
-function submitEval() {
-  if (Object.keys(answers).length === 0) {
-    showToast('Responde al menos una pregunta para enviar', 'warning');
-    return;
-  }
-  submitted = true;
-  let score = 0;
-  const total = Object.keys(CORRECTAS).length;
-
-  Object.keys(CORRECTAS).forEach(q => {
-    const container = document.querySelector(`[data-question="${q}"]`);
-    if (!container) return;
-    const userAns = answers[q];
-    const correctAns = CORRECTAS[q];
-    const opts = container.querySelectorAll('.eval-option');
-
-    opts.forEach((opt, idx) => {
-      opt.style.pointerEvents = 'none';
-      if (idx + 1 === userAns) {
-        if (userAns === correctAns) { opt.classList.add('correct'); score++; }
-        else opt.classList.add('incorrect');
-      }
-    });
-
-    if (userAns !== undefined) {
-      const fb = FEEDBACK[q];
-      const isOk = userAns === correctAns;
-      const fbEl = document.createElement('div');
-      fbEl.className = 'feedback-box ' + (isOk ? 'feedback-ok' : 'feedback-fail');
-      fbEl.innerHTML = (isOk ? '<i class="bi bi-check-circle me-1"></i>' : '<i class="bi bi-x-circle me-1"></i>') + (isOk ? fb.ok : fb.fail);
-      container.appendChild(fbEl);
-    }
+// Capas
+let capasReveladas = 0;
+document.querySelectorAll('.capa').forEach((capa, i) => {
+  capa.addEventListener('click', () => {
+    capa.closest('.callout').classList.add('revealed');
+    Gami.award('m2-3_capa' + i, 5, 'Levantaste una capa');
+    capasReveladas++;
+    if (capasReveladas >= 2) Gami.badge('curiosa');
   });
+});
 
-  const answered = Object.keys(answers).length;
-  const pct = Math.round(score / total * 100);
-  const msg = pct >= 90 ? 'Excelente dominio de esta unidad.' : pct >= 70 ? 'Buen resultado. Repasa lo que fallaste antes de avanzar.' : 'Hay conceptos que requieren repaso. Revisa las secciones donde cometiste errores.';
-
-  document.getElementById('evalResult').innerHTML = `
-    <div class="result-card">
-      <div class="result-score">${score}/${total}</div>
-      <div class="result-label">${pct}% de respuestas correctas (${answered} respondidas)</div>
-      <div class="result-msg">${msg}</div>
-    </div>`;
-
-  document.getElementById('submitBtn').style.display = 'none';
-  document.getElementById('retryBtn').style.display = 'inline-block';
-  guardarPuntaje(score / total);
-  renderModuleComplete();
+// Respuestas modelo y checklists de práctica
+function toggleRM(id, pid) {
+  document.getElementById(id).classList.toggle('show');
+  Gami.award('m2-3_rm_' + pid, 3, 'Contrastaste con la respuesta modelo');
+}
+function clCheck(el, id) {
+  if (el.checked) Gami.award('m2-3_cl_' + id, 2, 'Ítem de checklist verificado');
 }
 
-function retryEval() {
-  submitted = false;
-  answers = {};
-  document.querySelectorAll('.eval-option').forEach(o => {
-    o.classList.remove('selected','correct','incorrect');
-    o.style.pointerEvents = '';
-  });
-  document.querySelectorAll('.feedback-box').forEach(f => f.remove());
-  document.getElementById('evalResult').innerHTML = '';
-  document.getElementById('answeredCount').textContent = '0';
-  document.getElementById('submitBtn').style.display = 'inline-block';
-  document.getElementById('retryBtn').style.display = 'none';
-  document.getElementById('moduleCompleteZone').innerHTML = '';
-  showToast('Inténtalo de nuevo — repasa el contenido antes de responder', 'info');
-  document.querySelector('.eval-section').scrollIntoView({ behavior:'smooth' });
+// ===== Actividad ¿Alineado o desalineado? =====
+const ACT_ITEMS = [
+  { text: 'Objetivo: "aplicar los principios de Mayer al rediseñar un video." Evaluación: la persona rediseña un storyboard aplicando al menos 3 principios y justifica cada elección. Actividad: taller práctico de rediseño con retroalimentación de pares.', ans: 'si', why: 'Los tres elementos exigen aplicar, no solo recordar — alineados en el mismo nivel cognitivo.' },
+  { text: 'Objetivo: "analizar una brecha de desempeño y clasificar su tipo." Evaluación: examen de selección múltiple con definiciones de cada tipo de brecha.', ans: 'no', why: 'El objetivo pide analizar un caso; la evaluación solo mide recordar definiciones — desalineado.' },
+  { text: 'Objetivo: "diseñar una rúbrica alineada a un objetivo dado." Evaluación: la persona entrega una rúbrica aplicada a un objetivo real, evaluada con un checklist de criterios de alineamiento. Actividad: taller guiado con ejemplos de rúbricas buenas y malas.', ans: 'si', why: 'Diseñar, practicar diseñando y evaluar el diseño producido — mismo nivel en los tres elementos.' },
+  { text: 'Objetivo: "distinguir las fases de ADDIE" (nivel comprender). Evaluación: se le pide entregar un DDI completo de 15 páginas para un curso real, sin haber practicado antes.', ans: 'no', why: 'La evaluación exige un nivel de aplicación/creación muy superior al objetivo, y no hubo actividad que preparara ese salto.' },
+  { text: 'Objetivo: "explicar los nueve eventos de Gagné." Evaluación: quiz de emparejamiento evento–descripción. Actividad: lectura guiada con resumen de los nueve eventos y ejemplos propios.', ans: 'si', why: 'Los tres elementos se mantienen en el nivel de comprender/explicar — coherentes entre sí.' },
+  { text: 'Objetivo: "aplicar backward design a un caso propio." Evaluación: reflexión escrita sobre qué le pareció el concepto de backward design.', ans: 'no', why: 'El objetivo exige aplicar; la evaluación pide solo una opinión personal, que no demuestra si la persona sabe aplicar el modelo.' },
+];
+let actDone = 0, actCorrect = 0;
+function renderActivity() {
+  document.getElementById('actRoot').innerHTML = ACT_ITEMS.map((item, i) => `
+    <div class="act-card" id="act-${i}">
+      <div class="act-statement">${item.text}</div>
+      <div class="act-buttons">
+        <button class="act-btn" onclick="answerAct(${i}, 'si')">Alineado</button>
+        <button class="act-btn" onclick="answerAct(${i}, 'no')">Desalineado</button>
+      </div>
+      <div class="act-verdict" id="verdict-${i}"></div>
+    </div>`).join('');
+  updateActProgress();
 }
-
-// ---- Cierre de módulo: aparece cuando las 3 unidades del Módulo 2 están aprobadas ----
-function renderModuleComplete() {
-  const zone = document.getElementById('moduleCompleteZone');
-  if (!zone) return;
-  const s = getScores();
-  const ids = ['m2-1','m2-2','m2-3'];
-  const labels = { 'm2-1':'2.1 Modelos ADDIE, SAM, UbD', 'm2-2':'2.2 Análisis de necesidades y audiencia', 'm2-3':'2.3 Objetivos de aprendizaje y taxonomías' };
-  const done = ids.filter(id => s[id] !== undefined && s[id] > 0);
-  const pendientes = ids.filter(id => !(s[id] !== undefined && s[id] > 0));
-
-  if (pendientes.length === 0) {
-    zone.innerHTML = `
-      <div style="background:var(--terra-light);border:1px solid #e0b0a0;border-left:4px solid var(--terra);border-radius:10px;padding:1.3rem 1.5rem;margin-top:1.2rem">
-        <h5 style="font-family:Georgia,serif;font-weight:normal;color:var(--dark);margin-bottom:0.6rem">
-          <i class="bi bi-trophy-fill me-2" style="color:var(--terra)"></i>Módulo 2 completo
-        </h5>
-        <p style="font-size:0.88rem;color:var(--muted);margin-bottom:0.9rem">Aprobaste las 3 unidades de Proceso de diseño:</p>
-        <ul style="font-size:0.85rem;margin-bottom:1rem">
-          ${ids.map(id => `<li>${labels[id]} — <strong>${Math.round(s[id]*100)}%</strong></li>`).join('')}
-        </ul>
-        <a href="m3-1.html" class="btn btn-terra">
-          <i class="bi bi-arrow-right-circle me-2"></i>Ir al Módulo 3: Implementación y contexto actual
-        </a>
-      </div>`;
+function answerAct(i, choice) {
+  const item = ACT_ITEMS[i];
+  const card = document.getElementById('act-' + i);
+  const verdict = document.getElementById('verdict-' + i);
+  actDone++;
+  if (choice === item.ans) {
+    actCorrect++;
+    card.classList.add('ok');
+    verdict.style.color = '#315226';
+    verdict.textContent = '✓ ' + item.why;
   } else {
-    zone.innerHTML = `
-      <div style="background:var(--cream);border:1px solid var(--border);border-radius:10px;padding:1rem 1.3rem;margin-top:1.2rem;font-size:0.85rem;color:var(--muted)">
-        <i class="bi bi-hourglass-split me-2"></i>Te falta${pendientes.length>1?'n':''} <strong>${pendientes.length}</strong> unidad${pendientes.length>1?'es':''} del Módulo 2 antes de avanzar al Módulo 3: ${pendientes.map(id=>labels[id]).join(', ')}.
-      </div>`;
+    card.classList.add('no');
+    card.querySelector('.act-buttons').style.display = 'none';
+    verdict.style.color = '#6E2A2A';
+    verdict.textContent = '✗ Era ' + (item.ans === 'si' ? 'Alineado' : 'Desalineado') + '. ' + item.why;
+  }
+  updateActProgress();
+  if (actDone === ACT_ITEMS.length) {
+    Gami.award('m2-3_actividad', Math.round(15 * actCorrect / ACT_ITEMS.length) + 5, 'Actividad ¿Alineado o desalineado? — ' + actCorrect + '/' + ACT_ITEMS.length);
   }
 }
+function updateActProgress() {
+  document.getElementById('actProgress').textContent = actDone + '/' + ACT_ITEMS.length + ' clasificadas' + (actDone === ACT_ITEMS.length ? ' · ' + actCorrect + ' correctas' : '');
+}
+renderActivity();
 
-function getScores() { try { return JSON.parse(localStorage.getItem('di_scores')||'{}'); } catch(e) { return {}; } }
+// ===== Evaluación final =====
+const QUIZ = [
+  { q: '¿Qué significa "backward" en backward design?', opts: ['Que se diseña el calendario del curso de atrás hacia adelante','Que se comienza definiendo los resultados de aprendizaje deseados antes de planificar actividades o contenidos','Que las evaluaciones se redactan antes que los objetivos, sin relación entre ambos','Que el modelo invierte literalmente el orden de las fases de ADDIE'], ans: 1 },
+  { q: '¿Quiénes propusieron formalmente backward design dentro de Understanding by Design (UbD)?', opts: ['Robert Gagné y Richard Mayer','Grant Wiggins y Jay McTighe','Michael Allen y David Merrill','Malcolm Knowles y Benjamin Bloom'], ans: 1 },
+  { q: '¿Cuál es el orden correcto de las tres etapas de backward design?', opts: ['Actividades → Evaluación → Resultados deseados','Resultados deseados → Evidencia aceptable → Experiencias de aprendizaje','Evaluación → Resultados deseados → Actividades','Contenidos del temario → Objetivos → Evaluación'], ans: 1 },
+  { q: 'En el modelo de "tres círculos" de la Etapa 1, ¿qué va en el círculo central, el más exigente?', opts: ['Worth being familiar with (contenido de contexto)','Important to know and do (conceptos y destrezas centrales)','Enduring understanding (comprensión perdurable)','Todo el contenido del programa por igual'], ans: 2 },
+  { q: '¿Por qué la Etapa 2 (evidencia) se define antes que la Etapa 3 (actividades)?', opts: ['Porque las actividades son técnicamente más difíciles de planificar','Porque definir cómo se demostrará el aprendizaje evita diseñar actividades entretenidas que no prueban nada','Porque así lo exige la configuración del LMS','Porque a los estudiantes les gusta más ese orden'], ans: 1 },
+  { q: '¿Cuál de estas es un ejemplo de evidencia de "desempeño auténtico" más que evidencia tradicional?', opts: ['Un quiz de verdadero o falso','Una prueba de selección múltiple con retroalimentación automática','Una persona que diseña y presenta un DDI real para un caso, evaluado con rúbrica','Una lista de definiciones memorizadas'], ans: 2 },
+  { q: 'Según Wiggins, ¿cuáles son los dos "pecados" comunes que backward design busca evitar?', opts: ['La falta de tecnología y de presupuesto en el proyecto','El "activity trap" (actividades sin propósito claro) y el "coverage trap" (cubrir contenido sin criterio de resultados)','El exceso de evaluaciones y la falta de retroalimentación docente','La ausencia de un LMS y de un SME en el equipo'], ans: 1 },
+  { q: '¿Qué es el alineamiento constructivo (Biggs)?', opts: ['Un método para construir infraestructura técnica de e-learning','La coherencia entre objetivo, evaluación y actividad, de modo que los tres midan y practiquen el mismo nivel cognitivo','Un tipo específico de evaluación diagnóstica inicial','La fase final del modelo ADDIE'], ans: 1 },
+  { q: 'Un objetivo pide "aplicar" pero la evaluación solo pide recordar definiciones. ¿Qué problema hay?', opts: ['Ninguno, siempre es válido simplificar la evaluación final','Hay desalineamiento: la evaluación no puede verificar un nivel cognitivo que nunca practicó ni exigió','El objetivo está mal redactado, no la evaluación','Es backward design correcto porque la evidencia se definió primero'], ans: 1 },
+  { q: 'Dentro del marco WHERETO de la Etapa 3, ¿qué buscan en conjunto sus criterios?', opts: ['Elegir actividades por ser las más fáciles de producir técnicamente','Que las experiencias enganchen, se organicen con complejidad creciente y preparen a la persona para la evidencia ya definida en la Etapa 2','Elegir actividades solo según el gusto personal de quien diseña','Evitar que la actividad requiera ninguna evaluación posterior'], ans: 1 },
+];
 
-function jsonp(params) {
-  return new Promise(function(resolve, reject) {
-    var cb = 'cb_' + Date.now() + '_' + Math.floor(Math.random()*1e6);
-    var script = document.createElement('script');
-    function cleanup(){ try { delete window[cb]; } catch(e) { window[cb] = undefined; } if (script.parentNode) script.parentNode.removeChild(script); }
-    window[cb] = function(data){ cleanup(); resolve(data); };
-    var qp = new URLSearchParams(Object.assign({}, params, { callback: cb }));
-    script.src = SCRIPT_URL + '?' + qp.toString();
-    script.onerror = function(){ cleanup(); reject(new Error('conexion')); };
-    setTimeout(function(){ if (window[cb]) { cleanup(); reject(new Error('timeout')); } }, 20000);
-    document.head.appendChild(script);
+function renderQuiz() {
+  document.getElementById('quizRoot').innerHTML = QUIZ.map((item, qi) => `
+    <div class="eval-q">${qi + 1}. ${item.q}</div>
+    <div class="quiz-opts" data-q="${qi}">
+      ${item.opts.map((opt, oi) => `
+        <label class="eval-option"><input type="radio" name="q${qi}" value="${oi}" onchange="updateQuizCounter()"> ${opt}</label>
+      `).join('')}
+    </div>`).join('');
+}
+function answered() {
+  let n = 0;
+  for (let i = 0; i < QUIZ.length; i++) if (document.querySelector('input[name=q' + i + ']:checked')) n++;
+  return n;
+}
+function updateQuizCounter() {
+  const n = answered();
+  document.getElementById('quizCounter').textContent = 'Respondidas: ' + n + '/' + QUIZ.length;
+  document.getElementById('quizSubmit').disabled = n < QUIZ.length;
+}
+function submitQuiz() {
+  let correct = 0;
+  QUIZ.forEach((item, qi) => {
+    const sel = document.querySelector('input[name=q' + qi + ']:checked');
+    const val = sel ? parseInt(sel.value) : -1;
+    document.querySelectorAll('[data-q="' + qi + '"] .eval-option').forEach((opt, oi) => {
+      opt.classList.remove('correct','incorrect');
+      if (oi === item.ans) opt.classList.add('correct');
+      else if (oi === val) opt.classList.add('incorrect');
+    });
+    if (val === item.ans) correct++;
   });
+  const pct = correct / QUIZ.length;
+  saveScore(pct, correct);
 }
-
-async function guardarPuntaje(ratio) {
-  const s = getScores(); s[UNIDAD_ID] = ratio; localStorage.setItem('di_scores', JSON.stringify(s));
-  updateSidebar();
+function saveScore(pct, correct) {
   try {
-    await jsonp({ action: 'saveScore', id: UNIDAD_ID, score: ratio, label: UNIDAD_LABEL, date: new Date().toLocaleDateString('es-CL') });
+    const scores = JSON.parse(localStorage.getItem('di_scores_v2') || '{}');
+    scores[UNIT_ID] = pct;
+    localStorage.setItem('di_scores_v2', JSON.stringify(scores));
   } catch(e) {}
-}
 
-function updateSidebar() {
-  const s = getScores();
-  const ids = ['m2-1','m2-2','m2-3'];
-  const done = ids.filter(id => s[id] !== undefined && s[id] > 0).length;
-  document.getElementById('sidebarPct').textContent = done + '/3';
-  document.getElementById('sidebarBar').style.width = Math.round(done/3*100) + '%';
-  ids.forEach(id => {
-    const el = document.getElementById('num-' + id);
-    if (el && s[id] !== undefined && s[id] > 0) { el.style.background = 'var(--success)'; el.style.color = '#fff'; }
-  });
-  document.getElementById('headerProgress').textContent = done + '/3 completadas';
-}
+  const card = document.getElementById('resultCard');
+  card.className = 'result-card show';
+  card.style.background = pct >= 0.7 ? 'var(--done-soft)' : 'var(--msoft)';
+  document.getElementById('resultScore').textContent = Math.round(pct * 100) + '%';
+  document.getElementById('resultMsg').textContent = correct + '/' + QUIZ.length + ' correctas · ' + (pct >= 0.7 ? 'Unidad completada en tu ruta.' : 'Puedes repasar y reintentar — sin límite de intentos.');
 
-function showToast(msg, type) {
-  const colors = { warning:'#c85c3a', info:'#3a6b8a', success:'#2d7a4f' };
-  const t = document.createElement('div');
-  t.className = 'toast-di';
-  t.style.background = colors[type] || colors.info;
-  t.innerHTML = msg;
-  document.body.appendChild(t);
-  setTimeout(() => { t.style.opacity='0'; t.style.transition='opacity 0.3s'; setTimeout(()=>t.remove(),300); }, 3000);
-}
-
-function scrollToTop() { window.scrollTo({top:0,behavior:'smooth'}); }
-
-updateSidebar();
-
-async function syncSheet() {
-  try {
-    const data = await jsonp({ action: 'getAll' });
-    if (data && data.ok) {
-      const s = getScores();
-      (data.scores || []).forEach(function(row){
-        if (row.id && row.score !== undefined) s[row.id] = parseFloat(row.score);
-      });
-      localStorage.setItem('di_scores', JSON.stringify(s));
-      updateSidebar();
-      showCompletedState();
-    }
-  } catch(e) {}
-}
-
-function showCompletedState() {
-  renderModuleComplete();
-  const ratio = getScores()[UNIDAD_ID];
-  if (ratio === undefined || ratio <= 0) return;
-  const pct = Math.round(ratio * 100);
-  const ok = pct >= 70;
-  const sec = document.querySelector('.eval-section');
-  if (!sec) return;
-  let banner = document.getElementById('completedBanner');
-  if (!banner) {
-    banner = document.createElement('div');
-    banner.id = 'completedBanner';
-    sec.insertBefore(banner, sec.firstChild);
+  if (pct >= 0.7) {
+    Gami.award('m2-3_eval', 30, 'Evaluación de la unidad aprobada — ' + correct + '/' + QUIZ.length);
   }
-  banner.innerHTML =
-    '<div style="display:flex;align-items:center;gap:0.9rem;background:' + (ok ? '#edf7f2' : 'var(--terra-light)') +
-    ';border:1px solid ' + (ok ? '#b0ddc5' : '#e0b0a0') + ';border-left:4px solid ' + (ok ? 'var(--success)' : 'var(--terra)') +
-    ';border-radius:8px;padding:0.9rem 1.1rem;margin-bottom:1.2rem">' +
-      '<i class="bi bi-' + (ok ? 'check-circle-fill' : 'arrow-repeat') + '" style="color:' + (ok ? 'var(--success)' : 'var(--terra)') + ';font-size:1.5rem"></i>' +
-      '<div style="flex:1">' +
-        '<div style="font-weight:bold;font-size:0.9rem;color:var(--dark)">Ya completaste esta unidad</div>' +
-        '<div style="font-size:0.82rem;color:var(--muted)">Puntaje guardado: <strong>' + pct + '%</strong>. Puedes repasar el contenido o volver a responder más abajo.</div>' +
-      '</div>' +
-    '</div>';
-}
-
-function trackVisit() {
   try {
-    let vid = localStorage.getItem('di_vid');
-    if (!vid) { vid = 'v' + Date.now().toString(36) + Math.random().toString(36).slice(2,8); localStorage.setItem('di_vid', vid); }
-    let sid = sessionStorage.getItem('di_sid');
-    if (!sid) { sid = 's' + Date.now().toString(36) + Math.random().toString(36).slice(2,8); sessionStorage.setItem('di_sid', sid); }
-    const qs = new URLSearchParams(location.search);
-    if (qs.get('owner') === '1') localStorage.setItem('di_owner', '1');
-    if (qs.get('owner') === '0') localStorage.removeItem('di_owner');
-    const owner = localStorage.getItem('di_owner') === '1' ? '1' : '0';
-    const device = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'movil' : 'escritorio';
-    const params = new URLSearchParams({ action: 'logVisit', page: UNIDAD_ID, vid: vid, sid: sid, owner: owner, device: device, t: String(Date.now()) });
     const img = new Image();
-    img.referrerPolicy = 'no-referrer';
-    img.src = SCRIPT_URL + '?' + params.toString();
+    img.src = SCRIPT_URL + '?action=saveScore&id=' + UNIT_ID + '&score=' + pct + '&t=' + Date.now();
   } catch(e) {}
 }
-
-trackVisit();
-syncSheet();
+renderQuiz();
+updateQuizCounter();
 </script>
 </body>
 </html>
