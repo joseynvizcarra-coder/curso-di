@@ -540,6 +540,7 @@ document.querySelectorAll('.capa').forEach((capa, i) => {
   });
 });
 function toggleRM(id, pid) { document.getElementById(id).classList.toggle('show'); Gami.award('m1-4_rm_' + pid, 3, 'Contrastaste con la respuesta modelo'); }
+function toggleFase(el, eid) { el.classList.toggle('open'); el.querySelector('.fase-toggle').textContent = el.classList.contains('open') ? '−' : '+'; if (el.classList.contains('open')) Gami.award('m1-4_fase_' + eid, 2, 'Revisaste el evento de Gagné: ' + eid); }
 function clCheck(el, id) { if (el.checked) Gami.award('m1-4_cl_' + id, 2, 'Ítem de checklist verificado'); }
 
 const ACT_ITEMS = [
