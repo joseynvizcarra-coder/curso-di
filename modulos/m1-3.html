@@ -3,711 +3,600 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>1.3 Gagné y carga cognitiva — Curso DI</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<title>1.3 Teorías del aprendizaje — Cuaderno de taller</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --cream: #f5f2ec;
-  --dark: #0f1117;
-  --terra: #c85c3a;
-  --blue: #3a6b8a;
-  --muted: #7a7570;
-  --border: #ddd8d0;
-  --success: #2d7a4f;
-  --terra-light: #f7ede8;
-  --blue-light: #e8f0f5;
+  --paper: #EDEAE3; --paper-alt: #E4DFD3; --card: #F8F6F1;
+  --ink: #1C1A17; --ink-muted: #6B665D; --border: #D8D1C0; --border-soft: #E2DCCC;
+  --mc: #A85B32; --msoft: #F1E2D6;
+  --ia: #2A5CAA; --ia-soft: #DCE5F2;
+  --done: #4A6B3E; --done-soft: #E9F0E5;
+  --warn: #B9862C; --warn-soft: #F1E5CC;
 }
-body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif; color: var(--dark); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--paper); color: var(--ink); font-family: 'IBM Plex Sans', sans-serif; line-height: 1.55; }
+a { color: inherit; }
+.topbar { background: var(--ink); color: #EDEAE3; padding: 0.7rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; position: sticky; top: 0; z-index: 50; }
+.topbar a.back { color: #C9C3B5; text-decoration: none; }
+.topbar a.back:hover { color: #fff; }
+.gami-chips { display: flex; gap: 0.9rem; color: #C9C3B5; flex-wrap: wrap; }
+.layout { display: grid; grid-template-columns: 250px 1fr; max-width: 1120px; margin: 0 auto; }
+@media (max-width: 880px) { .layout { grid-template-columns: 1fr; } .sidebar { order: 2; } }
+.sidebar { border-right: 1px solid var(--border); padding: 1.4rem 1.2rem; }
+@media (max-width: 880px) { .sidebar { border-right: none; border-top: 1px solid var(--border); } }
+.sidebar h6 { font-family: 'Fraunces', serif; font-size: 0.95rem; color: var(--mc); margin-bottom: 0.2rem; }
+.sidebar .sidebar-sub { font-size: 0.74rem; color: var(--ink-muted); margin-bottom: 1rem; }
+.side-item { display: flex; align-items: center; gap: 0.6rem; padding: 0.55rem 0.5rem; border-radius: 3px; text-decoration: none; color: var(--ink); font-size: 0.84rem; margin-bottom: 0.15rem; }
+.side-item.active { background: var(--msoft); font-weight: 600; color: var(--mc); }
+.side-mark { width: 22px; height: 22px; border-radius: 3px; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; flex-shrink: 0; }
+.side-item.active .side-mark { background: var(--mc); border-color: var(--mc); color: #fff; }
+.side-toc { margin-top: 1.4rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+.side-toc .toc-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.64rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); margin-bottom: 0.5rem; }
+.side-toc a { display: block; font-size: 0.78rem; color: var(--ink-muted); text-decoration: none; padding: 0.3rem 0; }
+.side-toc a:hover { color: var(--mc); }
+main { padding: 2.2rem 2rem 4rem; min-width: 0; }
+.unit-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--mc); margin-bottom: 0.5rem; }
+h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(1.5rem, 3.5vw, 2.1rem); margin-bottom: 0.6rem; max-width: 24ch; }
+.lesson-dek { color: #423E37; max-width: 64ch; margin-bottom: 1rem; }
+.lesson-badges { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.6rem; }
+.lbadge { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; border: 1px solid var(--border); background: var(--card); border-radius: 3px; padding: 0.25rem 0.6rem; color: var(--ink-muted); }
+.objetivo-box { background: var(--card); border: 1px solid var(--border); border-left: 4px solid var(--mc); border-radius: 4px; padding: 1.1rem 1.3rem; margin-bottom: 2rem; }
+.objetivo-box .label { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mc); margin-bottom: 0.4rem; }
+.objetivo-box p { font-size: 0.92rem; font-style: italic; color: #322E28; }
+.mapa-block { border: 1px solid var(--border); border-radius: 4px; background: var(--card); margin-bottom: 2rem; overflow: hidden; }
+.mapa-head { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); padding: 0.7rem 1rem; border-bottom: 1px solid var(--border-soft); }
+.mapa-body { padding: 1rem; background: #fff; }
+.mapa-note { font-size: 0.78rem; color: var(--ink-muted); padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
+.media-block { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin-bottom: 2.2rem; background: var(--card); }
+.media-tabs { display: flex; border-bottom: 1px solid var(--border); background: var(--paper-alt); flex-wrap: wrap; }
+.media-tab { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; padding: 0.7rem 1rem; cursor: pointer; border: none; background: none; color: var(--ink-muted); border-bottom: 2px solid transparent; }
+.media-tab.active { color: var(--mc); border-bottom-color: var(--mc); background: var(--card); }
+.media-pane { display: none; }
+.media-pane.active { display: block; }
+.media-note { font-size: 0.76rem; color: var(--ink-muted); padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
+.media-pending { padding: 2rem 1rem; text-align: center; color: var(--ink-muted); font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; }
+.pdf-frame { width: 100%; height: 480px; border: none; display: block; background: #fff; }
+.pdf-actions { display: flex; gap: 0.6rem; padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
+.pdf-actions a { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--mc); text-decoration: none; border: 1px solid var(--border); border-radius: 3px; padding: 0.3rem 0.7rem; }
+.audio-pane { padding: 1.2rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.audio-pane audio { flex: 1; min-width: 240px; }
+.audio-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: var(--ink-muted); }
+.video-wrap { position: relative; padding-top: 56.25%; background: #111; }
+.video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+.content-section { margin-bottom: 2.6rem; }
+.content-section h2 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.3rem; margin-bottom: 0.8rem; padding-bottom: 0.4rem; border-bottom: 2px solid var(--mc); display: flex; align-items: baseline; gap: 0.6rem; }
+.content-section h2 .sec-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--mc); }
+.content-section h3 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.05rem; margin: 1.2rem 0 0.5rem; }
+.content-section p { margin-bottom: 0.8rem; font-size: 0.94rem; color: #2B2823; }
+.content-section ul, .content-section ol { margin: 0.6rem 0 0.9rem 1.3rem; font-size: 0.92rem; }
+.content-section li { margin-bottom: 0.4rem; }
+.content-section strong { color: var(--mc); font-weight: 600; }
+.defbox { background: var(--msoft); border-radius: 4px; padding: 0.9rem 1.1rem; font-style: italic; font-size: 0.93rem; margin: 0.8rem 0 1.2rem; }
+.nota { border-radius: 4px; padding: 0.9rem 1.1rem; font-size: 0.88rem; margin: 1.1rem 0; border: 1px solid var(--border); }
+.nota .nota-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.07em; display: block; margin-bottom: 0.35rem; }
+.nota.clave { background: var(--done-soft); } .nota.clave .nota-tag { color: var(--done); }
+.nota.alerta { background: var(--warn-soft); } .nota.alerta .nota-tag { color: #8A6318; }
+.nota.contexto { background: var(--ia-soft); } .nota.contexto .nota-tag { color: var(--ia); }
+.compare-table { width: 100%; border-collapse: collapse; margin: 0.8rem 0 1.4rem; font-size: 0.86rem; }
+.compare-table th, .compare-table td { border: 1px solid var(--border); padding: 0.55rem 0.7rem; text-align: left; vertical-align: top; }
+.compare-table th { background: var(--card); font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-muted); }
+.compare-table td:first-child { font-weight: 600; }
 
-/* HEADER */
-.header-di {
-  background: linear-gradient(135deg, var(--dark) 0%, #1e2030 100%);
-  border-bottom: 3px solid var(--terra);
-  padding: 0.9rem 0;
-  position: sticky; top: 0; z-index: 1030;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-}
-.header-di .course-name { color: #fff; font-family: Georgia, serif; font-size: 1.1rem; font-weight: normal; }
-.header-di .unit-name { color: var(--terra); font-size: 0.82rem; }
-.btn-back { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; border-radius: 20px; padding: 0.4rem 1rem; font-size: 0.82rem; text-decoration: none; transition: all 0.2s; }
-.btn-back:hover { background: rgba(255,255,255,0.2); color: #fff; }
+/* teoría — tarjetas expandibles */
+.teoria { border: 1px solid var(--border); border-radius: 4px; background: var(--card); margin: 1rem 0; overflow: hidden; }
+.teoria-head { padding: 0.9rem 1.1rem; border-left: 5px solid var(--tc); }
+.teoria-head .t-era { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--tc); text-transform: uppercase; letter-spacing: 0.06em; }
+.teoria-head h3 { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 600; margin: 0.2rem 0 0.1rem; }
+.teoria-head .t-thinkers { font-size: 0.78rem; color: var(--ink-muted); }
+.teoria-body { padding: 0 1.1rem 1.1rem 1.1rem; }
+.teoria-metafora { background: var(--tc-soft); border-radius: 3px; padding: 0.6rem 0.9rem; font-size: 0.85rem; font-style: italic; margin: 0.6rem 0; }
+.teoria-aplica { border-top: 1px dashed var(--border); padding-top: 0.7rem; margin-top: 0.7rem; }
+.teoria-aplica .ta-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--tc); margin-bottom: 0.35rem; }
+.t-cond { --tc: #A83232; --tc-soft: #F5E5E2; }
+.t-cog { --tc: #2A5CAA; --tc-soft: #DCE5F2; }
+.t-const { --tc: #4A6B3E; --tc-soft: #E9F0E5; }
+.t-conect { --tc: #6B4C7A; --tc-soft: #E9E0EC; }
 
-/* SIDEBAR */
-.sidebar-di {
-  background: #fff;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  overflow: hidden;
-}
-@media(min-width:992px){ .sidebar-di { position: sticky; top: 80px; max-height: calc(100vh - 100px); overflow-y: auto; } }
-.sidebar-header { background: var(--dark); color: #fff; padding: 1rem 1.2rem; }
-.sidebar-header h6 { font-family: Georgia, serif; font-weight: normal; font-size: 0.9rem; margin: 0; color: var(--terra); }
-.sidebar-header p { font-size: 0.75rem; color: #a09a94; margin: 0.2rem 0 0; }
-.lesson-item { display: flex; align-items: center; gap: 0.8rem; padding: 0.75rem 1.2rem; border-bottom: 1px solid var(--border); cursor: pointer; transition: all 0.2s; text-decoration: none; color: var(--dark); }
-.lesson-item:hover { background: var(--cream); }
-.lesson-item.active { background: var(--terra-light); border-left: 3px solid var(--terra); }
-.lesson-item.done { color: var(--muted); }
-.lesson-num { width: 30px; height: 30px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold; flex-shrink: 0; color: var(--muted); }
-.lesson-item.active .lesson-num { background: var(--terra); color: #fff; }
-.lesson-item.done .lesson-num { background: var(--success); color: #fff; }
-.lesson-info { flex: 1; }
-.lesson-info strong { font-size: 0.83rem; display: block; }
-.lesson-info span { font-size: 0.74rem; color: var(--muted); }
-.sidebar-progress { padding: 1rem 1.2rem; background: var(--cream); }
-.progress-di { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
-.progress-di-fill { height: 100%; background: linear-gradient(90deg, var(--terra), #e07a5a); border-radius: 99px; transition: width 0.5s ease; }
-.sidebar-footer { padding: 0.8rem 1.2rem; text-align: center; border-top: 1px solid var(--border); }
+.vineta { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin: 1.2rem 0; }
+.vineta-head { background: var(--ink); color: #EDEAE3; font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.6rem 1rem; }
+.vineta-body { background: var(--card); padding: 1rem 1.2rem; font-size: 0.9rem; }
+.vineta-reveal-btn { display: block; width: 100%; text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; background: var(--msoft); border: none; border-top: 1px solid var(--border); padding: 0.7rem; cursor: pointer; color: var(--mc); }
+.vineta-solution { display: none; background: #fff; border-top: 1px dashed var(--border); padding: 1rem 1.2rem; font-size: 0.9rem; }
+.vineta.revealed .vineta-solution { display: block; }
+.vineta.revealed .vineta-reveal-btn { display: none; }
 
-/* CONTENT */
-.content-di { background: #fff; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow: hidden; }
-.lesson-hero { background: linear-gradient(135deg, var(--dark) 0%, #1e2030 100%); color: #fff; padding: 2rem 2rem 1.5rem; }
-.lesson-hero .unit-tag { font-size: 0.72rem; color: var(--terra); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.4rem; }
-.lesson-hero h1 { font-family: Georgia, serif; font-size: 1.6rem; font-weight: normal; margin-bottom: 0.4rem; }
-.lesson-hero p { color: #a09a94; font-size: 0.88rem; margin: 0; }
-.lesson-badges { padding: 1rem 2rem; background: var(--terra-light); border-bottom: 1px solid var(--border); display: flex; gap: 0.6rem; flex-wrap: wrap; }
-.lbadge { font-size: 0.78rem; padding: 0.3rem 0.7rem; border-radius: 20px; border: 1px solid var(--border); background: #fff; color: var(--muted); }
-.lbadge i { color: var(--terra); }
-.lesson-body { padding: 1.8rem 2rem; }
+.activity { border: 1px solid var(--border); border-radius: 4px; background: var(--card); padding: 1.3rem; margin: 2rem 0; }
+.activity h2 { font-family: 'Fraunces', serif; font-size: 1.1rem; margin-bottom: 0.3rem; }
+.activity .act-sub { font-size: 0.8rem; color: var(--ink-muted); margin-bottom: 1rem; }
+.act-card { border: 1px solid var(--border); border-radius: 4px; background: var(--paper); padding: 0.9rem 1rem; margin-bottom: 0.8rem; }
+.act-statement { font-size: 0.9rem; margin-bottom: 0.7rem; }
+.act-buttons { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.act-btn { flex: 1; min-width: 90px; font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; padding: 0.5rem; border: 1px solid var(--border); border-radius: 3px; background: var(--card); cursor: pointer; transition: all 0.15s; }
+.act-btn:hover { border-color: var(--mc); }
+.act-card.ok { border-color: var(--done); background: var(--done-soft); }
+.act-card.ok .act-buttons { display: none; }
+.act-card.no { border-color: #A83232; }
+.act-verdict { font-size: 0.78rem; margin-top: 0.4rem; display: none; }
+.act-card.ok .act-verdict, .act-card.no .act-verdict { display: block; }
+.act-progress { font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; color: var(--ink-muted); margin-top: 0.4rem; }
 
-/* PRESENTACIÓN */
-.presentacion { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
-.presentacion-head { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; flex-wrap: wrap; background: var(--dark); color: #fff; padding: 0.8rem 1.2rem; }
-.pres-title { font-size: 0.95rem; font-weight: bold; display: flex; align-items: center; gap: 0.6rem; }
-.pres-title i { color: var(--terra); font-size: 1.1rem; }
-.pres-tag { font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: #a09a94; border: 1px solid rgba(255,255,255,0.18); border-radius: 20px; padding: 0.12rem 0.55rem; }
-.presentacion-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-.pres-btn { font-size: 0.78rem; color: #fff; text-decoration: none; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.08); border-radius: 20px; padding: 0.35rem 0.9rem; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.4rem; }
-.pres-btn:hover { background: var(--terra); border-color: var(--terra); color: #fff; }
-.presentacion-viewer { height: 520px; background: var(--cream); }
-.presentacion-viewer object, .presentacion-viewer iframe { width: 100%; height: 100%; border: none; display: block; }
-.pres-placeholder { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: var(--muted); padding: 2rem; }
-.pres-placeholder i { font-size: 2.4rem; color: #c9c2b8; margin-bottom: 0.8rem; }
-.pres-placeholder p { font-size: 0.98rem; font-weight: bold; color: var(--dark); margin-bottom: 0.3rem; }
-.pres-placeholder small { font-size: 0.82rem; line-height: 1.6; max-width: 360px; }
-.pres-placeholder code { background: #fff; border: 1px solid var(--border); border-radius: 4px; padding: 0.1rem 0.4rem; color: var(--terra); }
-@media(max-width:600px){ .presentacion-viewer { height: 380px; } }
-.pres-audio { display: flex; align-items: center; gap: 0.9rem; padding: 0.85rem 1.2rem; background: var(--terra-light); border-top: 1px solid var(--border); }
-.pres-audio-label { font-size: 0.82rem; color: var(--dark); font-weight: bold; display: flex; align-items: center; gap: 0.5rem; white-space: nowrap; }
-.pres-audio-label i { color: var(--terra); font-size: 1rem; }
-.pres-audio audio { flex: 1; height: 38px; min-width: 0; }
-@media(max-width:600px){ .pres-audio { flex-direction: column; align-items: stretch; gap: 0.55rem; } }
+.callout { position: relative; border-radius: 4px; margin: 1.6rem 0; overflow: hidden; border: 1px solid var(--border); }
+.callout-header { display: flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.05em; color: #fff; }
+.callout.ia .callout-header { background: var(--ia); }
+.callout.entrevista .callout-header { background: var(--mc); }
+.callout-body { background: var(--card); padding: 1.1rem 1.3rem; font-size: 0.9rem; position: relative; }
+.callout-body p { margin-bottom: 0.7rem; }
+.callout-body p:last-child { margin-bottom: 0; }
+.capa { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 0.6rem; cursor: pointer; user-select: none; transition: transform 0.5s cubic-bezier(.65,0,.35,1), opacity 0.4s ease; font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--ink-muted); }
+.callout.ia .capa { background: var(--ia-soft); }
+.callout.entrevista .capa { background: var(--msoft); }
+.callout.revealed .capa { transform: translateX(105%); opacity: 0; pointer-events: none; }
 
-/* ACCORDION */
-.accordion-di { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1rem; }
-.accordion-di-btn { background: var(--cream); border: none; width: 100%; text-align: left; padding: 1rem 1.2rem; display: flex; align-items: center; gap: 0.8rem; cursor: pointer; transition: background 0.2s; font-size: 0.95rem; font-weight: bold; color: var(--dark); }
-.accordion-di-btn:hover { background: #ede9e2; }
-.accordion-di-btn.open { background: var(--dark); color: #fff; }
-.accordion-di-btn.open .acc-icon { color: var(--terra); }
-.accordion-di-btn .acc-chevron { margin-left: auto; transition: transform 0.25s; font-size: 0.8rem; }
-.accordion-di-btn.open .acc-chevron { transform: rotate(180deg); }
-.acc-icon { font-size: 1rem; color: var(--terra); }
-.accordion-di-body { display: none; padding: 1.2rem 1.4rem; border-top: 1px solid var(--border); background: #fff; font-size: 0.92rem; line-height: 1.7; }
-.accordion-di-body.show { display: block; }
-.accordion-di-body h5 { font-family: Georgia, serif; font-size: 1rem; font-weight: normal; color: var(--blue); margin: 1.2rem 0 0.5rem; }
-.accordion-di-body h5:first-child { margin-top: 0; }
+.practica { border: 1px solid var(--border); border-radius: 4px; background: var(--card); margin: 1.4rem 0; overflow: hidden; }
+.practica-head { padding: 0.9rem 1.1rem; border-bottom: 1px solid var(--border-soft); }
+.practica-head .p-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--mc); text-transform: uppercase; letter-spacing: 0.06em; }
+.practica-head .p-q { font-size: 0.94rem; font-weight: 500; margin-top: 0.25rem; }
+.practica-body { padding: 1rem 1.1rem; }
+.practica-body textarea { width: 100%; min-height: 80px; font-family: 'IBM Plex Sans', sans-serif; font-size: 0.88rem; border: 1px solid var(--border); border-radius: 3px; padding: 0.7rem; resize: vertical; background: var(--paper); margin-bottom: 0.7rem; }
+.rm-toggle { font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; color: var(--mc); cursor: pointer; text-decoration: underline; background: none; border: none; padding: 0; }
+.rm { display: none; margin-top: 0.7rem; padding: 0.8rem 1rem; background: var(--msoft); border-radius: 3px; font-size: 0.87rem; }
+.rm.show { display: block; }
+.checklist { margin-top: 0.8rem; border-top: 1px dashed var(--border); padding-top: 0.8rem; }
+.checklist .cl-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); margin-bottom: 0.5rem; }
+.cl-item { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.84rem; padding: 0.35rem 0; cursor: pointer; }
+.cl-item input { accent-color: var(--done); margin-top: 0.2rem; }
 
-/* CARDS */
-.card-di { background: var(--cream); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; margin-bottom: 0.7rem; height: 100%; }
-.card-di h6 { font-size: 0.85rem; font-weight: bold; color: var(--blue); margin-bottom: 0.3rem; }
-.card-di p { font-size: 0.88rem; margin: 0; }
-.callout-terra { border-left: 4px solid var(--terra); background: var(--terra-light); padding: 0.9rem 1.1rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: 0.88rem; }
-.callout-terra strong { color: var(--terra); }
-.callout-blue { border-left: 4px solid var(--blue); background: var(--blue-light); padding: 0.9rem 1.1rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: 0.88rem; }
-.callout-blue strong { color: var(--blue); }
-.table-di { font-size: 0.85rem; }
-.table-di th { background: var(--dark); color: #fff; font-weight: normal; }
-.table-di td { vertical-align: top; }
-
-/* EVENTOS GAGNÉ */
-.evento { display: grid; grid-template-columns: 46px 1fr; gap: 0; margin-bottom: 0.6rem; }
-.ev-num { background: var(--terra); color: #fff; display: flex; align-items: center; justify-content: center; font-family: Georgia, serif; font-size: 1.1rem; border-radius: 8px 0 0 8px; }
-.ev-body { background: var(--cream); border: 1px solid var(--border); border-left: none; border-radius: 0 8px 8px 0; padding: 0.7rem 1rem; }
-.ev-body h6 { font-size: 0.86rem; font-weight: bold; color: var(--dark); margin-bottom: 0.25rem; }
-.ev-body p { font-size: 0.85rem; margin: 0; color: #444; }
-.ev-body .proceso { font-size: 0.78rem; color: var(--blue); margin-top: 0.3rem; font-style: italic; }
-
-/* CARGA */
-.carga-card { border-radius: 10px; padding: 1rem 1.2rem; height: 100%; border: 1px solid var(--border); background: #fff; }
-.carga-card h6 { font-size: 0.85rem; font-weight: bold; margin-bottom: 0.35rem; }
-.carga-card p { font-size: 0.84rem; margin: 0; color: var(--muted); }
-.carga-card.malo { border-left: 4px solid var(--terra); }
-.carga-card.malo h6 { color: var(--terra); }
-.carga-card.bueno { border-left: 4px solid var(--success); }
-.carga-card.bueno h6 { color: var(--success); }
-.carga-card.neutral { border-left: 4px solid var(--blue); }
-.carga-card.neutral h6 { color: var(--blue); }
-
-/* PRINCIPIOS MAYER */
-.principio { background: var(--cream); border: 1px solid var(--border); border-radius: 8px; padding: 0.8rem 1.1rem; margin: 0.5rem 0; display: grid; grid-template-columns: 150px 1fr; gap: 1rem; align-items: start; }
-.principio-nombre { font-size: 0.85rem; font-weight: bold; color: var(--blue); }
-.principio-desc { font-size: 0.86rem; color: var(--dark); }
-@media(max-width:600px){ .principio { grid-template-columns: 1fr; gap: 0.3rem; } }
-
-/* EVALUACIÓN */
-.eval-section { background: var(--cream); border-radius: 10px; border: 1px solid var(--border); padding: 1.5rem; margin-top: 2rem; }
-.eval-section h4 { font-family: Georgia, serif; font-weight: normal; color: var(--dark); font-size: 1.1rem; margin-bottom: 0.3rem; }
-.eval-progress-text { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.2rem; }
-.eval-question { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem 1.3rem; margin-bottom: 1rem; }
-.eval-question h6 { font-size: 0.9rem; font-weight: bold; color: var(--dark); margin-bottom: 0.8rem; line-height: 1.5; }
-.eval-option { display: flex; align-items: flex-start; gap: 0.7rem; padding: 0.6rem 0.8rem; border-radius: 7px; border: 1px solid var(--border); margin-bottom: 0.5rem; cursor: pointer; font-size: 0.88rem; transition: all 0.15s; background: var(--cream); }
-.eval-option:hover { border-color: var(--blue); background: var(--blue-light); }
-.eval-option.selected { border-color: var(--blue); background: var(--blue-light); }
-.eval-option.correct { border-color: var(--success); background: #edf7f2; pointer-events: none; }
-.eval-option.incorrect { border-color: var(--terra); background: var(--terra-light); pointer-events: none; }
-.eval-option.disabled { pointer-events: none; opacity: 0.7; }
-.eval-radio { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px; transition: all 0.15s; }
-.eval-option.selected .eval-radio { border-color: var(--blue); background: var(--blue); }
-.eval-option.correct .eval-radio { border-color: var(--success); background: var(--success); }
-.eval-option.incorrect .eval-radio { border-color: var(--terra); background: var(--terra); }
-.feedback-box { font-size: 0.84rem; padding: 0.7rem 1rem; border-radius: 7px; margin-top: 0.5rem; line-height: 1.6; }
-.feedback-ok { background: #edf7f2; color: var(--success); border: 1px solid #b0ddc5; }
-.feedback-fail { background: var(--terra-light); color: #8a3020; border: 1px solid #e0b0a0; }
-
-/* RESULT */
-.result-card { text-align: center; padding: 2rem; background: #fff; border-radius: 12px; border: 1px solid var(--border); margin-top: 1rem; }
-.result-score { font-family: Georgia, serif; font-size: 4rem; color: var(--terra); line-height: 1; }
-.result-label { font-size: 0.85rem; color: var(--muted); margin: 0.3rem 0 0.8rem; }
-.result-msg { font-size: 0.92rem; max-width: 400px; margin: 0 auto 1.5rem; line-height: 1.6; }
-
-/* BTN */
-.btn-terra { background: var(--terra); border-color: var(--terra); color: #fff; border-radius: 8px; padding: 0.6rem 1.4rem; }
-.btn-terra:hover { background: #a8492d; border-color: #a8492d; color: #fff; }
-.btn-blue { background: var(--blue); border-color: var(--blue); color: #fff; border-radius: 8px; }
-.btn-blue:hover { background: #2d5570; border-color: #2d5570; color: #fff; }
-.btn-outline-terra { border-color: var(--terra); color: var(--terra); border-radius: 8px; }
-.btn-outline-terra:hover { background: var(--terra); color: #fff; }
-
-/* TOAST */
-.toast-di { position: fixed; top: 80px; right: 20px; padding: 0.9rem 1.3rem; border-radius: 8px; color: #fff; z-index: 9999; font-size: 0.88rem; box-shadow: 0 4px 16px rgba(0,0,0,0.2); animation: slideIn 0.3s ease; }
-@keyframes slideIn { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:translateX(0); } }
+.eval-block { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 1.3rem; margin-top: 2.2rem; }
+.eval-block h2 { font-family: 'Fraunces', serif; font-size: 1.15rem; margin-bottom: 0.3rem; }
+.eval-sub { font-size: 0.8rem; color: var(--ink-muted); margin-bottom: 1.1rem; }
+.eval-q { font-size: 0.92rem; font-weight: 500; margin: 1.2rem 0 0.6rem; }
+.eval-option { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.6rem 0.8rem; border: 1px solid var(--border); border-radius: 3px; margin-bottom: 0.45rem; cursor: pointer; font-size: 0.87rem; background: var(--paper); transition: border-color 0.15s; }
+.eval-option:hover { border-color: var(--mc); }
+.eval-option input { accent-color: var(--mc); margin-top: 0.2rem; }
+.eval-option.correct { border-color: var(--done); background: var(--done-soft); }
+.eval-option.incorrect { border-color: #A83232; background: #F5E5E2; }
+.eval-submit { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; background: var(--mc); color: #fff; border: none; border-radius: 3px; padding: 0.7rem 1.4rem; cursor: pointer; margin-top: 1.2rem; }
+.eval-submit:disabled { opacity: 0.5; cursor: default; }
+.eval-counter { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: var(--ink-muted); margin-top: 0.5rem; }
+.result-card { display: none; margin-top: 1.2rem; padding: 1.1rem; border-radius: 4px; text-align: center; }
+.result-card.show { display: block; }
+.result-score { font-family: 'Fraunces', serif; font-size: 1.7rem; font-weight: 600; }
+.next-nav { display: flex; justify-content: space-between; margin-top: 2.5rem; padding-top: 1.2rem; border-top: 1px solid var(--border); font-size: 0.86rem; }
+.next-nav a { color: var(--mc); font-weight: 500; text-decoration: none; }
+.next-nav .disabled { color: var(--ink-muted); }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<div class="header-di">
-  <div class="container-fluid px-3">
-    <div class="d-flex align-items-center justify-content-between">
-      <div class="d-flex align-items-center gap-3">
-        <a href="../index.html" class="btn-back"><i class="bi bi-arrow-left me-1"></i>Inicio</a>
-        <div>
-          <div class="course-name">Diseño Instruccional</div>
-          <div class="unit-name">Módulo 1 · Unidad 1.3</div>
-        </div>
-      </div>
-      <div class="d-none d-md-flex align-items-center gap-2">
-        <span id="headerProgress" style="font-size:0.8rem;color:#a09a94"></span>
-      </div>
-    </div>
+<div class="topbar">
+  <a class="back" href="../index.html">← Ruta de aprendizaje</a>
+  <div class="gami-chips">
+    <span id="gamiNivel">Nivel 1 · Boceto</span>
+    <span id="gamiPoints">0 pts</span>
+    <span id="gamiStreak">0 días</span>
   </div>
 </div>
 
-<div class="container-fluid px-3 py-4" style="max-width:1200px;margin:0 auto">
-  <div class="row g-4">
+<div class="layout">
+  <aside class="sidebar">
+    <h6>Módulo 1</h6>
+    <div class="sidebar-sub">Fundamentos y panorama</div>
+    <a class="side-item" href="m1-1.html"><span class="side-mark">1.1</span> ¿Qué es el DI?</a>
+    <a class="side-item" href="m1-2.html"><span class="side-mark">1.2</span> Modelos de DI</a>
+    <a class="side-item active" href="m1-3.html"><span class="side-mark">1.3</span> Teorías del aprendizaje</a>
+    <a class="side-item" href="m1-4.html"><span class="side-mark">1.4</span> Gagné y carga cognitiva</a>
+    <div class="side-toc">
+      <div class="toc-label">En esta unidad</div>
+      <a href="#s1">1 · Por qué le importan al DI</a>
+      <a href="#s2">2 · Conductismo</a>
+      <a href="#s3">3 · Cognitivismo</a>
+      <a href="#s4">4 · Constructivismo</a>
+      <a href="#s5">5 · Conectivismo</a>
+      <a href="#s6">6 · Cuál usar cuándo</a>
+      <a href="#practica">Práctica de entrevista</a>
+      <a href="#evaluacion">Evaluación (10)</a>
+    </div>
+  </aside>
 
-    <!-- SIDEBAR -->
-    <div class="col-lg-3">
-      <div class="sidebar-di">
-        <div class="sidebar-header">
-          <h6>Módulo 1</h6>
-          <p>Fundamentos teóricos</p>
+  <main>
+    <div class="unit-eyebrow">Módulo 1 · Unidad 1.3</div>
+    <h1 class="lesson-title">Teorías del aprendizaje</h1>
+    <p class="lesson-dek">Las cuatro corrientes que explican cómo aprende la gente — y, lo que de verdad importa para un DI, cómo cada una se traduce en decisiones concretas de diseño.</p>
+    <div class="lesson-badges">
+      <span class="lbadge">6 bloques de contenido</span>
+      <span class="lbadge">1 actividad interactiva</span>
+      <span class="lbadge">3 prácticas de entrevista</span>
+      <span class="lbadge">10 preguntas de evaluación</span>
+      <span class="lbadge">~40 min</span>
+    </div>
+
+    <div class="objetivo-box">
+      <div class="label">Objetivo de aprendizaje</div>
+      <p>Dada una decisión de diseño instruccional, serás capaz de identificar qué teoría del aprendizaje (conductismo, cognitivismo, constructivismo o conectivismo) la sustenta, y de justificar qué corriente conviene para un tipo de contenido y audiencia dados.</p>
+    </div>
+
+    <div class="mapa-block">
+      <div class="mapa-head">Mapa de esta unidad · organizador previo</div>
+      <div class="mapa-body">
+        <svg width="100%" viewBox="0 0 680 250" style="display:block" role="img" aria-label="Mapa de teorías del aprendizaje">
+          <rect x="255" y="12" width="170" height="44" rx="5" fill="#F1E2D6" stroke="#A85B32" stroke-width="1.4"/>
+          <text x="340" y="30" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1C1A17">¿Cómo se aprende?</text>
+          <text x="340" y="47" text-anchor="middle" font-family="monospace" font-size="9" fill="#A85B32">4 respuestas históricas</text>
+          <line x1="340" y1="56" x2="95" y2="120" stroke="#D8D1C0"/><line x1="340" y1="56" x2="270" y2="120" stroke="#D8D1C0"/>
+          <line x1="340" y1="56" x2="425" y2="120" stroke="#D8D1C0"/><line x1="340" y1="56" x2="600" y2="120" stroke="#D8D1C0"/>
+          <rect x="20" y="120" width="150" height="50" rx="5" fill="#F5E5E2" stroke="#A83232" stroke-width="1.2"/>
+          <text x="95" y="140" text-anchor="middle" font-family="Georgia,serif" font-size="12.5" fill="#1C1A17">Conductismo</text>
+          <text x="95" y="157" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#A83232">estímulo → respuesta</text>
+          <rect x="195" y="120" width="150" height="50" rx="5" fill="#DCE5F2" stroke="#2A5CAA" stroke-width="1.2"/>
+          <text x="270" y="140" text-anchor="middle" font-family="Georgia,serif" font-size="12.5" fill="#1C1A17">Cognitivismo</text>
+          <text x="270" y="157" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#2A5CAA">procesar información</text>
+          <rect x="350" y="120" width="150" height="50" rx="5" fill="#E9F0E5" stroke="#4A6B3E" stroke-width="1.2"/>
+          <text x="425" y="140" text-anchor="middle" font-family="Georgia,serif" font-size="12.5" fill="#1C1A17">Constructivismo</text>
+          <text x="425" y="157" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#4A6B3E">construir sentido</text>
+          <rect x="525" y="120" width="150" height="50" rx="5" fill="#E9E0EC" stroke="#6B4C7A" stroke-width="1.2"/>
+          <text x="600" y="140" text-anchor="middle" font-family="Georgia,serif" font-size="12.5" fill="#1C1A17">Conectivismo</text>
+          <text x="600" y="157" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#6B4C7A">aprender en red</text>
+          <text x="340" y="205" text-anchor="middle" font-family="monospace" font-size="10" fill="#6B665D">No se reemplazan: coexisten. Un DI las combina según el contenido.</text>
+        </svg>
+      </div>
+      <div class="mapa-note">Al terminar, deberías poder mirar una actividad de un curso y decir qué teoría la sustenta.</div>
+    </div>
+
+    <div class="media-block" id="mediaBlock">
+      <div class="media-tabs" id="mediaTabs">
+        <button class="media-tab active" data-pane="pdf" onclick="switchMedia(this)">📑 Presentación</button>
+        <button class="media-tab" data-pane="audio" onclick="switchMedia(this)">🎧 Audio NotebookLM</button>
+        <button class="media-tab" data-pane="video" onclick="switchMedia(this)">▶ Video</button>
+      </div>
+      <div class="media-pane active" id="pane-pdf"><div id="pdfContainer"><div class="media-pending">Presentación en preparación — se activará al agregar <strong>m1-3.pdf</strong>.</div></div></div>
+      <div class="media-pane" id="pane-audio"><div id="audioContainer"><div class="media-pending">Audio en preparación — se activará al agregar <strong>m1-3-audio.mp3</strong>.</div></div></div>
+      <div class="media-pane" id="pane-video"><div id="videoContainer"><div class="media-pending">Video en preparación — pega el ID en <strong>YT_VIDEO_ID</strong> dentro del archivo.</div></div></div>
+      <div class="media-note">Misma unidad, varios formatos (DUA pauta 1). El texto completo está siempre visible abajo.</div>
+    </div>
+
+    <!-- S1 -->
+    <div class="content-section" id="s1">
+      <h2><span class="sec-num">01</span> Por qué a un DI le importan las teorías del aprendizaje</h2>
+      <p>Una teoría del aprendizaje es una explicación de <strong>cómo las personas adquieren, procesan y retienen conocimiento</strong>. No es un modelo de proceso (eso era la 1.2) ni una técnica: es la base científica que justifica <em>por qué</em> una estrategia instruccional funciona.</p>
+      <div class="defbox">Para un DI, conocer las teorías no es erudición: es <strong>el fundamento que te permite justificar cada decisión de diseño</strong> ante un cliente, un jefe o un panel de entrevista.</div>
+      <p>La diferencia entre un DI junior y uno senior muchas veces está aquí: el junior dice "pongamos un quiz al final"; el senior dice "pongamos recuperación activa con feedback inmediato porque el contenido es procedimental y el conductismo muestra que el refuerzo consolida ese tipo de aprendizaje". Misma actividad, pero una está justificada y la otra es intuición.</p>
+      <div class="nota alerta"><span class="nota-tag">Importante</span>Las teorías no se reemplazan unas a otras como si las nuevas invalidaran las viejas. Coexisten. Cada una explica mejor <em>cierto tipo</em> de aprendizaje. Un buen DI es pragmático: usa la que mejor sirve al contenido, no la que está de moda.</div>
+    </div>
+
+    <!-- S2 CONDUCTISMO -->
+    <div class="content-section" id="s2">
+      <h2><span class="sec-num">02</span> Conductismo</h2>
+      <div class="teoria t-cond">
+        <div class="teoria-head">
+          <div class="t-era">1900–1950s · el más antiguo</div>
+          <h3>Conductismo</h3>
+          <div class="t-thinkers">Pavlov · Watson · Skinner · Thorndike</div>
         </div>
-        <a class="lesson-item" href="m1-1.html">
-          <div class="lesson-num" id="num-m1-1">1</div>
-          <div class="lesson-info"><strong>¿Qué es el DI?</strong><span>Definición · historia · perfil</span></div>
-        </a>
-        <a class="lesson-item" href="m1-2.html">
-          <div class="lesson-num" id="num-m1-2">2</div>
-          <div class="lesson-info"><strong>Teorías del aprendizaje</strong><span>Conductismo · constructivismo</span></div>
-        </a>
-        <a class="lesson-item active" onclick="scrollToTop()">
-          <div class="lesson-num">3</div>
-          <div class="lesson-info"><strong>Gagné y carga cognitiva</strong><span>Nueve eventos · Sweller</span></div>
-        </a>
-        <a class="lesson-item" href="m1-4.html">
-          <div class="lesson-num" id="num-m1-4">4</div>
-          <div class="lesson-info"><strong>Artefactos y documentos del DI</strong><span>Syllabus · APA · diversificación</span></div>
-        </a>
-        <div class="sidebar-progress">
-          <div class="d-flex justify-content-between mb-1">
-            <small style="color:var(--muted);font-size:0.75rem">Módulo 1</small>
-            <small id="sidebarPct" style="color:var(--terra);font-size:0.75rem;font-weight:bold">0/4</small>
+        <div class="teoria-body">
+          <p>El aprendizaje es un <strong>cambio observable de conducta</strong> producido por estímulos externos. No le interesa lo que pasa "dentro de la cabeza" (eso es una caja negra), sino la relación entre estímulo, respuesta y refuerzo. Se aprende por asociación, repetición y refuerzo (premio o castigo).</p>
+          <div class="teoria-metafora">Metáfora: la mente es una caja negra. Solo importa qué entra (estímulo) y qué sale (conducta).</div>
+          <div class="teoria-aplica">
+            <div class="ta-label">Cómo se traduce en diseño</div>
+            <ul>
+              <li>Objetivos de aprendizaje conductuales y medibles ("el estudiante <em>calculará</em>…")</li>
+              <li>Práctica repetida con retroalimentación inmediata (drill and practice)</li>
+              <li>Quizzes autocorregidos, refuerzo positivo, gamificación con puntos y badges</li>
+              <li>Secuencia de lo simple a lo complejo, en pasos pequeños</li>
+            </ul>
           </div>
-          <div class="progress-di"><div class="progress-di-fill" id="sidebarBar" style="width:0%"></div></div>
-        </div>
-        <div class="sidebar-footer">
-          <a href="../index.html" style="font-size:0.8rem;color:var(--muted);text-decoration:none"><i class="bi bi-grid me-1"></i>Ver todos los módulos</a>
+          <div class="nota clave" style="margin-top:0.8rem"><span class="nota-tag">Cuándo brilla</span>Contenido procedimental, memorización, habilidades básicas, cumplimiento normativo. Ej.: aprender atajos de teclado, normas de seguridad, vocabulario técnico.</div>
         </div>
       </div>
     </div>
 
-    <!-- CONTENT -->
-    <div class="col-lg-9">
-      <div class="content-di">
-        <div class="lesson-hero">
-          <div class="unit-tag">Módulo 1 · Unidad 1.3</div>
-          <h1>Nueve Eventos de Gagné y carga cognitiva</h1>
-          <p>Eventos instruccionales · teoría de Sweller · principios de diseño de Mayer</p>
+    <!-- S3 COGNITIVISMO -->
+    <div class="content-section" id="s3">
+      <h2><span class="sec-num">03</span> Cognitivismo</h2>
+      <div class="teoria t-cog">
+        <div class="teoria-head">
+          <div class="t-era">1950–1970s · la revolución cognitiva</div>
+          <h3>Cognitivismo</h3>
+          <div class="t-thinkers">Miller · Gagné · Ausubel · Sweller</div>
         </div>
-        <div class="lesson-badges">
-          <span class="lbadge"><i class="bi bi-list-ol me-1"></i>9 eventos + 7 principios</span>
-          <span class="lbadge"><i class="bi bi-chat-square-text me-1"></i>3 preguntas de práctica oral</span>
-          <span class="lbadge"><i class="bi bi-clipboard-check me-1"></i>10 preguntas al final</span>
-          <span class="lbadge"><i class="bi bi-clock me-1"></i>~30 min</span>
+        <div class="teoria-body">
+          <p>Abre la caja negra que el conductismo ignoraba. El aprendizaje es un <strong>procesamiento de información</strong>: la mente recibe, codifica, almacena y recupera datos, como un computador. Le importan la memoria de trabajo, la memoria de largo plazo, los esquemas mentales y la atención.</p>
+          <div class="teoria-metafora">Metáfora: la mente es un procesador de información con memoria limitada. El diseño debe respetar esos límites.</div>
+          <div class="teoria-aplica">
+            <div class="ta-label">Cómo se traduce en diseño</div>
+            <ul>
+              <li>Organizadores previos que activan conocimiento existente (Ausubel)</li>
+              <li>Gestión de la carga cognitiva: no saturar la memoria de trabajo (Sweller — se profundiza en 1.4)</li>
+              <li>Fragmentación (chunking), mapas conceptuales, ayudas visuales</li>
+              <li>Los Nueve Eventos de Gagné (también en 1.4) para secuenciar la instrucción</li>
+            </ul>
+          </div>
+          <div class="nota clave" style="margin-top:0.8rem"><span class="nota-tag">Cuándo brilla</span>Contenido conceptual complejo que hay que comprender y organizar, no solo memorizar. Ej.: entender un proceso, relacionar conceptos, resolver problemas estructurados.</div>
         </div>
+      </div>
+    </div>
 
-        <div class="lesson-body">
-
-          <!-- MAPA CONCEPTUAL (organizador previo) -->
-          <div class="presentacion mb-4">
-            <div class="presentacion-head">
-              <div class="pres-title"><i class="bi bi-diagram-3"></i> Mapa de esta unidad</div>
-              <span class="pres-tag">Organizador previo</span>
-            </div>
-            <div style="background:#fff;padding:1.2rem">
-              <svg width="100%" viewBox="0 0 680 300" style="display:block">
-                <rect x="245" y="20" width="190" height="60" rx="8" fill="#f7ede8" stroke="#c85c3a" stroke-width="1"/>
-                <text x="340" y="44" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Gagné y carga cognitiva</text>
-                <text x="340" y="63" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#c85c3a">unidad 1.3</text>
-                <line x1="340" y1="80" x2="130" y2="150" stroke="#ddd8d0" stroke-width="1"/>
-                <line x1="340" y1="80" x2="340" y2="150" stroke="#ddd8d0" stroke-width="1"/>
-                <line x1="340" y1="80" x2="550" y2="150" stroke="#ddd8d0" stroke-width="1"/>
-                <rect x="30" y="150" width="200" height="70" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="130" y="178" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#0f1117">Nueve Eventos de Gagné</text>
-                <text x="130" y="196" text-anchor="middle" font-family="Calibri,sans-serif" font-size="10.5" fill="#3a6b8a">estructura de cada unidad</text>
-                <rect x="240" y="150" width="200" height="70" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="340" y="178" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#0f1117">Carga cognitiva (Sweller)</text>
-                <text x="340" y="196" text-anchor="middle" font-family="Calibri,sans-serif" font-size="10.5" fill="#3a6b8a">intrínseca, extrínseca, germana</text>
-                <rect x="450" y="150" width="200" height="70" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="550" y="178" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#0f1117">Principios de Mayer</text>
-                <text x="550" y="196" text-anchor="middle" font-family="Calibri,sans-serif" font-size="10.5" fill="#3a6b8a">diseño de materiales</text>
-              </svg>
-              <p style="font-size:0.8rem;color:var(--muted);text-align:center;margin-top:0.5rem">Los tres bloques comparten una misma raíz: la memoria de trabajo tiene límites, y el diseño (secuencia, señalización, formato) determina si esos límites se respetan o se saturan.</p>
-            </div>
+    <!-- S4 CONSTRUCTIVISMO -->
+    <div class="content-section" id="s4">
+      <h2><span class="sec-num">04</span> Constructivismo</h2>
+      <div class="teoria t-const">
+        <div class="teoria-head">
+          <div class="t-era">1970–1990s · el giro al estudiante</div>
+          <h3>Constructivismo</h3>
+          <div class="t-thinkers">Piaget · Vygotsky · Bruner · Dewey</div>
+        </div>
+        <div class="teoria-body">
+          <p>El estudiante no recibe conocimiento: lo <strong>construye activamente</strong> a partir de su experiencia previa e interacción con el entorno. El aprendizaje es personal, situado y social. Vygotsky agrega la dimensión social: aprendemos en interacción con otros, en la "zona de desarrollo próximo" (lo que puedo lograr con ayuda antes de lograrlo solo).</p>
+          <div class="teoria-metafora">Metáfora: la mente es un constructor. El conocimiento no se transmite, se edifica sobre lo que ya está.</div>
+          <div class="teoria-aplica">
+            <div class="ta-label">Cómo se traduce en diseño</div>
+            <ul>
+              <li>Aprendizaje basado en problemas (ABP) y en proyectos</li>
+              <li>Casos reales, simulaciones, aprendizaje situado en contexto auténtico</li>
+              <li>Trabajo colaborativo, foros, construcción social del conocimiento</li>
+              <li>Andamiaje (scaffolding): apoyo que se retira gradualmente</li>
+              <li>Reflexión, portafolios, evaluación auténtica</li>
+            </ul>
           </div>
+          <div class="nota clave" style="margin-top:0.8rem"><span class="nota-tag">Cuándo brilla</span>Habilidades complejas, pensamiento crítico, competencias transferibles, contenido donde no hay una sola respuesta correcta. Ej.: diseñar, argumentar, resolver casos abiertos — justo el tipo de aprendizaje de tu propio campo artístico.</div>
+        </div>
+      </div>
+    </div>
 
-          <!-- PRESENTACIÓN -->
-          <div class="presentacion">
-            <div class="presentacion-head">
-              <div class="pres-title"><i class="bi bi-easel2"></i> Presentación del tema <span class="pres-tag">NotebookLM</span></div>
-              <div class="presentacion-actions">
-                <a class="pres-btn" href="m1-3.pdf" target="_blank" rel="noopener"><i class="bi bi-arrows-fullscreen"></i> Pantalla completa</a>
-                <a class="pres-btn" href="m1-3.pdf" download><i class="bi bi-download"></i> Descargar</a>
-              </div>
-            </div>
-            <div class="presentacion-viewer">
-              <iframe src="m1-3.pdf#view=FitH" title="Presentación del tema" loading="lazy"></iframe>
-            </div>
-            <div class="pres-audio">
-              <span class="pres-audio-label"><i class="bi bi-headphones"></i> Resumen en audio</span>
-              <audio controls preload="metadata" src="m1-3-audio.mp3"></audio>
-            </div>
+    <!-- S5 CONECTIVISMO -->
+    <div class="content-section" id="s5">
+      <h2><span class="sec-num">05</span> Conectivismo</h2>
+      <div class="teoria t-conect">
+        <div class="teoria-head">
+          <div class="t-era">2000s–hoy · la era digital</div>
+          <h3>Conectivismo</h3>
+          <div class="t-thinkers">Siemens · Downes</div>
+        </div>
+        <div class="teoria-body">
+          <p>La teoría más nueva y la más discutida. Propuesta por George Siemens y Stephen Downes para la era digital: el aprendizaje ocurre en <strong>redes</strong> — de personas, fuentes y tecnologías. Saber ya no es solo lo que tienes en la cabeza, sino tu capacidad de <em>navegar, filtrar y conectar</em> información distribuida. "Saber dónde" y "saber quién" pesan tanto como "saber qué".</p>
+          <div class="teoria-metafora">Metáfora: la mente es un nodo en una red. Aprender es cultivar y navegar conexiones.</div>
+          <div class="teoria-aplica">
+            <div class="ta-label">Cómo se traduce en diseño</div>
+            <ul>
+              <li>MOOC, comunidades de práctica, aprendizaje en red y social</li>
+              <li>Curación de contenidos, PLE (entornos personales de aprendizaje)</li>
+              <li>Enseñar a filtrar, evaluar y conectar fuentes, más que a memorizar</li>
+              <li>Uso de redes, IA y herramientas digitales como parte del aprendizaje</li>
+            </ul>
           </div>
+          <div class="nota alerta" style="margin-top:0.8rem"><span class="nota-tag">Ojo — es discutida</span>Muchos académicos cuestionan si el conectivismo es una teoría del aprendizaje propiamente tal o más bien una pedagogía/visión de la era digital. En una entrevista, mencionarlo con ese matiz ("es debatido si califica como teoría plena") demuestra lectura crítica, no solo memorización.</div>
+        </div>
+      </div>
+    </div>
 
-          <!-- ACORDEÓN 1 -->
-          <div class="accordion-di">
-            <button class="accordion-di-btn open" onclick="toggleAcc(this)">
-              <i class="bi bi-list-ol acc-icon"></i> Los Nueve Eventos de Instrucción de Gagné
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body show">
-              <p>Robert Gagné propuso en <em>Las condiciones del aprendizaje</em> (1965) que toda experiencia instruccional efectiva debe activar nueve procesos cognitivos. Cada evento externo (lo que el diseñador hace) corresponde a un proceso interno (lo que ocurre en la mente del aprendiz). No son pasos rígidos, sino un <strong>marco de verificación</strong>: ninguno debe quedar completamente ignorado.</p>
-              <div class="callout-terra">
-                <strong>Para entrevistas:</strong> Si te preguntan cómo estructurarías un módulo o cápsula de aprendizaje, los Nueve Eventos son la respuesta ideal. Muestran que conoces la lógica detrás de cada momento del diseño.
-              </div>
-              <div class="mt-3">
-                <div class="evento"><div class="ev-num">1</div><div class="ev-body"><h6>Captar la atención</h6><p>Activar la disposición perceptual antes del contenido: una pregunta provocadora, un dato sorprendente, un caso real, un video corto.</p><p class="proceso">Proceso interno: activación de la percepción selectiva</p></div></div>
-                <div class="evento"><div class="ev-num">2</div><div class="ev-body"><h6>Informar los objetivos</h6><p>El estudiante debe saber qué va a aprender y por qué le sirve. Esto activa la expectativa y orienta la atención hacia lo relevante.</p><p class="proceso">Proceso interno: creación de expectativa sobre el desempeño esperado</p></div></div>
-                <div class="evento"><div class="ev-num">3</div><div class="ev-body"><h6>Estimular el recuerdo de conocimientos previos</h6><p>Conectar lo nuevo con lo que ya sabe: pregunta diagnóstica, analogía, recuperación. Sin este gancho, la nueva información flota sin ancla.</p><p class="proceso">Proceso interno: recuperación de información relevante a la memoria de trabajo</p></div></div>
-                <div class="evento"><div class="ev-num">4</div><div class="ev-body"><h6>Presentar el contenido</h6><p>Entregar la información de forma organizada, clara y con apoyo visual o auditivo. Segmentar en unidades manejables, consistentes con el objetivo.</p><p class="proceso">Proceso interno: codificación semántica selectiva</p></div></div>
-                <div class="evento"><div class="ev-num">5</div><div class="ev-body"><h6>Proporcionar orientación para el aprendizaje</h6><p>Guiar cómo procesar el contenido: ejemplos resueltos, analogías, esquemas, preguntas guía. El evento más subestimado del modelo.</p><p class="proceso">Proceso interno: codificación semántica profunda — construcción de esquemas</p></div></div>
-                <div class="evento"><div class="ev-num">6</div><div class="ev-body"><h6>Provocar el desempeño</h6><p>El estudiante practica lo aprendido: ejercicios, actividades, simulaciones, casos. Sin práctica no hay transferencia.</p><p class="proceso">Proceso interno: ejecución del desempeño esperado</p></div></div>
-                <div class="evento"><div class="ev-num">7</div><div class="ev-body"><h6>Proporcionar retroalimentación</h6><p>Informar qué hizo bien y qué mejorar, de forma oportuna e informativa. "Incorrecto" no es retroalimentación; "incorrecto porque…" sí.</p><p class="proceso">Proceso interno: refuerzo y corrección del esquema</p></div></div>
-                <div class="evento"><div class="ev-num">8</div><div class="ev-body"><h6>Evaluar el desempeño</h6><p>Verificar que el objetivo fue alcanzado. Distinto de la práctica: aquí se certifica el logro, alineado con el objetivo del Evento 2.</p><p class="proceso">Proceso interno: activación del desempeño aprendido para verificación</p></div></div>
-                <div class="evento"><div class="ev-num">9</div><div class="ev-body"><h6>Mejorar la retención y la transferencia</h6><p>Actividades que consolidan y conectan con situaciones nuevas: resúmenes, mapas conceptuales, casos en contextos distintos.</p><p class="proceso">Proceso interno: generalización — aplicación a nuevos contextos</p></div></div>
-              </div>
-              <div class="callout-blue">
-                <strong>Los más omitidos en cursos virtuales:</strong> el Evento 3 (conocimientos previos) y el Evento 9 (retención y transferencia). Sin el 3, el aprendizaje no tiene dónde anclarse. Sin el 9, el estudiante aprueba el examen pero no transfiere a situaciones reales.
-              </div>
-            </div>
+    <!-- S6 comparación + actividad -->
+    <div class="content-section" id="s6">
+      <h2><span class="sec-num">06</span> Cuál usar cuándo — visión de conjunto</h2>
+      <p>No se trata de elegir una y descartar el resto. Un curso real combina varias: puede usar conductismo para las habilidades básicas, cognitivismo para los conceptos, y constructivismo para la aplicación. Esta tabla resume la lógica de decisión:</p>
+      <table class="compare-table">
+        <tr><th>Teoría</th><th>El aprendizaje es…</th><th>Rol del estudiante</th><th>Mejor para…</th></tr>
+        <tr><td>Conductismo</td><td>Cambio de conducta por refuerzo</td><td>Pasivo / reactivo</td><td>Procedimientos, memorización, normas</td></tr>
+        <tr><td>Cognitivismo</td><td>Procesar y organizar información</td><td>Procesador activo</td><td>Conceptos complejos, comprensión</td></tr>
+        <tr><td>Constructivismo</td><td>Construir sentido desde la experiencia</td><td>Constructor activo</td><td>Habilidades complejas, pensamiento crítico</td></tr>
+        <tr><td>Conectivismo</td><td>Navegar y conectar redes</td><td>Nodo en la red</td><td>Entornos digitales, información cambiante</td></tr>
+      </table>
+      <div class="nota clave"><span class="nota-tag">La respuesta madura</span>Cuando te pregunten "¿qué teoría prefieres?", la mejor respuesta es que las combinas según el objetivo: "para memorizar términos uso refuerzo conductista; para comprender un proceso, gestión de carga cognitiva; para aplicar en casos reales, un enfoque constructivista." El eclecticismo fundamentado es señal de madurez profesional.</div>
+    </div>
+
+    <div class="activity">
+      <h2>Actividad — ¿Qué teoría sustenta esta decisión?</h2>
+      <div class="act-sub">Lee cada decisión de diseño e identifica la teoría que la fundamenta. El feedback explica la conexión.</div>
+      <div id="actRoot"></div>
+      <div class="act-progress" id="actProgress"></div>
+    </div>
+
+    <div class="callout ia">
+      <div class="callout-header">🖌 IA en esta fase</div>
+      <div class="callout-body">
+        <div class="capa">＋ Toca para levantar la capa</div>
+        <p>Las teorías del aprendizaje son terreno donde la IA te ayuda a <strong>fundamentar y contrastar</strong>:</p>
+        <p>• Pídele que revise una actividad que diseñaste y te diga qué teoría la sustenta — útil para verificar que tus decisiones están fundamentadas y no son solo intuición.</p>
+        <p>• Pídele ejemplos de cómo un mismo objetivo se abordaría desde el conductismo vs. el constructivismo, para ver el contraste en concreto.</p>
+        <p>• Cuidado: la IA a veces presenta el conectivismo como teoría establecida sin matizar el debate. Contrasta siempre con fuentes académicas cuando el punto sea fino.</p>
+      </div>
+    </div>
+
+    <div class="callout entrevista">
+      <div class="callout-header">🎤 Nota de entrevista</div>
+      <div class="callout-body">
+        <div class="capa">＋ Toca para levantar la capa</div>
+        <p>La pregunta trampa clásica: "¿cuál es tu teoría del aprendizaje favorita?". No caigas en defender una sola. La respuesta fuerte reconoce que cada teoría sirve a un tipo de contenido, y da un ejemplo concreto de cómo combinarías dos o tres en un curso real.</p>
+        <p>Bonus para tu perfil: puedes conectar el constructivismo con tu experiencia enseñando arte — un campo donde el conocimiento se construye haciendo, no memorizando. Eso vuelve la respuesta personal y creíble, no de manual.</p>
+      </div>
+    </div>
+
+    <div class="content-section" id="practica">
+      <h2><span class="sec-num">◆</span> Practica como en una entrevista</h2>
+      <p>Responde primero con tus propias palabras — <strong>en voz alta o por escrito</strong> — antes de revelar la respuesta modelo. Luego marca el checklist.</p>
+
+      <div class="practica">
+        <div class="practica-head"><div class="p-num">Práctica 1</div><div class="p-q">"¿Cuál es la diferencia entre conductismo y constructivismo, y cuándo usarías cada uno?"</div></div>
+        <div class="practica-body">
+          <textarea placeholder="Tu respuesta…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p1','p1')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p1">"En el conductismo el estudiante es reactivo: aprende por refuerzo y repetición, y funciona bien para contenido procedimental o memorización — como normas de seguridad o vocabulario. En el constructivismo el estudiante construye activamente el conocimiento desde su experiencia, y funciona mejor para habilidades complejas o pensamiento crítico, donde no hay una sola respuesta correcta. En un curso real los combino: refuerzo para las bases, construcción para la aplicación."</div>
+          <div class="checklist"><div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1a')"> ¿Contrastaste el rol del estudiante (reactivo vs. constructor)?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1b')"> ¿Diste el tipo de contenido ideal para cada uno?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1c')"> ¿Mencionaste que se combinan, no se excluyen?</label>
           </div>
+        </div>
+      </div>
 
-          <!-- ACORDEÓN 2 -->
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-cpu acc-icon"></i> Teoría de la carga cognitiva (Sweller, 1988)
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p>John Sweller propuso que la memoria de trabajo tiene capacidad limitada: maneja aproximadamente 7±2 elementos simultáneos (Miller, 1956). Si un diseño supera esa capacidad, el aprendizaje se bloquea — no porque el estudiante sea incapaz, sino porque el diseño lo sobrecargó. La teoría distingue tres tipos de carga:</p>
-              <div class="row g-2 mt-1">
-                <div class="col-md-4"><div class="carga-card neutral"><h6>Carga intrínseca</h6><p>Inherente a la complejidad del contenido. No se elimina, pero se gestiona con buena secuenciación: de simple a complejo, de general a específico.</p></div></div>
-                <div class="col-md-4"><div class="carga-card malo"><h6>Carga extrínseca</h6><p>Generada por mal diseño: navegación confusa, exceso de texto, animaciones decorativas, instrucciones ambiguas. Esta es la que el DI debe eliminar.</p></div></div>
-                <div class="col-md-4"><div class="carga-card bueno"><h6>Carga germana</h6><p>La que genera aprendizaje real: el esfuerzo de construir esquemas mentales. El diseño debe maximizarla eliminando la extrínseca.</p></div></div>
-              </div>
-            </div>
+      <div class="practica">
+        <div class="practica-head"><div class="p-num">Práctica 2</div><div class="p-q">"Diseña una actividad para que enfermeros memoricen dosis de medicamentos. ¿Qué teoría aplicas y por qué?"</div></div>
+        <div class="practica-body">
+          <textarea placeholder="Tu respuesta…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p2','p2')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p2">"Para memorización de datos críticos usaría un enfoque conductista: práctica repetida con retroalimentación inmediata, tipo flashcards o quiz autocorregido con refuerzo. La memorización de dosis es contenido donde la respuesta correcta es única y el error tiene consecuencias, así que el drill con feedback inmediato consolida bien. Le agregaría recuperación espaciada para la retención a largo plazo. Ahora, para que apliquen esas dosis en decisiones clínicas reales, ahí cambiaría a simulaciones de casos — constructivismo."</div>
+          <div class="checklist"><div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2a')"> ¿Elegiste conductismo para la memorización?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2b')"> ¿Justificaste con el tipo de contenido (respuesta única)?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2c')"> ¿Distinguiste memorizar de aplicar (cambio de teoría)?</label>
           </div>
+        </div>
+      </div>
 
-          <!-- ACORDEÓN 3 -->
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-easel acc-icon"></i> Principios de diseño de materiales (Mayer)
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p>Richard Mayer sistematizó los principios cognitivos del diseño multimedia, derivados de la teoría de Sweller. Son fundamentales para cualquier diseñador instruccional:</p>
-              <div class="principio"><div class="principio-nombre">Coherencia</div><div class="principio-desc">Eliminar palabras, imágenes, música o efectos que no contribuyan al objetivo. Menos es más: una imagen decorativa puede interferir al competir por recursos cognitivos.</div></div>
-              <div class="principio"><div class="principio-nombre">Señalización</div><div class="principio-desc">Usar recursos visuales (negritas, flechas, colores, íconos) para guiar la atención hacia lo más importante. Sin señalización, todo parece igualmente relevante.</div></div>
-              <div class="principio"><div class="principio-nombre">Redundancia</div><div class="principio-desc">Evitar presentar la misma información en texto y audio simultáneamente: compiten por el canal visual. El error clásico: diapositiva con texto completo que el docente lee en voz alta.</div></div>
-              <div class="principio"><div class="principio-nombre">Contigüidad</div><div class="principio-desc">Presentar texto e imágenes relacionados juntos en espacio y tiempo. Una leyenda debajo de la imagen funciona mejor que una al otro lado de la pantalla.</div></div>
-              <div class="principio"><div class="principio-nombre">Segmentación</div><div class="principio-desc">Dividir el contenido en unidades pequeñas y permitir controlar el ritmo. Un video de 20 minutos abruma más que cuatro de 5 minutos.</div></div>
-              <div class="principio"><div class="principio-nombre">Modalidad</div><div class="principio-desc">Es más efectivo narración de audio + imágenes que texto escrito + imágenes. Los canales visual y auditivo son independientes: usar ambos libera capacidad cognitiva.</div></div>
-              <div class="principio"><div class="principio-nombre">Personalización</div><div class="principio-desc">El aprendizaje mejora con lenguaje conversacional. "Ahora veamos cómo…" funciona mejor que "A continuación se procederá a examinar…"</div></div>
-            </div>
+      <div class="practica">
+        <div class="practica-head"><div class="p-num">Práctica 3</div><div class="p-q">"¿Qué opinas del conectivismo?" (pregunta para ver tu criterio)</div></div>
+        <div class="practica-body">
+          <textarea placeholder="Tu respuesta…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p3','p3')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p3">"El conectivismo, de Siemens y Downes, describe bien cómo aprendemos hoy en entornos digitales: en redes, curando y conectando fuentes más que memorizando. Es muy útil para pensar MOOC o comunidades de práctica. Dicho eso, hay un debate legítimo sobre si es una teoría del aprendizaje plena o más bien una pedagogía de la era digital, porque no explica los mecanismos cognitivos como sí lo hacen las otras. Lo uso como lente para diseñar aprendizaje en red, pero sin descartar cognitivismo o constructivismo para el aprendizaje individual."</div>
+          <div class="checklist"><div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3a')"> ¿Nombraste a sus autores y la idea de red?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3b')"> ¿Mencionaste el debate sobre si es teoría plena?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3c')"> ¿Mostraste criterio en vez de aceptarla sin más?</label>
           </div>
+        </div>
+      </div>
+    </div>
 
-          <!-- ACORDEÓN 4 -->
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-check2-square acc-icon"></i> Aplicación práctica: checklist de diseño
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <table class="table table-di table-bordered mt-1">
-                <thead><tr><th>Pregunta de verificación</th><th>Principio que aplica</th></tr></thead>
-                <tbody>
-                  <tr><td>¿El módulo comienza captando la atención antes de presentar contenido?</td><td>Evento 1 de Gagné</td></tr>
-                  <tr><td>¿El estudiante sabe desde el inicio qué aprenderá y para qué?</td><td>Evento 2 de Gagné</td></tr>
-                  <tr><td>¿Se activan conocimientos previos antes del contenido nuevo?</td><td>Evento 3 de Gagné</td></tr>
-                  <tr><td>¿Los videos duran menos de 10 minutos?</td><td>Segmentación (Mayer)</td></tr>
-                  <tr><td>¿El texto en pantalla está narrado o complementado con imagen?</td><td>Redundancia / Modalidad</td></tr>
-                  <tr><td>¿Las imágenes son funcionales o decorativas?</td><td>Coherencia (Mayer)</td></tr>
-                  <tr><td>¿La retroalimentación explica por qué, no solo si es correcto?</td><td>Evento 7 de Gagné</td></tr>
-                  <tr><td>¿Hay actividades de consolidación y transferencia al final?</td><td>Evento 9 de Gagné</td></tr>
-                  <tr><td>¿La evaluación está alineada con el objetivo declarado?</td><td>Evento 8 + alineación constructiva</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+    <div class="eval-block" id="evaluacion">
+      <h2>Evaluación — Unidad 1.3</h2>
+      <div class="eval-sub">10 preguntas. El puntaje se guarda en tu ruta. Puedes reintentar sin límite.</div>
+      <div id="quizRoot"></div>
+      <div class="eval-counter" id="quizCounter">Respondidas: 0/10</div>
+      <button class="eval-submit" id="quizSubmit" onclick="submitQuiz()" disabled>Enviar evaluación</button>
+      <div class="result-card" id="resultCard"><div class="result-score" id="resultScore">0%</div><div id="resultMsg" style="font-size:0.85rem;color:var(--ink-muted);margin-top:0.3rem;"></div></div>
+    </div>
 
-          <!-- AUTOEVALUACIÓN AUTOINSTRUCCIONAL -->
-          <div class="accordion-di" style="border-color:var(--blue)">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)" style="background:var(--blue-light)">
-              <i class="bi bi-chat-square-text acc-icon" style="color:var(--blue)"></i> Practica como en una entrevista
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p style="color:var(--muted);font-size:0.85rem">Responde primero con tus propias palabras antes de revelar la respuesta modelo.</p>
+    <div class="next-nav">
+      <a href="m1-2.html">← 1.2 Modelos de DI</a>
+      <a href="m1-4.html">1.4 Gagné y carga cognitiva →</a>
+    </div>
+  </main>
+</div>
 
-              <div class="card-di" style="border-left:3px solid var(--blue)">
-                <h6><i class="bi bi-question-circle me-1"></i>1. Te preguntan cómo estructurarías una cápsula corta de capacitación desde cero. ¿Qué le respondes?</h6>
-                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
-                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
-                  <p style="font-size:0.87rem"><em>"La estructuraría siguiendo la lógica de los Nueve Eventos de Gagné: parto captando atención con un caso real, informo el objetivo concreto, activo conocimiento previo, presento el contenido segmentado, doy orientación con ejemplos resueltos, incluyo práctica con retroalimentación, y cierro con una actividad de transferencia — no solo un quiz de memoria."</em></p>
-                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
-                  <ul style="font-size:0.83rem;color:var(--muted)">
-                    <li>¿Nombraste los eventos en la secuencia correcta, no como una lista suelta?</li>
-                    <li>¿Mencionaste específicamente el Evento 3 y el Evento 9, los más omitidos?</li>
-                    <li>¿Diste al menos un ejemplo concreto de cómo aplicarías un evento?</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="card-di" style="border-left:3px solid var(--blue)">
-                <h6><i class="bi bi-question-circle me-1"></i>2. Un SME te entrega una diapositiva con 400 palabras de texto que además narra en voz alta palabra por palabra. ¿Qué le dirías y por qué?</h6>
-                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
-                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
-                  <p style="font-size:0.87rem"><em>"Le explicaría que está violando el principio de redundancia de Mayer: el mismo contenido compite dos veces por el canal visual (leyendo y escuchando el mismo texto), lo que genera carga extrínseca innecesaria. Le propondría elegir un canal — narración con imágenes de apoyo — en vez de duplicar el texto en pantalla y en audio."</em></p>
-                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
-                  <ul style="font-size:0.83rem;color:var(--muted)">
-                    <li>¿Nombraste el principio de redundancia específicamente?</li>
-                    <li>¿Explicaste por qué genera carga extrínseca, no solo que "está mal"?</li>
-                    <li>¿Propusiste una alternativa concreta (modalidad: audio + imagen)?</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="card-di" style="border-left:3px solid var(--blue)">
-                <h6><i class="bi bi-question-circle me-1"></i>3. ¿Cuál es la diferencia entre carga intrínseca y carga extrínseca, y por qué esa distinción es la más importante de la unidad?</h6>
-                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
-                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
-                  <p style="font-size:0.87rem"><em>"La carga intrínseca es inherente a la complejidad del contenido — no la puedo eliminar, solo secuenciarla bien. La carga extrínseca la genera un mal diseño: navegación confusa, texto redundante, animaciones decorativas. Es la más importante porque es la única que el DI controla directamente; la intrínseca depende del tema, no del diseño."</em></p>
-                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
-                  <ul style="font-size:0.83rem;color:var(--muted)">
-                    <li>¿Distinguiste claramente qué se puede y qué no se puede eliminar?</li>
-                    <li>¿Explicaste por qué la extrínseca es la responsabilidad directa del DI?</li>
-                    <li>¿Evitaste confundirla con la carga germana (la que sí es deseable)?</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- EVALUACIÓN -->
-          <div class="eval-section mt-4">
-            <h4><i class="bi bi-clipboard-check me-2" style="color:var(--terra)"></i>Evaluación — Unidad 1.3</h4>
-            <p class="eval-progress-text">Preguntas respondidas: <strong><span id="answeredCount">0</span>/10</strong> — puedes enviar en cualquier momento</p>
-
-            <div id="quizBody"></div>
-
-            <div id="evalResult" class="mt-3"></div>
-
-            <div class="d-flex flex-wrap gap-2 mt-3">
-              <button class="btn btn-terra" id="submitBtn" onclick="submitEval()">
-                <i class="bi bi-check-circle me-2"></i>Enviar evaluación
-              </button>
-              <button class="btn btn-outline-terra" id="retryBtn" style="display:none" onclick="retryEval()">
-                <i class="bi bi-arrow-clockwise me-2"></i>Reintentar
-              </button>
-              <a href="m1-4.html" class="btn btn-blue" id="nextBtn" style="display:none">
-                Siguiente unidad <i class="bi bi-arrow-right ms-2"></i>
-              </a>
-            </div>
-          </div>
-
-        </div><!-- /lesson-body -->
-      </div><!-- /content-di -->
-    </div><!-- /col -->
-  </div><!-- /row -->
-</div><!-- /container -->
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../gami.js"></script>
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbylYML8h2BnNgi2AXtZ8bkGaXPNRhurswPr5dfyGRldbVoCRvmoT2cHN0r3I4qGynLb/exec';
-const UNIDAD_ID = 'm1-3';
-const UNIDAD_LABEL = '1.3 Gagné y carga cognitiva';
+const UNIT_ID = 'm1-3';
+const YT_VIDEO_ID = '';
 
-const PREGUNTAS = [
-  { q:"¿Cuál es el propósito del Evento 3 de Gagné (estimular el recuerdo de conocimientos previos)?", opts:["Evaluar si el estudiante puede saltarse el módulo","Crear un gancho mental donde la nueva información pueda anclarse, facilitando su integración y retención","Motivar al estudiante con preguntas fáciles antes del contenido difícil","Verificar que el estudiante completó el módulo anterior"], c:1, fb_ok:"Correcto. Desde el cognitivismo de Ausubel, el aprendizaje significativo ocurre cuando la nueva información se ancla en esquemas existentes. El Evento 3 activa esos esquemas.", fb_fail:"El Evento 3 tiene un propósito cognitivo: activar los esquemas existentes para que la nueva información tenga dónde anclarse. No es motivacional ni evaluativo." },
-  { q:"Un diseñador presenta un módulo donde primero explica los 5 principios de la andragogía, luego muestra ejemplos, y al final hace un quiz. ¿Cuál evento crítico de Gagné está omitiendo?", opts:["Evento 1 — no captó la atención al inicio","Evento 9 — no hay actividad de retención y transferencia a nuevos contextos","Evento 8 — no hay evaluación formal","Evento 4 — no presentó el contenido"], c:1, fb_ok:"Correcto. El Evento 9 (retención y transferencia) es el más omitido. Sin él, el aprendizaje queda en la memoria a corto plazo y no se generaliza a situaciones nuevas.", fb_fail:"El Evento 9 (retención y transferencia) es el más frecuentemente omitido. Sin actividades que consoliden y transfieran a nuevos contextos, el aprendizaje es superficial." },
-  { q:"¿Qué tipo de carga cognitiva genera una diapositiva con 400 palabras de texto que el docente lee en voz alta?", opts:["Carga intrínseca alta, porque el contenido es complejo","Carga extrínseca alta, porque el mal diseño hace que el mismo contenido compita por el canal visual dos veces","Carga germana alta, porque obliga al estudiante a construir esquemas","Carga intrínseca baja, porque el contenido se simplifica al verbalizarse"], c:1, fb_ok:"Correcto. Viola el principio de redundancia: texto escrito + narración del mismo texto satura el canal visual. El diseñador debe elegir uno u otro, o complementar el audio con imágenes.", fb_fail:"Es carga extrínseca: generada por el mal diseño. El principio de redundancia establece que texto escrito + narración del mismo texto sobrecarga el canal visual." },
-  { q:"Según el principio de modalidad de Mayer, ¿cuál de estas combinaciones es más efectiva para el aprendizaje?", opts:["Texto escrito + imágenes en la misma pantalla","Narración de audio + imágenes relacionadas","Solo texto escrito, sin imágenes que distraigan","Texto escrito + narración de audio + imágenes simultáneos"], c:1, fb_ok:"Correcto. Audio + imágenes usa dos canales independientes (auditivo y visual) sin sobrecargar ninguno. Texto + imágenes compiten por el canal visual.", fb_fail:"Narración de audio + imágenes es la combinación más efectiva según Mayer. Aprovecha dos canales independientes sin sobrecargarlos." },
-  { q:"¿Cuál es la diferencia entre el Evento 6 (provocar el desempeño) y el Evento 8 (evaluar el desempeño) de Gagné?", opts:["Son el mismo evento con diferente nombre","El Evento 6 es práctica formativa para desarrollar la habilidad; el Evento 8 certifica si el objetivo fue alcanzado","El Evento 6 es solo para cursos presenciales; el 8 es para virtuales","El Evento 6 lo hace el docente; el Evento 8 lo hace el estudiante"], c:1, fb_ok:"Correcto. Esta distinción es fundamental: la práctica (6) desarrolla la habilidad con margen para el error; la evaluación (8) certifica el logro. Confundirlos distorsiona el diseño.", fb_fail:"Son distintos: el Evento 6 es práctica formativa (aprender haciendo con retroalimentación); el Evento 8 es evaluación sumativa (certificar el logro del objetivo)." },
-  { q:"¿Qué establece el principio de coherencia de Mayer?", opts:["El contenido debe ser coherente con los objetivos de aprendizaje","Se deben eliminar elementos (imágenes, música, texto) que no contribuyan directamente al objetivo, porque compiten por recursos cognitivos","El diseño visual debe ser coherente en todo el curso","El texto y las imágenes deben aparecer juntos en pantalla"], c:1, fb_ok:"Correcto. Menos es más. Una imagen decorativa atractiva puede parecer inofensiva, pero consume recursos cognitivos que el estudiante necesita para procesar el contenido relevante.", fb_fail:"El principio de coherencia establece eliminar todo lo que no contribuye al objetivo: imágenes decorativas, música de fondo, texto adicional. Compiten por recursos cognitivos limitados." },
-  { q:"Un curso de capacitación comienza con: 'En este módulo aprenderás a redactar correos de cobranza efectivos. Al finalizar, podrás escribir un correo que logre respuesta en menos de 48 horas.' ¿Qué evento de Gagné activa esto?", opts:["Evento 1 (captar la atención)","Evento 2 (informar los objetivos)","Evento 3 (conocimientos previos)","Evento 5 (orientación para el aprendizaje)"], c:1, fb_ok:"Correcto. Informar los objetivos en términos concretos y relevantes activa la expectativa del estudiante y orienta su atención hacia lo que importa.", fb_fail:"Es el Evento 2: informar los objetivos. El estudiante sabe qué aprenderá y cuál será el beneficio concreto. Esto activa la expectativa y orienta la atención." },
-  { q:"¿Por qué el principio de segmentación mejora el aprendizaje según la teoría de la carga cognitiva?", opts:["Porque los estudiantes tienen menos tiempo disponible hoy","Porque divide el contenido en unidades pequeñas que no saturan la memoria de trabajo, permitiendo procesar cada parte antes de avanzar","Porque los videos cortos son más fáciles de producir","Porque los LMS modernos solo soportan contenido corto"], c:1, fb_ok:"Correcto. La segmentación respeta los límites de la memoria de trabajo: cada unidad pequeña puede procesarse completamente antes de que llegue la siguiente.", fb_fail:"La segmentación reduce la carga intrínseca percibida al dividir el contenido en porciones que no saturan la memoria de trabajo. No es una razón de producción o tecnología." },
-  { q:"¿Qué ocurre cuando un diseñador omite el Evento 5 de Gagné (orientación para el aprendizaje)?", opts:["El estudiante no sabe qué evaluar","El estudiante recibe la información pero sin guía para procesarla profundamente, lo que resulta en aprendizaje superficial o memorístico","El módulo pierde su estructura narrativa","El estudiante no puede hacer la práctica del Evento 6"], c:1, fb_ok:"Correcto. El Evento 5 es el puente entre recibir información y construir comprensión. Sin ejemplos resueltos, analogías o esquemas guía, el estudiante memorizará en lugar de comprender.", fb_fail:"El Evento 5 es el puente entre presentar información y construir comprensión. Sin él, el estudiante memoriza pero no comprende. Es uno de los eventos más subestimados." },
-  { q:"¿Cuál de los siguientes escenarios aplica correctamente el principio de señalización?", opts:["Un video de 15 minutos sin pausas ni subtítulos","Una presentación donde los conceptos clave están en negrita, las flechas indican relaciones y los íconos distinguen tipos de contenido","Un documento con todo el texto en el mismo tamaño y color para no distraer","Una pantalla con múltiples colores aleatorios para hacer el contenido más atractivo"], c:1, fb_ok:"Correcto. La señalización guía la atención hacia lo relevante: negritas, flechas, íconos con propósito. No es decoración; es orientación cognitiva.", fb_fail:"La señalización usa recursos visuales con propósito pedagógico (negritas para énfasis, flechas para relaciones, íconos para categorías) para guiar la atención. No es decoración aleatoria." }
+function detectMedia() {
+  fetch('m1-3.pdf', { method: 'HEAD' }).then(r => {
+    if (r.ok) document.getElementById('pdfContainer').innerHTML =
+      '<iframe class="pdf-frame" src="m1-3.pdf#view=FitH" title="Presentación" loading="lazy" onload="Gami.award(\'m1-3_pdf\',5,\'Revisaste la presentación\');checkMultimodal();"></iframe><div class="pdf-actions"><a href="m1-3.pdf" target="_blank" rel="noopener">Pantalla completa</a><a href="m1-3.pdf" download>Descargar</a></div>';
+  }).catch(()=>{});
+  fetch('m1-3-audio.mp3', { method: 'HEAD' }).then(r => {
+    if (r.ok) document.getElementById('audioContainer').innerHTML =
+      '<div class="audio-pane"><span class="audio-label">Resumen en audio · NotebookLM</span><audio controls preload="metadata" src="m1-3-audio.mp3" onplay="Gami.award(\'m1-3_audio\',5,\'Escuchaste el audio\');checkMultimodal();"></audio></div>';
+  }).catch(()=>{});
+  if (YT_VIDEO_ID) document.getElementById('videoContainer').innerHTML =
+    '<div class="video-wrap"><iframe src="https://www.youtube-nocookie.com/embed/' + YT_VIDEO_ID + '" title="Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>';
+}
+detectMedia();
+
+function switchMedia(btn) {
+  document.querySelectorAll('.media-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.media-pane').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('pane-' + btn.dataset.pane).classList.add('active');
+  if (btn.dataset.pane === 'video' && YT_VIDEO_ID) { Gami.award('m1-3_video',5,'Viste el video'); checkMultimodal(); }
+}
+function checkMultimodal() { if (Gami.hasSeen('m1-3_pdf') && Gami.hasSeen('m1-3_audio')) Gami.badge('multimodal'); }
+
+let capasReveladas = 0;
+document.querySelectorAll('.capa').forEach((capa, i) => {
+  capa.addEventListener('click', () => {
+    capa.closest('.callout').classList.add('revealed');
+    Gami.award('m1-3_capa' + i, 5, 'Levantaste una capa');
+    capasReveladas++;
+    if (capasReveladas >= 2) Gami.badge('curiosa');
+  });
+});
+function toggleRM(id, pid) { document.getElementById(id).classList.toggle('show'); Gami.award('m1-3_rm_' + pid, 3, 'Contrastaste con la respuesta modelo'); }
+function clCheck(el, id) { if (el.checked) Gami.award('m1-3_cl_' + id, 2, 'Ítem de checklist verificado'); }
+
+const ACT_ITEMS = [
+  { text: 'Un quiz autocorregido con feedback inmediato y puntos por respuesta correcta.', ans: 'cond', why: 'Refuerzo inmediato de la conducta correcta = conductismo.' },
+  { text: 'Un organizador previo que activa lo que el estudiante ya sabe antes de introducir el tema nuevo.', ans: 'cog', why: 'Ausubel y el procesamiento de información = cognitivismo.' },
+  { text: 'Un proyecto donde el grupo resuelve un caso real sin una única respuesta correcta.', ans: 'const', why: 'Construcción activa y aprendizaje situado = constructivismo.' },
+  { text: 'Un curso que enseña a curar fuentes y construir una red personal de aprendizaje con expertos en redes sociales.', ans: 'conect', why: 'Aprender navegando y conectando redes = conectivismo.' },
+  { text: 'Fragmentar el contenido en chunks pequeños para no saturar la memoria de trabajo.', ans: 'cog', why: 'Gestión de carga cognitiva (Sweller) = cognitivismo.' },
+  { text: 'Práctica repetida de vocabulario técnico con flashcards y refuerzo.', ans: 'cond', why: 'Drill and practice con refuerzo = conductismo.' },
 ];
-
-let answers = {};
-let submitted = false;
-
-function toggleAcc(btn) {
-  const body = btn.nextElementSibling;
-  const isOpen = body.classList.contains('show');
-  body.classList.toggle('show', !isOpen);
-  btn.classList.toggle('open', !isOpen);
+let actDone = 0, actCorrect = 0;
+const LABELS = { cond: 'Conductismo', cog: 'Cognitivismo', const: 'Constructivismo', conect: 'Conectivismo' };
+function renderActivity() {
+  document.getElementById('actRoot').innerHTML = ACT_ITEMS.map((item, i) => `
+    <div class="act-card" id="act-${i}">
+      <div class="act-statement">${item.text}</div>
+      <div class="act-buttons">
+        <button class="act-btn" onclick="answerAct(${i},'cond')">Conductismo</button>
+        <button class="act-btn" onclick="answerAct(${i},'cog')">Cognitivismo</button>
+        <button class="act-btn" onclick="answerAct(${i},'const')">Constructivismo</button>
+        <button class="act-btn" onclick="answerAct(${i},'conect')">Conectivismo</button>
+      </div>
+      <div class="act-verdict" id="verdict-${i}"></div>
+    </div>`).join('');
+  updateActProgress();
 }
-
-function toggleModelo(btn) {
-  const box = btn.nextElementSibling;
-  const isOpen = box.style.display === 'block';
-  box.style.display = isOpen ? 'none' : 'block';
-  btn.textContent = isOpen ? 'Ver respuesta modelo' : 'Ocultar respuesta modelo';
+function answerAct(i, choice) {
+  const item = ACT_ITEMS[i];
+  const card = document.getElementById('act-' + i);
+  const verdict = document.getElementById('verdict-' + i);
+  actDone++;
+  if (choice === item.ans) { actCorrect++; card.classList.add('ok'); verdict.style.color = '#315226'; verdict.textContent = '✓ ' + item.why; }
+  else { card.classList.add('no'); card.querySelector('.act-buttons').style.display = 'none'; verdict.style.color = '#6E2A2A'; verdict.textContent = '✗ Era ' + LABELS[item.ans] + '. ' + item.why; }
+  updateActProgress();
+  if (actDone === ACT_ITEMS.length) Gami.award('m1-3_actividad', Math.round(15 * actCorrect / ACT_ITEMS.length) + 5, 'Actividad de teorías — ' + actCorrect + '/' + ACT_ITEMS.length);
 }
+function updateActProgress() { document.getElementById('actProgress').textContent = actDone + '/' + ACT_ITEMS.length + ' resueltas' + (actDone === ACT_ITEMS.length ? ' · ' + actCorrect + ' correctas' : ''); }
+renderActivity();
 
+const QUIZ = [
+  { q: 'Para el conductismo, el aprendizaje es…', opts: ['La construcción activa de significado','Un cambio observable de conducta producido por estímulos y refuerzo','El procesamiento interno de información','Navegar redes de conocimiento'], ans: 1 },
+  { q: '¿Qué metáfora describe mejor al cognitivismo?', opts: ['La mente como caja negra','La mente como procesador de información con memoria limitada','La mente como constructor','La mente como nodo en una red'], ans: 1 },
+  { q: 'El aprendizaje basado en problemas (ABP) se fundamenta principalmente en…', opts: ['Conductismo','Cognitivismo','Constructivismo','Conectivismo'], ans: 2 },
+  { q: 'La "zona de desarrollo próximo" es un aporte de…', opts: ['Skinner','Vygotsky','Pavlov','Siemens'], ans: 1 },
+  { q: '¿Qué teoría es la más reciente y también la más debatida como "teoría plena"?', opts: ['Conductismo','Cognitivismo','Constructivismo','Conectivismo'], ans: 3 },
+  { q: 'Para memorizar normas de seguridad con práctica repetida y refuerzo, ¿qué teoría conviene?', opts: ['Conductismo','Constructivismo','Conectivismo','Ninguna sirve'], ans: 0 },
+  { q: 'La gestión de la carga cognitiva y los organizadores previos pertenecen a…', opts: ['Conductismo','Cognitivismo','Constructivismo','Conectivismo'], ans: 1 },
+  { q: '¿Cuál es la afirmación correcta sobre las teorías del aprendizaje?', opts: ['La más nueva reemplaza y anula a las anteriores','Coexisten y cada una explica mejor cierto tipo de aprendizaje','Solo una es científicamente válida','Son intercambiables y dan igual'], ans: 1 },
+  { q: 'El conectivismo fue propuesto por…', opts: ['Piaget y Vygotsky','Skinner y Thorndike','Siemens y Downes','Gagné y Ausubel'], ans: 2 },
+  { q: '¿Cuál es la respuesta más madura a "¿qué teoría del aprendizaje prefieres?"?', opts: ['"El constructivismo, siempre es superior"','"Depende del contenido: combino varias según el objetivo de cada parte del curso"','"El conductismo, es el más científico"','"Ninguna, son todas obsoletas"'], ans: 1 },
+];
 function renderQuiz() {
-  const body = document.getElementById('quizBody');
-  body.innerHTML = PREGUNTAS.map((p, qi) => {
-    const opts = p.opts.map((o, oi) =>
-      `<div class="eval-option" onclick="selectOpt(this,${qi},${oi})"><div class="eval-radio"></div><span>${o}</span></div>`
-    ).join('');
-    return `<div class="eval-question" data-question="${qi}"><h6>${qi+1}. ${p.q}</h6>${opts}</div>`;
-  }).join('');
+  document.getElementById('quizRoot').innerHTML = QUIZ.map((item, qi) => `
+    <div class="eval-q">${qi + 1}. ${item.q}</div>
+    <div class="quiz-opts" data-q="${qi}">${item.opts.map((opt, oi) => `<label class="eval-option"><input type="radio" name="q${qi}" value="${oi}" onchange="updateQuizCounter()"> ${opt}</label>`).join('')}</div>`).join('');
 }
-
-function selectOpt(el, qi, oi) {
-  if (submitted) return;
-  const container = el.closest('[data-question]');
-  container.querySelectorAll('.eval-option').forEach(o => o.classList.remove('selected'));
-  el.classList.add('selected');
-  answers[qi] = oi;
-  document.getElementById('answeredCount').textContent = Object.keys(answers).length;
-}
-
-function submitEval() {
-  if (Object.keys(answers).length === 0) {
-    showToast('Responde al menos una pregunta para enviar', 'warning');
-    return;
-  }
-  submitted = true;
-  let score = 0;
-
-  PREGUNTAS.forEach((p, qi) => {
-    const container = document.querySelector(`[data-question="${qi}"]`);
-    if (!container) return;
-    const userAns = answers[qi];
-    const opts = container.querySelectorAll('.eval-option');
-    opts.forEach((opt, idx) => {
-      opt.style.pointerEvents = 'none';
-      if (idx === userAns) {
-        if (userAns === p.c) { opt.classList.add('correct'); score++; }
-        else opt.classList.add('incorrect');
-      } else if (idx === p.c && userAns !== undefined) {
-        opt.classList.add('correct');
-      }
+function answered() { let n = 0; for (let i = 0; i < QUIZ.length; i++) if (document.querySelector('input[name=q' + i + ']:checked')) n++; return n; }
+function updateQuizCounter() { const n = answered(); document.getElementById('quizCounter').textContent = 'Respondidas: ' + n + '/' + QUIZ.length; document.getElementById('quizSubmit').disabled = n < QUIZ.length; }
+function submitQuiz() {
+  let correct = 0;
+  QUIZ.forEach((item, qi) => {
+    const sel = document.querySelector('input[name=q' + qi + ']:checked');
+    const val = sel ? parseInt(sel.value) : -1;
+    document.querySelectorAll('[data-q="' + qi + '"] .eval-option').forEach((opt, oi) => {
+      opt.classList.remove('correct','incorrect');
+      if (oi === item.ans) opt.classList.add('correct'); else if (oi === val) opt.classList.add('incorrect');
     });
-    if (userAns !== undefined) {
-      const isOk = userAns === p.c;
-      const fbEl = document.createElement('div');
-      fbEl.className = 'feedback-box ' + (isOk ? 'feedback-ok' : 'feedback-fail');
-      fbEl.innerHTML = (isOk ? '<i class="bi bi-check-circle me-1"></i>' : '<i class="bi bi-x-circle me-1"></i>') + (isOk ? p.fb_ok : p.fb_fail);
-      container.appendChild(fbEl);
-    }
+    if (val === item.ans) correct++;
   });
-
-  const answered = Object.keys(answers).length;
-  const pct = Math.round(score / PREGUNTAS.length * 100);
-  const msg = pct >= 90 ? 'Excelente. Dominas Gagné y la carga cognitiva.' : pct >= 70 ? 'Buen resultado. Repasa los principios de Mayer.' : 'Vuelve a repasar los Nueve Eventos y los principios de diseño.';
-
-  document.getElementById('evalResult').innerHTML = `
-    <div class="result-card">
-      <div class="result-score">${score}/${PREGUNTAS.length}</div>
-      <div class="result-label">${pct}% de respuestas correctas (${answered} respondidas)</div>
-      <div class="result-msg">${msg}</div>
-    </div>`;
-
-  document.getElementById('submitBtn').style.display = 'none';
-  document.getElementById('retryBtn').style.display = 'inline-block';
-  document.getElementById('nextBtn').style.display = 'inline-block';
-  guardarPuntaje(score / PREGUNTAS.length);
+  saveScore(correct / QUIZ.length, correct);
 }
-
-function retryEval() {
-  submitted = false;
-  answers = {};
-  renderQuiz();
-  document.getElementById('evalResult').innerHTML = '';
-  document.getElementById('answeredCount').textContent = '0';
-  document.getElementById('submitBtn').style.display = 'inline-block';
-  document.getElementById('retryBtn').style.display = 'none';
-  document.getElementById('nextBtn').style.display = 'none';
-  showToast('Inténtalo de nuevo — repasa el contenido antes de responder', 'info');
-  document.querySelector('.eval-section').scrollIntoView({ behavior:'smooth' });
+function saveScore(pct, correct) {
+  try { const scores = JSON.parse(localStorage.getItem('di_scores_v2') || '{}'); scores[UNIT_ID] = pct; localStorage.setItem('di_scores_v2', JSON.stringify(scores)); } catch(e) {}
+  const card = document.getElementById('resultCard');
+  card.className = 'result-card show';
+  card.style.background = pct >= 0.7 ? 'var(--done-soft)' : 'var(--msoft)';
+  document.getElementById('resultScore').textContent = Math.round(pct * 100) + '%';
+  document.getElementById('resultMsg').textContent = correct + '/' + QUIZ.length + ' correctas · ' + (pct >= 0.7 ? 'Unidad completada en tu ruta.' : 'Puedes repasar y reintentar — sin límite.');
+  if (pct >= 0.7) { Gami.award('m1-3_eval', 30, 'Evaluación 1.3 aprobada — ' + correct + '/' + QUIZ.length); Gami.badge('primeraCapa'); }
+  try { const img = new Image(); img.src = SCRIPT_URL + '?action=saveScore&id=' + UNIT_ID + '&score=' + pct + '&t=' + Date.now(); } catch(e) {}
 }
-
-function getScores() { try { return JSON.parse(localStorage.getItem('di_scores')||'{}'); } catch(e) { return {}; } }
-
-function jsonp(params) {
-  return new Promise(function(resolve, reject) {
-    var cb = 'cb_' + Date.now() + '_' + Math.floor(Math.random()*1e6);
-    var script = document.createElement('script');
-    function cleanup(){ try { delete window[cb]; } catch(e) { window[cb] = undefined; } if (script.parentNode) script.parentNode.removeChild(script); }
-    window[cb] = function(data){ cleanup(); resolve(data); };
-    var qp = new URLSearchParams(Object.assign({}, params, { callback: cb }));
-    script.src = SCRIPT_URL + '?' + qp.toString();
-    script.onerror = function(){ cleanup(); reject(new Error('conexion')); };
-    setTimeout(function(){ if (window[cb]) { cleanup(); reject(new Error('timeout')); } }, 20000);
-    document.head.appendChild(script);
-  });
-}
-
-async function guardarPuntaje(ratio) {
-  const s = getScores(); s[UNIDAD_ID] = ratio; localStorage.setItem('di_scores', JSON.stringify(s));
-  updateSidebar();
-  try {
-    await jsonp({ action: 'saveScore', id: UNIDAD_ID, score: ratio, label: UNIDAD_LABEL, date: new Date().toLocaleDateString('es-CL') });
-  } catch(e) {}
-}
-
-function updateSidebar() {
-  const s = getScores();
-  const ids = ['m1-1','m1-2','m1-3','m1-4'];
-  // Una unidad cuenta como completada solo si su puntaje es mayor a 0.
-  const done = ids.filter(id => s[id] !== undefined && s[id] > 0).length;
-  document.getElementById('sidebarPct').textContent = done + '/4';
-  document.getElementById('sidebarBar').style.width = Math.round(done/4*100) + '%';
-  ids.forEach(id => {
-    const el = document.getElementById('num-' + id);
-    if (el && s[id] !== undefined && s[id] > 0) { el.style.background = 'var(--success)'; el.style.color = '#fff'; }
-  });
-  document.getElementById('headerProgress').textContent = done + '/4 completadas';
-}
-
-function showToast(msg, type) {
-  const colors = { warning:'#c85c3a', info:'#3a6b8a', success:'#2d7a4f' };
-  const t = document.createElement('div');
-  t.className = 'toast-di';
-  t.style.background = colors[type] || colors.info;
-  t.innerHTML = msg;
-  document.body.appendChild(t);
-  setTimeout(() => { t.style.opacity='0'; t.style.transition='opacity 0.3s'; setTimeout(()=>t.remove(),300); }, 3000);
-}
-
-function scrollToTop() { window.scrollTo({top:0,behavior:'smooth'}); }
-
 renderQuiz();
-updateSidebar();
-
-// ---- Sincronización con Google Sheets al cargar el módulo ----
-// Trae los puntajes desde Sheets aunque el localStorage esté vacío
-// (otro dispositivo, modo incógnito o navegador nuevo).
-async function syncSheet() {
-  try {
-    const data = await jsonp({ action: 'getAll' });
-    if (data && data.ok) {
-      const s = getScores();
-      (data.scores || []).forEach(function(row){
-        if (row.id && row.score !== undefined) s[row.id] = parseFloat(row.score);
-      });
-      localStorage.setItem('di_scores', JSON.stringify(s));
-      updateSidebar();
-      showCompletedState();
-    }
-  } catch(e) {}
-}
-
-// ---- Muestra el estado "ya completado" si esta unidad tiene puntaje ----
-function showCompletedState() {
-  const ratio = getScores()[UNIDAD_ID];
-  if (ratio === undefined || ratio <= 0) return;
-  const pct = Math.round(ratio * 100);
-  const ok = pct >= 70;
-  const sec = document.querySelector('.eval-section');
-  if (!sec) return;
-  let banner = document.getElementById('completedBanner');
-  if (!banner) {
-    banner = document.createElement('div');
-    banner.id = 'completedBanner';
-    sec.insertBefore(banner, sec.firstChild);
-  }
-  banner.innerHTML =
-    '<div style="display:flex;align-items:center;gap:0.9rem;background:' + (ok ? '#edf7f2' : 'var(--terra-light)') +
-    ';border:1px solid ' + (ok ? '#b0ddc5' : '#e0b0a0') + ';border-left:4px solid ' + (ok ? 'var(--success)' : 'var(--terra)') +
-    ';border-radius:8px;padding:0.9rem 1.1rem;margin-bottom:1.2rem">' +
-      '<i class="bi bi-' + (ok ? 'check-circle-fill' : 'arrow-repeat') + '" style="color:' + (ok ? 'var(--success)' : 'var(--terra)') + ';font-size:1.5rem"></i>' +
-      '<div style="flex:1">' +
-        '<div style="font-weight:bold;font-size:0.9rem;color:var(--dark)">Ya completaste esta unidad</div>' +
-        '<div style="font-size:0.82rem;color:var(--muted)">Puntaje guardado: <strong>' + pct + '%</strong>. Puedes repasar el contenido o volver a responder más abajo.</div>' +
-      '</div>' +
-    '</div>';
-}
-
-// ---- Registro de visita por pixel de imagen ----
-// Más confiable que JSONP: funciona en móvil, incógnito y cualquier navegador, sin CORS.
-function trackVisit() {
-  try {
-    let vid = localStorage.getItem('di_vid');
-    if (!vid) { vid = 'v' + Date.now().toString(36) + Math.random().toString(36).slice(2,8); localStorage.setItem('di_vid', vid); }
-    let sid = sessionStorage.getItem('di_sid');
-    if (!sid) { sid = 's' + Date.now().toString(36) + Math.random().toString(36).slice(2,8); sessionStorage.setItem('di_sid', sid); }
-    const qs = new URLSearchParams(location.search);
-    if (qs.get('owner') === '1') localStorage.setItem('di_owner', '1');
-    if (qs.get('owner') === '0') localStorage.removeItem('di_owner');
-    const owner = localStorage.getItem('di_owner') === '1' ? '1' : '0';
-    const device = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'movil' : 'escritorio';
-    const params = new URLSearchParams({ action: 'logVisit', page: UNIDAD_ID, vid: vid, sid: sid, owner: owner, device: device, t: String(Date.now()) });
-    const img = new Image();
-    img.referrerPolicy = 'no-referrer';
-    img.src = SCRIPT_URL + '?' + params.toString();
-  } catch(e) {}
-}
-
-trackVisit();
-syncSheet();
+updateQuizCounter();
 </script>
 </body>
 </html>
