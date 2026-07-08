@@ -3,856 +3,509 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>1.1 ¿Qué es el DI? — Curso DI</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<title>1.1 ¿Qué es el DI? — Cuaderno de taller</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --cream: #f5f2ec;
-  --dark: #0f1117;
-  --terra: #c85c3a;
-  --blue: #3a6b8a;
-  --muted: #7a7570;
-  --border: #ddd8d0;
-  --success: #2d7a4f;
-  --terra-light: #f7ede8;
-  --blue-light: #e8f0f5;
+  --paper: #EDEAE3; --paper-alt: #E4DFD3; --card: #F8F6F1;
+  --ink: #1C1A17; --ink-muted: #6B665D; --border: #D8D1C0; --border-soft: #E2DCCC;
+  --mc: #A85B32; --msoft: #F1E2D6;
+  --ia: #2A5CAA; --ia-soft: #DCE5F2;
+  --done: #4A6B3E;
 }
-body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif; color: var(--dark); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--paper); color: var(--ink); font-family: 'IBM Plex Sans', sans-serif; line-height: 1.55; }
+a { color: inherit; }
 
-/* HEADER */
-.header-di {
-  background: linear-gradient(135deg, var(--dark) 0%, #1e2030 100%);
-  border-bottom: 3px solid var(--terra);
-  padding: 0.9rem 0;
-  position: sticky; top: 0; z-index: 1030;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+.topbar {
+  background: var(--ink); color: #EDEAE3;
+  padding: 0.7rem 1.5rem;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem;
 }
-.header-di .course-name { color: #fff; font-family: Georgia, serif; font-size: 1.1rem; font-weight: normal; }
-.header-di .unit-name { color: var(--terra); font-size: 0.82rem; }
-.btn-back { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; border-radius: 20px; padding: 0.4rem 1rem; font-size: 0.82rem; text-decoration: none; transition: all 0.2s; }
-.btn-back:hover { background: rgba(255,255,255,0.2); color: #fff; }
+.topbar a.back { color: #C9C3B5; text-decoration: none; }
+.topbar a.back:hover { color: #fff; }
+.gami-chips { display: flex; gap: 0.9rem; color: #C9C3B5; }
+.gami-chips span strong { color: #EDEAE3; font-weight: 500; }
 
-/* SIDEBAR */
-.sidebar-di {
-  background: #fff;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  overflow: hidden;
+.layout { display: grid; grid-template-columns: 250px 1fr; max-width: 1080px; margin: 0 auto; }
+@media (max-width: 860px) { .layout { grid-template-columns: 1fr; } .sidebar { order: 2; } }
+.sidebar { border-right: 1px solid var(--border); padding: 1.4rem 1.2rem; }
+@media (max-width: 860px) { .sidebar { border-right: none; border-top: 1px solid var(--border); } }
+.sidebar h6 { font-family: 'Fraunces', serif; font-size: 0.95rem; color: var(--mc); margin-bottom: 0.2rem; }
+.sidebar .sidebar-sub { font-size: 0.74rem; color: var(--ink-muted); margin-bottom: 1rem; }
+.side-item {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.55rem 0.5rem; border-radius: 3px; text-decoration: none; color: var(--ink);
+  font-size: 0.84rem; margin-bottom: 0.15rem;
 }
-@media(min-width:992px){ .sidebar-di { position: sticky; top: 80px; max-height: calc(100vh - 100px); overflow-y: auto; } }
-.sidebar-header { background: var(--dark); color: #fff; padding: 1rem 1.2rem; }
-.sidebar-header h6 { font-family: Georgia, serif; font-weight: normal; font-size: 0.9rem; margin: 0; color: var(--terra); }
-.sidebar-header p { font-size: 0.75rem; color: #a09a94; margin: 0.2rem 0 0; }
-.lesson-item { display: flex; align-items: center; gap: 0.8rem; padding: 0.75rem 1.2rem; border-bottom: 1px solid var(--border); cursor: pointer; transition: all 0.2s; text-decoration: none; color: var(--dark); }
-.lesson-item:hover { background: var(--cream); }
-.lesson-item.active { background: var(--terra-light); border-left: 3px solid var(--terra); }
-.lesson-item.done { color: var(--muted); }
-.lesson-num { width: 30px; height: 30px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold; flex-shrink: 0; color: var(--muted); }
-.lesson-item.active .lesson-num { background: var(--terra); color: #fff; }
-.lesson-item.done .lesson-num { background: var(--success); color: #fff; }
-.lesson-info { flex: 1; }
-.lesson-info strong { font-size: 0.83rem; display: block; }
-.lesson-info span { font-size: 0.74rem; color: var(--muted); }
-.sidebar-progress { padding: 1rem 1.2rem; background: var(--cream); }
-.progress-di { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
-.progress-di-fill { height: 100%; background: linear-gradient(90deg, var(--terra), #e07a5a); border-radius: 99px; transition: width 0.5s ease; }
-.sidebar-footer { padding: 0.8rem 1.2rem; text-align: center; border-top: 1px solid var(--border); }
+.side-item.active { background: var(--msoft); font-weight: 600; color: var(--mc); }
+.side-item.locked { color: var(--ink-muted); cursor: default; }
+.side-mark { width: 20px; height: 20px; border-radius: 3px; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; flex-shrink: 0; }
+.side-item.active .side-mark { background: var(--mc); border-color: var(--mc); color: #fff; }
 
-/* CONTENT */
-.content-di { background: #fff; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow: hidden; }
-.lesson-hero { background: linear-gradient(135deg, var(--dark) 0%, #1e2030 100%); color: #fff; padding: 2rem 2rem 1.5rem; }
-.lesson-hero .unit-tag { font-size: 0.72rem; color: var(--terra); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.4rem; }
-.lesson-hero h1 { font-family: Georgia, serif; font-size: 1.6rem; font-weight: normal; margin-bottom: 0.4rem; }
-.lesson-hero p { color: #a09a94; font-size: 0.88rem; margin: 0; }
-.lesson-badges { padding: 1rem 2rem; background: var(--terra-light); border-bottom: 1px solid var(--border); display: flex; gap: 0.6rem; flex-wrap: wrap; }
-.lbadge { font-size: 0.78rem; padding: 0.3rem 0.7rem; border-radius: 20px; border: 1px solid var(--border); background: #fff; color: var(--muted); }
-.lbadge i { color: var(--terra); }
-.lesson-body { padding: 1.8rem 2rem; }
+main { padding: 2.2rem 2rem 4rem; min-width: 0; }
+.unit-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--mc); margin-bottom: 0.5rem; }
+h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(1.5rem, 3.5vw, 2.1rem); margin-bottom: 0.6rem; max-width: 22ch; }
+.lesson-dek { color: #423E37; max-width: 62ch; margin-bottom: 1.6rem; }
 
-/* PRESENTACIÓN */
-.presentacion { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
-.presentacion-head { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; flex-wrap: wrap; background: var(--dark); color: #fff; padding: 0.8rem 1.2rem; }
-.pres-title { font-size: 0.95rem; font-weight: bold; display: flex; align-items: center; gap: 0.6rem; }
-.pres-title i { color: var(--terra); font-size: 1.1rem; }
-.pres-tag { font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: #a09a94; border: 1px solid rgba(255,255,255,0.18); border-radius: 20px; padding: 0.12rem 0.55rem; }
-.presentacion-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-.pres-btn { font-size: 0.78rem; color: #fff; text-decoration: none; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.08); border-radius: 20px; padding: 0.35rem 0.9rem; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.4rem; }
-.pres-btn:hover { background: var(--terra); border-color: var(--terra); color: #fff; }
-.presentacion-viewer { height: 520px; background: var(--cream); }
-.presentacion-viewer object, .presentacion-viewer iframe { width: 100%; height: 100%; border: none; display: block; }
-.pres-placeholder { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: var(--muted); padding: 2rem; }
-.pres-placeholder i { font-size: 2.4rem; color: #c9c2b8; margin-bottom: 0.8rem; }
-.pres-placeholder p { font-size: 0.98rem; font-weight: bold; color: var(--dark); margin-bottom: 0.3rem; }
-.pres-placeholder small { font-size: 0.82rem; line-height: 1.6; max-width: 360px; }
-.pres-placeholder code { background: #fff; border: 1px solid var(--border); border-radius: 4px; padding: 0.1rem 0.4rem; color: var(--terra); }
-@media(max-width:600px){ .presentacion-viewer { height: 380px; } }
-.pres-audio { display: flex; align-items: center; gap: 0.9rem; padding: 0.85rem 1.2rem; background: var(--terra-light); border-top: 1px solid var(--border); }
-.pres-audio-label { font-size: 0.82rem; color: var(--dark); font-weight: bold; display: flex; align-items: center; gap: 0.5rem; white-space: nowrap; }
-.pres-audio-label i { color: var(--terra); font-size: 1rem; }
-.pres-audio audio { flex: 1; height: 38px; min-width: 0; }
-@media(max-width:600px){ .pres-audio { flex-direction: column; align-items: stretch; gap: 0.55rem; } }
+.objetivo-box {
+  background: var(--card); border: 1px solid var(--border); border-left: 4px solid var(--mc);
+  border-radius: 4px; padding: 1.1rem 1.3rem; margin-bottom: 2rem;
+}
+.objetivo-box .label { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mc); margin-bottom: 0.4rem; }
+.objetivo-box p { font-size: 0.92rem; font-style: italic; color: #322E28; }
 
-/* ACCORDION */
-.accordion-di { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1rem; }
-.accordion-di-btn { background: var(--cream); border: none; width: 100%; text-align: left; padding: 1rem 1.2rem; display: flex; align-items: center; gap: 0.8rem; cursor: pointer; transition: background 0.2s; font-size: 0.95rem; font-weight: bold; color: var(--dark); }
-.accordion-di-btn:hover { background: #ede9e2; }
-.accordion-di-btn.open { background: var(--dark); color: #fff; }
-.accordion-di-btn.open .acc-icon { color: var(--terra); }
-.accordion-di-btn .acc-chevron { margin-left: auto; transition: transform 0.25s; font-size: 0.8rem; }
-.accordion-di-btn.open .acc-chevron { transform: rotate(180deg); }
-.acc-icon { font-size: 1rem; color: var(--terra); }
-.accordion-di-body { display: none; padding: 1.2rem 1.4rem; border-top: 1px solid var(--border); background: #fff; font-size: 0.92rem; line-height: 1.7; }
-.accordion-di-body.show { display: block; }
-.accordion-di-body h5 { font-family: Georgia, serif; font-size: 1rem; font-weight: normal; color: var(--blue); margin: 1.2rem 0 0.5rem; }
-.accordion-di-body h5:first-child { margin-top: 0; }
+/* ===== BLOQUE MULTIMODAL (DUA: múltiples medios de representación) ===== */
+.media-block { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin-bottom: 2.2rem; background: var(--card); }
+.media-tabs { display: flex; border-bottom: 1px solid var(--border); background: var(--paper-alt); flex-wrap: wrap; }
+.media-tab {
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; padding: 0.7rem 1rem;
+  cursor: pointer; border: none; background: none; color: var(--ink-muted);
+  border-bottom: 2px solid transparent;
+}
+.media-tab.active { color: var(--mc); border-bottom-color: var(--mc); background: var(--card); }
+.media-pane { display: none; }
+.media-pane.active { display: block; }
+.media-note { font-size: 0.76rem; color: var(--ink-muted); padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
+.pdf-frame { width: 100%; height: 480px; border: none; display: block; background: #fff; }
+.pdf-actions { display: flex; gap: 0.6rem; padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
+.pdf-actions a { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--mc); text-decoration: none; border: 1px solid var(--border); border-radius: 3px; padding: 0.3rem 0.7rem; }
+.audio-pane { padding: 1.2rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.audio-pane audio { flex: 1; min-width: 240px; }
+.audio-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: var(--ink-muted); }
+.video-wrap { position: relative; padding-top: 56.25%; background: #111; }
+.video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+.video-empty {
+  position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 0.5rem; color: #C9C3B5; font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; text-align: center; padding: 1rem;
+}
 
-/* CARDS */
-.card-di { background: var(--cream); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; margin-bottom: 0.7rem; }
-.card-di h6 { font-size: 0.85rem; font-weight: bold; color: var(--blue); margin-bottom: 0.3rem; }
-.card-di p { font-size: 0.88rem; margin: 0; }
-.callout-terra { border-left: 4px solid var(--terra); background: var(--terra-light); padding: 0.9rem 1.1rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: 0.88rem; }
-.callout-terra strong { color: var(--terra); }
-.callout-blue { border-left: 4px solid var(--blue); background: var(--blue-light); padding: 0.9rem 1.1rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: 0.88rem; }
-.callout-blue strong { color: var(--blue); }
-.table-di { font-size: 0.85rem; }
-.table-di th { background: var(--dark); color: #fff; font-weight: normal; }
-.table-di td { vertical-align: top; }
+.content-section { margin-bottom: 2.4rem; }
+.content-section h2 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.25rem; margin-bottom: 0.7rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
+.content-section p { margin-bottom: 0.8rem; font-size: 0.94rem; color: #2B2823; }
+.content-section ul { margin: 0.6rem 0 0.9rem 1.3rem; font-size: 0.92rem; }
+.content-section li { margin-bottom: 0.4rem; }
+.content-section strong { color: var(--mc); font-weight: 600; }
 
-/* EVALUACIÓN */
-.eval-section { background: var(--cream); border-radius: 10px; border: 1px solid var(--border); padding: 1.5rem; margin-top: 2rem; }
-.eval-section h4 { font-family: Georgia, serif; font-weight: normal; color: var(--dark); font-size: 1.1rem; margin-bottom: 0.3rem; }
-.eval-progress-text { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.2rem; }
-.eval-question { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem 1.3rem; margin-bottom: 1rem; }
-.eval-question h6 { font-size: 0.9rem; font-weight: bold; color: var(--dark); margin-bottom: 0.8rem; line-height: 1.5; }
-.eval-option { display: flex; align-items: flex-start; gap: 0.7rem; padding: 0.6rem 0.8rem; border-radius: 7px; border: 1px solid var(--border); margin-bottom: 0.5rem; cursor: pointer; font-size: 0.88rem; transition: all 0.15s; background: var(--cream); }
-.eval-option:hover { border-color: var(--blue); background: var(--blue-light); }
-.eval-option.selected { border-color: var(--blue); background: var(--blue-light); }
-.eval-option.correct { border-color: var(--success); background: #edf7f2; pointer-events: none; }
-.eval-option.incorrect { border-color: var(--terra); background: var(--terra-light); pointer-events: none; }
-.eval-option.disabled { pointer-events: none; opacity: 0.7; }
-.eval-radio { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px; transition: all 0.15s; }
-.eval-option.selected .eval-radio { border-color: var(--blue); background: var(--blue); }
-.eval-option.correct .eval-radio { border-color: var(--success); background: var(--success); }
-.eval-option.incorrect .eval-radio { border-color: var(--terra); background: var(--terra); }
-.feedback-box { font-size: 0.84rem; padding: 0.7rem 1rem; border-radius: 7px; margin-top: 0.5rem; line-height: 1.6; }
-.feedback-ok { background: #edf7f2; color: var(--success); border: 1px solid #b0ddc5; }
-.feedback-fail { background: var(--terra-light); color: #8a3020; border: 1px solid #e0b0a0; }
+.timeline { border-left: 2px solid var(--border); margin: 1rem 0 1.5rem 0.4rem; padding-left: 1.2rem; }
+.tl-item { position: relative; margin-bottom: 1.1rem; }
+.tl-item::before { content: ''; position: absolute; left: -1.53rem; top: 0.3rem; width: 9px; height: 9px; border-radius: 50%; background: var(--mc); }
+.tl-year { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: var(--mc); font-weight: 500; }
+.tl-text { font-size: 0.88rem; color: #2B2823; }
 
-/* RESULT */
-.result-card { text-align: center; padding: 2rem; background: #fff; border-radius: 12px; border: 1px solid var(--border); margin-top: 1rem; }
-.result-score { font-family: Georgia, serif; font-size: 4rem; color: var(--terra); line-height: 1; }
-.result-label { font-size: 0.85rem; color: var(--muted); margin: 0.3rem 0 0.8rem; }
-.result-msg { font-size: 0.92rem; max-width: 400px; margin: 0 auto 1.5rem; line-height: 1.6; }
+.compare-table { width: 100%; border-collapse: collapse; margin: 0.8rem 0 1.4rem; font-size: 0.86rem; }
+.compare-table th, .compare-table td { border: 1px solid var(--border); padding: 0.55rem 0.7rem; text-align: left; }
+.compare-table th { background: var(--card); font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-muted); }
 
-/* BTN */
-.btn-terra { background: var(--terra); border-color: var(--terra); color: #fff; border-radius: 8px; padding: 0.6rem 1.4rem; }
-.btn-terra:hover { background: #a8492d; border-color: #a8492d; color: #fff; }
-.btn-blue { background: var(--blue); border-color: var(--blue); color: #fff; border-radius: 8px; }
-.btn-blue:hover { background: #2d5570; border-color: #2d5570; color: #fff; }
-.btn-outline-terra { border-color: var(--terra); color: var(--terra); border-radius: 8px; }
-.btn-outline-terra:hover { background: var(--terra); color: #fff; }
+/* ===== ACTIVIDAD: ¿Docencia o DI? ===== */
+.activity { border: 1px solid var(--border); border-radius: 4px; background: var(--card); padding: 1.3rem; margin: 2rem 0; }
+.activity h2 { font-family: 'Fraunces', serif; font-size: 1.1rem; margin-bottom: 0.3rem; }
+.activity .act-sub { font-size: 0.8rem; color: var(--ink-muted); margin-bottom: 1rem; }
+.act-card {
+  border: 1px solid var(--border); border-radius: 4px; background: var(--paper);
+  padding: 0.9rem 1rem; margin-bottom: 0.8rem;
+}
+.act-statement { font-size: 0.9rem; margin-bottom: 0.7rem; }
+.act-buttons { display: flex; gap: 0.6rem; }
+.act-btn {
+  flex: 1; font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem;
+  padding: 0.5rem; border: 1px solid var(--border); border-radius: 3px;
+  background: var(--card); cursor: pointer; transition: all 0.15s;
+}
+.act-btn:hover { border-color: var(--mc); }
+.act-card.ok { border-color: var(--done); background: #E9F0E5; }
+.act-card.ok .act-buttons { display: none; }
+.act-card.no { border-color: #A83232; }
+.act-verdict { font-size: 0.78rem; margin-top: 0.4rem; display: none; }
+.act-card.ok .act-verdict, .act-card.no .act-verdict { display: block; }
+.act-progress { font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; color: var(--ink-muted); margin-top: 0.4rem; }
 
-/* TOAST */
-.toast-di { position: fixed; top: 80px; right: 20px; padding: 0.9rem 1.3rem; border-radius: 8px; color: #fff; z-index: 9999; font-size: 0.88rem; box-shadow: 0 4px 16px rgba(0,0,0,0.2); animation: slideIn 0.3s ease; }
-@keyframes slideIn { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:translateX(0); } }
+/* ===== CALLOUTS con capa ===== */
+.callout { position: relative; border-radius: 4px; margin: 1.6rem 0; overflow: hidden; border: 1px solid var(--border); }
+.callout-header {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.7rem 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem;
+  text-transform: uppercase; letter-spacing: 0.05em; color: #fff;
+}
+.callout.ia .callout-header { background: var(--ia); }
+.callout.entrevista .callout-header { background: var(--mc); }
+.callout-body { background: var(--card); padding: 1.1rem 1.3rem; font-size: 0.9rem; position: relative; }
+.callout-body p { margin-bottom: 0.7rem; }
+.callout-body p:last-child { margin-bottom: 0; }
+.capa {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+  cursor: pointer; user-select: none;
+  transition: transform 0.5s cubic-bezier(.65,0,.35,1), opacity 0.4s ease;
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--ink-muted);
+}
+.callout.ia .capa { background: var(--ia-soft); }
+.callout.entrevista .capa { background: var(--msoft); }
+.callout.revealed .capa { transform: translateX(105%); opacity: 0; pointer-events: none; }
+
+/* ===== Autoevaluación ===== */
+.eval-block { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 1.3rem; margin-top: 2rem; }
+.eval-block h2 { font-family: 'Fraunces', serif; font-size: 1.1rem; margin-bottom: 0.3rem; }
+.eval-sub { font-size: 0.8rem; color: var(--ink-muted); margin-bottom: 1.1rem; }
+.eval-q { font-size: 0.92rem; font-weight: 500; margin-bottom: 0.7rem; }
+.eval-option {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.6rem 0.8rem; border: 1px solid var(--border); border-radius: 3px;
+  margin-bottom: 0.5rem; cursor: pointer; font-size: 0.88rem; background: var(--paper);
+  transition: border-color 0.15s;
+}
+.eval-option:hover { border-color: var(--mc); }
+.eval-option input { accent-color: var(--mc); }
+.eval-option.correct { border-color: var(--done); background: #E9F0E5; }
+.eval-option.incorrect { border-color: #A83232; background: #F5E5E2; }
+.eval-feedback { display: none; margin-top: 0.9rem; padding: 0.8rem 1rem; border-radius: 3px; font-size: 0.86rem; }
+.eval-feedback.show { display: block; }
+.eval-feedback.ok { background: #E9F0E5; color: #315226; }
+.eval-feedback.no { background: #F5E5E2; color: #6E2A2A; }
+
+.reflexion-box { margin-top: 1.3rem; }
+.reflexion-box label { font-size: 0.84rem; font-weight: 500; display: block; margin-bottom: 0.5rem; }
+.reflexion-box textarea {
+  width: 100%; min-height: 90px; font-family: 'IBM Plex Sans', sans-serif; font-size: 0.88rem;
+  border: 1px solid var(--border); border-radius: 3px; padding: 0.7rem; resize: vertical; background: var(--paper);
+}
+.respuesta-modelo-toggle {
+  margin-top: 0.6rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; color: var(--mc);
+  cursor: pointer; text-decoration: underline; background: none; border: none; padding: 0;
+}
+.respuesta-modelo { display: none; margin-top: 0.6rem; padding: 0.8rem 1rem; background: var(--msoft); border-radius: 3px; font-size: 0.86rem; }
+.respuesta-modelo.show { display: block; }
+
+.result-card { display: none; margin-top: 1.2rem; padding: 1rem; border-radius: 4px; text-align: center; }
+.result-card.show { display: block; }
+.result-score { font-family: 'Fraunces', serif; font-size: 1.6rem; font-weight: 600; }
+
+.next-nav { display: flex; justify-content: space-between; margin-top: 2.5rem; padding-top: 1.2rem; border-top: 1px solid var(--border); font-size: 0.86rem; }
+.next-nav .disabled { color: var(--ink-muted); }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<div class="header-di">
-  <div class="container-fluid px-3">
-    <div class="d-flex align-items-center justify-content-between">
-      <div class="d-flex align-items-center gap-3">
-        <a href="../index.html" class="btn-back"><i class="bi bi-arrow-left me-1"></i>Inicio</a>
-        <div>
-          <div class="course-name">Diseño Instruccional</div>
-          <div class="unit-name">Módulo 1 · Unidad 1.1</div>
-        </div>
-      </div>
-      <div class="d-none d-md-flex align-items-center gap-2">
-        <span id="headerProgress" style="font-size:0.8rem;color:#a09a94"></span>
-      </div>
-    </div>
+<div class="topbar">
+  <a class="back" href="../index.html">← Ruta de aprendizaje</a>
+  <div class="gami-chips">
+    <span id="gamiNivel">Nivel 1 · Boceto</span>
+    <span id="gamiPoints">0 pts</span>
+    <span id="gamiStreak">0 días</span>
   </div>
 </div>
 
-<div class="container-fluid px-3 py-4" style="max-width:1200px;margin:0 auto">
-  <div class="row g-4">
+<div class="layout">
+  <aside class="sidebar">
+    <h6>Módulo 1</h6>
+    <div class="sidebar-sub">Fundamentos y panorama</div>
+    <a class="side-item active" href="m1-1.html"><span class="side-mark">1.1</span> ¿Qué es el DI?</a>
+    <a class="side-item locked" href="#" onclick="return false;"><span class="side-mark">1.2</span> Modelos de DI</a>
+    <a class="side-item locked" href="#" onclick="return false;"><span class="side-mark">1.3</span> Teorías del aprendizaje</a>
+    <a class="side-item locked" href="#" onclick="return false;"><span class="side-mark">1.4</span> Gagné y carga cognitiva</a>
+  </aside>
 
-    <!-- SIDEBAR -->
-    <div class="col-lg-3">
-      <div class="sidebar-di">
-        <div class="sidebar-header">
-          <h6>Módulo 1</h6>
-          <p>Fundamentos teóricos</p>
+  <main>
+    <div class="unit-eyebrow">Módulo 1 · Unidad 1.1</div>
+    <h1 class="lesson-title">¿Qué es el Diseño Instruccional?</h1>
+    <p class="lesson-dek">De lo más amplio — por qué existe esta disciplina — a lo más específico: qué hace exactamente una diseñadora instruccional, y en qué se diferencia de dar clases.</p>
+
+    <div class="objetivo-box">
+      <div class="label">Objetivo de aprendizaje</div>
+      <p>Dado el contexto de un rol de DI, serás capaz de explicar el origen, propósito y perfil profesional del diseño instruccional, distinguiéndolo con precisión de la docencia tradicional.</p>
+    </div>
+
+    <!-- ===== BLOQUE MULTIMODAL — texto, presentación, audio, video ===== -->
+    <div class="media-block">
+      <div class="media-tabs">
+        <button class="media-tab active" data-pane="pdf" onclick="switchMedia(this)">📑 Presentación</button>
+        <button class="media-tab" data-pane="audio" onclick="switchMedia(this)">🎧 Audio NotebookLM</button>
+        <button class="media-tab" data-pane="video" onclick="switchMedia(this)">▶ Video</button>
+      </div>
+      <div class="media-pane active" id="pane-pdf">
+        <iframe class="pdf-frame" src="m1-1.pdf#view=FitH" title="Presentación del tema" loading="lazy" onload="Gami.award('m1-1_pdf', 5, 'Revisaste la presentación'); checkMultimodal();"></iframe>
+        <div class="pdf-actions">
+          <a href="m1-1.pdf" target="_blank" rel="noopener">Pantalla completa</a>
+          <a href="m1-1.pdf" download>Descargar</a>
         </div>
-        <a class="lesson-item active" onclick="scrollToTop()">
-          <div class="lesson-num">1</div>
-          <div class="lesson-info"><strong>¿Qué es el DI?</strong><span>Definición · historia · perfil</span></div>
-        </a>
-        <a class="lesson-item" href="m1-2.html">
-          <div class="lesson-num" id="num-m1-2">2</div>
-          <div class="lesson-info"><strong>Teorías del aprendizaje</strong><span>Conductismo · constructivismo</span></div>
-        </a>
-        <a class="lesson-item" href="m1-3.html">
-          <div class="lesson-num" id="num-m1-3">3</div>
-          <div class="lesson-info"><strong>Gagné y carga cognitiva</strong><span>Nueve eventos · Sweller</span></div>
-        </a>
-        <a class="lesson-item" href="m1-4.html">
-          <div class="lesson-num" id="num-m1-4">4</div>
-          <div class="lesson-info"><strong>Artefactos y documentos del DI</strong><span>Syllabus · APA · diversificación</span></div>
-        </a>
-        <div class="sidebar-progress">
-          <div class="d-flex justify-content-between mb-1">
-            <small style="color:var(--muted);font-size:0.75rem">Módulo 1</small>
-            <small id="sidebarPct" style="color:var(--terra);font-size:0.75rem;font-weight:bold">0/4</small>
+      </div>
+      <div class="media-pane" id="pane-audio">
+        <div class="audio-pane">
+          <span class="audio-label">Resumen en audio · NotebookLM</span>
+          <audio controls preload="metadata" src="m1-1-audio.mp3" onplay="Gami.award('m1-1_audio', 5, 'Escuchaste el resumen en audio'); checkMultimodal();"></audio>
+        </div>
+      </div>
+      <div class="media-pane" id="pane-video">
+        <div class="video-wrap" id="videoWrap">
+          <!-- Pega el ID de YouTube en la constante YT_VIDEO_ID al final del archivo -->
+          <div class="video-empty" id="videoEmpty">
+            <span>▶ Espacio para video de YouTube</span>
+            <span style="opacity:0.6">Edita la constante YT_VIDEO_ID en este archivo con el ID del video que elijas — o pídeme que te busque uno sobre el tema.</span>
           </div>
-          <div class="progress-di"><div class="progress-di-fill" id="sidebarBar" style="width:0%"></div></div>
         </div>
-        <div class="sidebar-footer">
-          <a href="../index.html" style="font-size:0.8rem;color:var(--muted);text-decoration:none"><i class="bi bi-grid me-1"></i>Ver todos los módulos</a>
-        </div>
+      </div>
+      <div class="media-note">Misma unidad, cuatro formatos — elige el medio que te acomode hoy (diversificación de la representación, DUA pauta 1). El texto completo está abajo.</div>
+    </div>
+
+    <div class="content-section">
+      <h2>1. El problema que resuelve el DI</h2>
+      <p>Antes de definir el término, vale la pena partir por el problema. Cuando alguien "sabe" algo — un procedimiento, un contenido, una habilidad — y necesita que otras personas también lo sepan, aparece una brecha: la distancia entre lo que la audiencia sabe hoy y lo que necesita saber. Transmitir contenido no cierra automáticamente esa brecha. Un experto que simplemente cuenta lo que sabe rara vez produce aprendizaje eficiente — organiza la información según su propia lógica interna, no según cómo aprende quien no sabe nada del tema todavía.</p>
+      <p>El Diseño Instruccional es la disciplina que se encarga de <strong>cerrar esa brecha de forma sistemática</strong>: no depende del talento individual de quien enseña, sino de un proceso replicable que va desde entender a la audiencia hasta verificar que el aprendizaje efectivamente ocurrió.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>2. Definición técnica</h2>
+      <p>El Diseño Instruccional (DI) es la aplicación sistemática de teorías del aprendizaje, principios pedagógicos y metodologías de análisis para planificar, desarrollar, implementar y evaluar experiencias formativas efectivas. Es un campo que combina tres tradiciones distintas:</p>
+      <ul>
+        <li><strong>Psicología del aprendizaje</strong> — cómo las personas procesan, retienen y transfieren conocimiento</li>
+        <li><strong>Ingeniería de procesos</strong> — modelos sistemáticos y repetibles (ADDIE, SAM) para producir la instrucción</li>
+        <li><strong>Diseño centrado en el usuario</strong> — la experiencia del que aprende, no solo el contenido, es objeto de diseño</li>
+      </ul>
+      <p>Una forma útil de recordarlo: si la pedagogía pregunta "¿cómo se aprende?", el DI pregunta "¿cómo construyo, de forma sistemática y verificable, una experiencia que produzca ese aprendizaje en esta audiencia específica?"</p>
+    </div>
+
+    <div class="content-section">
+      <h2>3. Origen histórico — panorama breve</h2>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-year">1940s</div><div class="tl-text">La Segunda Guerra Mundial obliga a entrenar masivamente a personal militar en poco tiempo. Psicólogos conductistas (influenciados por Skinner) diseñan los primeros programas de entrenamiento sistemático — nace la necesidad de un proceso replicable, no artesanal.</div></div>
+        <div class="tl-item"><div class="tl-year">1965</div><div class="tl-text">Robert Gagné publica <em>The Conditions of Learning</em>, estableciendo que distintos tipos de resultado de aprendizaje requieren distintas condiciones de enseñanza — base de los "Nueve Eventos de Instrucción" que verás en 1.4.</div></div>
+        <div class="tl-item"><div class="tl-year">1975</div><div class="tl-text">El ejército de EE.UU. formaliza el modelo <strong>ADDIE</strong> como estándar para desarrollo de entrenamiento — se convierte en el marco de referencia dominante del campo por las siguientes cinco décadas.</div></div>
+        <div class="tl-item"><div class="tl-year">1990s–2000s</div><div class="tl-text">El e-learning masifica el campo. Surgen los LMS y el estándar SCORM (Módulo 4), y el DI se separa definitivamente de la docencia presencial como profesión propia.</div></div>
+        <div class="tl-item"><div class="tl-year">2020s</div><div class="tl-text">La pandemia acelera la educación virtual a gran escala. La IA generativa comienza a integrarse en cada fase del proceso — el tema del Módulo 5 de este curso.</div></div>
       </div>
     </div>
 
-    <!-- CONTENT -->
-    <div class="col-lg-9">
-      <div class="content-di">
-        <div class="lesson-hero">
-          <div class="unit-tag">Módulo 1 · Unidad 1.1</div>
-          <h1>¿Qué es el Diseño Instruccional?</h1>
-          <p>Definición técnica · origen histórico · para qué sirve · perfil profesional</p>
-        </div>
-        <div class="lesson-badges">
-          <span class="lbadge"><i class="bi bi-book me-1"></i>5 bloques de contenido</span>
-          <span class="lbadge"><i class="bi bi-chat-square-text me-1"></i>3 preguntas de práctica oral</span>
-          <span class="lbadge"><i class="bi bi-clipboard-check me-1"></i>10 preguntas al final</span>
-          <span class="lbadge"><i class="bi bi-clock me-1"></i>~35 min</span>
-        </div>
+    <div class="content-section">
+      <h2>4. Para qué sirve — el valor concreto</h2>
+      <p>El DI existe porque el costo de una mala instrucción es real y medible: horas de trabajo perdidas en capacitación que no cambia comportamiento, certificaciones que no garantizan competencia real, y contenido que se produce pero nadie termina. Un proceso de DI bien ejecutado:</p>
+      <ul>
+        <li>Reduce el tiempo de producción al usar modelos probados en vez de reinventar el proceso cada vez</li>
+        <li>Hace el aprendizaje medible — puedes demostrar que un objetivo se logró, no solo que el contenido "se vio"</li>
+        <li>Escala — un buen diseño puede adaptarse a más audiencias sin perder calidad pedagógica</li>
+      </ul>
+    </div>
 
-        <div class="lesson-body">
+    <div class="content-section">
+      <h2>5. Perfil profesional — DI vs. docencia</h2>
+      <p>Esta es la distinción que más vale la pena tener clara, especialmente viniendo de un rol docente:</p>
+      <table class="compare-table">
+        <tr><th></th><th>Docencia tradicional</th><th>Diseño Instruccional</th></tr>
+        <tr><td><strong>Foco</strong></td><td>La relación en tiempo real con estudiantes</td><td>El producto/experiencia que otros van a usar sin ti presente</td></tr>
+        <tr><td><strong>Escala</strong></td><td>Un curso, un grupo, un semestre</td><td>Un diseño que se reutiliza para múltiples cohortes o audiencias</td></tr>
+        <tr><td><strong>Rol</strong></td><td>Ejecuta la enseñanza directamente</td><td>Diseña el sistema que produce el aprendizaje, con o sin instructor presente</td></tr>
+        <tr><td><strong>Entregable</strong></td><td>La clase misma</td><td>Documentos, storyboards, cursos empaquetados, LMS configurado</td></tr>
+        <tr><td><strong>Éxito se mide por</strong></td><td>Evaluaciones sumativas del curso</td><td>Datos de uso, finalización y transferencia al desempeño real</td></tr>
+      </table>
+    </div>
 
-          <!-- MAPA CONCEPTUAL (organizador previo) -->
-          <div class="presentacion mb-4">
-            <div class="presentacion-head">
-              <div class="pres-title"><i class="bi bi-diagram-3"></i> Mapa de esta unidad</div>
-              <span class="pres-tag">Organizador previo</span>
-            </div>
-            <div style="background:#fff;padding:1.2rem">
-              <svg width="100%" viewBox="0 0 680 460" style="display:block">
-                <line x1="340" y1="192" x2="220" y2="96" stroke="#ddd8d0" stroke-width="1"/>
-                <line x1="340" y1="192" x2="460" y2="96" stroke="#ddd8d0" stroke-width="1"/>
-                <line x1="260" y1="220" x2="210" y2="220" stroke="#ddd8d0" stroke-width="1"/>
-                <line x1="420" y1="220" x2="470" y2="220" stroke="#ddd8d0" stroke-width="1"/>
-                <line x1="340" y1="248" x2="340" y2="360" stroke="#ddd8d0" stroke-width="1"/>
-                <rect x="250" y="192" width="180" height="56" rx="8" fill="#f7ede8" stroke="#c85c3a" stroke-width="1"/>
-                <text x="340" y="212" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Diseño Instruccional</text>
-                <text x="340" y="230" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#c85c3a">unidad 1.1</text>
-                <rect x="40" y="40" width="190" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="135" y="60" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Definición técnica</text>
-                <text x="135" y="78" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">principios en planes</text>
-                <rect x="450" y="40" width="190" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="545" y="60" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Origen histórico</text>
-                <text x="545" y="78" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">WWII y Gagné</text>
-                <rect x="20" y="192" width="190" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="115" y="212" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Tipos de brechas</text>
-                <text x="115" y="230" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">tres tipos posibles</text>
-                <rect x="470" y="192" width="190" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="565" y="212" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Perfil del DI</text>
-                <text x="565" y="230" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">pedagogía + tecnología</text>
-                <rect x="250" y="360" width="180" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="340" y="380" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Roles afines</text>
-                <text x="340" y="398" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">distinguir de LXD y dev</text>
-              </svg>
-              <p style="font-size:0.8rem;color:var(--muted);text-align:center;margin-top:0.5rem">Estos 5 conceptos son las piezas que necesitas dominar en esta unidad. Vuelve a este mapa al terminar para verificar que puedes explicar cada conexión.</p>
-            </div>
-          </div>
+    <!-- ===== ACTIVIDAD INTERACTIVA ===== -->
+    <div class="activity">
+      <h2>Actividad — ¿Docencia o DI?</h2>
+      <div class="act-sub">Clasifica cada situación. Cada acierto suma puntos — y las que falles son las que necesitas repasar en la tabla de arriba.</div>
+      <div id="actRoot"></div>
+      <div class="act-progress" id="actProgress"></div>
+    </div>
 
-          <!-- PRESENTACIÓN -->
-          <div class="presentacion">
-            <div class="presentacion-head">
-              <div class="pres-title"><i class="bi bi-easel2"></i> Presentación del tema <span class="pres-tag">NotebookLM</span></div>
-              <div class="presentacion-actions">
-                <a class="pres-btn" href="m1-1.pdf" target="_blank" rel="noopener"><i class="bi bi-arrows-fullscreen"></i> Pantalla completa</a>
-                <a class="pres-btn" href="m1-1.pdf" download><i class="bi bi-download"></i> Descargar</a>
-              </div>
-            </div>
-            <div class="presentacion-viewer">
-              <iframe src="m1-1.pdf#view=FitH" title="Presentación del tema" loading="lazy"></iframe>
-            </div>
-            <div class="pres-audio">
-              <span class="pres-audio-label"><i class="bi bi-headphones"></i> Resumen en audio</span>
-              <audio controls preload="metadata" src="m1-1-audio.mp3"></audio>
-            </div>
-          </div>
+    <div class="callout ia">
+      <div class="callout-header">🖌 IA en esta fase</div>
+      <div class="callout-body">
+        <div class="capa">＋ Toca para levantar la capa</div>
+        <p>En la fase de fundamentos, la IA generativa es más útil como <strong>herramienta de investigación y contraste</strong>, no de producción. Ejemplos concretos:</p>
+        <p>• Pedirle que compare cómo definen "diseño instruccional" distintas fuentes (ATD, ADL, Dick & Carey) para detectar matices que un solo texto no te daría.</p>
+        <p>• Generar un mapa conceptual en texto de las tres tradiciones (psicología, ingeniería de procesos, diseño UX) para verificar que entendiste cómo se conectan.</p>
+        <p>• Pedirle que actúe como entrevistador y te haga "¿qué es el DI para ti?" cinco veces con distintos ángulos, para practicar variaciones de tu respuesta.</p>
+      </div>
+    </div>
 
-          <!-- ACORDEÓN 1 -->
-          <div class="accordion-di">
-            <button class="accordion-di-btn open" onclick="toggleAcc(this)">
-              <i class="bi bi-1-circle acc-icon"></i> Definición técnica
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body show">
-              <p>El Diseño Instruccional (DI) es la disciplina que planifica, desarrolla, implementa y evalúa experiencias de aprendizaje de manera <strong>sistemática</strong>, basada en evidencia y orientada a resultados medibles. No es "hacer materiales educativos" ni "subir contenidos a un LMS". Es un proceso de toma de decisiones pedagógicas.</p>
-              <p>Definición técnica: <em>el proceso sistemático por el cual se traducen principios del aprendizaje en planes para materiales, actividades, recursos y evaluaciones.</em></p>
-              <div class="row g-2 mt-2">
-                <div class="col-md-4"><div class="card-di"><h6><i class="bi bi-diagram-3 me-1"></i>Sistemático</h6><p>Lógica ordenada y replicable. Cada decisión se justifica con criterios pedagógicos. Produce procesos documentados y transferibles.</p></div></div>
-                <div class="col-md-4"><div class="card-di"><h6><i class="bi bi-lightbulb me-1"></i>Principios del aprendizaje</h6><p>Se apoya en psicología cognitiva, andragogía, carga cognitiva, constructivismo. No inventa: aplica lo que la investigación estableció.</p></div></div>
-                <div class="col-md-4"><div class="card-di"><h6><i class="bi bi-map me-1"></i>Planes</h6><p>El producto no es solo el curso terminado, sino su arquitectura: objetivos, guiones, flujos. El curso visible es la punta del iceberg.</p></div></div>
-              </div>
-              <div class="callout-terra mt-3">
-                <strong>Distinción clave para entrevistas:</strong> El SME (docente experto) sabe <em>qué</em> enseñar. El DI sabe <em>cómo</em> estructurar la experiencia para que sea efectivamente aprendido. Son roles complementarios, no intercambiables.
-              </div>
+    <div class="callout entrevista">
+      <div class="callout-header">🎤 Nota de entrevista</div>
+      <div class="callout-body">
+        <div class="capa">＋ Toca para levantar la capa</div>
+        <p>Cuando te pregunten "¿qué es el diseño instruccional?" en entrevista, evita la definición de diccionario. Una respuesta fuerte tiene tres partes: (1) el problema que resuelve — cerrar la brecha entre lo que la audiencia sabe y necesita saber, de forma sistemática; (2) un ejemplo concreto de tu propio trabajo; (3) qué te distingue viniendo de docencia — entiendes tanto la teoría como la experiencia real de estar frente a quien aprende.</p>
+        <p>Evita decir solo "es como dar clases pero online" — es la forma más común de sonar junior en esta pregunta.</p>
+      </div>
+    </div>
 
-              <h5>Qué SÍ es y qué NO es el DI</h5>
-              <table class="table table-di table-bordered">
-                <thead><tr><th>Sí es</th><th>No es</th></tr></thead>
-                <tbody>
-                  <tr><td>Un proceso de análisis, diseño, desarrollo, implementación y evaluación (ADDIE u otro modelo)</td><td>"Hacer que el PowerPoint se vea más bonito"</td></tr>
-                  <tr><td>Decisiones fundamentadas en cómo funciona la memoria, la motivación y la atención</td><td>Aplicar intuición o gusto personal sobre qué "se ve bien"</td></tr>
-                  <tr><td>Un producto documentado (DDI) que otro profesional podría ejecutar</td><td>Un conocimiento que vive solo en la cabeza de quien diseñó el curso</td></tr>
-                  <tr><td>Diseñar para que el aprendizaje ocurra y sea medible</td><td>Configurar el LMS o subir archivos a una plataforma</td></tr>
-                </tbody>
-              </table>
+    <div class="eval-block">
+      <h2>Autoevaluación</h2>
+      <div class="eval-sub">1 pregunta de verificación + 1 práctica oral</div>
 
-              <h5>Dos ejemplos para fijar la definición</h5>
-              <div class="card-di">
-                <h6><i class="bi bi-briefcase me-1"></i>Ejemplo institucional (tu contexto EMMD)</h6>
-                <p>Un maestro-artista sabe tallar en piedra a nivel de excelencia (es el SME), pero no sabe cómo secuenciar ese conocimiento para que un estudiante virtual lo aprenda sin verlo en persona. El DI no talla piedra: diseña la secuencia de videos, ejercicios de observación y retroalimentación que permite que ese saber tácito se transmita a distancia sin perder su identidad artística.</p>
-              </div>
-              <div class="card-di">
-                <h6><i class="bi bi-building me-1"></i>Ejemplo corporativo</h6>
-                <p>Una empresa de retail necesita que 200 vendedores en 15 sucursales aprendan un nuevo protocolo de atención. Sin DI, alguien graba un video de 40 minutos y lo sube a un Drive — nadie lo termina. Con DI, se analiza la brecha (¿es de conocimiento o de práctica?), se fragmenta en microlearning de 5 minutos, se agregan simulaciones de casos y se mide con indicadores de desempeño en tienda, no solo con "visto/no visto".</p>
-              </div>
-            </div>
-          </div>
+      <div class="eval-q">¿Cuál de estas opciones distingue mejor al Diseño Instruccional de la docencia tradicional?</div>
+      <div id="evalOptions">
+        <label class="eval-option"><input type="radio" name="q1" value="a"> El DI usa tecnología y la docencia no</label>
+        <label class="eval-option"><input type="radio" name="q1" value="b"> El DI diseña un sistema/producto reutilizable para una audiencia que el diseñador no verá en tiempo real, mientras la docencia ejecuta la enseñanza directamente</label>
+        <label class="eval-option"><input type="radio" name="q1" value="c"> El DI no requiere conocer teorías del aprendizaje</label>
+      </div>
+      <div class="eval-feedback" id="evalFeedback"></div>
 
-          <!-- ACORDEÓN 2 -->
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-2-circle acc-icon"></i> Origen histórico
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p>El DI nació durante la <strong>Segunda Guerra Mundial</strong>. El ejército de los EE.UU. necesitaba entrenar millones de soldados en períodos cortos con resultados verificables. Robert Gagné y otros psicólogos sistematizaron ese proceso. El aprendizaje dejó de ser intuitivo y se convirtió en un problema de ingeniería.</p>
+      <div class="reflexion-box">
+        <label>Práctica oral — respóndete en voz alta antes de ver la respuesta modelo: "¿Qué es el diseño instruccional para ti?"</label>
+        <textarea id="reflexionText" placeholder="Puedes escribir tu respuesta acá, o solo practicarla en voz alta y luego revisar la respuesta modelo."></textarea>
+        <button class="respuesta-modelo-toggle" onclick="document.getElementById('rm1').classList.toggle('show')">Ver respuesta modelo</button>
+        <div class="respuesta-modelo" id="rm1">"El diseño instruccional es la disciplina que cierra, de forma sistemática y medible, la brecha entre lo que una audiencia sabe hoy y lo que necesita saber — combinando teoría del aprendizaje, un proceso replicable tipo ADDIE, y una mirada de experiencia de usuario. Vengo de docencia en artes visuales, así que además de diseñar el sistema, entiendo de primera mano cómo se siente estar frente a alguien que está aprendiendo — eso me da un criterio pedagógico que no todos los perfiles de DI tienen."</div>
+      </div>
 
-              <div style="background:var(--cream);border-radius:8px;padding:1rem 0.5rem;margin:1rem 0">
-                <svg width="100%" viewBox="0 0 680 170" style="display:block">
-                  <line x1="50" y1="100" x2="630" y2="100" stroke="#ddd8d0" stroke-width="1.5"/>
-                  <circle cx="60" cy="100" r="6" fill="#c85c3a"/>
-                  <circle cx="192" cy="100" r="6" fill="#c85c3a"/>
-                  <circle cx="324" cy="100" r="6" fill="#c85c3a"/>
-                  <circle cx="456" cy="100" r="6" fill="#c85c3a"/>
-                  <circle cx="588" cy="100" r="6" fill="#c85c3a"/>
-                  <text x="60" y="70" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#0f1117">1940–50s</text>
-                  <text x="60" y="86" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#c85c3a">Conductismo</text>
-                  <text x="60" y="125" text-anchor="middle" font-family="Calibri,sans-serif" font-size="10.5" fill="#7a7570">retroalimentación</text>
-                  <text x="60" y="138" text-anchor="middle" font-family="Calibri,sans-serif" font-size="10.5" fill="#7a7570">inmediata</text>
-                  <text x="192" y="70" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#0f1117">1960–70s</text>
-                  <text x="192" y="86" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#c85c3a">Cognitivismo</text>
-                  <text x="192" y="125" text-anchor="middle" font-family="Calibri,sans-serif" font-size="10.5" fill="#7a7570">Nueve Eventos</text>
-                  <text x="192" y="138" text-anchor="middle" font-family="Calibri,sans-serif" font-size="10.5" fill="#7a7570">de Gagné</text>
-                  <text x="324" y="70" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#0f1117">1980–90s</text>
-                  <text x="324" y="86" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#c85c3a">Constructivismo</text>
-                  <text x="324" y="125" text-anchor="middle" font-family="Calibri,sans-serif" font-size="10.5" fill="#7a7570">ABP y aprendizaje</text>
-                  <text x="324" y="138" text-anchor="middle" font-family="Calibri,sans-serif" font-size="10.5" fill="#7a7570">colaborativo</text>
-                  <text x="456" y="70" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#0f1117">2000s</text>
-                  <text x="456" y="86" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#c85c3a">E-learning</text>
-                  <text x="456" y="125" text-anchor="middle" font-family="Calibri,sans-serif" font-size="10.5" fill="#7a7570">LMS y</text>
-                  <text x="456" y="138" text-anchor="middle" font-family="Calibri,sans-serif" font-size="10.5" fill="#7a7570">SCORM</text>
-                  <text x="588" y="70" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#0f1117">2010s–hoy</text>
-                  <text x="588" y="86" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#c85c3a">IA y redes</text>
-                  <text x="588" y="125" text-anchor="middle" font-family="Calibri,sans-serif" font-size="10.5" fill="#7a7570">microcredenciales,</text>
-                  <text x="588" y="138" text-anchor="middle" font-family="Calibri,sans-serif" font-size="10.5" fill="#7a7570">IA generativa</text>
-                </svg>
-              </div>
+      <div class="result-card" id="resultCard">
+        <div class="result-score" id="resultScore">0%</div>
+        <div id="resultMsg" style="font-size:0.85rem;color:var(--ink-muted);margin-top:0.3rem;"></div>
+      </div>
+    </div>
 
-              <table class="table table-di table-bordered mt-3">
-                <thead><tr><th>Período</th><th>Paradigma</th><th>Aporte al DI</th></tr></thead>
-                <tbody>
-                  <tr><td>1940–50s</td><td>Conductismo</td><td>Instrucción programada, análisis de tareas, retroalimentación inmediata</td></tr>
-                  <tr><td>1960–70s</td><td>Cognitivismo</td><td>Esquemas mentales, Nueve Eventos de Gagné, primeras versiones de ADDIE</td></tr>
-                  <tr><td>1980–90s</td><td>Constructivismo</td><td>ABP, aprendizaje colaborativo, entornos situados</td></tr>
-                  <tr><td>2000s</td><td>E-learning</td><td>LMS, SCORM, educación a distancia masificada</td></tr>
-                  <tr><td>2010s–hoy</td><td>IA y redes</td><td>MOOC, microlearning, microcredenciales, IA generativa</td></tr>
-                </tbody>
-              </table>
-              <div class="callout-blue">
-                <strong>Para recordar:</strong> El DI tiene raíces militares pero su evolución ha sido profundamente humanista. Hoy integra rigor empírico con sensibilidad pedagógica y diseño centrado en el estudiante.
-              </div>
-              <div class="card-di mt-2">
-                <h6><i class="bi bi-lightbulb me-1"></i>Ejemplo para fijarlo</h6>
-                <p>Los "Programas de Entrenamiento de Vuelo" de la fuerza aérea de EE.UU. en los años 40 son el caso fundacional citado en casi toda la literatura de DI: pilotos entrenados en simuladores con instrucción fragmentada en pasos verificables, en vez de solo "mira y aprende" de un piloto experto. Ese mismo principio —fragmentar, verificar, retroalimentar— es el que hoy usas cuando divides un curso en microlearning de 5 minutos en vez de un video de 40.</p>
-              </div>
-            </div>
-          </div>
+    <div class="next-nav">
+      <span class="disabled">← Módulo 1 · Inicio</span>
+      <span class="disabled">1.2 Modelos de DI (próximamente) →</span>
+    </div>
+  </main>
+</div>
 
-          <!-- ACORDEÓN 3 -->
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-3-circle acc-icon"></i> Para qué sirve el DI
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p>El DI resuelve la brecha entre lo que alguien <strong>necesita saber o hacer</strong> y lo que actualmente sabe o puede hacer. Sin un proceso de diseño, un curso puede tener contenidos correctos pero mal secuenciados, evaluaciones que no miden lo que se enseñó, o materiales que abruman cognitivamente.</p>
-              <h5>Tres tipos de brechas</h5>
-              <div class="card-di"><h6><i class="bi bi-book me-1"></i>Brecha de conocimiento</h6><p>No sabe algo que necesita saber. Se resuelve con formación. <em>Ejemplo: un docente no conoce la normativa de evaluación diferenciada — un curso corto con la normativa explicada cierra la brecha.</em></p></div>
-              <div class="card-di"><h6><i class="bi bi-tools me-1"></i>Brecha de habilidad</h6><p>Sabe qué hacer pero no cómo. Se resuelve con práctica guiada. <em>Ejemplo: un profesor sabe que debe dar retroalimentación efectiva, pero nunca ha practicado formularla — necesita simulaciones y feedback sobre su propia redacción, no solo teoría.</em></p></div>
-              <div class="card-di" style="border-left:3px solid var(--terra)"><h6><i class="bi bi-exclamation-triangle me-1" style="color:var(--terra)"></i>Brecha de motivación</h6><p>Sabe y puede, pero no lo hace. <strong>La formación no resuelve esto.</strong> Es un problema de gestión, incentivos o cultura organizacional. <em>Ejemplo: los docentes saben usar la plataforma virtual y saben cómo hacerlo, pero no la usan porque no hay ningún reconocimiento ni consecuencia por no hacerlo — un curso adicional sobre "cómo usar la plataforma" no cambiará nada.</em></p></div>
-              <div class="callout-terra mt-2">
-                <strong>Valor institucional:</strong> Un proceso bien diseñado puede replicarse, actualizarse y transferirse a otros equipos sin perder coherencia pedagógica. Crítico para acreditación y proyectos FDI.
-              </div>
-              <div class="callout-blue mt-2">
-                <strong>Error común en entrevistas:</strong> Cuando te presenten un caso, resiste el impulso de proponer "un curso" de inmediato. Un buen DI primero diagnostica el tipo de brecha — a veces la respuesta correcta es "esto no se resuelve con capacitación".
-              </div>
-            </div>
-          </div>
-
-          <!-- ACORDEÓN 4 -->
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-4-circle acc-icon"></i> Perfil del Diseñador Instruccional
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p>El DI actúa en la intersección de la <strong>pedagogía, la tecnología y la gestión de proyectos</strong>. No es docente aunque puede serlo. No es programador aunque trabaja con tecnología.</p>
-              <table class="table table-di table-bordered">
-                <thead><tr><th>Competencia</th><th>En qué consiste</th><th>Se evidencia en...</th></tr></thead>
-                <tbody>
-                  <tr><td>Análisis pedagógico</td><td>Identificar necesidades, caracterizar audiencias, definir brechas</td><td>Informes de análisis, entrevistas a SME</td></tr>
-                  <tr><td>Diseño curricular</td><td>Redactar objetivos, seleccionar estrategias, alinear evaluación</td><td>DDI, blueprint del curso</td></tr>
-                  <tr><td>Desarrollo de materiales</td><td>Producir o supervisar contenidos, actividades, guiones</td><td>Videos, H5P, Genially, rúbricas</td></tr>
-                  <tr><td>Gestión de proyectos</td><td>Coordinar equipos, manejar plazos, documentar cambios</td><td>Cronogramas, actas, versiones</td></tr>
-                  <tr><td>LMS y herramientas</td><td>Implementar cursos, configurar actividades</td><td>Moodle, Brightspace, Canvas, Storyline</td></tr>
-                  <tr><td>Acompañamiento docente</td><td>Apoyar a los SME para materializar su conocimiento en virtual</td><td>Talleres, guías, revisiones de contenido</td></tr>
-                </tbody>
-              </table>
-              <div class="callout-terra">
-                <strong>Para tus tres postulaciones:</strong> Tu perfil híbrido (artes + pedagogía + DI + LMS) es un diferenciador real. En EMMD combinas sensibilidad artística con rigor instruccional — exactamente lo que los maestros-artistas necesitan para virtualizar sin perder su identidad.
-              </div>
-            </div>
-          </div>
-
-          <!-- ACORDEÓN 5 -->
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-5-circle acc-icon"></i> Roles afines: no confundirlos en una entrevista
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p>Es común que en un proceso de selección pidan distinguir el rol de DI de otros roles con los que se solapa. Confundirlos en una entrevista se lee como falta de claridad sobre tu propio perfil.</p>
-              <table class="table table-di table-bordered">
-                <thead><tr><th>Rol</th><th>Foco principal</th><th>Diferencia clave con el DI</th></tr></thead>
-                <tbody>
-                  <tr><td><strong>Instructional Designer (DI)</strong></td><td>Arquitectura pedagógica completa: análisis, objetivos, estrategia, evaluación</td><td>Es el rol "ancla" — piensa el diseño de principio a fin</td></tr>
-                  <tr><td>E-learning Developer</td><td>Construcción técnica del curso (Storyline, H5P, SCORM)</td><td>Ejecuta el diseño que el DI ya definió; no decide la estrategia pedagógica</td></tr>
-                  <tr><td>Learning Experience Designer (LXD)</td><td>Experiencia de usuario y usabilidad del aprendizaje</td><td>Aporta una capa de UX/diseño de interacción sobre la base pedagógica del DI</td></tr>
-                  <tr><td>Instructional Technologist</td><td>Selección, integración y soporte de LMS y herramientas</td><td>Resuelve el "con qué"; el DI resuelve el "qué y cómo enseñar"</td></tr>
-                  <tr><td>Facilitador / Capacitador</td><td>Ejecuta la instrucción en vivo (presencial o sincrónica)</td><td>Entrega lo que el DI diseñó; no necesariamente participa en el diseño</td></tr>
-                  <tr><td>Curriculum Designer</td><td>Diseño a nivel de programa o malla completa (varios cursos)</td><td>Trabaja un nivel de zoom más amplio que el DI, que suele diseñar cursos o módulos específicos</td></tr>
-                </tbody>
-              </table>
-              <div class="callout-blue">
-                <strong>Por qué importa:</strong> En instituciones chilenas (INACAP, universidades, fundaciones) estos roles muchas veces se fusionan en una sola persona por falta de equipo. Poder nombrar la distinción — aunque tú hagas varios de estos roles a la vez — demuestra que entiendes la arquitectura completa del trabajo, no solo tu porción de él.
-              </div>
-              <div class="callout-terra mt-2">
-                <strong>Para tus postulaciones:</strong> En INACAP el cargo es "Coordinador LMS / Jefe de Diseño Instruccional" — combina DI + Instructional Technologist. En U. de Chile es "Diseñador Instruccional E-Learning" — más cercano al DI + e-learning developer. Nombrar esta lectura del cargo en la entrevista muestra que leíste la descripción con criterio técnico, no solo motivacional.
-              </div>
-            </div>
-          </div>
-
-          <!-- AUTOEVALUACIÓN AUTOINSTRUCCIONAL -->
-          <div class="accordion-di" style="border-color:var(--blue)">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)" style="background:var(--blue-light)">
-              <i class="bi bi-chat-square-text acc-icon" style="color:var(--blue)"></i> Practica como en una entrevista
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p style="color:var(--muted);font-size:0.85rem">Responde primero con tus propias palabras — en voz alta o por escrito — antes de revelar la respuesta modelo. El valor está en formular tu propia respuesta, no en leer la mía.</p>
-
-              <div class="card-di" style="border-left:3px solid var(--blue)">
-                <h6><i class="bi bi-question-circle me-1"></i>1. Un entrevistador te pregunta: "¿Qué es el Diseño Instruccional?" en 30 segundos. ¿Qué le dirías?</h6>
-                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
-                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
-                  <p style="font-size:0.87rem"><em>"Es el proceso sistemático de traducir principios del aprendizaje en planes concretos para materiales, actividades y evaluaciones. No es hacer diapositivas bonitas ni configurar un LMS — es tomar decisiones pedagógicas fundamentadas para cerrar una brecha específica entre lo que alguien sabe y lo que necesita saber."</em></p>
-                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
-                  <ul style="font-size:0.83rem;color:var(--muted)">
-                    <li>¿Usaste la palabra "sistemático" o equivalente?</li>
-                    <li>¿Distinguiste el DI de "hacer materiales" o "usar tecnología"?</li>
-                    <li>¿Mencionaste que resuelve una brecha o necesidad concreta?</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="card-di" style="border-left:3px solid var(--blue)">
-                <h6><i class="bi bi-question-circle me-1"></i>2. Te preguntan la diferencia entre tu rol como DI y el de un e-learning developer con el que trabajarías. ¿Qué respondes?</h6>
-                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
-                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
-                  <p style="font-size:0.87rem"><em>"Yo defino qué se va a enseñar, en qué secuencia, con qué estrategia y cómo se va a evaluar — el DDI. El e-learning developer toma ese diseño y lo construye técnicamente en Storyline, H5P o el LMS. Trabajamos en cascada: mi output es su input. En proyectos chicos, como los que he liderado de forma independiente, hago ambos roles, pero entiendo dónde termina uno y empieza el otro."</em></p>
-                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
-                  <ul style="font-size:0.83rem;color:var(--muted)">
-                    <li>¿Explicaste qué decide cada rol, no solo qué "hace"?</li>
-                    <li>¿Diste un ejemplo propio (tus Brightspace, tu LMS)?</li>
-                    <li>¿Evitaste sonar como que un rol es "superior" al otro?</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="card-di" style="border-left:3px solid var(--blue)">
-                <h6><i class="bi bi-question-circle me-1"></i>3. Caso: un jefe de área te dice "el equipo sabe hacer el protocolo de seguridad, pero no lo aplica en terreno. Necesitamos un curso." ¿Cómo respondes como DI?</h6>
-                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
-                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
-                  <p style="font-size:0.87rem"><em>"Antes de diseñar nada, yo diagnosticaría el tipo de brecha. Si dicen que 'saben hacerlo pero no lo aplican', probablemente no es una brecha de conocimiento ni de habilidad — es una brecha de motivación, cultura o incentivos. Un curso no la resuelve. Le propondría al jefe de área investigar la causa raíz antes de invertir en formación que no va a cambiar el comportamiento."</em></p>
-                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
-                  <ul style="font-size:0.83rem;color:var(--muted)">
-                    <li>¿Identificaste que no es automáticamente un problema de capacitación?</li>
-                    <li>¿Nombraste el tipo de brecha correcto (motivación/cultura)?</li>
-                    <li>¿Mostraste criterio para decir "no" a un curso cuando no es la solución?</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- EVALUACIÓN -->
-          <div class="eval-section mt-4">
-            <h4><i class="bi bi-clipboard-check me-2" style="color:var(--terra)"></i>Evaluación — Unidad 1.1</h4>
-            <p class="eval-progress-text">Preguntas respondidas: <strong><span id="answeredCount">0</span>/10</strong> — puedes enviar en cualquier momento</p>
-
-            <div class="eval-question" data-question="q1">
-              <h6>1. ¿Cuál describe mejor al Diseño Instruccional?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q1',1)"><div class="eval-radio"></div><span>El proceso de crear materiales didácticos atractivos</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',2)"><div class="eval-radio"></div><span>El proceso sistemático de traducir principios del aprendizaje en planes para materiales, actividades y evaluaciones</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',3)"><div class="eval-radio"></div><span>La disciplina que configura plataformas LMS</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',4)"><div class="eval-radio"></div><span>La versión tecnológica de la planificación docente</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q2">
-              <h6>2. ¿Qué evento histórico dio origen formal al DI?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q2',1)"><div class="eval-radio"></div><span>La creación de los primeros LMS en los años 90</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',2)"><div class="eval-radio"></div><span>El surgimiento de internet y la educación a distancia</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',3)"><div class="eval-radio"></div><span>La necesidad de entrenar soldados durante la Segunda Guerra Mundial</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',4)"><div class="eval-radio"></div><span>La publicación de la taxonomía de Bloom en 1956</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q3">
-              <h6>3. ¿Cuál es la diferencia central entre el DI y el docente experto (SME)?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q3',1)"><div class="eval-radio"></div><span>El DI trabaja solo en virtual; el docente en presencial</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',2)"><div class="eval-radio"></div><span>El SME sabe qué enseñar; el DI sabe cómo diseñar la experiencia para que sea efectivamente aprendido</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',3)"><div class="eval-radio"></div><span>El DI es jerárquicamente superior al docente</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',4)"><div class="eval-radio"></div><span>No hay diferencia real entre ambos roles</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q4">
-              <h6>4. ¿Qué significa que el DI sea "sistemático"?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q4',1)"><div class="eval-radio"></div><span>Que usa sistemas informáticos y software especializado</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',2)"><div class="eval-radio"></div><span>Que sigue una lógica ordenada y replicable donde cada decisión se justifica con criterios pedagógicos</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',3)"><div class="eval-radio"></div><span>Que se aplica solo a sistemas educativos formales</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',4)"><div class="eval-radio"></div><span>Que requiere aprobación de un comité institucional</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q5">
-              <h6>5. ¿Cuál competencia NO corresponde al perfil estándar del DI?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q5',1)"><div class="eval-radio"></div><span>Análisis de necesidades de aprendizaje</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',2)"><div class="eval-radio"></div><span>Redacción de objetivos de aprendizaje</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',3)"><div class="eval-radio"></div><span>Producción cinematográfica profesional</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',4)"><div class="eval-radio"></div><span>Manejo de LMS y herramientas de autoría</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q6">
-              <h6>6. ¿Cuál es el principal impulsor de la demanda de DI en educación superior chilena hoy?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q6',1)"><div class="eval-radio"></div><span>La obligatoriedad de virtualizar todos los programas</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',2)"><div class="eval-radio"></div><span>Los fondos FDI que financian proyectos de innovación docente y virtualización</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',3)"><div class="eval-radio"></div><span>La baja matrícula en carreras presenciales</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',4)"><div class="eval-radio"></div><span>La eliminación de la acreditación institucional</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q7">
-              <h6>7. ¿Qué es el Documento de Diseño Instruccional (DDI)?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q7',1)"><div class="eval-radio"></div><span>El manual técnico de configuración del LMS</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',2)"><div class="eval-radio"></div><span>El plan pedagógico completo del curso producido antes de desarrollar materiales</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',3)"><div class="eval-radio"></div><span>El informe de resultados al finalizar el curso</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',4)"><div class="eval-radio"></div><span>El guión de un video educativo específico</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q8">
-              <h6>8. ¿En qué período el constructivismo comenzó a influir significativamente en el DI?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q8',1)"><div class="eval-radio"></div><span>1940s–1950s</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',2)"><div class="eval-radio"></div><span>1960s–1970s</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',3)"><div class="eval-radio"></div><span>1980s–1990s</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',4)"><div class="eval-radio"></div><span>2010s–2020s</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q9">
-              <h6>9. ¿Por qué el DI es valioso institucionalmente más allá del estudiante individual?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q9',1)"><div class="eval-radio"></div><span>Permite reducir la cantidad de docentes necesarios</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q9',2)"><div class="eval-radio"></div><span>Los procesos bien diseñados pueden replicarse, actualizarse y transferirse sin perder coherencia pedagógica</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q9',3)"><div class="eval-radio"></div><span>Obliga a los docentes a usar tecnología</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q9',4)"><div class="eval-radio"></div><span>Garantiza que todos los estudiantes aprueben</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q10">
-              <h6>10. Un equipo sabe y puede aplicar un protocolo pero no lo hace. ¿Qué tipo de problema es?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q10',1)"><div class="eval-radio"></div><span>Brecha de conocimiento — requiere un curso teórico</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q10',2)"><div class="eval-radio"></div><span>Brecha de habilidad — requiere práctica guiada</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q10',3)"><div class="eval-radio"></div><span>Problema de motivación o cultura que la formación no resuelve</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q10',4)"><div class="eval-radio"></div><span>Problema de diseño instruccional del protocolo original</span></div>
-            </div>
-
-            <div id="evalResult" class="mt-3"></div>
-
-            <div class="d-flex flex-wrap gap-2 mt-3">
-              <button class="btn btn-terra" id="submitBtn" onclick="submitEval()">
-                <i class="bi bi-check-circle me-2"></i>Enviar evaluación
-              </button>
-              <button class="btn btn-outline-terra" id="retryBtn" style="display:none" onclick="retryEval()">
-                <i class="bi bi-arrow-clockwise me-2"></i>Reintentar
-              </button>
-              <a href="m1-2.html" class="btn btn-blue" id="nextBtn" style="display:none">
-                Siguiente unidad <i class="bi bi-arrow-right ms-2"></i>
-              </a>
-            </div>
-          </div>
-
-        </div><!-- /lesson-body -->
-      </div><!-- /content-di -->
-    </div><!-- /col -->
-  </div><!-- /row -->
-</div><!-- /container -->
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../gami.js"></script>
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbylYML8h2BnNgi2AXtZ8bkGaXPNRhurswPr5dfyGRldbVoCRvmoT2cHN0r3I4qGynLb/exec';
-const UNIDAD_ID = 'm1-1';
+const UNIT_ID = 'm1-1';
+const CORRECT = 'b';
 
-const CORRECTAS = { q1:2, q2:3, q3:2, q4:2, q5:3, q6:2, q7:2, q8:3, q9:2, q10:3 };
-const FEEDBACK = {
-  q1:  {ok:'Correcto. La definición técnica enfatiza: sistemático, basado en principios del aprendizaje, orientado a producir planes.',fail:'La definición técnica no se reduce a materiales ni tecnología. Enfatiza el proceso sistemático y la fundamentación pedagógica.'},
-  q2:  {ok:'Correcto. La necesidad de entrenamiento masivo y verificable obligó a sistematizar la instrucción. Gagné lideró ese proceso.',fail:'El DI nació en contexto militar. La WWII forzó la sistematización del proceso instruccional para entrenar millones en poco tiempo.'},
-  q3:  {ok:'Exacto. Son roles complementarios. El SME aporta el contenido; el DI aporta la arquitectura pedagógica.',fail:'Son complementarios: el SME aporta el qué (contenido disciplinar); el DI aporta el cómo (diseño de la experiencia).'},
-  q4:  {ok:'Correcto. Sistemático implica proceso documentado, auditable y transferible, no dependiente de la intuición.',fail:'Sistemático se refiere a la lógica pedagógica: ordenada, justificable y replicable. No a la tecnología.'},
-  q5:  {ok:'Correcto. El DI puede producir videos educativos simples, pero la producción cinematográfica profesional está fuera de su perfil.',fail:'La producción cinematográfica profesional no es parte del perfil DI. El DI produce materiales educativos, no filmes.'},
-  q6:  {ok:'Correcto. Los FDI del Mineduc son un motor real — como el proyecto en EMMD donde postulaste.',fail:'Los FDI del Mineduc financian proyectos de virtualización y microcredenciales, generando demanda directa de DI.'},
-  q7:  {ok:'Correcto. El DDI es la evidencia central del trabajo de diseño. El curso en el LMS es la ejecución de ese plan.',fail:'El DDI es el plan pedagógico completo: objetivos, estrategias, secuencia y evaluación. Se produce antes de cualquier material.'},
-  q8:  {ok:'Correcto. En los 80–90, Vygotsky y Piaget enriquecieron el DI con la idea de que el conocimiento se construye, no se transmite.',fail:'El constructivismo influyó en los 80–90, como contrapeso al conductismo y cognitivismo de décadas anteriores.'},
-  q9:  {ok:'Correcto. La escalabilidad y transferibilidad del proceso es uno de sus valores institucionales más importantes.',fail:'El valor institucional del DI es la escalabilidad: procesos documentados que se replican y transfieren a otros equipos.'},
-  q10: {ok:'Correcto. Si saben y pueden pero no lo hacen, no hay brecha de aprendizaje. La formación no resuelve problemas de motivación.',fail:'Si ya saben y pueden, no hay brecha de aprendizaje. Es un problema de motivación, incentivos o cultura.'}
-};
+// ===== VIDEO: pega aquí el ID de YouTube (lo que va después de v= en la URL) =====
+const YT_VIDEO_ID = '';
 
-let answers = {};
-let submitted = false;
-
-function toggleAcc(btn) {
-  const body = btn.nextElementSibling;
-  const isOpen = body.classList.contains('show');
-  body.classList.toggle('show', !isOpen);
-  btn.classList.toggle('open', !isOpen);
+if (YT_VIDEO_ID) {
+  const wrap = document.getElementById('videoWrap');
+  wrap.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + YT_VIDEO_ID + '" title="Video de la unidad" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+  // El award del video se dispara al cambiar a la pestaña de video (aprox de visualización)
 }
 
-function toggleModelo(btn) {
-  const box = btn.nextElementSibling;
-  const isOpen = box.style.display === 'block';
-  box.style.display = isOpen ? 'none' : 'block';
-  btn.textContent = isOpen ? 'Ver respuesta modelo' : 'Ocultar respuesta modelo';
-}
-
-function selectOpt(el, question, optNum) {
-  if (submitted) return;
-  const container = el.closest('[data-question]');
-  container.querySelectorAll('.eval-option').forEach(o => o.classList.remove('selected'));
-  el.classList.add('selected');
-  answers[question] = optNum;
-  document.getElementById('answeredCount').textContent = Object.keys(answers).length;
-}
-
-function submitEval() {
-  if (Object.keys(answers).length === 0) {
-    showToast('Responde al menos una pregunta para enviar', 'warning');
-    return;
+// ===== Tabs multimedia =====
+function switchMedia(btn) {
+  document.querySelectorAll('.media-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.media-pane').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('pane-' + btn.dataset.pane).classList.add('active');
+  if (btn.dataset.pane === 'video' && YT_VIDEO_ID) {
+    Gami.award('m1-1_video', 5, 'Viste el video de la unidad');
+    checkMultimodal();
   }
-  submitted = true;
-  let score = 0;
+}
 
-  Object.keys(CORRECTAS).forEach(q => {
-    const container = document.querySelector(`[data-question="${q}"]`);
-    if (!container) return;
-    const userAns = answers[q];
-    const correctAns = CORRECTAS[q];
-    const opts = container.querySelectorAll('.eval-option');
+function checkMultimodal() {
+  if (Gami.hasSeen('m1-1_pdf') && Gami.hasSeen('m1-1_audio') && (YT_VIDEO_ID ? Gami.hasSeen('m1-1_video') : true)) {
+    Gami.badge('multimodal');
+  }
+}
 
-    opts.forEach((opt, idx) => {
-      opt.style.pointerEvents = 'none';
-      if (idx + 1 === userAns) {
-        if (userAns === correctAns) { opt.classList.add('correct'); score++; }
-        else opt.classList.add('incorrect');
-      }
+// ===== Capas — revelar callouts (+5 c/u, badge si abre todas) =====
+let capasReveladas = 0;
+document.querySelectorAll('.capa').forEach((capa, i) => {
+  capa.addEventListener('click', () => {
+    capa.closest('.callout').classList.add('revealed');
+    Gami.award('m1-1_capa' + i, 5, 'Levantaste una capa');
+    capasReveladas++;
+    if (capasReveladas >= 2) Gami.badge('curiosa');
+  });
+});
+
+// ===== Actividad ¿Docencia o DI? =====
+const ACT_ITEMS = [
+  { text: 'Preparas la clase de mañana ajustando ejemplos según cómo reaccionó el grupo hoy.', ans: 'doc', why: 'Ajuste en tiempo real con un grupo específico — ejecución directa de la enseñanza.' },
+  { text: 'Escribes un storyboard que otro equipo va a producir en Storyline para 400 personas que nunca conocerás.', ans: 'di', why: 'Diseñas el sistema/producto; la ejecución ocurre sin ti.' },
+  { text: 'Revisas los datos de finalización del curso en Moodle para decidir qué módulo rediseñar.', ans: 'di', why: 'Éxito medido por datos de uso y finalización — mirada de producto.' },
+  { text: 'Improvisas una analogía nueva porque notas caras de confusión en la sala.', ans: 'doc', why: 'Respuesta pedagógica en vivo — el corazón de la docencia.' },
+  { text: 'Defines los objetivos de aprendizaje y el instrumento de evaluación antes de crear cualquier contenido.', ans: 'di', why: 'Backward design puro — proceso sistemático que precede a la producción.' },
+  { text: 'Corriges pruebas y entregas retroalimentación individual a tus 35 estudiantes.', ans: 'doc', why: 'Retroalimentación directa dentro de la relación docente-estudiante.' },
+];
+
+let actDone = 0, actCorrect = 0;
+function renderActivity() {
+  const root = document.getElementById('actRoot');
+  root.innerHTML = ACT_ITEMS.map((item, i) => `
+    <div class="act-card" id="act-${i}">
+      <div class="act-statement">${item.text}</div>
+      <div class="act-buttons">
+        <button class="act-btn" onclick="answerAct(${i}, 'doc')">Docencia</button>
+        <button class="act-btn" onclick="answerAct(${i}, 'di')">Diseño Instruccional</button>
+      </div>
+      <div class="act-verdict" id="verdict-${i}"></div>
+    </div>
+  `).join('');
+  updateActProgress();
+}
+
+function answerAct(i, choice) {
+  const item = ACT_ITEMS[i];
+  const card = document.getElementById('act-' + i);
+  const verdict = document.getElementById('verdict-' + i);
+  actDone++;
+  if (choice === item.ans) {
+    actCorrect++;
+    card.classList.add('ok');
+    verdict.style.color = '#315226';
+    verdict.textContent = '✓ ' + item.why;
+  } else {
+    card.classList.add('no');
+    card.querySelector('.act-buttons').style.display = 'none';
+    verdict.style.color = '#6E2A2A';
+    verdict.textContent = '✗ Era ' + (item.ans === 'doc' ? 'Docencia' : 'DI') + '. ' + item.why;
+  }
+  updateActProgress();
+  if (actDone === ACT_ITEMS.length) {
+    const pct = actCorrect / ACT_ITEMS.length;
+    Gami.award('m1-1_actividad', Math.round(15 * pct) + 5, 'Actividad ¿Docencia o DI? — ' + actCorrect + '/' + ACT_ITEMS.length);
+  }
+}
+
+function updateActProgress() {
+  document.getElementById('actProgress').textContent = actDone + '/' + ACT_ITEMS.length + ' clasificadas' + (actDone === ACT_ITEMS.length ? ' · ' + actCorrect + ' correctas' : '');
+}
+
+renderActivity();
+
+// ===== Quiz =====
+document.querySelectorAll('#evalOptions input').forEach(input => {
+  input.addEventListener('change', () => {
+    const val = input.value;
+    document.querySelectorAll('#evalOptions .eval-option').forEach(opt => {
+      const optInput = opt.querySelector('input');
+      opt.classList.remove('correct','incorrect');
+      if (optInput.value === CORRECT) opt.classList.add('correct');
+      else if (optInput.value === val && val !== CORRECT) opt.classList.add('incorrect');
     });
-
-    if (userAns !== undefined) {
-      const fb = FEEDBACK[q];
-      const isOk = userAns === correctAns;
-      const fbEl = document.createElement('div');
-      fbEl.className = 'feedback-box ' + (isOk ? 'feedback-ok' : 'feedback-fail');
-      fbEl.innerHTML = (isOk ? '<i class="bi bi-check-circle me-1"></i>' : '<i class="bi bi-x-circle me-1"></i>') + (isOk ? fb.ok : fb.fail);
-      container.appendChild(fbEl);
+    const fb = document.getElementById('evalFeedback');
+    fb.classList.add('show');
+    if (val === CORRECT) {
+      fb.className = 'eval-feedback show ok';
+      fb.textContent = 'Correcto. La clave está en "reutilizable" y "sin el diseñador presente" — eso es lo que hace del DI un oficio de producto, no de ejecución en vivo.';
+      Gami.award('m1-1_quiz', 20, 'Quiz de la unidad correcto');
+    } else {
+      fb.className = 'eval-feedback show no';
+      fb.textContent = 'No es la mejor distinción. La tecnología y la teoría del aprendizaje las usan ambos oficios — lo que cambia es si el diseño se ejecuta en vivo (docencia) o se produce como sistema reutilizable (DI).';
     }
+    saveScore(val === CORRECT ? 1 : 0.4);
   });
+});
 
-  const answered = Object.keys(answers).length;
-  const pct = Math.round(score / 10 * 100);
-  const msg = pct >= 90 ? 'Excelente dominio de esta unidad.' : pct >= 70 ? 'Buen resultado. Repasa lo que fallaste antes de avanzar.' : 'Hay conceptos que requieren repaso. Revisa las secciones donde cometiste errores.';
-
-  document.getElementById('evalResult').innerHTML = `
-    <div class="result-card">
-      <div class="result-score">${score}/10</div>
-      <div class="result-label">${pct}% de respuestas correctas (${answered} respondidas)</div>
-      <div class="result-msg">${msg}</div>
-    </div>`;
-
-  document.getElementById('submitBtn').style.display = 'none';
-  document.getElementById('retryBtn').style.display = 'inline-block';
-  document.getElementById('nextBtn').style.display = 'inline-block';
-  guardarPuntaje(score / 10);
-}
-
-function retryEval() {
-  submitted = false;
-  answers = {};
-  document.querySelectorAll('.eval-option').forEach(o => {
-    o.classList.remove('selected','correct','incorrect');
-    o.style.pointerEvents = '';
-  });
-  document.querySelectorAll('.feedback-box').forEach(f => f.remove());
-  document.getElementById('evalResult').innerHTML = '';
-  document.getElementById('answeredCount').textContent = '0';
-  document.getElementById('submitBtn').style.display = 'inline-block';
-  document.getElementById('retryBtn').style.display = 'none';
-  document.getElementById('nextBtn').style.display = 'none';
-  showToast('Inténtalo de nuevo — repasa el contenido antes de responder', 'info');
-  document.querySelector('.eval-section').scrollIntoView({ behavior:'smooth' });
-}
-
-function getScores() { try { return JSON.parse(localStorage.getItem('di_scores')||'{}'); } catch(e) { return {}; } }
-
-function jsonp(params) {
-  return new Promise(function(resolve, reject) {
-    var cb = 'cb_' + Date.now() + '_' + Math.floor(Math.random()*1e6);
-    var script = document.createElement('script');
-    function cleanup(){ try { delete window[cb]; } catch(e) { window[cb] = undefined; } if (script.parentNode) script.parentNode.removeChild(script); }
-    window[cb] = function(data){ cleanup(); resolve(data); };
-    var qp = new URLSearchParams(Object.assign({}, params, { callback: cb }));
-    script.src = SCRIPT_URL + '?' + qp.toString();
-    script.onerror = function(){ cleanup(); reject(new Error('conexion')); };
-    setTimeout(function(){ if (window[cb]) { cleanup(); reject(new Error('timeout')); } }, 20000);
-    document.head.appendChild(script);
-  });
-}
-
-async function guardarPuntaje(ratio) {
-  const s = getScores(); s[UNIDAD_ID] = ratio; localStorage.setItem('di_scores', JSON.stringify(s));
-  updateSidebar();
+function saveScore(pct) {
   try {
-    await jsonp({ action: 'saveScore', id: UNIDAD_ID, score: ratio, label: '1.1 ¿Qué es el DI?', date: new Date().toLocaleDateString('es-CL') });
+    const scores = JSON.parse(localStorage.getItem('di_scores_v2') || '{}');
+    scores[UNIT_ID] = pct;
+    localStorage.setItem('di_scores_v2', JSON.stringify(scores));
   } catch(e) {}
-}
 
-function updateSidebar() {
-  const s = getScores();
-  const ids = ['m1-1','m1-2','m1-3','m1-4'];
-  // Una unidad cuenta como completada solo si su puntaje es mayor a 0.
-  const done = ids.filter(id => s[id] !== undefined && s[id] > 0).length;
-  document.getElementById('sidebarPct').textContent = done + '/4';
-  document.getElementById('sidebarBar').style.width = Math.round(done/4*100) + '%';
-  ids.forEach(id => {
-    const el = document.getElementById('num-' + id);
-    if (el && s[id] !== undefined && s[id] > 0) { el.style.background = 'var(--success)'; el.style.color = '#fff'; }
-  });
-  document.getElementById('headerProgress').textContent = done + '/4 completadas';
-}
+  const card = document.getElementById('resultCard');
+  const scoreEl = document.getElementById('resultScore');
+  const msgEl = document.getElementById('resultMsg');
+  card.className = 'result-card show';
+  card.style.background = pct >= 0.7 ? '#E9F0E5' : '#F1E2D6';
+  scoreEl.textContent = Math.round(pct * 100) + '%';
+  msgEl.textContent = pct >= 0.7 ? 'Unidad marcada como completada en tu ruta.' : 'Puedes repasar y volver a intentar — no hay límite de intentos.';
 
-function showToast(msg, type) {
-  const colors = { warning:'#c85c3a', info:'#3a6b8a', success:'#2d7a4f' };
-  const t = document.createElement('div');
-  t.className = 'toast-di';
-  t.style.background = colors[type] || colors.info;
-  t.innerHTML = msg;
-  document.body.appendChild(t);
-  setTimeout(() => { t.style.opacity='0'; t.style.transition='opacity 0.3s'; setTimeout(()=>t.remove(),300); }, 3000);
-}
+  if (pct >= 0.7) Gami.badge('primeraCapa');
 
-function scrollToTop() { window.scrollTo({top:0,behavior:'smooth'}); }
-
-updateSidebar();
-
-// ---- Sincronización con Google Sheets al cargar el módulo ----
-// Trae los puntajes desde Sheets aunque el localStorage esté vacío
-// (otro dispositivo, modo incógnito o navegador nuevo).
-async function syncSheet() {
   try {
-    const data = await jsonp({ action: 'getAll' });
-    if (data && data.ok) {
-      const s = getScores();
-      (data.scores || []).forEach(function(row){
-        if (row.id && row.score !== undefined) s[row.id] = parseFloat(row.score);
-      });
-      localStorage.setItem('di_scores', JSON.stringify(s));
-      updateSidebar();
-      showCompletedState();
-    }
-  } catch(e) {}
-}
-
-// ---- Muestra el estado "ya completado" si esta unidad tiene puntaje ----
-function showCompletedState() {
-  const ratio = getScores()[UNIDAD_ID];
-  if (ratio === undefined || ratio <= 0) return;
-  const pct = Math.round(ratio * 100);
-  const ok = pct >= 70;
-  const sec = document.querySelector('.eval-section');
-  if (!sec) return;
-  let banner = document.getElementById('completedBanner');
-  if (!banner) {
-    banner = document.createElement('div');
-    banner.id = 'completedBanner';
-    sec.insertBefore(banner, sec.firstChild);
-  }
-  banner.innerHTML =
-    '<div style="display:flex;align-items:center;gap:0.9rem;background:' + (ok ? '#edf7f2' : 'var(--terra-light)') +
-    ';border:1px solid ' + (ok ? '#b0ddc5' : '#e0b0a0') + ';border-left:4px solid ' + (ok ? 'var(--success)' : 'var(--terra)') +
-    ';border-radius:8px;padding:0.9rem 1.1rem;margin-bottom:1.2rem">' +
-      '<i class="bi bi-' + (ok ? 'check-circle-fill' : 'arrow-repeat') + '" style="color:' + (ok ? 'var(--success)' : 'var(--terra)') + ';font-size:1.5rem"></i>' +
-      '<div style="flex:1">' +
-        '<div style="font-weight:bold;font-size:0.9rem;color:var(--dark)">Ya completaste esta unidad</div>' +
-        '<div style="font-size:0.82rem;color:var(--muted)">Puntaje guardado: <strong>' + pct + '%</strong>. Puedes repasar el contenido o volver a responder más abajo.</div>' +
-      '</div>' +
-    '</div>';
-}
-
-// ---- Registro de visita por pixel de imagen ----
-// Más confiable que JSONP: funciona en móvil, incógnito y cualquier navegador, sin CORS.
-function trackVisit() {
-  try {
-    let vid = localStorage.getItem('di_vid');
-    if (!vid) { vid = 'v' + Date.now().toString(36) + Math.random().toString(36).slice(2,8); localStorage.setItem('di_vid', vid); }
-    let sid = sessionStorage.getItem('di_sid');
-    if (!sid) { sid = 's' + Date.now().toString(36) + Math.random().toString(36).slice(2,8); sessionStorage.setItem('di_sid', sid); }
-    const qs = new URLSearchParams(location.search);
-    if (qs.get('owner') === '1') localStorage.setItem('di_owner', '1');
-    if (qs.get('owner') === '0') localStorage.removeItem('di_owner');
-    const owner = localStorage.getItem('di_owner') === '1' ? '1' : '0';
-    const device = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'movil' : 'escritorio';
-    const params = new URLSearchParams({ action: 'logVisit', page: UNIDAD_ID, vid: vid, sid: sid, owner: owner, device: device, t: String(Date.now()) });
     const img = new Image();
-    img.referrerPolicy = 'no-referrer';
-    img.src = SCRIPT_URL + '?' + params.toString();
+    img.src = SCRIPT_URL + '?action=saveScore&id=' + UNIT_ID + '&score=' + pct + '&t=' + Date.now();
   } catch(e) {}
 }
-
-trackVisit();
-syncSheet();
 </script>
 </body>
 </html>
