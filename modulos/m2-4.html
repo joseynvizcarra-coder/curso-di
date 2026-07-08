@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2.4 Artefactos y documentos del DI — Cuaderno de taller</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #EDEAE3; --paper-alt: #E4DFD3; --card: #F8F6F1;
+  --ink: #1C1A17; --ink-muted: #6B665D; --border: #D8D1C0; --border-soft: #E2DCCC;
+  --mc: #2A5CAA; --msoft: #DCE5F2;
+  --ia: #2A5CAA; --ia-soft: #DCE5F2;
+  --done: #4A6B3E; --done-soft: #E9F0E5;
+  --warn: #B9862C; --warn-soft: #F1E5CC;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--paper); color: var(--ink); font-family: 'IBM Plex Sans', sans-serif; line-height: 1.55; }
+a { color: inherit; }
+
+.topbar {
+  background: var(--ink); color: #EDEAE3;
+  padding: 0.7rem 1.5rem;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem;
+  position: sticky; top: 0; z-index: 50;
+}
+.topbar a.back { color: #C9C3B5; text-decoration: none; }
+.topbar a.back:hover { color: #fff; }
+.gami-chips { display: flex; gap: 0.9rem; color: #C9C3B5; flex-wrap: wrap; }
+
+.layout { display: grid; grid-template-columns: 250px 1fr; max-width: 1120px; margin: 0 auto; }
+@media (max-width: 880px) { .layout { grid-template-columns: 1fr; } .sidebar { order: 2; } }
+.sidebar { border-right: 1px solid var(--border); padding: 1.4rem 1.2rem; }
+@media (max-width: 880px) { .sidebar { border-right: none; border-top: 1px solid var(--border); } }
+.sidebar h6 { font-family: 'Fraunces', serif; font-size: 0.95rem; color: var(--mc); margin-bottom: 0.2rem; }
+.sidebar .sidebar-sub { font-size: 0.74rem; color: var(--ink-muted); margin-bottom: 1rem; }
+.side-item {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.55rem 0.5rem; border-radius: 3px; text-decoration: none; color: var(--ink);
+  font-size: 0.84rem; margin-bottom: 0.15rem;
+}
+.side-item.active { background: var(--msoft); font-weight: 600; color: var(--mc); }
+.side-mark { width: 22px; height: 22px; border-radius: 3px; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; flex-shrink: 0; }
+.side-item.active .side-mark { background: var(--mc); border-color: var(--mc); color: #fff; }
+.side-toc { margin-top: 1.4rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+.side-toc .toc-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.64rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); margin-bottom: 0.5rem; }
+.side-toc a { display: block; font-size: 0.78rem; color: var(--ink-muted); text-decoration: none; padding: 0.3rem 0; }
+.side-toc a:hover { color: var(--mc); }
+
+main { padding: 2.2rem 2rem 4rem; min-width: 0; }
+.unit-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--mc); margin-bottom: 0.5rem; }
+h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(1.5rem, 3.5vw, 2.1rem); margin-bottom: 0.6rem; max-width: 24ch; }
+.lesson-dek { color: #423E37; max-width: 64ch; margin-bottom: 1rem; }
+.lesson-badges { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.6rem; }
+.lbadge { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; border: 1px solid var(--border); background: var(--card); border-radius: 3px; padding: 0.25rem 0.6rem; color: var(--ink-muted); }
+
+.objetivo-box {
+  background: var(--card); border: 1px solid var(--border); border-left: 4px solid var(--mc);
+  border-radius: 4px; padding: 1.1rem 1.3rem; margin-bottom: 2rem;
+}
+.objetivo-box .label { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mc); margin-bottom: 0.4rem; }
+.objetivo-box p { font-size: 0.92rem; font-style: italic; color: #322E28; }
+
+/* mapa de unidad */
+.mapa-block { border: 1px solid var(--border); border-radius: 4px; background: var(--card); margin-bottom: 2rem; overflow: hidden; }
+.mapa-head { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); padding: 0.7rem 1rem; border-bottom: 1px solid var(--border-soft); }
+.mapa-body { padding: 1rem; background: #fff; }
+.mapa-note { font-size: 0.78rem; color: var(--ink-muted); padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
+
+/* multimodal */
+.media-block { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin-bottom: 2.2rem; background: var(--card); }
+.media-tabs { display: flex; border-bottom: 1px solid var(--border); background: var(--paper-alt); flex-wrap: wrap; }
+.media-tab {
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; padding: 0.7rem 1rem;
+  cursor: pointer; border: none; background: none; color: var(--ink-muted);
+  border-bottom: 2px solid transparent;
+}
+.media-tab.active { color: var(--mc); border-bottom-color: var(--mc); background: var(--card); }
+.media-pane { display: none; }
+.media-pane.active { display: block; }
+.media-note { font-size: 0.76rem; color: var(--ink-muted); padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
+.pdf-frame { width: 100%; height: 480px; border: none; display: block; background: #fff; }
+.pdf-actions { display: flex; gap: 0.6rem; padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
+.pdf-actions a { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--mc); text-decoration: none; border: 1px solid var(--border); border-radius: 3px; padding: 0.3rem 0.7rem; }
+.audio-pane { padding: 1.2rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.audio-pane audio { flex: 1; min-width: 240px; }
+.audio-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: var(--ink-muted); }
+.video-wrap { position: relative; padding-top: 56.25%; background: #111; }
+.video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+.video-empty {
+  position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 0.5rem; color: #C9C3B5; font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; text-align: center; padding: 1rem;
+}
+
+/* content */
+.content-section { margin-bottom: 2.6rem; }
+.content-section h2 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.3rem; margin-bottom: 0.8rem; padding-bottom: 0.4rem; border-bottom: 2px solid var(--mc); display: flex; align-items: baseline; gap: 0.6rem; }
+.content-section h2 .sec-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--mc); }
+.content-section h3 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.05rem; margin: 1.2rem 0 0.5rem; }
+.content-section p { margin-bottom: 0.8rem; font-size: 0.94rem; color: #2B2823; }
+.content-section ul { margin: 0.6rem 0 0.9rem 1.3rem; font-size: 0.92rem; }
+.content-section li { margin-bottom: 0.4rem; }
+.content-section strong { color: var(--mc); font-weight: 600; }
+.defbox { background: var(--msoft); border-radius: 4px; padding: 0.9rem 1.1rem; font-style: italic; font-size: 0.93rem; margin: 0.8rem 0 1.2rem; }
+
+/* pilares (sistemático/principios/planes) */
+.pilares { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; margin: 1rem 0 1.4rem; }
+@media (max-width: 700px) { .pilares { grid-template-columns: 1fr; } }
+.pilar { background: var(--card); border: 1px solid var(--border); border-top: 3px solid var(--mc); border-radius: 4px; padding: 0.9rem 1rem; }
+.pilar h4 { font-family: 'Fraunces', serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 0.4rem; }
+.pilar p { font-size: 0.82rem; color: #3A362F; margin: 0; }
+
+/* nota destacada */
+.nota { border-radius: 4px; padding: 0.9rem 1.1rem; font-size: 0.88rem; margin: 1.1rem 0; border: 1px solid var(--border); }
+.nota .nota-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.07em; display: block; margin-bottom: 0.35rem; }
+.nota.clave { background: var(--done-soft); } .nota.clave .nota-tag { color: var(--done); }
+.nota.alerta { background: var(--warn-soft); } .nota.alerta .nota-tag { color: #8A6318; }
+.nota.contexto { background: var(--ia-soft); } .nota.contexto .nota-tag { color: var(--ia); }
+
+/* tablas */
+.compare-table { width: 100%; border-collapse: collapse; margin: 0.8rem 0 1.4rem; font-size: 0.86rem; }
+.compare-table th, .compare-table td { border: 1px solid var(--border); padding: 0.55rem 0.7rem; text-align: left; vertical-align: top; }
+.compare-table th { background: var(--card); font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-muted); }
+.compare-table td:first-child { font-weight: 600; }
+.si-no td.si { background: var(--done-soft); }
+.si-no td.no { background: #F5E5E2; }
+
+/* timeline */
+.timeline { border-left: 2px solid var(--border); margin: 1rem 0 1.5rem 0.4rem; padding-left: 1.2rem; }
+.tl-item { position: relative; margin-bottom: 1.1rem; }
+.tl-item::before { content: ''; position: absolute; left: -1.53rem; top: 0.3rem; width: 9px; height: 9px; border-radius: 50%; background: var(--mc); }
+.tl-year { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: var(--mc); font-weight: 500; }
+.tl-text { font-size: 0.88rem; color: #2B2823; }
+
+/* viñeta de taller (caso con think-first) */
+.vineta { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin: 1.2rem 0; }
+.vineta-head { background: var(--ink); color: #EDEAE3; font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.6rem 1rem; }
+.vineta-body { background: var(--card); padding: 1rem 1.2rem; font-size: 0.9rem; }
+.vineta-reveal-btn {
+  display: block; width: 100%; text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem;
+  background: var(--msoft); border: none; border-top: 1px solid var(--border); padding: 0.7rem; cursor: pointer; color: var(--mc);
+}
+.vineta-solution { display: none; background: #fff; border-top: 1px dashed var(--border); padding: 1rem 1.2rem; font-size: 0.9rem; }
+.vineta.revealed .vineta-solution { display: block; }
+.vineta.revealed .vineta-reveal-btn { display: none; }
+
+/* brechas — tarjetas (reutilizada como "artefactos" en tarjetas de 3) */
+.brechas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; margin: 1rem 0; }
+@media (max-width: 760px) { .brechas { grid-template-columns: 1fr; } }
+.brecha { border: 1px solid var(--border); border-radius: 4px; background: var(--card); padding: 1rem; }
+.brecha h4 { font-family: 'Fraunces', serif; font-size: 0.98rem; font-weight: 600; margin-bottom: 0.4rem; }
+.brecha .b-def { font-size: 0.84rem; margin-bottom: 0.5rem; }
+.brecha .b-ej { font-size: 0.79rem; color: var(--ink-muted); border-top: 1px dashed var(--border); padding-top: 0.5rem; }
+.brecha.b1 { border-top: 3px solid var(--ia); }
+.brecha.b2 { border-top: 3px solid var(--warn); }
+.brecha.b3 { border-top: 3px solid #A83232; }
+
+/* actividad clasificación */
+.activity { border: 1px solid var(--border); border-radius: 4px; background: var(--card); padding: 1.3rem; margin: 2rem 0; }
+.activity h2 { font-family: 'Fraunces', serif; font-size: 1.1rem; margin-bottom: 0.3rem; }
+.activity .act-sub { font-size: 0.8rem; color: var(--ink-muted); margin-bottom: 1rem; }
+.act-card { border: 1px solid var(--border); border-radius: 4px; background: var(--paper); padding: 0.9rem 1rem; margin-bottom: 0.8rem; }
+.act-statement { font-size: 0.9rem; margin-bottom: 0.7rem; }
+.act-buttons { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.act-btn { flex: 1; min-width: 110px; font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; padding: 0.5rem; border: 1px solid var(--border); border-radius: 3px; background: var(--card); cursor: pointer; transition: all 0.15s; }
+.act-btn:hover { border-color: var(--mc); }
+.act-card.ok { border-color: var(--done); background: var(--done-soft); }
+.act-card.ok .act-buttons { display: none; }
+.act-card.no { border-color: #A83232; }
+.act-verdict { font-size: 0.78rem; margin-top: 0.4rem; display: none; }
+.act-card.ok .act-verdict, .act-card.no .act-verdict { display: block; }
+.act-progress { font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; color: var(--ink-muted); margin-top: 0.4rem; }
+
+/* callouts */
+.callout { position: relative; border-radius: 4px; margin: 1.6rem 0; overflow: hidden; border: 1px solid var(--border); }
+.callout-header { display: flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.05em; color: #fff; }
+.callout.ia .callout-header { background: var(--ia); }
+.callout.entrevista .callout-header { background: #A85B32; }
+.callout-body { background: var(--card); padding: 1.1rem 1.3rem; font-size: 0.9rem; position: relative; }
+.callout-body p { margin-bottom: 0.7rem; }
+.callout-body p:last-child { margin-bottom: 0; }
+.capa {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+  cursor: pointer; user-select: none;
+  transition: transform 0.5s cubic-bezier(.65,0,.35,1), opacity 0.4s ease;
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--ink-muted);
+}
+.callout.ia .capa { background: var(--ia-soft); }
+.callout.entrevista .capa { background: #F1E2D6; }
+.callout.revealed .capa { transform: translateX(105%); opacity: 0; pointer-events: none; }
+
+/* práctica de entrevista */
+.practica { border: 1px solid var(--border); border-radius: 4px; background: var(--card); margin: 1.4rem 0; overflow: hidden; }
+.practica-head { padding: 0.9rem 1.1rem; border-bottom: 1px solid var(--border-soft); }
+.practica-head .p-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--mc); text-transform: uppercase; letter-spacing: 0.06em; }
+.practica-head .p-q { font-size: 0.94rem; font-weight: 500; margin-top: 0.25rem; }
+.practica-body { padding: 1rem 1.1rem; }
+.practica-body textarea { width: 100%; min-height: 80px; font-family: 'IBM Plex Sans', sans-serif; font-size: 0.88rem; border: 1px solid var(--border); border-radius: 3px; padding: 0.7rem; resize: vertical; background: var(--paper); margin-bottom: 0.7rem; }
+.rm-toggle { font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; color: var(--mc); cursor: pointer; text-decoration: underline; background: none; border: none; padding: 0; }
+.rm { display: none; margin-top: 0.7rem; padding: 0.8rem 1rem; background: var(--msoft); border-radius: 3px; font-size: 0.87rem; }
+.rm.show { display: block; }
+.checklist { margin-top: 0.8rem; border-top: 1px dashed var(--border); padding-top: 0.8rem; }
+.checklist .cl-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); margin-bottom: 0.5rem; }
+.cl-item { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.84rem; padding: 0.35rem 0; cursor: pointer; }
+.cl-item input { accent-color: var(--done); margin-top: 0.2rem; }
+
+/* evaluación final */
+.eval-block { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 1.3rem; margin-top: 2.2rem; }
+.eval-block h2 { font-family: 'Fraunces', serif; font-size: 1.15rem; margin-bottom: 0.3rem; }
+.eval-sub { font-size: 0.8rem; color: var(--ink-muted); margin-bottom: 1.1rem; }
+.eval-q { font-size: 0.92rem; font-weight: 500; margin: 1.2rem 0 0.6rem; }
+.eval-option { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.6rem 0.8rem; border: 1px solid var(--border); border-radius: 3px; margin-bottom: 0.45rem; cursor: pointer; font-size: 0.87rem; background: var(--paper); transition: border-color 0.15s; }
+.eval-option:hover { border-color: var(--mc); }
+.eval-option input { accent-color: var(--mc); margin-top: 0.2rem; }
+.eval-option.correct { border-color: var(--done); background: var(--done-soft); }
+.eval-option.incorrect { border-color: #A83232; background: #F5E5E2; }
+.eval-submit { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; background: var(--mc); color: #fff; border: none; border-radius: 3px; padding: 0.7rem 1.4rem; cursor: pointer; margin-top: 1.2rem; }
+.eval-submit:disabled { opacity: 0.5; cursor: default; }
+.eval-counter { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: var(--ink-muted); margin-top: 0.5rem; }
+.result-card { display: none; margin-top: 1.2rem; padding: 1.1rem; border-radius: 4px; text-align: center; }
+.result-card.show { display: block; }
+.result-score { font-family: 'Fraunces', serif; font-size: 1.7rem; font-weight: 600; }
+
+.next-nav { display: flex; justify-content: space-between; margin-top: 2.5rem; padding-top: 1.2rem; border-top: 1px solid var(--border); font-size: 0.86rem; }
+.next-nav a { color: var(--mc); font-weight: 500; text-decoration: none; }
+.next-nav .disabled { color: var(--ink-muted); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../index.html">← Ruta de aprendizaje</a>
+  <div class="gami-chips">
+    <span id="gamiNivel">Nivel 1 · Boceto</span>
+    <span id="gamiPoints">0 pts</span>
+    <span id="gamiStreak">0 días</span>
+  </div>
+</div>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h6>Módulo 2</h6>
+    <div class="sidebar-sub">Análisis y definición</div>
+    <a class="side-item" href="m2-1.html"><span class="side-mark">2.1</span> Análisis de necesidades</a>
+    <a class="side-item" href="m2-2.html"><span class="side-mark">2.2</span> Objetivos y taxonomías</a>
+    <a class="side-item" href="m2-3.html"><span class="side-mark">2.3</span> Backward Design</a>
+    <a class="side-item active" href="m2-4.html"><span class="side-mark">2.4</span> Artefactos y documentos</a>
+    <div class="side-toc">
+      <div class="toc-label">En esta unidad</div>
+      <a href="#s1">1 · Panorama de artefactos</a>
+      <a href="#s2">2 · El syllabus</a>
+      <a href="#s3">3 · Ruta de aprendizaje</a>
+      <a href="#s4">4 · DDI y blueprint</a>
+      <a href="#s5">5 · DUA y otros marcos de inclusión</a>
+      <a href="#s6">6 · Verificar coherencia</a>
+      <a href="#s7">7 · Errores comunes</a>
+      <a href="#practica">Práctica de entrevista</a>
+      <a href="#evaluacion">Evaluación (10)</a>
+    </div>
+  </aside>
+
+  <main>
+    <div class="unit-eyebrow">Módulo 2 · Unidad 2.4</div>
+    <h1 class="lesson-title">Artefactos y documentos del Diseño Instruccional</h1>
+    <p class="lesson-dek">Cierre del módulo de análisis y definición: todo lo que diagnosticaste en 2.1, redactaste en 2.2 y alineaste en 2.3 tiene que aterrizar en documentos concretos que otras personas puedan leer, ejecutar y auditar. Aquí aprenderás a producir los dos artefactos que todo DI entrega tarde o temprano — el syllabus y la ruta de aprendizaje — y a verificar que ambos sean coherentes entre sí y con lo que ya definiste.</p>
+    <div class="lesson-badges">
+      <span class="lbadge">7 bloques de contenido</span>
+      <span class="lbadge">1 actividad interactiva</span>
+      <span class="lbadge">4 prácticas de entrevista</span>
+      <span class="lbadge">12 preguntas de evaluación</span>
+      <span class="lbadge">~55 min</span>
+    </div>
+
+    <div class="objetivo-box">
+      <div class="label">Objetivo de aprendizaje</div>
+      <p>Dado el modelo de DI ya elegido (1.2), la audiencia ya caracterizada (2.1) y los objetivos de aprendizaje ya redactados y alineados con la evaluación (2.2 y 2.3), serás capaz de producir un syllabus y una ruta de aprendizaje coherentes entre sí y con esas tres definiciones previas, distinguiéndolos con precisión de otros artefactos del proceso (DDI, blueprint, storyboard) y verificando que ningún objetivo se pierda en la traducción de un documento a otro.</p>
+    </div>
+
+    <!-- MAPA DE LA UNIDAD (organizador previo) -->
+    <div class="mapa-block">
+      <div class="mapa-head">Mapa de esta unidad · organizador previo</div>
+      <div class="mapa-body">
+        <svg width="100%" viewBox="0 0 700 320" style="display:block" role="img" aria-label="Mapa conceptual de la unidad">
+          <line x1="350" y1="176" x2="100" y2="53" stroke="#D8D1C0" stroke-width="1.2"/>
+          <line x1="350" y1="176" x2="350" y2="53" stroke="#D8D1C0" stroke-width="1.2"/>
+          <line x1="350" y1="176" x2="600" y2="53" stroke="#D8D1C0" stroke-width="1.2"/>
+          <line x1="350" y1="176" x2="100" y2="273" stroke="#D8D1C0" stroke-width="1.2"/>
+          <line x1="350" y1="176" x2="350" y2="273" stroke="#D8D1C0" stroke-width="1.2"/>
+          <line x1="350" y1="176" x2="600" y2="273" stroke="#D8D1C0" stroke-width="1.2"/>
+          <rect x="255" y="150" width="190" height="52" rx="5" fill="#DCE5F2" stroke="#2A5CAA" stroke-width="1.4"/>
+          <text x="350" y="172" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#1C1A17">Artefactos del DI</text>
+          <text x="350" y="190" text-anchor="middle" font-family="monospace" font-size="10" fill="#2A5CAA">unidad 2.4</text>
+          <rect x="20" y="30" width="160" height="46" rx="5" fill="#F8F6F1" stroke="#2A5CAA" stroke-width="1.2"/>
+          <text x="100" y="49" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1C1A17">Panorama</text>
+          <text x="100" y="66" text-anchor="middle" font-family="monospace" font-size="9" fill="#2A5CAA">quién produce qué, cuándo</text>
+          <rect x="270" y="30" width="160" height="46" rx="5" fill="#F8F6F1" stroke="#2A5CAA" stroke-width="1.2"/>
+          <text x="350" y="49" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1C1A17">Syllabus</text>
+          <text x="350" y="66" text-anchor="middle" font-family="monospace" font-size="9" fill="#2A5CAA">contrato con el estudiante</text>
+          <rect x="520" y="30" width="160" height="46" rx="5" fill="#F8F6F1" stroke="#2A5CAA" stroke-width="1.2"/>
+          <text x="600" y="49" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1C1A17">Ruta de aprendizaje</text>
+          <text x="600" y="66" text-anchor="middle" font-family="monospace" font-size="9" fill="#2A5CAA">secuencia y andamiaje</text>
+          <rect x="20" y="250" width="160" height="46" rx="5" fill="#F8F6F1" stroke="#2A5CAA" stroke-width="1.2"/>
+          <text x="100" y="269" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1C1A17">DDI y blueprint</text>
+          <text x="100" y="286" text-anchor="middle" font-family="monospace" font-size="9" fill="#2A5CAA">la fuente de verdad</text>
+          <rect x="270" y="250" width="160" height="46" rx="5" fill="#F8F6F1" stroke="#2A5CAA" stroke-width="1.2"/>
+          <text x="350" y="269" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1C1A17">DUA e inclusión</text>
+          <text x="350" y="286" text-anchor="middle" font-family="monospace" font-size="9" fill="#2A5CAA">representación · acción · motivación</text>
+          <rect x="520" y="250" width="160" height="46" rx="5" fill="#F8F6F1" stroke="#2A5CAA" stroke-width="1.2"/>
+          <text x="600" y="269" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1C1A17">Coherencia</text>
+          <text x="600" y="286" text-anchor="middle" font-family="monospace" font-size="9" fill="#2A5CAA">modelo · audiencia · objetivos</text>
+        </svg>
+      </div>
+      <div class="mapa-note">Estos 5 conceptos son las piezas de esta unidad. Vuelve a este mapa al terminar y verifica que puedes explicar cada conexión en voz alta.</div>
+    </div>
+
+    <!-- MULTIMODAL -->
+    <div class="media-block">
+      <div class="media-tabs">
+        <button class="media-tab active" data-pane="pdf" onclick="switchMedia(this)">📑 Presentación</button>
+        <button class="media-tab" data-pane="audio" onclick="switchMedia(this)">🎧 Audio NotebookLM</button>
+        <button class="media-tab" data-pane="video" onclick="switchMedia(this)">▶ Video</button>
+      </div>
+      <div class="media-pane active" id="pane-pdf">
+        <iframe class="pdf-frame" src="m2-4.pdf#view=FitH" title="Presentación del tema" loading="lazy" onload="Gami.award('m2-4_pdf', 5, 'Revisaste la presentación'); checkMultimodal();"></iframe>
+        <div class="pdf-actions">
+          <a href="m2-4.pdf" target="_blank" rel="noopener">Pantalla completa</a>
+          <a href="m2-4.pdf" download>Descargar</a>
+        </div>
+      </div>
+      <div class="media-pane" id="pane-audio">
+        <div class="audio-pane">
+          <span class="audio-label">Resumen en audio · NotebookLM</span>
+          <audio controls preload="metadata" src="m2-4-audio.mp3" onplay="Gami.award('m2-4_audio', 5, 'Escuchaste el resumen en audio'); checkMultimodal();"></audio>
+        </div>
+      </div>
+      <div class="media-pane" id="pane-video">
+        <div class="video-wrap" id="videoWrap">
+          <div class="video-empty" id="videoEmpty">
+            <span>▶ Espacio para video de YouTube</span>
+            <span style="opacity:0.6">Edita la constante YT_VIDEO_ID en este archivo con el ID del video que elijas.</span>
+          </div>
+        </div>
+      </div>
+      <div class="media-note">Misma unidad, cuatro formatos — elige el medio que te acomode hoy (diversificación de la representación, DUA pauta 1). El texto completo está abajo, siempre visible.</div>
+    </div>
+
+    <!-- ============ SECCIÓN 1: PANORAMA DE ARTEFACTOS ============ -->
+    <div class="content-section" id="s1">
+      <h2><span class="sec-num">01</span> Panorama de artefactos — quién produce qué, y cuándo</h2>
+      <p>Un proyecto de DI no termina en "el curso terminado". A lo largo del proceso se van produciendo <strong>documentos intermedios</strong>, cada uno con un propósito, una audiencia y un momento distinto. Confundirlos —tratar un syllabus como si fuera un DDI, o un storyboard como si fuera una ruta de aprendizaje— es uno de los errores que más rápido delata a alguien que nunca ha llevado un proyecto completo de principio a fin.</p>
+
+      <div class="defbox">Un <strong>artefacto de DI</strong> es cualquier documento tangible que resulta de una fase del proceso, y que permite que ese trabajo sea revisado, transferido a otra persona o auditado más adelante — sin depender de que quien lo diseñó esté presente para explicarlo.</div>
+
+      <table class="compare-table">
+        <tr><th>Artefacto</th><th>Fase donde nace</th><th>Para quién</th><th>Qué responde</th></tr>
+        <tr><td>Informe de análisis de necesidades</td><td>Análisis (2.1)</td><td>Sponsor / stakeholders</td><td>¿Cuál es la brecha real y quién es la audiencia?</td></tr>
+        <tr><td>Objetivos de aprendizaje</td><td>Diseño (2.2)</td><td>Equipo de DI</td><td>¿Qué será capaz de hacer la audiencia, en qué condición y con qué criterio?</td></tr>
+        <tr><td>DDI (Documento de Diseño Instruccional)</td><td>Diseño (2.3–2.4)</td><td>Todo el equipo + SME</td><td>¿Cuál es el plan pedagógico completo del curso?</td></tr>
+        <tr><td>Syllabus</td><td>Diseño / implementación</td><td>El estudiante</td><td>¿Qué voy a aprender, cómo se evalúa y qué se espera de mí?</td></tr>
+        <tr><td>Ruta de aprendizaje</td><td>Diseño / implementación</td><td>El estudiante + equipo</td><td>¿En qué orden avanzo y qué necesito antes de qué?</td></tr>
+        <tr><td>Storyboard</td><td>Desarrollo (3.2)</td><td>El e-learning developer</td><td>¿Qué aparece exactamente en cada pantalla?</td></tr>
+        <tr><td>Rúbrica</td><td>Diseño de evaluación (3.1)</td><td>Evaluador + estudiante</td><td>¿Cómo se distingue un desempeño bueno de uno insuficiente?</td></tr>
+      </table>
+
+      <div class="nota clave"><span class="nota-tag">La distinción que esta unidad resuelve</span>El <strong>DDI</strong> es interno y completo — casi nunca lo ve el estudiante. El <strong>syllabus</strong> y la <strong>ruta de aprendizaje</strong> son extractos de ese plan, traducidos a un lenguaje y un formato pensados para quien va a tomar el curso. Los tres deben decir exactamente lo mismo sobre objetivos y evaluación — solo cambia el nivel de detalle y el destinatario.</div>
+
+      <div class="nota alerta"><span class="nota-tag">Error común</span>Tratar estos documentos como trámites burocráticos que se llenan al final "porque el proceso lo pide". Cuando eso pasa, el syllabus y la ruta terminan sin relación real con los objetivos ya definidos — y ese desalineamiento es exactamente lo que rompe el alineamiento constructivo que trabajaste en 2.3.</div>
+    </div>
+
+    <!-- ============ SECCIÓN 2: EL SYLLABUS ============ -->
+    <div class="content-section" id="s2">
+      <h2><span class="sec-num">02</span> El syllabus — el contrato pedagógico con el estudiante</h2>
+      <p>El syllabus es el primer documento que un estudiante lee y el que define sus expectativas sobre el curso completo. Funciona como un <strong>contrato pedagógico</strong>: comunica qué se espera de la institución/instructor y qué se espera del estudiante, en un lenguaje que esa audiencia específica pueda entender sin jerga técnica de diseño instruccional.</p>
+
+      <h3>Componentes de un syllabus bien construido</h3>
+      <table class="compare-table">
+        <tr><th>Componente</th><th>Pregunta que responde</th><th>De dónde viene</th></tr>
+        <tr><td>Encabezado</td><td>¿Qué curso es, modalidad, duración, créditos?</td><td>Ficha del proyecto</td></tr>
+        <tr><td>Descripción del curso</td><td>¿De qué trata y por qué importa?</td><td>Análisis de necesidades (2.1)</td></tr>
+        <tr><td>Público objetivo y prerrequisitos</td><td>¿Para quién es y qué debe saber antes?</td><td>Caracterización de audiencia (2.1)</td></tr>
+        <tr><td>Objetivos del curso</td><td>¿Qué serás capaz de hacer al terminar?</td><td>Objetivos ABCD (2.2), traducidos a lenguaje llano</td></tr>
+        <tr><td>Metodología</td><td>¿Cómo se enseña — sincrónico, asincrónico, con qué modelo?</td><td>Modelo de DI elegido (1.2)</td></tr>
+        <tr><td>Estructura de contenidos</td><td>¿En qué unidades o módulos se organiza?</td><td>Ruta de aprendizaje (sección 3 de esta unidad)</td></tr>
+        <tr><td>Sistema de evaluación</td><td>¿Cómo y con qué ponderación se evalúa cada objetivo?</td><td>Alineamiento constructivo (2.3)</td></tr>
+        <tr><td>Cronograma</td><td>¿Qué semana corresponde a qué unidad y evaluación?</td><td>Planificación del proyecto</td></tr>
+        <tr><td>Políticas</td><td>¿Qué pasa con atrasos, asistencia, comunicación, integridad académica?</td><td>Normativa institucional</td></tr>
+        <tr><td>Recursos y bibliografía</td><td>¿Con qué materiales cuento?</td><td>Estrategia de contenidos</td></tr>
+      </table>
+
+      <div class="nota alerta"><span class="nota-tag">Error frecuente</span>Copiar el objetivo redactado en formato ABCD literalmente al syllabus ("Dado un caso de brecha de desempeño, el estudiante será capaz de diagnosticar…"). Ese registro es correcto para el equipo de DI, pero suena distante y burocrático para el estudiante. En el syllabus se traduce a segunda persona y lenguaje directo, conservando el verbo observable: "Vas a poder diagnosticar una brecha de desempeño real y justificar qué tipo de solución necesita."</div>
+
+      <div class="vineta">
+        <div class="vineta-head">Viñeta de taller · sincrónico vs. asincrónico</div>
+        <div class="vineta-body">Estás escribiendo el syllabus de dos versiones del mismo curso: una con clases en vivo semanales y otra 100% asincrónica para profesionales que estudian de noche. <strong>¿Qué componente del syllabus cambia más entre ambas versiones, y por qué?</strong></div>
+        <button class="vineta-reveal-btn" onclick="revealVineta(this, 'v1')">Piénsalo primero → ver resolución</button>
+        <div class="vineta-solution">El cronograma y las políticas de comunicación. En la versión sincrónica el cronograma ancla fechas y horarios fijos de sesión; en la asincrónica se reemplaza por ventanas de tiempo flexibles con hitos de entrega, y las políticas deben explicitar tiempos de respuesta del instructor (por ejemplo, "48 horas hábiles") porque no hay un momento en vivo donde resolver dudas.</div>
+      </div>
+    </div>
+
+    <!-- ============ SECCIÓN 3: RUTA DE APRENDIZAJE ============ -->
+    <div class="content-section" id="s3">
+      <h2><span class="sec-num">03</span> La ruta de aprendizaje — secuencia y andamiaje</h2>
+      <p>Si el syllabus es el contrato, la <strong>ruta de aprendizaje</strong> es el mapa de navegación: la representación visual y secuencial de las unidades del curso, mostrando qué es prerrequisito de qué, cuánto tiempo toma cada tramo y en qué punto de su progreso está el estudiante en cualquier momento. El cuaderno de taller que estás usando ahora mismo —con sus módulos, unidades y barra de avance— <strong>es en sí mismo una ruta de aprendizaje aplicada</strong>.</p>
+
+      <div class="defbox">Una ruta de aprendizaje no es solo un índice de contenidos: es una decisión de <strong>secuenciación y andamiaje</strong> (scaffolding) — qué debe dominarse antes de avanzar, y cuánta libertad tiene el estudiante para moverse fuera del orden sugerido.</div>
+
+      <h3>Cuatro lógicas de secuenciación</h3>
+      <table class="compare-table">
+        <tr><th>Tipo de ruta</th><th>Cuándo conviene</th><th>Ejemplo</th></tr>
+        <tr><td>Lineal estricta</td><td>Contenido acumulativo, donde cada unidad depende literalmente de la anterior</td><td>Un curso de programación: no se entiende una función sin dominar variables antes</td></tr>
+        <tr><td>Lineal flexible</td><td>Hay un orden recomendado, pero avanzar fuera de él no rompe el aprendizaje</td><td>Actualización docente en metodologías activas — cada unidad aporta, pero no depende estrictamente de la anterior</td></tr>
+        <tr><td>Modular / electiva</td><td>Un tronco común obligatorio más bloques independientes a elección</td><td>Una certificación con especializaciones (por ejemplo, LMS vs. producción multimedia)</td></tr>
+        <tr><td>Adaptativa</td><td>La ruta cambia según un diagnóstico inicial o el desempeño del estudiante</td><td>Un sistema que salta unidades de repaso si el estudiante ya demuestra dominio en una evaluación diagnóstica</td></tr>
+      </table>
+
+      <div class="nota contexto"><span class="nota-tag">Autorreferencia</span>Este cuaderno de taller modela una ruta <strong>lineal flexible</strong>: el orden 1→5 está sugerido y refleja backward design (fundamentos → análisis → diseño → producción → gestión), pero el sistema de gamificación (niveles con nombres de etapas de un óleo, racha de estudio, insignias) no bloquea unidades — confía en que la motivación intrínseca y la lógica del contenido guíen el avance, no un candado técnico.</div>
+
+      <div class="vineta">
+        <div class="vineta-head">Viñeta de taller · audiencia profesional con poco tiempo</div>
+        <div class="vineta-body">Diseñas la ruta de un curso de 8 semanas para profesionales que estudian de forma asincrónica, con 3-4 horas disponibles a la semana repartidas en sesiones cortas. <strong>¿Qué decisiones de secuenciación tomarías para que esa ruta funcione con ese perfil de audiencia?</strong></div>
+        <button class="vineta-reveal-btn" onclick="revealVineta(this, 'v2')">Piénsalo primero → ver resolución</button>
+        <div class="vineta-solution">Fragmentar cada unidad en microlearning de 15-20 minutos en vez de bloques de una hora; usar una ruta lineal flexible con hitos claros de evaluación cada 2 semanas (no solo al final); mostrar siempre el tiempo estimado de cada unidad para que la persona pueda planificar su semana; y evitar dependencias estrictas entre unidades salvo que el contenido realmente lo exija, porque un profesional que se atrasa una semana no debería quedar bloqueado del resto del curso.</div>
+      </div>
+    </div>
+
+    <!-- ============ SECCIÓN 4: DDI Y BLUEPRINT ============ -->
+    <div class="content-section" id="s4">
+      <h2><span class="sec-num">04</span> DDI y blueprint — la fuente de verdad</h2>
+      <p>El <strong>Documento de Diseño Instruccional (DDI)</strong>, a veces llamado <em>blueprint</em> o <em>course design document</em>, es el plan completo del curso: análisis de necesidades, audiencia, objetivos, estrategia pedagógica, secuencia de contenidos, evaluación, recursos necesarios y cronograma de producción. Es el documento más extenso y más interno de todos — su lector es el equipo de proyecto, no el estudiante.</p>
+
+      <div class="pilares">
+        <div class="pilar"><h4>DDI / Blueprint</h4><p>Plan macro de todo el curso. Contiene el "por qué" de cada decisión pedagógica. Lo usa el equipo completo como fuente de verdad.</p></div>
+        <div class="pilar"><h4>Syllabus</h4><p>Extracto público, en lenguaje llano, orientado a las expectativas y responsabilidades del estudiante.</p></div>
+        <div class="pilar"><h4>Storyboard</h4><p>Guión pantalla por pantalla de una lección específica, para que el developer la construya en una herramienta de autoría (tema de 3.2).</p></div>
+      </div>
+
+      <table class="compare-table">
+        <tr><th></th><th>DDI / Blueprint</th><th>Syllabus</th><th>Ruta de aprendizaje</th><th>Storyboard</th></tr>
+        <tr><td>Audiencia</td><td>Equipo de proyecto</td><td>Estudiante</td><td>Estudiante + equipo</td><td>Developer</td></tr>
+        <tr><td>Nivel de detalle</td><td>Muy alto — todo el razonamiento</td><td>Medio — resumen y políticas</td><td>Medio — secuencia y tiempos</td><td>Máximo — pantalla por pantalla</td></tr>
+        <tr><td>Alcance</td><td>Todo el curso</td><td>Todo el curso</td><td>Todo el curso</td><td>Una lección o módulo</td></tr>
+        <tr><td>Cuándo se usa</td><td>Durante todo el diseño y desarrollo</td><td>Antes de iniciar el curso</td><td>Antes de iniciar y durante el curso</td><td>En la fase de desarrollo (Módulo 4)</td></tr>
+      </table>
+
+      <div class="nota clave"><span class="nota-tag">Para recordar</span>Syllabus, ruta de aprendizaje y storyboard son todos <strong>derivados</strong> del DDI. Si necesitas cambiar un objetivo de aprendizaje a mitad de proyecto, el cambio empieza en el DDI y se propaga hacia los demás documentos — nunca al revés. Editar el syllabus sin volver al DDI es la forma más común en que un curso termina con objetivos, evaluación y contenido desalineados.</div>
+    </div>
+
+    <!-- ============ SECCIÓN 5: DUA Y OTROS MARCOS DE INCLUSIÓN ============ -->
+    <div class="content-section" id="s5">
+      <h2><span class="sec-num">05</span> DUA y otros marcos de accesibilidad e inclusión</h2>
+      <p>Al redactar el syllabus y diseñar la ruta, tienes que decidir cómo vas a diversificar materiales y evaluaciones para que ningún perfil de estudiante quede fuera. El marco con más respaldo de investigación y más citado hoy en día para esto es el <strong>Diseño Universal para el Aprendizaje (DUA)</strong>, del CAST — pero no es el único que un DI debería poder nombrar en una entrevista. A continuación, el DUA y los tres marcos con los que se complementa.</p>
+
+      <table class="compare-table">
+        <tr><th>Marco</th><th>Qué resuelve</th><th>Cuándo aplica principalmente</th><th>Relación con el DUA</th></tr>
+        <tr><td>DUA / UDL (CAST)</td><td>Diseño pedagógico proactivo de materiales y evaluaciones</td><td>Diseño del curso desde cero, antes de que exista un estudiante concreto frente a ti</td><td>Es el marco central de esta sección</td></tr>
+        <tr><td>Enseñanza diferenciada (Differentiated Instruction)</td><td>Ajuste reactivo en tiempo real según necesidades observadas</td><td>Aula presencial o sincrónica, con un docente presente que ajusta sobre la marcha</td><td>Complementario: el DUA diseña la base flexible; la enseñanza diferenciada ajusta en vivo sobre esa base cuando hace falta</td></tr>
+        <tr><td>WCAG / POUR (Perceptible, Operable, Comprensible, Robusto)</td><td>Estándar técnico y legal de accesibilidad digital</td><td>Implementación real en el LMS: PDFs, videos, subtítulos, contraste, navegación por teclado</td><td>Complementario: el DUA resuelve el diseño pedagógico; WCAG resuelve que ese diseño funcione técnicamente para cualquier persona</td></tr>
+        <tr><td>Quality Matters (QM)</td><td>Rúbrica de aseguramiento de calidad para cursos en línea, muy usada en educación superior de EE.UU.</td><td>Auditoría y certificación de un curso completo antes o después de publicarlo</td><td>Incorpora criterios de DUA y de WCAG como parte de sus propios estándares — es el "empaquetado" de auditoría de ambos</td></tr>
+      </table>
+
+      <div class="nota clave"><span class="nota-tag">Mi recomendación</span>El DUA sigue siendo la respuesta correcta si te preguntan "¿qué marco usas para diversificar?" — tiene el mayor respaldo de investigación y es transversal a cualquier modalidad. Pero nombrarlo junto con su complemento técnico (WCAG) y, si trabajas en instituciones con estándares internacionales o de EE.UU., con Quality Matters, comunica que entiendes el ecosistema completo — no solo la pieza pedagógica.</div>
+
+      <h3>Los tres principios del DUA, aplicados al syllabus y la ruta</h3>
+      <table class="compare-table">
+        <tr><th>Principio DUA</th><th>Se refleja en el syllabus…</th><th>Se refleja en la ruta de aprendizaje…</th></tr>
+        <tr><td>Representación (el qué)</td><td>Una sección que explicita en qué formatos está disponible cada unidad (texto, PDF, audio, video)</td><td>Multimodalidad ofrecida de forma consistente en cada tramo de la ruta</td></tr>
+        <tr><td>Acción y expresión (el cómo)</td><td>Política de evaluación que permite más de un formato de entrega para un mismo objetivo</td><td>Checkpoints que aceptan más de una forma de evidencia de logro</td></tr>
+        <tr><td>Motivación (el por qué)</td><td>Descripción del curso que conecta con contextos reales y relevantes para la audiencia ya caracterizada en 2.1</td><td>Una ruta flexible que da autonomía real de ritmo y orden, no solo la ilusión de elegir</td></tr>
+      </table>
+
+      <div class="nota alerta"><span class="nota-tag">No confundir</span>El DUA no es lo mismo que los (desmentidos) "estilos de aprendizaje" (visual/auditivo/kinestésico). El DUA no cataloga a cada estudiante en un perfil fijo — ofrece múltiples opciones disponibles para cualquiera, sin asumir que una persona "es" de un solo tipo.</div>
+
+      <div class="vineta">
+        <div class="vineta-head">Viñeta de taller · aplicar DUA al syllabus ya redactado</div>
+        <div class="vineta-body">Revisas el syllabus que acabas de escribir en la sección 2 y notas que la única forma de evaluación que ofreces es un ensayo escrito individual. <strong>¿Qué principio del DUA falta reforzar, y qué cambio concreto harías en el syllabus?</strong></div>
+        <button class="vineta-reveal-btn" onclick="revealVineta(this, 'v4')">Piénsalo primero → ver resolución</button>
+        <div class="vineta-solution">Falta acción y expresión: una única forma de entrega no da opciones sobre cómo demostrar el aprendizaje. El cambio concreto es agregar en la sección de evaluación del syllabus una alternativa equivalente — por ejemplo, permitir un video explicativo o una infografía como entrega válida para el mismo objetivo, siempre que la rúbrica evalúe el mismo criterio de fondo.</div>
+      </div>
+    </div>
+
+    <!-- ============ SECCIÓN 6: VERIFICAR COHERENCIA ============ -->
+    <div class="content-section" id="s6">
+      <h2><span class="sec-num">06</span> Verificar coherencia — modelo, audiencia y objetivos</h2>
+      <p>Producir el syllabus y la ruta no es el final del trabajo: falta verificar que ambos documentos sean <strong>coherentes entre sí</strong> y con lo que ya definiste en las unidades anteriores de este módulo. Esta es la parte del proceso que más se salta bajo presión de plazos, y la que más rápido se nota cuando falta.</p>
+
+      <table class="compare-table">
+        <tr><th>Elemento del syllabus/ruta</th><th>De dónde debe venir</th><th>Cómo verificarlo</th></tr>
+        <tr><td>Público objetivo y prerrequisitos</td><td>Análisis de audiencia (2.1)</td><td>¿El perfil descrito en el syllabus coincide con el perfil real que analizaste, no con un "estudiante genérico"?</td></tr>
+        <tr><td>Objetivos del curso</td><td>Objetivos ABCD (2.2)</td><td>¿Cada objetivo del syllabus tiene un verbo observable equivalente al de la unidad correspondiente, sin agregar ni quitar nivel de Bloom?</td></tr>
+        <tr><td>Sistema de evaluación</td><td>Alineamiento constructivo (2.3)</td><td>¿Cada instrumento de evaluación listado mide un objetivo real, y cada objetivo tiene al menos un instrumento que lo mida?</td></tr>
+        <tr><td>Metodología y estructura</td><td>Modelo de DI elegido (1.2)</td><td>¿La lógica de la ruta refleja el modelo declarado — por ejemplo, iteración visible si se usó SAM, o evidencia antes que actividad si se usó UbD?</td></tr>
+      </table>
+
+      <div class="nota alerta"><span class="nota-tag">Checklist antes de entregar</span>Antes de dar por cerrado un syllabus o una ruta, pregúntate: ¿todos los objetivos de 2.2 aparecen en algún lugar? ¿ningún objetivo nuevo apareció "de la nada" en el syllabus sin haber pasado por el análisis? ¿la evaluación que prometes en el syllabus es la misma que diseñaste con alineamiento constructivo? ¿la ruta refleja realmente el tipo de audiencia — tiempo disponible, modalidad, nivel previo — o es una plantilla genérica reciclada de otro curso?</div>
+
+      <div class="vineta">
+        <div class="vineta-head">Viñeta de taller · desalineamiento detectado tarde</div>
+        <div class="vineta-body">Revisando el syllabus casi terminado, notas que promete una "evaluación práctica final" pero el objetivo principal del curso (redactado en 2.2) usa el verbo "explicar" — un nivel de comprensión, no de aplicación. <strong>¿Qué corriges primero: el syllabus o el objetivo?</strong></div>
+        <button class="vineta-reveal-btn" onclick="revealVineta(this, 'v3')">Piénsalo primero → ver resolución</button>
+        <div class="vineta-solution">Ninguno de los dos se corrige "a ciegas": primero vuelves al análisis de necesidades (2.1) y preguntas qué necesita realmente la audiencia — comprender el concepto o aplicarlo en la práctica. Esa respuesta determina si el objetivo estaba mal redactado desde 2.2 (y hay que subirlo a "aplicar") o si el syllabus prometió más de lo que el curso realmente enseña (y hay que bajar la evaluación a algo coherente con "explicar"). El error de fondo es que el desalineamiento se detectó en la fase equivocada — debía haberse visto en el checklist de 2.3.</div>
+      </div>
+    </div>
+
+    <!-- ============ SECCIÓN 7: ERRORES COMUNES ============ -->
+    <div class="content-section" id="s7">
+      <h2><span class="sec-num">07</span> Errores comunes y cómo defenderlos en entrevista</h2>
+      <p>Estos documentos suelen aparecer en procesos de selección como parte del portafolio o de una prueba práctica. Conocer los errores típicos —y poder nombrarlos— demuestra que entiendes el proceso completo, no solo el formato final.</p>
+      <table class="compare-table">
+        <tr><th>Error común</th><th>Por qué ocurre</th><th>Cómo se evita</th></tr>
+        <tr><td>Syllabus genérico, copiado de otro curso</td><td>Presión de tiempo; se trata como trámite</td><td>Volver siempre al análisis de audiencia y objetivos específicos de este curso antes de reutilizar una plantilla</td></tr>
+        <tr><td>Ruta con demasiadas unidades sin tiempo estimado</td><td>Se diseñó pensando en contenido, no en la experiencia del estudiante</td><td>Agregar tiempo estimado por unidad y validar la carga total contra el tiempo real disponible de la audiencia</td></tr>
+        <tr><td>DDI tratado como papeleo posterior al diseño real</td><td>Se percibe como burocracia en vez de como la fuente de verdad</td><td>Escribirlo en paralelo a las decisiones, no después — documentar el razonamiento mientras ocurre</td></tr>
+        <tr><td>Objetivos reformulados distinto en cada documento</td><td>Se redactan por separado en vez de derivar unos de otros</td><td>Mantener una única lista maestra de objetivos y traducir su lenguaje, nunca su nivel de Bloom, entre documentos</td></tr>
+      </table>
+      <div class="nota clave"><span class="nota-tag">Para tus postulaciones</span>Si te piden mostrar un syllabus o una ruta que hayas diseñado, la pregunta que casi siempre sigue es "¿por qué esa estructura?" — no "¿por qué ese formato?". Lo que evalúan es si puedes trazar cada decisión de vuelta al análisis de audiencia y a los objetivos, no si el documento se ve prolijo.</div>
+    </div>
+
+    <div class="activity">
+      <h2>Actividad — ¿Qué artefacto es?</h2>
+      <div class="act-sub">Clasifica cada descripción según el artefacto que le corresponde. Cada acierto suma puntos — las que falles te dicen exactamente qué repasar en la tabla de la sección 4.</div>
+      <div id="actRoot"></div>
+      <div class="act-progress" id="actProgress"></div>
+    </div>
+
+    <!-- CALLOUTS -->
+    <div class="callout ia">
+      <div class="callout-header">🖌 IA en esta fase</div>
+      <div class="callout-body">
+        <div class="capa">＋ Toca para levantar la capa</div>
+        <p>En la fase de producir artefactos, la IA generativa rinde mejor como <strong>acelerador de primeros borradores y verificador de coherencia</strong> que como redactora final. Ejemplos concretos:</p>
+        <p>• Pegar los objetivos ya redactados en 2.2 y pedirle a la IA un primer borrador de syllabus en lenguaje llano — luego editar tono y precisión con tu propio criterio, nunca publicar ese primer borrador sin revisión.</p>
+        <p>• Pegar el syllabus, la ruta y la lista de objetivos en una misma conversación y pedirle explícitamente que señale cualquier objetivo que no aparezca reflejado en los tres documentos — es un chequeo de alineamiento rápido antes de entregar.</p>
+        <p>• Pedirle que genere dos o tres alternativas de secuenciación de la ruta (lineal flexible vs. modular, por ejemplo) para comparar ventajas antes de decidir, en vez de comprometerte con la primera estructura que se te ocurra.</p>
+        <p>• Pegar el syllabus terminado y pedirle explícitamente que lo revise contra los tres principios del DUA (representación, acción/expresión, motivación) y señale qué principio está más débil — es un chequeo rápido antes de dar el documento por cerrado.</p>
+      </div>
+    </div>
+
+    <div class="callout entrevista">
+      <div class="callout-header">🎤 Nota de entrevista</div>
+      <div class="callout-body">
+        <div class="capa">＋ Toca para levantar la capa</div>
+        <p>Cuando te pidan mostrar un syllabus o una ruta de tu portafolio, evita presentarlo solo como un documento terminado. Una respuesta fuerte conecta el artefacto con las decisiones que lo preceden: (1) qué brecha y qué audiencia motivaron ese diseño; (2) qué objetivo específico refleja cada sección clave del documento; (3) qué verificaste para asegurar que todo estuviera alineado antes de entregarlo.</p>
+        <p>Evita presentar el syllabus como "el formato que usa mi institución" sin poder explicar por qué cada componente está ahí — suena a que llenaste una plantilla, no a que diseñaste el curso.</p>
+      </div>
+    </div>
+
+    <!-- ============ PRÁCTICA DE ENTREVISTA (3 con checklist) ============ -->
+    <div class="content-section" id="practica">
+      <h2><span class="sec-num">◆</span> Practica como en una entrevista</h2>
+      <p>Responde primero con tus propias palabras — <strong>en voz alta o por escrito</strong> — antes de revelar la respuesta modelo. El valor está en formular tu propia respuesta, no en leer la mía. Después usa el checklist: cada ítem que marques suma a tu autoevaluación.</p>
+
+      <div class="practica">
+        <div class="practica-head">
+          <div class="p-num">Práctica 1</div>
+          <div class="p-q">Un entrevistador te pregunta: "¿Qué diferencia hay entre un syllabus y un DDI?" en 30 segundos. ¿Qué respondes?</div>
+        </div>
+        <div class="practica-body">
+          <textarea placeholder="Escribe o practica en voz alta tu respuesta antes de revelar la modelo…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p1', 'p1')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p1">"El DDI es el plan completo del curso — todo el razonamiento pedagógico, la estrategia, la evaluación y el cronograma de producción — y lo usa el equipo interno, no el estudiante. El syllabus es un extracto de ese plan, traducido a lenguaje llano, pensado para que el estudiante entienda qué va a aprender, cómo se evalúa y qué se espera de él. Uno es la fuente de verdad; el otro es la cara pública de esa fuente."</div>
+          <div class="checklist">
+            <div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1a')"> ¿Distinguiste audiencia interna (DDI) de audiencia estudiante (syllabus)?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1b')"> ¿Mencionaste que uno deriva del otro, no que son independientes?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1c')"> ¿Evitaste reducirlo a "uno es más largo que el otro"?</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="practica">
+        <div class="practica-head">
+          <div class="p-num">Práctica 2</div>
+          <div class="p-q">Te piden explicar cómo estructurarías la ruta de aprendizaje de un curso de 8 semanas para profesionales asincrónicos con poco tiempo disponible. ¿Qué decisiones destacas?</div>
+        </div>
+        <div class="practica-body">
+          <textarea placeholder="Tu respuesta…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p2', 'p2')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p2">"Usaría una ruta lineal flexible, no estricta: un orden recomendado pero sin bloquear al estudiante si se atrasa una semana. Fragmentaría cada unidad en microlearning de 15-20 minutos, mostraría siempre el tiempo estimado por unidad para que puedan planificar su semana, y pondría hitos de evaluación cada dos semanas en vez de dejar todo para el final, para que el avance sea visible y no se acumule la presión."</div>
+          <div class="checklist">
+            <div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2a')"> ¿Justificaste la elección de "lineal flexible" con el perfil de audiencia?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2b')"> ¿Mencionaste tiempo estimado visible por unidad?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2c')"> ¿Propusiste hitos intermedios, no solo evaluación final?</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="practica">
+        <div class="practica-head">
+          <div class="p-num">Práctica 3</div>
+          <div class="p-q">Un jefe de proyecto te dice: "el syllabus ya está listo, solo cópialo del curso anterior y cambia el nombre del curso." ¿Cómo respondes como DI?</div>
+        </div>
+        <div class="practica-body">
+          <textarea placeholder="Tu respuesta…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p3', 'p3')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p3">"Antes de reutilizarlo, propondría una revisión rápida de coherencia: comparar los objetivos y la audiencia del curso anterior con los de este curso nuevo. Si la audiencia o los objetivos cambiaron —aunque sea el mismo formato de syllabus—, el contenido interno (prerrequisitos, evaluación, cronograma) probablemente ya no calza. Copiar sin verificar es exactamente el error que genera desalineamiento entre lo que el syllabus promete y lo que el curso realmente enseña."</div>
+          <div class="checklist">
+            <div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3a')"> ¿Propusiste verificar antes de copiar, no negarte ni aceptar sin más?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3b')"> ¿Nombraste el riesgo concreto (desalineamiento con audiencia/objetivos)?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3c')"> ¿Mantuviste un tono colaborativo, no de confrontación con el jefe de proyecto?</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="practica">
+        <div class="practica-head">
+          <div class="p-num">Práctica 4</div>
+          <div class="p-q">Te preguntan: "¿qué marco usas para diversificar materiales y evaluaciones?" — y agregan "¿es lo mismo que estilos de aprendizaje?". ¿Qué respondes?</div>
+        </div>
+        <div class="practica-body">
+          <textarea placeholder="Tu respuesta…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p4', 'p4')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p4">"Uso el Diseño Universal para el Aprendizaje (DUA): representación, acción/expresión y motivación. No es lo mismo que los estilos de aprendizaje — esa idea de que alguien 'es' visual o auditivo no tiene respaldo científico sólido. El DUA no cataloga a nadie: ofrece múltiples opciones a todos por igual. Y lo complemento con WCAG para que la accesibilidad técnica del LMS esté resuelta, no solo la pedagógica."</div>
+          <div class="checklist">
+            <div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p4a')"> ¿Nombraste el DUA como marco principal, con sus tres principios aunque sea brevemente?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p4b')"> ¿Distinguiste el DUA de los estilos de aprendizaje sin que te lo tuvieran que preguntar dos veces?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p4c')"> ¿Mencionaste al menos un marco complementario (WCAG o Quality Matters)?</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ EVALUACIÓN FINAL (12) ============ -->
+    <div class="eval-block" id="evaluacion">
+      <h2>Evaluación — Unidad 2.4</h2>
+      <div class="eval-sub">12 preguntas. El puntaje se guarda en tu ruta de aprendizaje. Puedes reintentar sin límite.</div>
+      <div id="quizRoot"></div>
+      <div class="eval-counter" id="quizCounter">Respondidas: 0/10</div>
+      <button class="eval-submit" id="quizSubmit" onclick="submitQuiz()" disabled>Enviar evaluación</button>
+      <div class="result-card" id="resultCard">
+        <div class="result-score" id="resultScore">0%</div>
+        <div id="resultMsg" style="font-size:0.85rem;color:var(--ink-muted);margin-top:0.3rem;"></div>
+      </div>
+    </div>
+
+    <div class="next-nav">
+      <a href="m2-3.html">← 2.3 Backward Design y alineamiento constructivo</a>
+      <a href="m3-1.html">3.1 Evaluación y diseño de actividades →</a>
+    </div>
+  </main>
+</div>
+
+<script src="../gami.js"></script>
+<script>
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbylYML8h2BnNgi2AXtZ8bkGaXPNRhurswPr5dfyGRldbVoCRvmoT2cHN0r3I4qGynLb/exec';
+const UNIT_ID = 'm2-4';
+
+// ===== VIDEO: pega aquí el ID de YouTube =====
+const YT_VIDEO_ID = '';
+if (YT_VIDEO_ID) {
+  document.getElementById('videoWrap').innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + YT_VIDEO_ID + '" title="Video de la unidad" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+}
+
+function switchMedia(btn) {
+  document.querySelectorAll('.media-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.media-pane').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('pane-' + btn.dataset.pane).classList.add('active');
+  if (btn.dataset.pane === 'video' && YT_VIDEO_ID) { Gami.award('m2-4_video', 5, 'Viste el video de la unidad'); checkMultimodal(); }
+}
+function checkMultimodal() {
+  if (Gami.hasSeen('m2-4_pdf') && Gami.hasSeen('m2-4_audio') && (YT_VIDEO_ID ? Gami.hasSeen('m2-4_video') : true)) Gami.badge('multimodal');
+}
+
+// Viñetas think-first
+function revealVineta(btn, id) {
+  btn.closest('.vineta').classList.add('revealed');
+  Gami.award('m2-4_vineta_' + id, 5, 'Resolviste una viñeta de taller');
+}
+
+// Capas
+let capasReveladas = 0;
+document.querySelectorAll('.capa').forEach((capa, i) => {
+  capa.addEventListener('click', () => {
+    capa.closest('.callout').classList.add('revealed');
+    Gami.award('m2-4_capa' + i, 5, 'Levantaste una capa');
+    capasReveladas++;
+    if (capasReveladas >= 2) Gami.badge('curiosa');
+  });
+});
+
+// Respuestas modelo y checklists de práctica
+function toggleRM(id, pid) {
+  document.getElementById(id).classList.toggle('show');
+  Gami.award('m2-4_rm_' + pid, 3, 'Contrastaste con la respuesta modelo');
+}
+function clCheck(el, id) {
+  if (el.checked) Gami.award('m2-4_cl_' + id, 2, 'Ítem de checklist verificado');
+}
+
+// ===== Actividad ¿Qué artefacto es? =====
+const ACT_ITEMS = [
+  { text: 'Documento de 2-3 páginas que el estudiante recibe el primer día, con política de asistencia, sistema de evaluación y cronograma de clases.', ans: 'syl', why: 'Es la cara pública del curso, orientada al estudiante — el contrato pedagógico.' },
+  { text: 'Mapa visual de las unidades del curso, mostrando qué módulos son prerrequisito de cuáles y el tiempo estimado de cada uno.', ans: 'ruta', why: 'Representa la secuencia y el andamiaje — de eso trata la ruta de aprendizaje.' },
+  { text: 'Documento interno de 40 páginas con el análisis de necesidades, la estrategia pedagógica completa, los objetivos, la evaluación y el cronograma de producción — el estudiante nunca lo ve.', ans: 'ddi', why: 'Plan macro completo para el equipo interno: es el DDI, la fuente de verdad.' },
+  { text: 'Guión pantalla por pantalla que especifica qué texto, imagen, interacción y audio aparece en cada pantalla de un módulo construido en Storyline.', ans: 'story', why: 'Nivel de detalle máximo para una sola lección, dirigido al developer.' },
+  { text: 'Documento que el equipo de e-learning developers usa como fuente de verdad para construir tanto el syllabus como el storyboard de cada lección.', ans: 'ddi', why: 'Syllabus y storyboard derivan de él — es, de nuevo, el DDI.' },
+  { text: 'Herramienta de navegación que le permite al estudiante ver en qué etapa de su progreso está y qué le falta para avanzar (como los niveles y la barra de este mismo cuaderno de taller).', ans: 'ruta', why: 'Función de navegación y progreso: exactamente el rol de la ruta de aprendizaje.' },
+  { text: 'Sección que detalla los porcentajes de cada evaluación y la política de entregas atrasadas.', ans: 'syl', why: 'Es contenido típico de la sección de evaluación y políticas de un syllabus.' },
+];
+let actDone = 0, actCorrect = 0;
+function renderActivity() {
+  document.getElementById('actRoot').innerHTML = ACT_ITEMS.map((item, i) => `
+    <div class="act-card" id="act-${i}">
+      <div class="act-statement">${item.text}</div>
+      <div class="act-buttons">
+        <button class="act-btn" onclick="answerAct(${i}, 'syl')">Syllabus</button>
+        <button class="act-btn" onclick="answerAct(${i}, 'ruta')">Ruta de aprendizaje</button>
+        <button class="act-btn" onclick="answerAct(${i}, 'ddi')">DDI</button>
+        <button class="act-btn" onclick="answerAct(${i}, 'story')">Storyboard</button>
+      </div>
+      <div class="act-verdict" id="verdict-${i}"></div>
+    </div>`).join('');
+  updateActProgress();
+}
+const ACT_LABELS = { syl: 'Syllabus', ruta: 'Ruta de aprendizaje', ddi: 'DDI', story: 'Storyboard' };
+function answerAct(i, choice) {
+  const item = ACT_ITEMS[i];
+  const card = document.getElementById('act-' + i);
+  const verdict = document.getElementById('verdict-' + i);
+  actDone++;
+  if (choice === item.ans) {
+    actCorrect++;
+    card.classList.add('ok');
+    verdict.style.color = '#315226';
+    verdict.textContent = '✓ ' + item.why;
+  } else {
+    card.classList.add('no');
+    card.querySelector('.act-buttons').style.display = 'none';
+    verdict.style.color = '#6E2A2A';
+    verdict.textContent = '✗ Era ' + ACT_LABELS[item.ans] + '. ' + item.why;
+  }
+  updateActProgress();
+  if (actDone === ACT_ITEMS.length) {
+    Gami.award('m2-4_actividad', Math.round(15 * actCorrect / ACT_ITEMS.length) + 5, 'Actividad ¿Qué artefacto es? — ' + actCorrect + '/' + ACT_ITEMS.length);
+  }
+}
+function updateActProgress() {
+  document.getElementById('actProgress').textContent = actDone + '/' + ACT_ITEMS.length + ' clasificadas' + (actDone === ACT_ITEMS.length ? ' · ' + actCorrect + ' correctas' : '');
+}
+renderActivity();
+
+// ===== Evaluación final — 10 preguntas =====
+const QUIZ = [
+  { q: '¿Cuál describe mejor la función principal de un syllabus?', opts: ['El plan interno completo del curso para el equipo de diseño', 'El contrato pedagógico que comunica al estudiante qué aprenderá, cómo se evalúa y qué se espera de él', 'El guión pantalla por pantalla de cada lección', 'El informe de análisis de necesidades presentado al sponsor'], ans: 1 },
+  { q: '¿Cuál es la diferencia central entre el syllabus y la ruta de aprendizaje?', opts: ['No hay diferencia real, son sinónimos', 'El syllabus es el contrato y las políticas del curso; la ruta es el mapa de secuencia y avance por las unidades', 'El syllabus es para el equipo interno; la ruta es solo para el sponsor', 'La ruta reemplaza al syllabus en cursos asincrónicos'], ans: 1 },
+  { q: '¿Qué es el DDI (Documento de Diseño Instruccional)?', opts: ['El resumen de una hoja que se entrega al estudiante', 'El plan pedagógico completo e interno del curso, que funciona como fuente de verdad para los demás documentos', 'El cronograma de clases sincrónicas', 'La rúbrica de evaluación final'], ans: 1 },
+  { q: '¿Cuál es la relación correcta entre el DDI, el syllabus y la ruta de aprendizaje?', opts: ['Son documentos independientes que se redactan por separado', 'El syllabus y la ruta son extractos derivados del DDI, adaptados para el estudiante', 'El DDI se redacta después del syllabus para justificarlo', 'La ruta reemplaza al DDI en proyectos pequeños'], ans: 1 },
+  { q: '¿Qué distingue a un storyboard de un blueprint/DDI?', opts: ['El storyboard es más extenso que el DDI', 'El storyboard detalla pantalla por pantalla una lección específica; el DDI es el plan macro de todo el curso', 'No hay diferencia, son el mismo documento con distinto nombre', 'El storyboard lo usa el estudiante y el DDI el sponsor'], ans: 1 },
+  { q: '¿Cuál de los siguientes NO forma parte típicamente de un syllabus?', opts: ['Sistema de evaluación y ponderaciones', 'Políticas de asistencia y entregas atrasadas', 'Guión pantalla por pantalla para el desarrollador de e-learning', 'Descripción del curso y objetivos generales'], ans: 2 },
+  { q: 'Para una audiencia de profesionales asincrónicos con poco tiempo disponible, ¿qué tipo de ruta de aprendizaje conviene generalmente?', opts: ['Lineal estricta con bloqueo total entre unidades', 'Lineal flexible, con microlearning y tiempo estimado visible por unidad', 'Modular con especializaciones obligatorias', 'Adaptativa basada exclusivamente en un examen de ingreso'], ans: 1 },
+  { q: '¿Qué se debe verificar para asegurar que un syllabus sea coherente con los objetivos definidos en la unidad 2.2?', opts: ['Que el syllabus tenga más objetivos que la unidad 2.2, para cubrir más terreno', 'Que cada objetivo del syllabus conserve el mismo verbo observable o nivel de Bloom que el objetivo original, aunque cambie el lenguaje', 'Que los objetivos del syllabus estén redactados en formato ABCD técnico, igual que en 2.2', 'Que el syllabus omita los objetivos y los deje solo en el DDI'], ans: 1 },
+  { q: 'Copiar los objetivos técnicos en formato ABCD literalmente en el syllabus, sin adaptarlos, es un problema principalmente porque…', opts: ['Viola derechos de autor del formato ABCD', 'El estudiante no necesariamente entiende la jerga taxonómica, aunque el verbo observable debe conservarse en la traducción', 'Los objetivos ABCD son secretos internos que no se pueden mostrar', 'Aumenta artificialmente la extensión del documento'], ans: 1 },
+  { q: 'En una entrevista te piden mostrar un syllabus de tu portafolio. ¿Qué es más importante destacar?', opts: ['Que el formato se ve prolijo y profesional', 'Cómo cada sección refleja decisiones tomadas en el análisis de audiencia y en los objetivos previamente definidos', 'Que usaste la plantilla oficial de la institución', 'La cantidad de páginas que tiene el documento'], ans: 1 },
+  { q: '¿Cuál es la diferencia principal entre el DUA (UDL) y la enseñanza diferenciada (Differentiated Instruction)?', opts: ['Son sinónimos exactos del mismo concepto', 'El DUA diseña proactivamente desde el inicio para toda la variabilidad de estudiantes; la enseñanza diferenciada ajusta reactivamente en tiempo real con un docente presente', 'El DUA solo aplica en educación presencial y la enseñanza diferenciada solo en virtual', 'La enseñanza diferenciada reemplazó al DUA como marco más reciente'], ans: 1 },
+  { q: '¿Qué resuelve WCAG/POUR que el DUA por sí solo no garantiza?', opts: ['La motivación del estudiante', 'La implementación técnica y legal de la accesibilidad digital (LMS, PDFs, videos, navegación)', 'La redacción de los objetivos de aprendizaje', 'La secuenciación de la ruta de aprendizaje'], ans: 1 },
+];
+
+function renderQuiz() {
+  document.getElementById('quizRoot').innerHTML = QUIZ.map((item, qi) => `
+    <div class="eval-q">${qi + 1}. ${item.q}</div>
+    <div class="quiz-opts" data-q="${qi}">
+      ${item.opts.map((opt, oi) => `
+        <label class="eval-option"><input type="radio" name="q${qi}" value="${oi}" onchange="updateQuizCounter()"> ${opt}</label>
+      `).join('')}
+    </div>`).join('');
+}
+function answered() {
+  let n = 0;
+  for (let i = 0; i < QUIZ.length; i++) if (document.querySelector('input[name=q' + i + ']:checked')) n++;
+  return n;
+}
+function updateQuizCounter() {
+  const n = answered();
+  document.getElementById('quizCounter').textContent = 'Respondidas: ' + n + '/' + QUIZ.length;
+  document.getElementById('quizSubmit').disabled = n < QUIZ.length;
+}
+function submitQuiz() {
+  let correct = 0;
+  QUIZ.forEach((item, qi) => {
+    const sel = document.querySelector('input[name=q' + qi + ']:checked');
+    const val = sel ? parseInt(sel.value) : -1;
+    document.querySelectorAll('[data-q="' + qi + '"] .eval-option').forEach((opt, oi) => {
+      opt.classList.remove('correct','incorrect');
+      if (oi === item.ans) opt.classList.add('correct');
+      else if (oi === val) opt.classList.add('incorrect');
+    });
+    if (val === item.ans) correct++;
+  });
+  const pct = correct / QUIZ.length;
+  saveScore(pct, correct);
+}
+function saveScore(pct, correct) {
+  try {
+    const scores = JSON.parse(localStorage.getItem('di_scores_v2') || '{}');
+    scores[UNIT_ID] = pct;
+    localStorage.setItem('di_scores_v2', JSON.stringify(scores));
+  } catch(e) {}
+
+  const card = document.getElementById('resultCard');
+  card.className = 'result-card show';
+  card.style.background = pct >= 0.7 ? 'var(--done-soft)' : 'var(--msoft)';
+  document.getElementById('resultScore').textContent = Math.round(pct * 100) + '%';
+  document.getElementById('resultMsg').textContent = correct + '/' + QUIZ.length + ' correctas · ' + (pct >= 0.7 ? 'Unidad completada en tu ruta.' : 'Puedes repasar y reintentar — sin límite de intentos.');
+
+  if (pct >= 0.7) {
+    Gami.award('m2-4_eval', 30, 'Evaluación de la unidad aprobada — ' + correct + '/' + QUIZ.length);
+    Gami.badge('primeraCapa');
+  }
+  try {
+    const img = new Image();
+    img.src = SCRIPT_URL + '?action=saveScore&id=' + UNIT_ID + '&score=' + pct + '&t=' + Date.now();
+  } catch(e) {}
+}
+renderQuiz();
+updateQuizCounter();
+</script>
+</body>
+</html>
