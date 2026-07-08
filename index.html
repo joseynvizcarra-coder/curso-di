@@ -192,15 +192,6 @@ body {
 .unit-score { font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; color: var(--ink-muted); white-space: nowrap; }
 .unit-score.done { color: var(--done); }
 
-.tag-new {
-  font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; text-transform: uppercase;
-  letter-spacing: 0.05em; background: var(--mc); color: #fff; padding: 0.1rem 0.4rem; border-radius: 2px;
-}
-.tag-soon {
-  font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; text-transform: uppercase;
-  letter-spacing: 0.05em; color: var(--ink-muted); border: 1px solid var(--border); padding: 0.1rem 0.4rem; border-radius: 2px;
-}
-
 /* module color scoping */
 .m1 { --mc: var(--m1); --msoft: var(--m1-soft); }
 .m2 { --mc: var(--m2); --msoft: var(--m2-soft); }
@@ -231,7 +222,7 @@ footer strong { color: var(--ink); font-weight: 500; }
   <div class="hero-inner">
     <div class="eyebrow">Cuaderno de taller · Diseño Instruccional</div>
     <h1>Diseñar, producir y defender una instancia formativa completa</h1>
-    <p class="thesis">Ruta de estudio personal construida con backward design: cada módulo parte de lo que necesito ser capaz de hacer al final, no de una lista de temas sueltos. Reconstrucción v2 — en progreso.</p>
+    <p class="thesis">Ruta de estudio personal construida con backward design: cada módulo parte de lo que necesito ser capaz de hacer al final, no de una lista de temas sueltos.</p>
     <div class="hero-meta">
       <span><strong>16</strong> unidades</span>
       <span><strong>5</strong> módulos</span>
@@ -281,7 +272,7 @@ footer strong { color: var(--ink); font-weight: 500; }
   </div>
 </div>
 
-<footer>Joselyn Vizcarra Romero · <strong>Cuaderno de taller de Diseño Instruccional</strong> · v2 · Julio 2026</footer>
+<footer>Joselyn Vizcarra Romero · <strong>Cuaderno de taller de Diseño Instruccional</strong> · 2026</footer>
 
 <script src="gami.js"></script>
 <script>
@@ -292,42 +283,42 @@ const MODULOS = [
   {
     id: 'm1', color: 'm1', titulo: 'Fundamentos y panorama', sub: 'De lo más amplio a lo aplicable',
     unidades: [
-      { id: 'm1-1', titulo: '¿Qué es el Diseño Instruccional?', built: true },
-      { id: 'm1-2', titulo: 'Modelos de DI: ADDIE, SAM, UbD', built: false },
-      { id: 'm1-3', titulo: 'Teorías del aprendizaje', built: false },
-      { id: 'm1-4', titulo: 'Gagné, carga cognitiva y principios de Mayer', built: false },
+      { id: 'm1-1', titulo: '¿Qué es el Diseño Instruccional?' },
+      { id: 'm1-2', titulo: 'Modelos de DI: ADDIE, SAM, UbD' },
+      { id: 'm1-3', titulo: 'Teorías del aprendizaje' },
+      { id: 'm1-4', titulo: 'Gagné, carga cognitiva y principios de Mayer' },
     ]
   },
   {
     id: 'm2', color: 'm2', titulo: 'Análisis y definición', sub: 'Diagnóstico, objetivos y alineamiento',
     unidades: [
-      { id: 'm2-1', titulo: 'Análisis de necesidades y audiencia', built: false },
-      { id: 'm2-2', titulo: 'Objetivos de aprendizaje y taxonomías', built: false },
-      { id: 'm2-3', titulo: 'Backward Design y alineamiento constructivo', built: false, nueva: true },
-      { id: 'm2-4', titulo: 'Artefactos y documentos del DI', built: false },
+      { id: 'm2-1', titulo: 'Análisis de necesidades y audiencia' },
+      { id: 'm2-2', titulo: 'Objetivos de aprendizaje y taxonomías' },
+      { id: 'm2-3', titulo: 'Backward Design y alineamiento constructivo' },
+      { id: 'm2-4', titulo: 'Artefactos y documentos del DI' },
     ]
   },
   {
     id: 'm3', color: 'm3', titulo: 'Diseño de evaluación y experiencias', sub: 'De la evidencia a la actividad',
     unidades: [
-      { id: 'm3-1', titulo: 'Evaluación y diseño de actividades', built: false },
-      { id: 'm3-2', titulo: 'Storyboarding', built: false, nueva: true },
+      { id: 'm3-1', titulo: 'Evaluación y diseño de actividades' },
+      { id: 'm3-2', titulo: 'Storyboarding' },
     ]
   },
   {
     id: 'm4', color: 'm4', titulo: 'Implementación técnica', sub: 'Producción y despliegue',
     unidades: [
-      { id: 'm4-1', titulo: 'LMS, SCORM, xAPI y SLA', built: false },
-      { id: 'm4-2', titulo: 'Herramientas de autoría — uso concreto', built: false },
-      { id: 'm4-3', titulo: 'Producción multimedia y video con IA', built: false },
+      { id: 'm4-1', titulo: 'LMS, SCORM, xAPI y SLA' },
+      { id: 'm4-2', titulo: 'Herramientas de autoría — uso concreto' },
+      { id: 'm4-3', titulo: 'Producción multimedia y video con IA' },
     ]
   },
   {
     id: 'm5', color: 'm5', titulo: 'Gestión, impacto e IA crítica', sub: 'Sostener, medir y decidir',
     unidades: [
-      { id: 'm5-1', titulo: 'Herramientas de análisis: PowerBI, GA4, reportes', built: false },
-      { id: 'm5-2', titulo: 'Colaboración y gestión de proyectos', built: false },
-      { id: 'm5-3', titulo: 'IA aplicada al DI — panorama crítico', built: false },
+      { id: 'm5-1', titulo: 'Herramientas de análisis: PowerBI, GA4, reportes' },
+      { id: 'm5-2', titulo: 'Colaboración y gestión de proyectos' },
+      { id: 'm5-3', titulo: 'IA aplicada al DI — panorama crítico' },
     ]
   },
 ];
@@ -348,13 +339,13 @@ function renderModules() {
       </div>
       <div class="unit-list">
         ${mod.unidades.map(u => `
-          <a class="unit-item ${u.built ? '' : 'locked'}" href="${u.built ? 'modulos/'+u.id+'.html' : '#'}" ${u.built ? '' : 'onclick="return false;"'}>
+          <a class="unit-item" href="modulos/${u.id}.html">
             <div class="unit-mark" id="mark-${u.id}">${u.id.split('-')[1]}</div>
             <div class="unit-body">
               <div class="unit-title">${u.titulo}</div>
-              <div class="unit-note ${u.nueva ? 'new' : ''}">${u.nueva ? 'Unidad nueva — backward design' : ('Unidad ' + mod.id.replace('m','') + '.' + u.id.split('-')[1])}</div>
+              <div class="unit-note">Unidad ${mod.id.replace('m','')}.${u.id.split('-')[1]}</div>
             </div>
-            ${u.built ? `<div class="unit-score" id="score-${u.id}">Pendiente</div>` : (u.nueva ? '<span class="tag-new">Nueva</span>' : '<span class="tag-soon">Por reconstruir</span>')}
+            <div class="unit-score" id="score-${u.id}">Pendiente</div>
           </a>
         `).join('')}
       </div>
