@@ -3,755 +3,782 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>2.2 Análisis de necesidades y audiencia — Curso DI</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<title>2.2 Objetivos de aprendizaje y taxonomías — Cuaderno de taller</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --cream: #f5f2ec;
-  --dark: #0f1117;
-  --terra: #c85c3a;
-  --blue: #3a6b8a;
-  --muted: #7a7570;
-  --border: #ddd8d0;
-  --success: #2d7a4f;
-  --terra-light: #f7ede8;
-  --blue-light: #e8f0f5;
+  --paper: #EDEAE3; --paper-alt: #E4DFD3; --card: #F8F6F1;
+  --ink: #1C1A17; --ink-muted: #6B665D; --border: #D8D1C0; --border-soft: #E2DCCC;
+  --mc: #2A5CAA; --msoft: #DCE5F2;
+  --ia: #2A5CAA; --ia-soft: #DCE5F2;
+  --done: #4A6B3E; --done-soft: #E9F0E5;
+  --warn: #B9862C; --warn-soft: #F1E5CC;
 }
-body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif; color: var(--dark); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--paper); color: var(--ink); font-family: 'IBM Plex Sans', sans-serif; line-height: 1.55; }
+a { color: inherit; }
 
-/* HEADER */
-.header-di {
-  background: linear-gradient(135deg, var(--dark) 0%, #1e2030 100%);
-  border-bottom: 3px solid var(--terra);
-  padding: 0.9rem 0;
-  position: sticky; top: 0; z-index: 1030;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+.topbar {
+  background: var(--ink); color: #EDEAE3;
+  padding: 0.7rem 1.5rem;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem;
+  position: sticky; top: 0; z-index: 50;
 }
-.header-di .course-name { color: #fff; font-family: Georgia, serif; font-size: 1.1rem; font-weight: normal; }
-.header-di .unit-name { color: var(--terra); font-size: 0.82rem; }
-.btn-back { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; border-radius: 20px; padding: 0.4rem 1rem; font-size: 0.82rem; text-decoration: none; transition: all 0.2s; }
-.btn-back:hover { background: rgba(255,255,255,0.2); color: #fff; }
+.topbar a.back { color: #C9C3B5; text-decoration: none; }
+.topbar a.back:hover { color: #fff; }
+.gami-chips { display: flex; gap: 0.9rem; color: #C9C3B5; flex-wrap: wrap; }
 
-/* SIDEBAR */
-.sidebar-di {
-  background: #fff;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  overflow: hidden;
+.layout { display: grid; grid-template-columns: 250px 1fr; max-width: 1120px; margin: 0 auto; }
+@media (max-width: 880px) { .layout { grid-template-columns: 1fr; } .sidebar { order: 2; } }
+.sidebar { border-right: 1px solid var(--border); padding: 1.4rem 1.2rem; }
+@media (max-width: 880px) { .sidebar { border-right: none; border-top: 1px solid var(--border); } }
+.sidebar h6 { font-family: 'Fraunces', serif; font-size: 0.95rem; color: var(--mc); margin-bottom: 0.2rem; }
+.sidebar .sidebar-sub { font-size: 0.74rem; color: var(--ink-muted); margin-bottom: 1rem; }
+.side-item {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.55rem 0.5rem; border-radius: 3px; text-decoration: none; color: var(--ink);
+  font-size: 0.84rem; margin-bottom: 0.15rem;
 }
-@media(min-width:992px){ .sidebar-di { position: sticky; top: 80px; max-height: calc(100vh - 100px); overflow-y: auto; } }
-.sidebar-header { background: var(--dark); color: #fff; padding: 1rem 1.2rem; }
-.sidebar-header h6 { font-family: Georgia, serif; font-weight: normal; font-size: 0.9rem; margin: 0; color: var(--terra); }
-.sidebar-header p { font-size: 0.75rem; color: #a09a94; margin: 0.2rem 0 0; }
-.lesson-item { display: flex; align-items: center; gap: 0.8rem; padding: 0.75rem 1.2rem; border-bottom: 1px solid var(--border); cursor: pointer; transition: all 0.2s; text-decoration: none; color: var(--dark); }
-.lesson-item:hover { background: var(--cream); }
-.lesson-item.active { background: var(--terra-light); border-left: 3px solid var(--terra); }
-.lesson-item.done { color: var(--muted); }
-.lesson-num { width: 30px; height: 30px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold; flex-shrink: 0; color: var(--muted); }
-.lesson-item.active .lesson-num { background: var(--terra); color: #fff; }
-.lesson-item.done .lesson-num { background: var(--success); color: #fff; }
-.lesson-info { flex: 1; }
-.lesson-info strong { font-size: 0.83rem; display: block; }
-.lesson-info span { font-size: 0.74rem; color: var(--muted); }
-.sidebar-progress { padding: 1rem 1.2rem; background: var(--cream); }
-.progress-di { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
-.progress-di-fill { height: 100%; background: linear-gradient(90deg, var(--terra), #e07a5a); border-radius: 99px; transition: width 0.5s ease; }
-.sidebar-footer { padding: 0.8rem 1.2rem; text-align: center; border-top: 1px solid var(--border); }
+.side-item.active { background: var(--msoft); font-weight: 600; color: var(--mc); }
+.side-mark { width: 22px; height: 22px; border-radius: 3px; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; flex-shrink: 0; }
+.side-item.active .side-mark { background: var(--mc); border-color: var(--mc); color: #fff; }
+.side-toc { margin-top: 1.4rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+.side-toc .toc-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.64rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); margin-bottom: 0.5rem; }
+.side-toc a { display: block; font-size: 0.78rem; color: var(--ink-muted); text-decoration: none; padding: 0.3rem 0; }
+.side-toc a:hover { color: var(--mc); }
 
-/* CONTENT */
-.content-di { background: #fff; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow: hidden; }
-.lesson-hero { background: linear-gradient(135deg, var(--dark) 0%, #1e2030 100%); color: #fff; padding: 2rem 2rem 1.5rem; }
-.lesson-hero .unit-tag { font-size: 0.72rem; color: var(--terra); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.4rem; }
-.lesson-hero h1 { font-family: Georgia, serif; font-size: 1.6rem; font-weight: normal; margin-bottom: 0.4rem; }
-.lesson-hero p { color: #a09a94; font-size: 0.88rem; margin: 0; }
-.lesson-badges { padding: 1rem 2rem; background: var(--terra-light); border-bottom: 1px solid var(--border); display: flex; gap: 0.6rem; flex-wrap: wrap; }
-.lbadge { font-size: 0.78rem; padding: 0.3rem 0.7rem; border-radius: 20px; border: 1px solid var(--border); background: #fff; color: var(--muted); }
-.lbadge i { color: var(--terra); }
-.lesson-body { padding: 1.8rem 2rem; }
+main { padding: 2.2rem 2rem 4rem; min-width: 0; }
+.unit-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--mc); margin-bottom: 0.5rem; }
+h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(1.5rem, 3.5vw, 2.1rem); margin-bottom: 0.6rem; max-width: 24ch; }
+.lesson-dek { color: #423E37; max-width: 64ch; margin-bottom: 1rem; }
+.lesson-badges { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.6rem; }
+.lbadge { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; border: 1px solid var(--border); background: var(--card); border-radius: 3px; padding: 0.25rem 0.6rem; color: var(--ink-muted); }
 
-/* PRESENTACIÓN placeholder */
-.presentacion { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
-.presentacion-head { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; flex-wrap: wrap; background: var(--dark); color: #fff; padding: 0.8rem 1.2rem; }
-.pres-title { font-size: 0.95rem; font-weight: bold; display: flex; align-items: center; gap: 0.6rem; }
-.pres-title i { color: var(--terra); font-size: 1.1rem; }
-.pres-tag { font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: #a09a94; border: 1px solid rgba(255,255,255,0.18); border-radius: 20px; padding: 0.12rem 0.55rem; }
-.presentacion-viewer { height: 220px; background: var(--cream); }
-.pres-placeholder { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: var(--muted); padding: 2rem; }
-.pres-placeholder i { font-size: 2.4rem; color: #c9c2b8; margin-bottom: 0.8rem; }
-.pres-placeholder p { font-size: 0.98rem; font-weight: bold; color: var(--dark); margin-bottom: 0.3rem; }
-.pres-placeholder small { font-size: 0.82rem; line-height: 1.6; max-width: 420px; }
+.objetivo-box {
+  background: var(--card); border: 1px solid var(--border); border-left: 4px solid var(--mc);
+  border-radius: 4px; padding: 1.1rem 1.3rem; margin-bottom: 2rem;
+}
+.objetivo-box .label { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mc); margin-bottom: 0.4rem; }
+.objetivo-box p { font-size: 0.92rem; font-style: italic; color: #322E28; }
 
-/* ACCORDION */
-.accordion-di { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1rem; }
-.accordion-di-btn { background: var(--cream); border: none; width: 100%; text-align: left; padding: 1rem 1.2rem; display: flex; align-items: center; gap: 0.8rem; cursor: pointer; transition: background 0.2s; font-size: 0.95rem; font-weight: bold; color: var(--dark); }
-.accordion-di-btn:hover { background: #ede9e2; }
-.accordion-di-btn.open { background: var(--dark); color: #fff; }
-.accordion-di-btn.open .acc-icon { color: var(--terra); }
-.accordion-di-btn .acc-chevron { margin-left: auto; transition: transform 0.25s; font-size: 0.8rem; }
-.accordion-di-btn.open .acc-chevron { transform: rotate(180deg); }
-.acc-icon { font-size: 1rem; color: var(--terra); }
-.accordion-di-body { display: none; padding: 1.2rem 1.4rem; border-top: 1px solid var(--border); background: #fff; font-size: 0.92rem; line-height: 1.7; }
-.accordion-di-body.show { display: block; }
-.accordion-di-body h5 { font-family: Georgia, serif; font-size: 1rem; font-weight: normal; color: var(--blue); margin: 1.2rem 0 0.5rem; }
-.accordion-di-body h5:first-child { margin-top: 0; }
+/* mapa de unidad */
+.mapa-block { border: 1px solid var(--border); border-radius: 4px; background: var(--card); margin-bottom: 2rem; overflow: hidden; }
+.mapa-head { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); padding: 0.7rem 1rem; border-bottom: 1px solid var(--border-soft); }
+.mapa-body { padding: 1rem; background: #fff; }
+.mapa-note { font-size: 0.78rem; color: var(--ink-muted); padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
 
-/* CARDS */
-.card-di { background: var(--cream); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; margin-bottom: 0.7rem; }
-.card-di h6 { font-size: 0.85rem; font-weight: bold; color: var(--blue); margin-bottom: 0.3rem; }
-.card-di p { font-size: 0.88rem; margin: 0; }
-.callout-terra { border-left: 4px solid var(--terra); background: var(--terra-light); padding: 0.9rem 1.1rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: 0.88rem; }
-.callout-terra strong { color: var(--terra); }
-.callout-blue { border-left: 4px solid var(--blue); background: var(--blue-light); padding: 0.9rem 1.1rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: 0.88rem; }
-.callout-blue strong { color: var(--blue); }
-.table-di { font-size: 0.85rem; }
-.table-di th { background: var(--dark); color: #fff; font-weight: normal; }
-.table-di td { vertical-align: top; }
+/* multimodal */
+.media-block { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin-bottom: 2.2rem; background: var(--card); }
+.media-tabs { display: flex; border-bottom: 1px solid var(--border); background: var(--paper-alt); flex-wrap: wrap; }
+.media-tab {
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; padding: 0.7rem 1rem;
+  cursor: pointer; border: none; background: none; color: var(--ink-muted);
+  border-bottom: 2px solid transparent;
+}
+.media-tab.active { color: var(--mc); border-bottom-color: var(--mc); background: var(--card); }
+.media-pane { display: none; }
+.media-pane.active { display: block; }
+.media-note { font-size: 0.76rem; color: var(--ink-muted); padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
+.pdf-frame { width: 100%; height: 480px; border: none; display: block; background: #fff; }
+.pdf-actions { display: flex; gap: 0.6rem; padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
+.pdf-actions a { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--mc); text-decoration: none; border: 1px solid var(--border); border-radius: 3px; padding: 0.3rem 0.7rem; }
+.audio-pane { padding: 1.2rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.audio-pane audio { flex: 1; min-width: 240px; }
+.audio-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: var(--ink-muted); }
+.video-wrap { position: relative; padding-top: 56.25%; background: #111; }
+.video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+.video-empty {
+  position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 0.5rem; color: #C9C3B5; font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; text-align: center; padding: 1rem;
+}
 
-/* HERRAMIENTA card (módulo 4) */
-.tool-di { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; margin-bottom: 0.8rem; }
-.tool-di-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; }
-.tool-di-head h6 { font-family: Georgia, serif; font-size: 1rem; font-weight: normal; color: var(--dark); margin: 0; }
-.tool-price { font-size: 0.72rem; padding: 0.2rem 0.6rem; border-radius: 20px; background: var(--terra-light); color: var(--terra); border: 1px solid var(--border); }
-.tool-di a.tool-link { font-size: 0.8rem; color: var(--blue); text-decoration: none; }
-.tool-di a.tool-link:hover { text-decoration: underline; }
-.tool-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; margin-top: 0.6rem; font-size: 0.82rem; }
-@media(max-width:640px) { .tool-grid { grid-template-columns: 1fr; } }
-.tool-grid div strong { display: block; color: var(--muted); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.15rem; }
+/* content */
+.content-section { margin-bottom: 2.6rem; }
+.content-section h2 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.3rem; margin-bottom: 0.8rem; padding-bottom: 0.4rem; border-bottom: 2px solid var(--mc); display: flex; align-items: baseline; gap: 0.6rem; }
+.content-section h2 .sec-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--mc); }
+.content-section h3 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.05rem; margin: 1.2rem 0 0.5rem; }
+.content-section p { margin-bottom: 0.8rem; font-size: 0.94rem; color: #2B2823; }
+.content-section ul { margin: 0.6rem 0 0.9rem 1.3rem; font-size: 0.92rem; }
+.content-section li { margin-bottom: 0.4rem; }
+.content-section strong { color: var(--mc); font-weight: 600; }
+.defbox { background: var(--msoft); border-radius: 4px; padding: 0.9rem 1.1rem; font-style: italic; font-size: 0.93rem; margin: 0.8rem 0 1.2rem; }
 
-/* EVALUACIÓN */
-.eval-section { background: var(--cream); border-radius: 10px; border: 1px solid var(--border); padding: 1.5rem; margin-top: 2rem; }
-.eval-section h4 { font-family: Georgia, serif; font-weight: normal; color: var(--dark); font-size: 1.1rem; margin-bottom: 0.3rem; }
-.eval-progress-text { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.2rem; }
-.eval-question { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem 1.3rem; margin-bottom: 1rem; }
-.eval-question h6 { font-size: 0.9rem; font-weight: bold; color: var(--dark); margin-bottom: 0.8rem; line-height: 1.5; }
-.eval-option { display: flex; align-items: flex-start; gap: 0.7rem; padding: 0.6rem 0.8rem; border-radius: 7px; border: 1px solid var(--border); margin-bottom: 0.5rem; cursor: pointer; font-size: 0.88rem; transition: all 0.15s; background: var(--cream); }
-.eval-option:hover { border-color: var(--blue); background: var(--blue-light); }
-.eval-option.selected { border-color: var(--blue); background: var(--blue-light); }
-.eval-option.correct { border-color: var(--success); background: #edf7f2; pointer-events: none; }
-.eval-option.incorrect { border-color: var(--terra); background: var(--terra-light); pointer-events: none; }
-.eval-option.disabled { pointer-events: none; opacity: 0.7; }
-.eval-radio { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px; transition: all 0.15s; }
-.eval-option.selected .eval-radio { border-color: var(--blue); background: var(--blue); }
-.eval-option.correct .eval-radio { border-color: var(--success); background: var(--success); }
-.eval-option.incorrect .eval-radio { border-color: var(--terra); background: var(--terra); }
-.feedback-box { font-size: 0.84rem; padding: 0.7rem 1rem; border-radius: 7px; margin-top: 0.5rem; line-height: 1.6; }
-.feedback-ok { background: #edf7f2; color: var(--success); border: 1px solid #b0ddc5; }
-.feedback-fail { background: var(--terra-light); color: #8a3020; border: 1px solid #e0b0a0; }
+/* pilares */
+.pilares { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; margin: 1rem 0 1.4rem; }
+@media (max-width: 700px) { .pilares { grid-template-columns: 1fr; } }
+.pilar { background: var(--card); border: 1px solid var(--border); border-top: 3px solid var(--mc); border-radius: 4px; padding: 0.9rem 1rem; }
+.pilar h4 { font-family: 'Fraunces', serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 0.4rem; }
+.pilar p { font-size: 0.82rem; color: #3A362F; margin: 0; }
 
-/* RESULT */
-.result-card { text-align: center; padding: 2rem; background: #fff; border-radius: 12px; border: 1px solid var(--border); margin-top: 1rem; }
-.result-score { font-family: Georgia, serif; font-size: 4rem; color: var(--terra); line-height: 1; }
-.result-label { font-size: 0.85rem; color: var(--muted); margin: 0.3rem 0 0.8rem; }
-.result-msg { font-size: 0.92rem; max-width: 400px; margin: 0 auto 1.5rem; line-height: 1.6; }
+/* nota destacada */
+.nota { border-radius: 4px; padding: 0.9rem 1.1rem; font-size: 0.88rem; margin: 1.1rem 0; border: 1px solid var(--border); }
+.nota .nota-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.07em; display: block; margin-bottom: 0.35rem; }
+.nota.clave { background: var(--done-soft); } .nota.clave .nota-tag { color: var(--done); }
+.nota.alerta { background: var(--warn-soft); } .nota.alerta .nota-tag { color: #8A6318; }
+.nota.contexto { background: var(--ia-soft); } .nota.contexto .nota-tag { color: var(--ia); }
 
-/* BTN */
-.btn-terra { background: var(--terra); border-color: var(--terra); color: #fff; border-radius: 8px; padding: 0.6rem 1.4rem; }
-.btn-terra:hover { background: #a8492d; border-color: #a8492d; color: #fff; }
-.btn-blue { background: var(--blue); border-color: var(--blue); color: #fff; border-radius: 8px; }
-.btn-blue:hover { background: #2d5570; border-color: #2d5570; color: #fff; }
-.btn-outline-terra { border-color: var(--terra); color: var(--terra); border-radius: 8px; }
-.btn-outline-terra:hover { background: var(--terra); color: #fff; }
+/* tablas */
+.compare-table { width: 100%; border-collapse: collapse; margin: 0.8rem 0 1.4rem; font-size: 0.86rem; }
+.compare-table th, .compare-table td { border: 1px solid var(--border); padding: 0.55rem 0.7rem; text-align: left; vertical-align: top; }
+.compare-table th { background: var(--card); font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-muted); }
+.compare-table td:first-child { font-weight: 600; }
+.si-no td.si { background: var(--done-soft); }
+.si-no td.no { background: #F5E5E2; }
 
-/* TOAST */
-.toast-di { position: fixed; top: 80px; right: 20px; padding: 0.9rem 1.3rem; border-radius: 8px; color: #fff; z-index: 9999; font-size: 0.88rem; box-shadow: 0 4px 16px rgba(0,0,0,0.2); animation: slideIn 0.3s ease; }
-@keyframes slideIn { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:translateX(0); } }
+/* timeline */
+.timeline { border-left: 2px solid var(--border); margin: 1rem 0 1.5rem 0.4rem; padding-left: 1.2rem; }
+.tl-item { position: relative; margin-bottom: 1.1rem; }
+.tl-item::before { content: ''; position: absolute; left: -1.53rem; top: 0.3rem; width: 9px; height: 9px; border-radius: 50%; background: var(--mc); }
+.tl-year { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: var(--mc); font-weight: 500; }
+.tl-text { font-size: 0.88rem; color: #2B2823; }
+
+/* viñeta de taller (caso con think-first) */
+.vineta { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin: 1.2rem 0; }
+.vineta-head { background: var(--ink); color: #EDEAE3; font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.6rem 1rem; }
+.vineta-body { background: var(--card); padding: 1rem 1.2rem; font-size: 0.9rem; }
+.vineta-reveal-btn {
+  display: block; width: 100%; text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem;
+  background: var(--msoft); border: none; border-top: 1px solid var(--border); padding: 0.7rem; cursor: pointer; color: var(--mc);
+}
+.vineta-solution { display: none; background: #fff; border-top: 1px dashed var(--border); padding: 1rem 1.2rem; font-size: 0.9rem; }
+.vineta.revealed .vineta-solution { display: block; }
+.vineta.revealed .vineta-reveal-btn { display: none; }
+
+/* brechas — reutilizado como "errores" en tarjetas de 3 */
+.brechas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; margin: 1rem 0; }
+@media (max-width: 760px) { .brechas { grid-template-columns: 1fr; } }
+.brecha { border: 1px solid var(--border); border-radius: 4px; background: var(--card); padding: 1rem; }
+.brecha h4 { font-family: 'Fraunces', serif; font-size: 0.98rem; font-weight: 600; margin-bottom: 0.4rem; }
+.brecha .b-def { font-size: 0.84rem; margin-bottom: 0.5rem; }
+.brecha .b-ej { font-size: 0.79rem; color: var(--ink-muted); border-top: 1px dashed var(--border); padding-top: 0.5rem; }
+.brecha.b1 { border-top: 3px solid var(--ia); }
+.brecha.b2 { border-top: 3px solid var(--warn); }
+.brecha.b3 { border-top: 3px solid #A83232; }
+
+/* actividad clasificación */
+.activity { border: 1px solid var(--border); border-radius: 4px; background: var(--card); padding: 1.3rem; margin: 2rem 0; }
+.activity h2 { font-family: 'Fraunces', serif; font-size: 1.1rem; margin-bottom: 0.3rem; }
+.activity .act-sub { font-size: 0.8rem; color: var(--ink-muted); margin-bottom: 1rem; }
+.act-card { border: 1px solid var(--border); border-radius: 4px; background: var(--paper); padding: 0.9rem 1rem; margin-bottom: 0.8rem; }
+.act-statement { font-size: 0.9rem; margin-bottom: 0.7rem; }
+.act-buttons { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.act-btn { flex: 1; min-width: 110px; font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; padding: 0.5rem; border: 1px solid var(--border); border-radius: 3px; background: var(--card); cursor: pointer; transition: all 0.15s; }
+.act-btn:hover { border-color: var(--mc); }
+.act-card.ok { border-color: var(--done); background: var(--done-soft); }
+.act-card.ok .act-buttons { display: none; }
+.act-card.no { border-color: #A83232; }
+.act-verdict { font-size: 0.78rem; margin-top: 0.4rem; display: none; }
+.act-card.ok .act-verdict, .act-card.no .act-verdict { display: block; }
+.act-progress { font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; color: var(--ink-muted); margin-top: 0.4rem; }
+
+/* callouts */
+.callout { position: relative; border-radius: 4px; margin: 1.6rem 0; overflow: hidden; border: 1px solid var(--border); }
+.callout-header { display: flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.05em; color: #fff; }
+.callout.ia .callout-header { background: var(--ia); }
+.callout.entrevista .callout-header { background: var(--mc); }
+.callout-body { background: var(--card); padding: 1.1rem 1.3rem; font-size: 0.9rem; position: relative; }
+.callout-body p { margin-bottom: 0.7rem; }
+.callout-body p:last-child { margin-bottom: 0; }
+.capa {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+  cursor: pointer; user-select: none;
+  transition: transform 0.5s cubic-bezier(.65,0,.35,1), opacity 0.4s ease;
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--ink-muted);
+}
+.callout.ia .capa { background: var(--ia-soft); }
+.callout.entrevista .capa { background: var(--msoft); }
+.callout.revealed .capa { transform: translateX(105%); opacity: 0; pointer-events: none; }
+
+/* práctica de entrevista */
+.practica { border: 1px solid var(--border); border-radius: 4px; background: var(--card); margin: 1.4rem 0; overflow: hidden; }
+.practica-head { padding: 0.9rem 1.1rem; border-bottom: 1px solid var(--border-soft); }
+.practica-head .p-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--mc); text-transform: uppercase; letter-spacing: 0.06em; }
+.practica-head .p-q { font-size: 0.94rem; font-weight: 500; margin-top: 0.25rem; }
+.practica-body { padding: 1rem 1.1rem; }
+.practica-body textarea { width: 100%; min-height: 80px; font-family: 'IBM Plex Sans', sans-serif; font-size: 0.88rem; border: 1px solid var(--border); border-radius: 3px; padding: 0.7rem; resize: vertical; background: var(--paper); margin-bottom: 0.7rem; }
+.rm-toggle { font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; color: var(--mc); cursor: pointer; text-decoration: underline; background: none; border: none; padding: 0; }
+.rm { display: none; margin-top: 0.7rem; padding: 0.8rem 1rem; background: var(--msoft); border-radius: 3px; font-size: 0.87rem; }
+.rm.show { display: block; }
+.checklist { margin-top: 0.8rem; border-top: 1px dashed var(--border); padding-top: 0.8rem; }
+.checklist .cl-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); margin-bottom: 0.5rem; }
+.cl-item { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.84rem; padding: 0.35rem 0; cursor: pointer; }
+.cl-item input { accent-color: var(--done); margin-top: 0.2rem; }
+
+/* evaluación final */
+.eval-block { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 1.3rem; margin-top: 2.2rem; }
+.eval-block h2 { font-family: 'Fraunces', serif; font-size: 1.15rem; margin-bottom: 0.3rem; }
+.eval-sub { font-size: 0.8rem; color: var(--ink-muted); margin-bottom: 1.1rem; }
+.eval-q { font-size: 0.92rem; font-weight: 500; margin: 1.2rem 0 0.6rem; }
+.eval-option { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.6rem 0.8rem; border: 1px solid var(--border); border-radius: 3px; margin-bottom: 0.45rem; cursor: pointer; font-size: 0.87rem; background: var(--paper); transition: border-color 0.15s; }
+.eval-option:hover { border-color: var(--mc); }
+.eval-option input { accent-color: var(--mc); margin-top: 0.2rem; }
+.eval-option.correct { border-color: var(--done); background: var(--done-soft); }
+.eval-option.incorrect { border-color: #A83232; background: #F5E5E2; }
+.eval-submit { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; background: var(--mc); color: #fff; border: none; border-radius: 3px; padding: 0.7rem 1.4rem; cursor: pointer; margin-top: 1.2rem; }
+.eval-submit:disabled { opacity: 0.5; cursor: default; }
+.eval-counter { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: var(--ink-muted); margin-top: 0.5rem; }
+.result-card { display: none; margin-top: 1.2rem; padding: 1.1rem; border-radius: 4px; text-align: center; }
+.result-card.show { display: block; }
+.result-score { font-family: 'Fraunces', serif; font-size: 1.7rem; font-weight: 600; }
+
+/* ABCD tag */
+.abcd-tag { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; font-weight: 600; border-radius: 3px; padding: 0.15rem 0.45rem; margin-right: 0.3rem; color: #fff; }
+.abcd-tag.a { background: #2A5CAA; }
+.abcd-tag.b { background: #A85B32; }
+.abcd-tag.c { background: #5B7052; }
+.abcd-tag.d { background: #6B4C7A; }
+.abcd-demo { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 1.1rem 1.2rem; margin: 1rem 0 1.3rem; font-size: 0.94rem; }
+.abcd-demo .frase span { padding: 0.06rem 0.15rem; border-radius: 2px; }
+.abcd-demo .frase .a-part { background: #DCE5F2; }
+.abcd-demo .frase .b-part { background: #F1E2D6; }
+.abcd-demo .frase .c-part { background: #E3E8DE; }
+.abcd-demo .frase .d-part { background: #E9E0EC; }
+.abcd-legend { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.8rem; font-size: 0.78rem; color: var(--ink-muted); }
+.abcd-legend span { display: flex; align-items: center; gap: 0.35rem; }
+.abcd-legend .sw { width: 11px; height: 11px; border-radius: 2px; display: inline-block; }
+
+.next-nav { display: flex; justify-content: space-between; margin-top: 2.5rem; padding-top: 1.2rem; border-top: 1px solid var(--border); font-size: 0.86rem; }
+.next-nav a { color: var(--mc); font-weight: 500; text-decoration: none; }
+.next-nav .disabled { color: var(--ink-muted); }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<div class="header-di">
-  <div class="container-fluid px-3">
-    <div class="d-flex align-items-center justify-content-between">
-      <div class="d-flex align-items-center gap-3">
-        <a href="../index.html" class="btn-back"><i class="bi bi-arrow-left me-1"></i>Inicio</a>
-        <div>
-          <div class="course-name">Diseño Instruccional</div>
-          <div class="unit-name">Módulo 2 · Unidad 2.2</div>
-        </div>
-      </div>
-      <div class="d-none d-md-flex align-items-center gap-2">
-        <span id="headerProgress" style="font-size:0.8rem;color:#a09a94"></span>
-      </div>
-    </div>
+<div class="topbar">
+  <a class="back" href="../index.html">← Ruta de aprendizaje</a>
+  <div class="gami-chips">
+    <span id="gamiNivel">Nivel 1 · Boceto</span>
+    <span id="gamiPoints">0 pts</span>
+    <span id="gamiStreak">0 días</span>
   </div>
 </div>
 
-<div class="container-fluid px-3 py-4" style="max-width:1200px;margin:0 auto">
-  <div class="row g-4">
+<div class="layout">
+  <aside class="sidebar">
+    <h6>Módulo 2</h6>
+    <div class="sidebar-sub">Análisis y definición</div>
+    <a class="side-item" href="m2-1.html"><span class="side-mark">2.1</span> Análisis de necesidades y audiencia</a>
+    <a class="side-item active" href="m2-2.html"><span class="side-mark">2.2</span> Objetivos y taxonomías</a>
+    <a class="side-item" href="m2-3.html"><span class="side-mark">2.3</span> Backward Design y alineamiento</a>
+    <a class="side-item" href="m2-4.html"><span class="side-mark">2.4</span> Artefactos y documentos del DI</a>
+    <div class="side-toc">
+      <div class="toc-label">En esta unidad</div>
+      <a href="#s1">1 · Objetivo bien formado</a>
+      <a href="#s2">2 · El modelo ABCD</a>
+      <a href="#s3">3 · Taxonomía de Bloom revisada</a>
+      <a href="#s4">4 · Verbos observables vs. ambiguos</a>
+      <a href="#s5">5 · Hacia la evaluación alineada</a>
+      <a href="#s6">6 · Errores comunes al redactar</a>
+      <a href="#practica">Práctica de entrevista</a>
+      <a href="#evaluacion">Evaluación (10)</a>
+    </div>
+  </aside>
 
-    <!-- SIDEBAR -->
-    <div class="col-lg-3">
-      <div class="sidebar-di">
-        <div class="sidebar-header">
-          <h6>Módulo 2</h6>
-          <p>Proceso de diseño</p>
+  <main>
+    <div class="unit-eyebrow">Módulo 2 · Unidad 2.2</div>
+    <h1 class="lesson-title">Objetivos de aprendizaje y taxonomías</h1>
+    <p class="lesson-dek">De un resultado esperado difuso a un objetivo redactado con precisión quirúrgica: el modelo ABCD como estructura, la Taxonomía de Bloom revisada como termómetro del nivel cognitivo, y los verbos como la bisagra entre lo que se enseña y lo que se puede evaluar.</p>
+    <div class="lesson-badges">
+      <span class="lbadge">6 bloques de contenido</span>
+      <span class="lbadge">1 actividad interactiva</span>
+      <span class="lbadge">3 prácticas de entrevista</span>
+      <span class="lbadge">10 preguntas de evaluación</span>
+      <span class="lbadge">~40 min</span>
+    </div>
+
+    <div class="objetivo-box">
+      <div class="label">Objetivo de aprendizaje</div>
+      <p>Dado un resultado de aprendizaje esperado o un tema entregado por un SME, serás capaz de redactar objetivos de aprendizaje bien formados usando la Taxonomía de Bloom revisada y el modelo ABCD, seleccionando verbos observables y medibles apropiados al nivel cognitivo deseado y distinguiendo un objetivo bien formado de uno vago o inevaluable.</p>
+    </div>
+
+    <!-- MAPA DE LA UNIDAD -->
+    <div class="mapa-block">
+      <div class="mapa-head">Mapa de esta unidad · organizador previo</div>
+      <div class="mapa-body">
+        <svg width="100%" viewBox="0 0 680 300" style="display:block" role="img" aria-label="Mapa conceptual de la unidad">
+          <line x1="340" y1="150" x2="150" y2="60" stroke="#D8D1C0" stroke-width="1.2"/>
+          <line x1="340" y1="150" x2="530" y2="60" stroke="#D8D1C0" stroke-width="1.2"/>
+          <line x1="340" y1="150" x2="110" y2="240" stroke="#D8D1C0" stroke-width="1.2"/>
+          <line x1="340" y1="150" x2="340" y2="245" stroke="#D8D1C0" stroke-width="1.2"/>
+          <line x1="340" y1="150" x2="570" y2="240" stroke="#D8D1C0" stroke-width="1.2"/>
+          <rect x="245" y="122" width="190" height="52" rx="5" fill="#DCE5F2" stroke="#2A5CAA" stroke-width="1.4"/>
+          <text x="340" y="144" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#1C1A17">Objetivo de aprendizaje</text>
+          <text x="340" y="162" text-anchor="middle" font-family="monospace" font-size="10" fill="#2A5CAA">unidad 2.2</text>
+          <rect x="60" y="30" width="180" height="46" rx="5" fill="#F8F6F1" stroke="#A85B32" stroke-width="1.2"/>
+          <text x="150" y="49" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1C1A17">Objetivo bien formado</text>
+          <text x="150" y="66" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#A85B32">centrado en el estudiante</text>
+          <rect x="440" y="30" width="180" height="46" rx="5" fill="#F8F6F1" stroke="#A85B32" stroke-width="1.2"/>
+          <text x="530" y="49" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1C1A17">Modelo ABCD</text>
+          <text x="530" y="66" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#A85B32">Audiencia · Conducta · Condición · Grado</text>
+          <rect x="20" y="216" width="180" height="46" rx="5" fill="#F8F6F1" stroke="#A85B32" stroke-width="1.2"/>
+          <text x="110" y="235" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1C1A17">Bloom revisada</text>
+          <text x="110" y="252" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#A85B32">6 niveles cognitivos</text>
+          <rect x="250" y="216" width="180" height="46" rx="5" fill="#F8F6F1" stroke="#A85B32" stroke-width="1.2"/>
+          <text x="340" y="235" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1C1A17">Verbos observables</text>
+          <text x="340" y="252" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#A85B32">medibles y evaluables</text>
+          <rect x="480" y="216" width="180" height="46" rx="5" fill="#F8F6F1" stroke="#A85B32" stroke-width="1.2"/>
+          <text x="570" y="235" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1C1A17">Alineamiento</text>
+          <text x="570" y="252" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#A85B32">objetivo → evaluación</text>
+        </svg>
+      </div>
+      <div class="mapa-note">Estos 5 conceptos son las piezas de esta unidad. Vuelve a este mapa al terminar y verifica que puedes explicar cada conexión en voz alta.</div>
+    </div>
+
+    <!-- MULTIMODAL -->
+    <div class="media-block">
+      <div class="media-tabs">
+        <button class="media-tab active" data-pane="pdf" onclick="switchMedia(this)">📑 Presentación</button>
+        <button class="media-tab" data-pane="audio" onclick="switchMedia(this)">🎧 Audio NotebookLM</button>
+        <button class="media-tab" data-pane="video" onclick="switchMedia(this)">▶ Video</button>
+      </div>
+      <div class="media-pane active" id="pane-pdf">
+        <iframe class="pdf-frame" src="m2-2.pdf#view=FitH" title="Presentación del tema" loading="lazy" onload="Gami.award('m2-2_pdf', 5, 'Revisaste la presentación'); checkMultimodal();"></iframe>
+        <div class="pdf-actions">
+          <a href="m2-2.pdf" target="_blank" rel="noopener">Pantalla completa</a>
+          <a href="m2-2.pdf" download>Descargar</a>
         </div>
-        <a class="lesson-item" href="m2-1.html">
-          <div class="lesson-num" id="num-m2-1">1</div>
-          <div class="lesson-info"><strong>Modelos de DI: ADDIE, SAM, UbD</strong><span>Fases · diferencias · cuándo usar</span></div>
-        </a>
-        <a class="lesson-item active" onclick="scrollToTop()">
-          <div class="lesson-num">2</div>
-          <div class="lesson-info"><strong>Análisis de necesidades y audiencia</strong><span>Diagnóstico · brechas · métodos</span></div>
-        </a>
-        <a class="lesson-item" href="m2-3.html">
-          <div class="lesson-num" id="num-m2-3">3</div>
-          <div class="lesson-info"><strong>Objetivos de aprendizaje y taxonomías</strong><span>Bloom · ABCD · alineación</span></div>
-        </a>
-        <div class="sidebar-progress">
-          <div class="d-flex justify-content-between mb-1">
-            <small style="color:var(--muted);font-size:0.75rem">Módulo 2</small>
-            <small id="sidebarPct" style="color:var(--terra);font-size:0.75rem;font-weight:bold">0/3</small>
+      </div>
+      <div class="media-pane" id="pane-audio">
+        <div class="audio-pane">
+          <span class="audio-label">Resumen en audio · NotebookLM</span>
+          <audio controls preload="metadata" src="m2-2-audio.mp3" onplay="Gami.award('m2-2_audio', 5, 'Escuchaste el resumen en audio'); checkMultimodal();"></audio>
+        </div>
+      </div>
+      <div class="media-pane" id="pane-video">
+        <div class="video-wrap" id="videoWrap">
+          <div class="video-empty" id="videoEmpty">
+            <span>▶ Espacio para video de YouTube</span>
+            <span style="opacity:0.6">Edita la constante YT_VIDEO_ID en este archivo con el ID del video que elijas.</span>
           </div>
-          <div class="progress-di"><div class="progress-di-fill" id="sidebarBar" style="width:0%"></div></div>
         </div>
-        <div class="sidebar-footer">
-          <a href="../index.html" style="font-size:0.8rem;color:var(--muted);text-decoration:none"><i class="bi bi-grid me-1"></i>Ver todos los módulos</a>
+      </div>
+      <div class="media-note">Misma unidad, cuatro formatos — elige el medio que te acomode hoy (diversificación de la representación, DUA pauta 1). El texto completo está abajo, siempre visible.</div>
+    </div>
+
+    <!-- ============ SECCIÓN 1: OBJETIVO BIEN FORMADO ============ -->
+    <div class="content-section" id="s1">
+      <h2><span class="sec-num">01</span> ¿Qué es un objetivo de aprendizaje bien formado?</h2>
+      <p>Un objetivo de aprendizaje no describe <strong>lo que el curso va a enseñar</strong>; describe <strong>lo que la persona que aprende podrá hacer</strong> al terminar, y de qué forma se sabrá que lo logró. Es la unidad más pequeña y más importante de todo el proceso de DI: de él dependen la estrategia, los materiales y la evaluación.</p>
+      <div class="defbox">Definición técnica: <strong>un enunciado que describe una conducta observable y medible que el estudiante será capaz de demostrar, bajo qué condiciones y con qué nivel de desempeño, como evidencia de que el aprendizaje ocurrió.</strong></div>
+
+      <div class="pilares">
+        <div class="pilar"><h4>Centrado en el estudiante</h4><p>El sujeto del objetivo es quien aprende, no quien enseña. "Los estudiantes serán capaces de…", nunca "el curso cubrirá…".</p></div>
+        <div class="pilar"><h4>Observable y medible</h4><p>Describe una conducta que alguien externo puede ver, escuchar o leer — no un estado mental interno como "comprender" o "saber".</p></div>
+        <div class="pilar"><h4>Alineado</h4><p>El verbo que uses aquí es el mismo verbo que va a dictar tu evaluación y tu actividad (esto se profundiza en la unidad 2.3, Backward Design).</p></div>
+      </div>
+
+      <div class="nota clave"><span class="nota-tag">Distinción clave para entrevistas</span>Un <em>objetivo de enseñanza</em> describe la intención del instructor ("presentar los principios de X"). Un <em>objetivo de aprendizaje</em> describe el resultado verificable en el estudiante ("el estudiante clasificará X según Y criterio"). El DI redacta siempre lo segundo.</div>
+
+      <h3>Dos casos para fijar la definición</h3>
+      <div class="vineta">
+        <div class="vineta-head">Viñeta de taller · el objetivo que no dice nada</div>
+        <div class="vineta-body">Un SME te entrega este "objetivo" para un curso de atención al cliente: <em>"Los participantes conocerán la importancia del servicio al cliente."</em> <strong>¿Qué falla aquí y qué le preguntarías al SME para arreglarlo?</strong></div>
+        <button class="vineta-reveal-btn" onclick="revealVineta(this, 'v1')">Piénsalo primero → ver resolución</button>
+        <div class="vineta-solution">"Conocerán la importancia" no es observable: dos personas pueden "conocer la importancia" de formas completamente distintas y nadie podría verificarlo. Le preguntaría al SME: <em>"Cuando alguien realmente entiende esto, ¿qué hace distinto en el mostrador?"</em> Esa respuesta —por ejemplo, "saluda al cliente en los primeros 10 segundos y ofrece una alternativa cuando no tiene el producto"— es la conducta observable que se convierte en el verbo del objetivo real.</div>
+      </div>
+      <div class="vineta">
+        <div class="vineta-head">Viñeta de taller · objetivo de enseñanza disfrazado de objetivo de aprendizaje</div>
+        <div class="vineta-body">Un syllabus dice: <em>"En esta unidad se revisarán los principios de accesibilidad web."</em> Suena razonable, pero un evaluador de acreditación lo devuelve. <strong>¿Por qué?</strong></div>
+        <button class="vineta-reveal-btn" onclick="revealVineta(this, 'v2')">Piénsalo primero → ver resolución</button>
+        <div class="vineta-solution">El sujeto de la oración es "se revisarán" — la acción del instructor, no del estudiante. No dice qué podrá hacer la persona que aprende ni cómo se verificará. La versión corregida: <em>"Dado un sitio web, el estudiante identificará al menos tres incumplimientos de las pautas WCAG 2.1 nivel AA."</em> Mismo tema, sujeto y verbo distintos.</div>
+      </div>
+    </div>
+
+    <!-- ============ SECCIÓN 2: MODELO ABCD ============ -->
+    <div class="content-section" id="s2">
+      <h2><span class="sec-num">02</span> El modelo ABCD</h2>
+      <p>El modelo ABCD (Heinich, Molenda, Russell y Smaldino) es la estructura más usada para redactar objetivos completos sin dejar ambigüedad. Cada letra obliga a responder una pregunta distinta:</p>
+
+      <table class="compare-table">
+        <tr><th>Componente</th><th>Pregunta que responde</th><th>Ejemplo</th></tr>
+        <tr><td><span class="abcd-tag a">A</span> Audiencia</td><td>¿Quién aprende? (siempre el sujeto de la oración)</td><td>"El estudiante de primer año…"</td></tr>
+        <tr><td><span class="abcd-tag b">B</span> Conducta (Behavior)</td><td>¿Qué hará, con qué verbo observable?</td><td>"…clasificará…"</td></tr>
+        <tr><td><span class="abcd-tag c">C</span> Condición</td><td>¿Bajo qué circunstancias, con qué recursos o restricciones?</td><td>"…dado un set de 10 casos clínicos y sin apoyo de apuntes,…"</td></tr>
+        <tr><td><span class="abcd-tag d">D</span> Grado</td><td>¿Con qué nivel de desempeño se considera logrado?</td><td>"…con al menos 8 de 10 clasificaciones correctas."</td></tr>
+      </table>
+
+      <h3>Un objetivo, cuatro capas</h3>
+      <div class="abcd-demo">
+        <div class="frase"><span class="a-part">El estudiante del diplomado en gestión sanitaria</span> <span class="b-part">clasificará</span> <span class="c-part">, dado un set de 10 casos clínicos y sin apoyo de apuntes,</span> los tipos de brecha de desempeño presentes, <span class="d-part">acertando en al menos 8 de 10 casos.</span></div>
+        <div class="abcd-legend">
+          <span><span class="sw" style="background:#DCE5F2"></span> A · Audiencia</span>
+          <span><span class="sw" style="background:#F1E2D6"></span> B · Conducta</span>
+          <span><span class="sw" style="background:#E3E8DE"></span> C · Condición</span>
+          <span><span class="sw" style="background:#E9E0EC"></span> D · Grado</span>
+        </div>
+      </div>
+
+      <div class="nota alerta"><span class="nota-tag">Error frecuente</span>La mayoría de los objetivos "casi buenos" tienen A y B pero olvidan C y D. Sin condición ni grado, dos DI distintos pueden diseñar evaluaciones completamente diferentes para el "mismo" objetivo — y eso es justo lo que el ABCD existe para prevenir.</div>
+      <div class="nota contexto"><span class="nota-tag">Cuándo simplificar</span>No todos los contextos exigen las cuatro letras explícitas en cada objetivo visible al estudiante (un syllabus público suele mostrar solo A+B). Pero el DI las piensa siempre las cuatro internamente, aunque C y D quedes implícitas en la rúbrica.</div>
+    </div>
+
+    <!-- ============ SECCIÓN 3: BLOOM REVISADA ============ -->
+    <div class="content-section" id="s3">
+      <h2><span class="sec-num">03</span> Taxonomía de Bloom revisada</h2>
+      <p>La taxonomía original de Bloom (1956) clasificaba objetivos con sustantivos ("Conocimiento", "Comprensión"). Anderson y Krathwohl la revisaron en 2001 y la convirtieron en <strong>verbos de proceso cognitivo</strong> — un cambio que la hizo mucho más útil para redactar objetivos, porque un verbo es justo lo que el modelo ABCD necesita en su componente B.</p>
+
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-year">Recordar</div><div class="tl-text">Reconocer o recuperar información. Verbos: <em>listar, nombrar, identificar, definir.</em></div></div>
+        <div class="tl-item"><div class="tl-year">Comprender</div><div class="tl-text">Construir significado a partir de información. Verbos: <em>explicar, parafrasear, resumir, clasificar.</em></div></div>
+        <div class="tl-item"><div class="tl-year">Aplicar</div><div class="tl-text">Usar un procedimiento en una situación concreta. Verbos: <em>ejecutar, implementar, resolver, calcular.</em></div></div>
+        <div class="tl-item"><div class="tl-year">Analizar</div><div class="tl-text">Descomponer en partes y detectar relaciones. Verbos: <em>diferenciar, comparar, organizar, atribuir.</em></div></div>
+        <div class="tl-item"><div class="tl-year">Evaluar</div><div class="tl-text">Emitir juicios fundamentados con criterios. Verbos: <em>justificar, criticar, defender, validar.</em></div></div>
+        <div class="tl-item"><div class="tl-year">Crear</div><div class="tl-text">Reorganizar elementos en algo nuevo y coherente. Verbos: <em>diseñar, construir, formular, producir.</em></div></div>
+      </div>
+
+      <h3>La otra dimensión: qué tipo de conocimiento</h3>
+      <p>La revisión de 2001 también separó el <strong>proceso cognitivo</strong> (los 6 niveles de arriba) del <strong>tipo de conocimiento</strong> involucrado, en una segunda dimensión que muchos DI olvidan mencionar:</p>
+      <table class="compare-table">
+        <tr><th>Tipo de conocimiento</th><th>Qué es</th><th>Ejemplo</th></tr>
+        <tr><td>Factual</td><td>Datos, terminología, elementos aislados</td><td>Las siglas de ADDIE</td></tr>
+        <tr><td>Conceptual</td><td>Categorías, principios, modelos, teorías</td><td>Por qué ADDIE es un modelo lineal y SAM iterativo</td></tr>
+        <tr><td>Procedimental</td><td>Cómo hacer algo, técnicas, métodos</td><td>Cómo aplicar los nueve eventos de Gagné a una lección</td></tr>
+        <tr><td>Metacognitivo</td><td>Conciencia y control del propio pensamiento</td><td>Reconocer cuándo tu propio diseño tiene sobrecarga cognitiva</td></tr>
+      </table>
+      <div class="nota clave"><span class="nota-tag">Para tus objetivos</span>Cruzar proceso × conocimiento evita el error más común de cursos "de nivel bajo disfrazado": un verbo que suena avanzado ("analizar") aplicado solo a conocimiento factual ("analizar la lista de las 5 fases de ADDIE") en realidad exige poco más que recordar. El nivel real de un objetivo depende de ambas dimensiones, no solo del verbo.</div>
+
+      <div class="nota contexto"><span class="nota-tag">Bloom no es la única mirada</span>La taxonomía de aprendizaje significativo de <strong>Fink</strong> propone seis dimensiones no jerárquicas —conocimiento fundacional, aplicación, integración, dimensión humana, cuidado (<em>caring</em>) y aprender a aprender— que se refuerzan entre sí en vez de ir de lo simple a lo complejo. Es especialmente relevante en formación de adultos, porque incorpora motivación y desarrollo personal, algo que Bloom no cubre. Vale la pena nombrarla en una entrevista si el cargo es de educación superior o corporativa con foco en adultos.</div>
+    </div>
+
+    <!-- ============ SECCIÓN 4: VERBOS OBSERVABLES ============ -->
+    <div class="content-section" id="s4">
+      <h2><span class="sec-num">04</span> Verbos observables vs. verbos ambiguos</h2>
+      <p>El verbo es la palabra que más trabajo hace en un objetivo. Un verbo ambiguo hace inevaluable todo el objetivo, sin importar qué tan bien estén redactados A, C y D.</p>
+
+      <table class="compare-table si-no">
+        <tr><th>Evita — no son observables</th><th>Usa — sí son observables</th></tr>
+        <tr><td class="no">Comprender, entender</td><td class="si">Explicar, resumir, parafrasear, clasificar</td></tr>
+        <tr><td class="no">Conocer, saber</td><td class="si">Enumerar, identificar, describir, definir</td></tr>
+        <tr><td class="no">Apreciar, valorar (como estado interno)</td><td class="si">Justificar la elección de X frente a Y con criterios</td></tr>
+        <tr><td class="no">Familiarizarse con</td><td class="si">Aplicar, ejecutar, operar, configurar</td></tr>
+        <tr><td class="no">Estar consciente de</td><td class="si">Detectar, señalar, contrastar, categorizar</td></tr>
+      </table>
+
+      <div class="nota alerta"><span class="nota-tag">La prueba del pasillo</span>Un truco rápido de taller: si no puedes imaginar a alguien parado en la puerta viendo al estudiante <em>hacer</em> el verbo, el verbo no sirve. Nadie puede "ver" a alguien "comprender" — sí puede verlo "clasificar diez casos" o "escribir un objetivo con las cuatro letras del ABCD".</div>
+
+      <h3>Verbos ambiguos no son un error menor — son un problema de tres capas</h3>
+      <div class="brechas">
+        <div class="brecha b1">
+          <h4>Para el diseño</h4>
+          <div class="b-def">Sin verbo claro, no sabes qué actividad diseñar.</div>
+          <div class="b-ej">"Comprenderán el modelo ADDIE" no dice si necesitan explicarlo, aplicarlo a un caso o compararlo con SAM.</div>
+        </div>
+        <div class="brecha b2">
+          <h4>Para la evaluación</h4>
+          <div class="b-def">Sin verbo claro, cualquier instrumento "sirve" — y eso significa que ninguno mide bien.</div>
+          <div class="b-ej">Un quiz de alternativas no puede evaluar "aplicar" del mismo modo que evalúa "recordar".</div>
+        </div>
+        <div class="brecha b3">
+          <h4>Para el estudiante</h4>
+          <div class="b-def">Sin verbo claro, el estudiante no sabe qué se espera realmente de él.</div>
+          <div class="b-ej">"Conocer la normativa" invita a memorizar; si en realidad se evaluará aplicándola a un caso, el estudiante estudió para la prueba equivocada.</div>
         </div>
       </div>
     </div>
 
-    <!-- CONTENT -->
-    <div class="col-lg-9">
-      <div class="content-di">
-        <div class="lesson-hero">
-          <div class="unit-tag">Módulo 2 · Unidad 2.2</div>
-          <h1>Análisis de necesidades y audiencia</h1>
-          <p>Diagnóstico · tipos de brechas · métodos de recolección · análisis de audiencia en profundidad</p>
+    <!-- ============ SECCIÓN 5: HACIA LA EVALUACIÓN ALINEADA ============ -->
+    <div class="content-section" id="s5">
+      <h2><span class="sec-num">05</span> Hacia la evaluación alineada — un adelanto</h2>
+      <p>El objetivo bien redactado no es un ejercicio de escritura: es un contrato. El verbo que elegiste en el componente B del ABCD tiene que ser el mismo tipo de desempeño que tu instrumento de evaluación mide, y el mismo tipo de práctica que tu actividad ofrece. Si el objetivo dice "aplicar" y la evaluación es un quiz de alternativas sobre definiciones, hay una fractura de alineamiento.</p>
+      <div class="nota contexto"><span class="nota-tag">Esto se profundiza en la unidad 2.3</span>Backward Design formaliza este principio en tres etapas: definir resultados (lo que estás redactando aquí), definir evidencia aceptable (la evaluación) y recién después diseñar experiencias (la actividad). Todo objetivo bien formado que redactes en esta unidad es el insumo directo de esa unidad.</div>
+      <table class="compare-table">
+        <tr><th>Si tu verbo (B) es…</th><th>Tu evaluación probablemente necesita…</th></tr>
+        <tr><td>Recordar / identificar</td><td>Prueba de selección múltiple, emparejamiento, completación</td></tr>
+        <tr><td>Explicar / comparar</td><td>Respuesta abierta breve, mapa conceptual, cuadro comparativo</td></tr>
+        <tr><td>Aplicar / resolver</td><td>Estudio de caso, simulación, ejercicio práctico con datos nuevos</td></tr>
+        <tr><td>Analizar / evaluar / crear</td><td>Proyecto, rúbrica de desempeño auténtico, portafolio</td></tr>
+      </table>
+    </div>
+
+    <!-- ============ SECCIÓN 6: ERRORES COMUNES + ACTIVIDAD ============ -->
+    <div class="content-section" id="s6">
+      <h2><span class="sec-num">06</span> Errores comunes al redactar objetivos</h2>
+      <table class="compare-table">
+        <tr><th>Objetivo con error</th><th>Qué falla</th><th>Versión corregida</th></tr>
+        <tr><td>"El curso enseñará los principios de accesibilidad."</td><td>Sujeto es el curso, no el estudiante</td><td>"El estudiante identificará tres principios de accesibilidad en un sitio dado."</td></tr>
+        <tr><td>"Los participantes entenderán la importancia de la retroalimentación."</td><td>Verbo no observable</td><td>"Los participantes redactarán retroalimentación específica y accionable para tres casos de desempeño."</td></tr>
+        <tr><td>"Aplicarán los nueve eventos de Gagné."</td><td>Sin condición ni grado — ¿a qué? ¿con qué criterio de éxito?</td><td>"Dado un tema de su elección, aplicarán los nueve eventos de Gagné en un guión de lección, incluyendo al menos 7 de los 9 eventos."</td></tr>
+        <tr><td>"Se familiarizarán con Moodle."</td><td>Verbo ambiguo, no dice qué hará concretamente en Moodle</td><td>"Configurarán una actividad de tarea con rúbrica en un curso Moodle de práctica."</td></tr>
+      </table>
+    </div>
+
+    <div class="activity">
+      <h2>Actividad — ¿Bien formado o necesita revisión?</h2>
+      <div class="act-sub">Clasifica cada objetivo. Cada acierto suma puntos — las que falles te dicen exactamente qué repasar arriba.</div>
+      <div id="actRoot"></div>
+      <div class="act-progress" id="actProgress"></div>
+    </div>
+
+    <!-- CALLOUTS -->
+    <div class="callout ia">
+      <div class="callout-header">🖌 IA en esta fase</div>
+      <div class="callout-body">
+        <div class="capa">＋ Toca para levantar la capa</div>
+        <p>En la fase de redacción de objetivos, la IA generativa funciona bien como <strong>banco de verbos y revisor de alineamiento</strong>, no como redactora final. Ejemplos concretos:</p>
+        <p>• Pedirle una lista de verbos observables para un nivel específico de Bloom cuando te quedaste "en blanco" en el componente B.</p>
+        <p>• Darle un objetivo tuyo y pedirle que identifique cuál letra del ABCD falta o está ambigua, sin que te lo reescriba entero.</p>
+        <p>• Pedirle que simule ser un evaluador de acreditación y objete cualquier objetivo cuyo sujeto no sea el estudiante.</p>
+      </div>
+    </div>
+
+    <div class="callout entrevista">
+      <div class="callout-header">🎤 Nota de entrevista</div>
+      <div class="callout-body">
+        <div class="capa">＋ Toca para levantar la capa</div>
+        <p>Cuando te pidan "redacta un objetivo de aprendizaje para X" en una entrevista técnica, nárralo mientras lo escribes: nombra en voz alta que estás definiendo la audiencia, luego el verbo según el nivel de Bloom que corresponde, luego la condición y el grado. Esto demuestra que dominas el modelo, no que memorizaste una frase.</p>
+        <p>Evita objetivos con dos verbos ("comprenderán y aplicarán") — es señal de que no decidiste qué nivel cognitivo realmente necesitas evaluar.</p>
+      </div>
+    </div>
+
+    <!-- ============ PRÁCTICA DE ENTREVISTA ============ -->
+    <div class="content-section" id="practica">
+      <h2><span class="sec-num">◆</span> Practica como en una entrevista</h2>
+      <p>Responde primero con tus propias palabras — <strong>en voz alta o por escrito</strong> — antes de revelar la respuesta modelo. El valor está en formular tu propia respuesta, no en leer la mía. Después usa el checklist: cada ítem que marques suma a tu autoevaluación.</p>
+
+      <div class="practica">
+        <div class="practica-head">
+          <div class="p-num">Práctica 1</div>
+          <div class="p-q">Reescribe este objetivo usando el modelo ABCD: "Los estudiantes conocerán las fases de ADDIE."</div>
         </div>
-        <div class="lesson-badges">
-          <span class="lbadge"><i class="bi bi-book me-1"></i>5 bloques de contenido</span>
-          <span class="lbadge"><i class="bi bi-chat-square-text me-1"></i>3 preguntas de práctica oral</span>
-          <span class="lbadge"><i class="bi bi-clipboard-check me-1"></i>8 preguntas al final</span>
-          <span class="lbadge"><i class="bi bi-clock me-1"></i>~33 min</span>
+        <div class="practica-body">
+          <textarea placeholder="Escribe tu versión ABCD antes de revelar la modelo…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p1', 'p1')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p1">"Dado un caso de proyecto de curso sin resolver, el estudiante de diplomado ordenará las cinco fases de ADDIE aplicadas a ese caso específico, ubicando correctamente al menos 4 de las 5 fases." Aquí A es "el estudiante de diplomado", B es "ordenará" (nivel Comprender/Analizar, no solo Recordar), C es "dado un caso de proyecto sin resolver", y D es "al menos 4 de 5".</div>
+          <div class="checklist">
+            <div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1a')"> ¿Tu sujeto es el estudiante, no el curso?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1b')"> ¿Reemplazaste "conocerán" por un verbo observable?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1c')"> ¿Incluiste condición y grado, aunque sea de forma simple?</label>
+          </div>
         </div>
+      </div>
 
-        <div class="lesson-body">
-
-          <!-- MAPA CONCEPTUAL (organizador previo) -->
-          <div class="presentacion mb-4">
-            <div class="presentacion-head">
-              <div class="pres-title"><i class="bi bi-diagram-3"></i> Mapa de esta unidad</div>
-              <span class="pres-tag">Organizador previo</span>
-            </div>
-            <div style="background:#fff;padding:1.2rem">
-              <svg width="100%" viewBox="0 0 680 460" style="display:block">
-                <line x1="340" y1="192" x2="220" y2="96" stroke="#ddd8d0" stroke-width="1"/>
-                <line x1="340" y1="192" x2="460" y2="96" stroke="#ddd8d0" stroke-width="1"/>
-                <line x1="260" y1="220" x2="210" y2="220" stroke="#ddd8d0" stroke-width="1"/>
-                <line x1="420" y1="220" x2="470" y2="220" stroke="#ddd8d0" stroke-width="1"/>
-                <line x1="340" y1="248" x2="340" y2="360" stroke="#ddd8d0" stroke-width="1"/>
-                <rect x="245" y="192" width="190" height="56" rx="8" fill="#f7ede8" stroke="#c85c3a" stroke-width="1"/>
-                <text x="340" y="212" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Análisis de necesidades</text>
-                <text x="340" y="230" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#c85c3a">unidad 2.2</text>
-                <rect x="40" y="40" width="190" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="135" y="60" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Tres niveles (Rossett)</text>
-                <text x="135" y="78" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">organización, tarea, audiencia</text>
-                <rect x="450" y="40" width="190" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="545" y="60" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Tipos de brechas</text>
-                <text x="545" y="78" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">no todas son de formación</text>
-                <rect x="20" y="192" width="190" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="115" y="212" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Métodos de recolección</text>
-                <text x="115" y="230" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">entrevistas, encuestas, datos</text>
-                <rect x="470" y="192" width="190" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="565" y="212" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Análisis de audiencia</text>
-                <text x="565" y="230" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">las 4 dimensiones</text>
-                <rect x="240" y="360" width="200" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="340" y="380" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Herramientas y entregables</text>
-                <text x="340" y="398" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">informe, matriz, persona</text>
-              </svg>
-              <p style="font-size:0.8rem;color:var(--muted);text-align:center;margin-top:0.5rem">El análisis de necesidades es la fase que más se salta y la que más determina si un curso sirve o no. Vuelve aquí para verificar que puedes explicar cada bloque con un ejemplo propio.</p>
-            </div>
+      <div class="practica">
+        <div class="practica-head">
+          <div class="p-num">Práctica 2</div>
+          <div class="p-q">Te muestran el objetivo "El estudiante evaluará la efectividad de tres estrategias de retroalimentación aplicadas a un caso real, justificando su elección con al menos dos criterios." ¿Qué nivel de la Taxonomía de Bloom revisada corresponde y por qué?</div>
+        </div>
+        <div class="practica-body">
+          <textarea placeholder="Tu respuesta…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p2', 'p2')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p2">"Corresponde al nivel Evaluar. El verbo 'evaluará' y la exigencia de 'justificar con criterios' son la marca distintiva de ese nivel: no basta con aplicar o comparar las estrategias, hay que emitir un juicio fundamentado sobre cuál es mejor y defenderlo. Si solo pidiera 'comparar' las tres estrategias sin exigir un juicio final, bajaría a nivel Analizar."</div>
+          <div class="checklist">
+            <div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2a')"> ¿Nombraste el nivel correcto (Evaluar)?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2b')"> ¿Explicaste qué palabra o exigencia del objetivo lo delata?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2c')"> ¿Contrastaste con un nivel vecino (Analizar) para mostrar precisión?</label>
           </div>
+        </div>
+      </div>
 
-          <div class="presentacion">
-            <div class="presentacion-head">
-              <div class="pres-title"><i class="bi bi-easel2"></i> Presentación del tema <span class="pres-tag">Próximamente</span></div>
-            </div>
-            <div class="presentacion-viewer">
-              <div class="pres-placeholder">
-                <i class="bi bi-file-earmark-slides"></i>
-                <p>Material audiovisual en preparación</p>
-                <small>Por ahora, revisa el contenido en los bloques de esta unidad.</small>
-              </div>
-            </div>
+      <div class="practica">
+        <div class="practica-head">
+          <div class="p-num">Práctica 3</div>
+          <div class="p-q">Caso: un SME te dice "quiero que al final del curso los alumnos sepan usar Canva para hacer material didáctico." Redacta un objetivo ABCD completo a partir de esa frase.</div>
+        </div>
+        <div class="practica-body">
+          <textarea placeholder="Tu respuesta…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p3', 'p3')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p3">"Dado un tema de su asignatura y sin plantilla previa, el docente participante diseñará en Canva un recurso didáctico de una página que incluya al menos un elemento visual, un título y un texto de apoyo, en un máximo de 30 minutos." Aquí traduje 'sepan usar' —ambiguo— al verbo real que el SME quiere ver: 'diseñar' un producto concreto, con condición (sin plantilla, un tema propio) y grado (tres elementos mínimos, tiempo límite)."</div>
+          <div class="checklist">
+            <div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3a')"> ¿Tradujiste "sepan usar" a un verbo observable concreto?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3b')"> ¿Incluiste las cuatro letras del ABCD?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3c')"> ¿El grado que definiste es realmente verificable por otra persona?</label>
           </div>
+        </div>
+      </div>
+    </div>
 
-          <div class="accordion-di">
-            <button class="accordion-di-btn open" onclick="toggleAcc(this)">
-              <i class="bi bi-1-circle acc-icon"></i> Qué es un análisis de necesidades y por qué es la fase más importante
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body show">
-              <p>El análisis de necesidades (needs assessment) es el proceso de identificar la <strong>brecha entre el desempeño actual y el desempeño deseado</strong>, y determinar si esa brecha se resuelve con formación o con otra intervención (proceso, herramienta, incentivo). Es la fase más subestimada del DI: saltársela o hacerla superficialmente es la causa número uno de cursos que no sirven.</p>
-              <div class="callout-terra">
-                <strong>Pregunta que ordena todo el análisis:</strong> "¿Este problema se soluciona con capacitación, o es un problema de proceso, herramienta o motivación?" Si la respuesta es "no es de capacitación", el DI debe decirlo — aunque el cliente haya pedido un curso. Esa honestidad profesional es lo que distingue a un DI senior.
-              </div>
-              <h5>Los tres niveles clásicos de análisis (modelo de Rossett)</h5>
-              <div class="card-di"><h6><i class="bi bi-building me-1"></i>Análisis organizacional</h6><p>¿Cuál es el objetivo de negocio o institucional detrás de la solicitud? ¿Qué métrica se espera mover (retención, satisfacción, cumplimiento normativo)?</p></div>
-              <div class="card-di"><h6><i class="bi bi-list-task me-1"></i>Análisis de tareas</h6><p>¿Qué debe hacer exactamente la persona en su puesto/rol? Se descompone la tarea en pasos observables y medibles.</p></div>
-              <div class="card-di"><h6><i class="bi bi-people me-1"></i>Análisis de audiencia</h6><p>¿Quién es el aprendiz? Conocimientos previos, contexto, motivación, acceso a tecnología (ver acordeón siguiente).</p></div>
-            </div>
-          </div>
+    <!-- ============ EVALUACIÓN FINAL (10) ============ -->
+    <div class="eval-block" id="evaluacion">
+      <h2>Evaluación — Unidad 2.2</h2>
+      <div class="eval-sub">10 preguntas. El puntaje se guarda en tu ruta de aprendizaje. Puedes reintentar sin límite.</div>
+      <div id="quizRoot"></div>
+      <div class="eval-counter" id="quizCounter">Respondidas: 0/10</div>
+      <button class="eval-submit" id="quizSubmit" onclick="submitQuiz()" disabled>Enviar evaluación</button>
+      <div class="result-card" id="resultCard">
+        <div class="result-score" id="resultScore">0%</div>
+        <div id="resultMsg" style="font-size:0.85rem;color:var(--ink-muted);margin-top:0.3rem;"></div>
+      </div>
+    </div>
 
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-2-circle acc-icon"></i> Tipos de brechas y cómo diagnosticarlas
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p>No toda brecha de desempeño es una brecha de aprendizaje. Distinguir el tipo de brecha evita construir cursos que no resuelven el problema real.</p>
-              <table class="table table-di table-bordered mt-2">
-                <thead><tr><th>Tipo de brecha</th><th>Síntoma típico</th><th>Solución correcta</th></tr></thead>
-                <tbody>
-                  <tr><td>Conocimiento</td><td>"No sabían que existía ese procedimiento"</td><td>Formación / curso</td></tr>
-                  <tr><td>Habilidad</td><td>"Saben la teoría pero fallan en la ejecución"</td><td>Práctica guiada, simulación, mentoría</td></tr>
-                  <tr><td>Motivación / cultura</td><td>"Saben hacerlo pero no lo hacen"</td><td>Gestión, incentivos, liderazgo — no un curso</td></tr>
-                  <tr><td>Entorno / recursos</td><td>"No tienen las herramientas o el tiempo para hacerlo"</td><td>Rediseño de proceso, dotación de recursos</td></tr>
-                </tbody>
-              </table>
-              <div class="callout-blue mt-3">
-                <strong>Señal de alerta en la solicitud del cliente:</strong> si te piden "un curso de tres horas sobre X" sin haberte mostrado datos de desempeño (quejas, errores, indicadores), es una señal de que el análisis de necesidades aún no se ha hecho — y es tu rol pedirlo antes de diseñar.
-              </div>
-            </div>
-          </div>
+    <div class="next-nav">
+      <a href="m2-1.html">← 2.1 Análisis de necesidades y audiencia</a>
+      <a href="m2-3.html">2.3 Backward Design y alineamiento constructivo →</a>
+    </div>
+  </main>
+</div>
 
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-3-circle acc-icon"></i> Métodos de recolección de información
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p>El análisis de necesidades combina métodos cualitativos y cuantitativos. Ningún método es suficiente por sí solo — la triangulación de fuentes da un diagnóstico más confiable.</p>
-              <div class="row g-2 mt-2">
-                <div class="col-md-6"><div class="card-di"><h6><i class="bi bi-chat-dots me-1"></i>Entrevistas a SME y stakeholders</h6><p>Revelan el "por qué" detrás del problema. Preguntas clave: "¿Cómo se ve el buen desempeño?", "¿Qué pasa cuando alguien lo hace mal?"</p></div></div>
-                <div class="col-md-6"><div class="card-di"><h6><i class="bi bi-clipboard-data me-1"></i>Encuestas a la audiencia</h6><p>Permiten escalar el diagnóstico a muchos aprendices; útiles para medir autopercepción de conocimiento y actitudes.</p></div></div>
-                <div class="col-md-6"><div class="card-di"><h6><i class="bi bi-people me-1"></i>Focus groups</h6><p>Exploran matices y desacuerdos entre grupos de aprendices que una encuesta no captura.</p></div></div>
-                <div class="col-md-6"><div class="card-di"><h6><i class="bi bi-file-earmark-text me-1"></i>Análisis documental</h6><p>Revisión de manuales, políticas, reportes de errores, tickets de soporte, resultados de evaluaciones previas.</p></div></div>
-                <div class="col-md-6"><div class="card-di"><h6><i class="bi bi-eye me-1"></i>Observación directa</h6><p>Ver a la persona realizar la tarea en su contexto real revela brechas que nadie reporta verbalmente.</p></div></div>
-                <div class="col-md-6"><div class="card-di"><h6><i class="bi bi-bar-chart me-1"></i>Datos de desempeño</h6><p>Indicadores duros: tasas de error, quejas de clientes, resultados de evaluaciones anteriores, rotación.</p></div></div>
-              </div>
-              <div class="callout-terra mt-2">
-                <strong>Para tus entrevistas:</strong> si te preguntan "¿cómo levantas requerimientos con un SME?", responde con esta lógica: primero entrevista exploratoria abierta, luego análisis documental para verificar, y si el proyecto lo permite, una breve observación o encuesta a una muestra de la audiencia.
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-4-circle acc-icon"></i> Análisis de audiencia en profundidad
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p>El análisis de audiencia es donde más se ahorra tiempo de rediseño después. Cuatro dimensiones cubren la mayoría de los casos:</p>
-              <h5>1. Características demográficas y de rol</h5>
-              <p>Edad, nivel educativo, cargo, antigüedad en el puesto, ubicación geográfica (relevante si hay variación cultural o de huso horario en cursos corporativos multinacionales).</p>
-              <h5>2. Conocimientos y habilidades previas</h5>
-              <p>¿Parten de cero o ya tienen experiencia relacionada? Un mismo tema (por ejemplo, "primeros auxilios") requiere diseño distinto para personal nuevo que para personal con recertificación.</p>
-              <h5>3. Motivación y actitud</h5>
-              <p>¿La formación es obligatoria (compliance) o voluntaria? ¿Existe resistencia previa al tema o a la modalidad virtual? Esto determina cuánto esfuerzo poner en enganche y storytelling versus eficiencia y brevedad.</p>
-              <h5>4. Contexto tecnológico y de acceso</h5>
-              <p>Ancho de banda disponible, dispositivo principal (móvil vs. escritorio), tiempo disponible durante la jornada, alfabetización digital. Un curso con video pesado no sirve para audiencia con conectividad limitada — mejor microlearning descargable o versión con menor peso.</p>
-              <div class="callout-terra mt-2">
-                <strong>Entregable típico:</strong> una "persona de aprendiz" (learner persona) — un perfil semi-ficticio que resume estas cuatro dimensiones para mantener foco en el diseño. Sirve como referencia rápida para el equipo durante todo el proyecto.
-              </div>
-              <div class="callout-blue">
-                <strong>Aplicación directa a tu perfil:</strong> en tu portafolio (Proyecto 02, virtualización en Brightspace) puedes mencionar explícitamente qué supuestos de audiencia guiaron tus decisiones de diseño — es evidencia concreta de que no solo produces contenido, sino que lo fundamentas.
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-5-circle acc-icon"></i> Herramientas y entregables del análisis
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p>El análisis de necesidades no es solo un ejercicio mental: produce documentos concretos que se usan en las fases siguientes.</p>
-              <table class="table table-di table-bordered">
-                <thead><tr><th>Entregable</th><th>Contenido</th><th>Para qué sirve después</th></tr></thead>
-                <tbody>
-                  <tr><td>Informe de análisis de necesidades</td><td>Brecha identificada, tipo de brecha, recomendación (¿es un problema de formación?)</td><td>Justifica el proyecto ante stakeholders; define el alcance</td></tr>
-                  <tr><td>Matriz de brechas</td><td>Tabla de conocimientos/habilidades requeridas vs. nivel actual de la audiencia</td><td>Insumo directo para redactar objetivos (Unidad 2.3)</td></tr>
-                  <tr><td>Persona de aprendiz</td><td>Perfil representativo de la audiencia con sus 4 dimensiones</td><td>Guía decisiones de tono, formato y extensión</td></tr>
-                  <tr><td>Análisis de tareas</td><td>Descomposición paso a paso de la tarea a enseñar</td><td>Base para diseñar actividades prácticas y evaluaciones auténticas</td></tr>
-                </tbody>
-              </table>
-              <div class="callout-terra mt-2">
-                <strong>Para INACAP y procesos similares:</strong> cuando te pregunten por tu metodología de análisis, menciona explícitamente estos entregables — muestra que entiendes el análisis como proceso documentado y no como intuición.
-              </div>
-            </div>
-          </div>
-
-          <!-- AUTOEVALUACIÓN AUTOINSTRUCCIONAL -->
-          <div class="accordion-di" style="border-color:var(--blue)">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)" style="background:var(--blue-light)">
-              <i class="bi bi-chat-square-text acc-icon" style="color:var(--blue)"></i> Practica como en una entrevista
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p style="color:var(--muted);font-size:0.85rem">Responde primero con tus propias palabras antes de revelar la respuesta modelo.</p>
-
-              <div class="card-di" style="border-left:3px solid var(--blue)">
-                <h6><i class="bi bi-question-circle me-1"></i>1. Un cliente te pide "un curso de tres horas sobre atención al cliente" sin mostrarte ningún dato de desempeño. ¿Qué haces antes de aceptar el encargo tal cual?</h6>
-                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
-                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
-                  <p style="font-size:0.87rem"><em>"Antes de diseñar, pediría datos concretos: quejas de clientes, resultados de evaluaciones previas, o al menos una entrevista con el jefe de área. La ausencia de esos datos es una señal de que el análisis de necesidades no se ha hecho, y mi rol como DI es solicitarlo antes de comprometerme con un formato y duración específicos."</em></p>
-                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
-                  <ul style="font-size:0.83rem;color:var(--muted)">
-                    <li>¿Identificaste la ausencia de datos como una señal de alerta?</li>
-                    <li>¿Propusiste al menos un método concreto para levantar el análisis?</li>
-                    <li>¿Evitaste simplemente aceptar el encargo "tal cual" para no generar fricción?</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="card-di" style="border-left:3px solid var(--blue)">
-                <h6><i class="bi bi-question-circle me-1"></i>2. Un equipo reporta: "sabemos hacer el protocolo, pero en la práctica no lo seguimos". ¿Qué tipo de brecha es y qué le recomiendas a tu cliente?</h6>
-                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
-                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
-                  <p style="font-size:0.87rem"><em>"Es una brecha de motivación o cultura, no de conocimiento ni de habilidad — ya saben hacerlo. Le recomendaría a mi cliente que un curso no va a resolver esto: hay que investigar por qué no lo aplican (¿falta de tiempo, incentivos contradictorios, falta de supervisión?) antes de invertir en formación adicional."</em></p>
-                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
-                  <ul style="font-size:0.83rem;color:var(--muted)">
-                    <li>¿Identificaste correctamente que es brecha de motivación/cultura?</li>
-                    <li>¿Recomendaste explícitamente no hacer un curso?</li>
-                    <li>¿Propusiste investigar la causa raíz en vez de asumir una?</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="card-di" style="border-left:3px solid var(--blue)">
-                <h6><i class="bi bi-question-circle me-1"></i>3. Te preguntan qué es una "persona de aprendiz" (learner persona) y para qué sirve en un proyecto real. ¿Qué respondes?</h6>
-                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
-                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
-                  <p style="font-size:0.87rem"><em>"Es un perfil semi-ficticio que resume las cuatro dimensiones clave de la audiencia — demografía, conocimientos previos, motivación y contexto tecnológico. Sirve como referencia rápida para todo el equipo durante el proyecto, para no perder de vista para quién se está diseñando en medio de decisiones de producción."</em></p>
-                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
-                  <ul style="font-size:0.83rem;color:var(--muted)">
-                    <li>¿Nombraste las cuatro dimensiones o al menos varias de ellas?</li>
-                    <li>¿Explicaste su función práctica (referencia para el equipo), no solo la definición?</li>
-                    <li>¿Diste un ejemplo de cómo la usarías en un proyecto tuyo?</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- EVALUACIÓN -->
-          <div class="eval-section mt-4">
-            <h4><i class="bi bi-clipboard-check me-2" style="color:var(--terra)"></i>Evaluación — Unidad 2.2</h4>
-            <p class="eval-progress-text">Preguntas respondidas: <strong><span id="answeredCount">0</span>/8</strong> — puedes enviar en cualquier momento</p>
-
-            <div class="eval-question" data-question="q1">
-              <h6>1. ¿Cuál es la pregunta central que debe responder un análisis de necesidades antes de diseñar un curso?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q1',1)"><div class="eval-radio"></div><span>¿Qué LMS se usará?</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',2)"><div class="eval-radio"></div><span>¿El problema se resuelve con formación o es de otra naturaleza (proceso, herramienta, motivación)?</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',3)"><div class="eval-radio"></div><span>¿Cuántas horas debe durar el curso?</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',4)"><div class="eval-radio"></div><span>¿Qué colores usar en el diseño?</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q2">
-              <h6>2. Según el modelo de Rossett, ¿cuáles son los tres niveles de análisis?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q2',1)"><div class="eval-radio"></div><span>Diseño, desarrollo, evaluación</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',2)"><div class="eval-radio"></div><span>Organizacional, de tareas, de audiencia</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',3)"><div class="eval-radio"></div><span>Cognitivo, conductual, social</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',4)"><div class="eval-radio"></div><span>Formativo, sumativo, diagnóstico</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q3">
-              <h6>3. Un equipo 'sabe hacer' una tarea pero no la realiza en su trabajo diario. ¿Qué tipo de brecha es y cuál es la solución correcta?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q3',1)"><div class="eval-radio"></div><span>Brecha de conocimiento — se resuelve con un curso teórico</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',2)"><div class="eval-radio"></div><span>Brecha de habilidad — se resuelve con más práctica</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',3)"><div class="eval-radio"></div><span>Brecha de motivación o cultura — no se resuelve con formación</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',4)"><div class="eval-radio"></div><span>Brecha tecnológica — se resuelve con nuevo software</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q4">
-              <h6>4. ¿Qué señal indica que el análisis de necesidades probablemente no se ha hecho antes de solicitar un curso?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q4',1)"><div class="eval-radio"></div><span>El cliente entrega datos de desempeño detallados</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',2)"><div class="eval-radio"></div><span>El cliente pide 'un curso de tres horas sobre X' sin evidencia de un problema medido</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',3)"><div class="eval-radio"></div><span>El cliente pregunta por el cronograma del proyecto</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',4)"><div class="eval-radio"></div><span>El cliente solicita una reunión de kickoff</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q5">
-              <h6>5. ¿Qué método de recolección de información revela brechas que nadie reporta verbalmente?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q5',1)"><div class="eval-radio"></div><span>Encuesta online</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',2)"><div class="eval-radio"></div><span>Observación directa de la tarea en contexto real</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',3)"><div class="eval-radio"></div><span>Revisión de manuales</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',4)"><div class="eval-radio"></div><span>Focus group</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q6">
-              <h6>6. ¿Cuáles son las cuatro dimensiones clave del análisis de audiencia?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q6',1)"><div class="eval-radio"></div><span>Presupuesto, plazo, alcance, riesgo</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',2)"><div class="eval-radio"></div><span>Demográficas/rol, conocimientos previos, motivación/actitud, contexto tecnológico</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',3)"><div class="eval-radio"></div><span>LMS, SCORM, xAPI, reportes</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',4)"><div class="eval-radio"></div><span>ADDIE, SAM, UbD, Bloom</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q7">
-              <h6>7. ¿Para qué sirve específicamente una 'persona de aprendiz' (learner persona)?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q7',1)"><div class="eval-radio"></div><span>Para reemplazar el análisis de tareas</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',2)"><div class="eval-radio"></div><span>Para servir como referencia rápida del equipo sobre el perfil de audiencia durante todo el diseño</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',3)"><div class="eval-radio"></div><span>Para definir el presupuesto del proyecto</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',4)"><div class="eval-radio"></div><span>Para elegir el LMS</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q8">
-              <h6>8. Un curso incluye video HD pesado, pero la audiencia tiene conectividad limitada y usa principalmente el celular. ¿Qué dimensión del análisis de audiencia se ignoró?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q8',1)"><div class="eval-radio"></div><span>Motivación y actitud</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',2)"><div class="eval-radio"></div><span>Conocimientos previos</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',3)"><div class="eval-radio"></div><span>Contexto tecnológico y de acceso</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',4)"><div class="eval-radio"></div><span>Características demográficas</span></div>
-            </div>
-
-            <div id="evalResult" class="mt-3"></div>
-
-            <div class="d-flex flex-wrap gap-2 mt-3">
-              <button class="btn btn-terra" id="submitBtn" onclick="submitEval()">
-                <i class="bi bi-check-circle me-2"></i>Enviar evaluación
-              </button>
-              <button class="btn btn-outline-terra" id="retryBtn" style="display:none" onclick="retryEval()">
-                <i class="bi bi-arrow-clockwise me-2"></i>Reintentar
-              </button>
-              <a href="m2-3.html" class="btn btn-blue" id="nextBtn" style="display:none">
-                Siguiente unidad <i class="bi bi-arrow-right ms-2"></i>
-              </a>
-            </div>
-          </div>
-
-        </div><!-- /lesson-body -->
-      </div><!-- /content-di -->
-    </div><!-- /col -->
-  </div><!-- /row -->
-</div><!-- /container -->
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../gami.js"></script>
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbylYML8h2BnNgi2AXtZ8bkGaXPNRhurswPr5dfyGRldbVoCRvmoT2cHN0r3I4qGynLb/exec';
-const UNIDAD_ID = 'm2-2';
-const UNIDAD_LABEL = '2.2 Análisis de necesidades';
+const UNIT_ID = 'm2-2';
 
-const CORRECTAS = { q1:2, q2:2, q3:3, q4:2, q5:2, q6:2, q7:2, q8:3 };
-const FEEDBACK = {
-  q1: {ok:'Correcto. Antes de diseñar hay que confirmar que el problema es realmente de aprendizaje y no de proceso, herramienta o motivación.',fail:'La pregunta central es si el problema realmente se resuelve con formación, o si es un problema de proceso, herramienta o motivación que un curso no solucionará.'},
-  q2: {ok:'Correcto. Rossett distingue análisis organizacional, de tareas y de audiencia.',fail:'Los tres niveles del modelo de Rossett son: análisis organizacional, análisis de tareas y análisis de audiencia.'},
-  q3: {ok:'Correcto. Si ya saben y pueden hacerlo pero no lo hacen, es un problema de motivación o cultura organizacional, no de aprendizaje.',fail:'Cuando la persona ya sabe y puede ejecutar la tarea pero no lo hace, el problema es de motivación o cultura — la formación no lo resuelve.'},
-  q4: {ok:'Correcto. Pedir un curso específico sin respaldo de datos es una señal clásica de que falta el análisis de necesidades previo.',fail:'La señal de alerta es pedir un formato de curso específico sin haber mostrado evidencia (datos, quejas, errores) del problema real.'},
-  q5: {ok:'Correcto. La observación directa capta discrepancias entre lo que la gente dice que hace y lo que realmente hace.',fail:'La observación directa es la que revela brechas no reportadas verbalmente, porque muestra el desempeño real en contexto.'},
-  q6: {ok:'Correcto. Estas cuatro dimensiones cubren la mayoría de los casos de análisis de audiencia.',fail:'Las cuatro dimensiones son: características demográficas/de rol, conocimientos previos, motivación/actitud, y contexto tecnológico de acceso.'},
-  q7: {ok:'Correcto. La persona de aprendiz mantiene el foco del equipo en las características reales de la audiencia durante todo el proyecto.',fail:'La persona de aprendiz es una referencia de diseño sobre el perfil de audiencia, no reemplaza el análisis de tareas ni define presupuesto o LMS.'},
-  q8: {ok:'Correcto. El contexto tecnológico (ancho de banda, dispositivo) determina decisiones de formato como el peso del video.',fail:'Ese es un problema de contexto tecnológico y de acceso: ancho de banda y dispositivo disponible, no de motivación ni de conocimientos previos.'}
-};
-
-let answers = {};
-let submitted = false;
-
-function toggleAcc(btn) {
-  const body = btn.nextElementSibling;
-  const isOpen = body.classList.contains('show');
-  body.classList.toggle('show', !isOpen);
-  btn.classList.toggle('open', !isOpen);
+// ===== VIDEO: pega aquí el ID de YouTube =====
+const YT_VIDEO_ID = '';
+if (YT_VIDEO_ID) {
+  document.getElementById('videoWrap').innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + YT_VIDEO_ID + '" title="Video de la unidad" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
 }
 
-function toggleModelo(btn) {
-  const box = btn.nextElementSibling;
-  const isOpen = box.style.display === 'block';
-  box.style.display = isOpen ? 'none' : 'block';
-  btn.textContent = isOpen ? 'Ver respuesta modelo' : 'Ocultar respuesta modelo';
+function switchMedia(btn) {
+  document.querySelectorAll('.media-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.media-pane').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('pane-' + btn.dataset.pane).classList.add('active');
+  if (btn.dataset.pane === 'video' && YT_VIDEO_ID) { Gami.award('m2-2_video', 5, 'Viste el video de la unidad'); checkMultimodal(); }
+}
+function checkMultimodal() {
+  if (Gami.hasSeen('m2-2_pdf') && Gami.hasSeen('m2-2_audio') && (YT_VIDEO_ID ? Gami.hasSeen('m2-2_video') : true)) Gami.badge('multimodal');
 }
 
-function selectOpt(el, question, optNum) {
-  if (submitted) return;
-  const container = el.closest('[data-question]');
-  container.querySelectorAll('.eval-option').forEach(o => o.classList.remove('selected'));
-  el.classList.add('selected');
-  answers[question] = optNum;
-  document.getElementById('answeredCount').textContent = Object.keys(answers).length;
+// Viñetas think-first
+function revealVineta(btn, id) {
+  btn.closest('.vineta').classList.add('revealed');
+  Gami.award('m2-2_vineta_' + id, 5, 'Resolviste una viñeta de taller');
 }
 
-function submitEval() {
-  if (Object.keys(answers).length === 0) {
-    showToast('Responde al menos una pregunta para enviar', 'warning');
-    return;
+// Capas
+let capasReveladas = 0;
+document.querySelectorAll('.capa').forEach((capa, i) => {
+  capa.addEventListener('click', () => {
+    capa.closest('.callout').classList.add('revealed');
+    Gami.award('m2-2_capa' + i, 5, 'Levantaste una capa');
+    capasReveladas++;
+    if (capasReveladas >= 2) Gami.badge('curiosa');
+  });
+});
+
+// Respuestas modelo y checklists de práctica
+function toggleRM(id, pid) {
+  document.getElementById(id).classList.toggle('show');
+  Gami.award('m2-2_rm_' + pid, 3, 'Contrastaste con la respuesta modelo');
+}
+function clCheck(el, id) {
+  if (el.checked) Gami.award('m2-2_cl_' + id, 2, 'Ítem de checklist verificado');
+}
+
+// ===== Actividad ¿Bien formado o necesita revisión? =====
+const ACT_ITEMS = [
+  { text: '"El estudiante clasificará, dado un set de 8 correos reales sin editar, cuáles cumplen el protocolo de tono institucional, acertando en al menos 6 de 8."', ans: 'bien', why: 'Sujeto correcto, verbo observable (clasificar), condición (8 correos reales) y grado (6/8) — las cuatro letras del ABCD presentes.' },
+  { text: '"Los participantes comprenderán la importancia de la comunicación asertiva en el trabajo en equipo."', ans: 'revisar', why: 'Verbo "comprenderán" no observable y no hay condición ni grado — es un objetivo de intención, no de resultado verificable.' },
+  { text: '"El curso abordará los fundamentos de la gestión de proyectos ágiles."', ans: 'revisar', why: 'El sujeto es "el curso", no el estudiante — describe contenido a cubrir, no una conducta que la persona demostrará.' },
+  { text: '"Dado un storyboard incompleto, el diseñador instruccional en formación completará las columnas de interactividad y evaluación siguiendo la plantilla del módulo 3, con cero campos vacíos."', ans: 'bien', why: 'Audiencia, conducta (completará), condición (storyboard incompleto, plantilla dada) y grado (cero campos vacíos) — objetivo redactado con precisión.' },
+  { text: '"Los alumnos se familiarizarán con las herramientas de autoría disponibles en el mercado."', ans: 'revisar', why: 'Verbo ambiguo ("familiarizarse") que no especifica ninguna conducta observable ni nivel de desempeño esperado.' },
+];
+let actDone = 0, actCorrect = 0;
+function renderActivity() {
+  document.getElementById('actRoot').innerHTML = ACT_ITEMS.map((item, i) => `
+    <div class="act-card" id="act-${i}">
+      <div class="act-statement">${item.text}</div>
+      <div class="act-buttons">
+        <button class="act-btn" onclick="answerAct(${i}, 'revisar')">Necesita revisión</button>
+        <button class="act-btn" onclick="answerAct(${i}, 'bien')">Bien formado</button>
+      </div>
+      <div class="act-verdict" id="verdict-${i}"></div>
+    </div>`).join('');
+  updateActProgress();
+}
+function answerAct(i, choice) {
+  const item = ACT_ITEMS[i];
+  const card = document.getElementById('act-' + i);
+  const verdict = document.getElementById('verdict-' + i);
+  actDone++;
+  if (choice === item.ans) {
+    actCorrect++;
+    card.classList.add('ok');
+    verdict.style.color = '#315226';
+    verdict.textContent = '✓ ' + item.why;
+  } else {
+    card.classList.add('no');
+    card.querySelector('.act-buttons').style.display = 'none';
+    verdict.style.color = '#6E2A2A';
+    verdict.textContent = '✗ Era ' + (item.ans === 'bien' ? 'Bien formado' : 'Necesita revisión') + '. ' + item.why;
   }
-  submitted = true;
-  let score = 0;
-  const total = Object.keys(CORRECTAS).length;
+  updateActProgress();
+  if (actDone === ACT_ITEMS.length) {
+    Gami.award('m2-2_actividad', Math.round(15 * actCorrect / ACT_ITEMS.length) + 5, 'Actividad ¿Bien formado o necesita revisión? — ' + actCorrect + '/' + ACT_ITEMS.length);
+  }
+}
+function updateActProgress() {
+  document.getElementById('actProgress').textContent = actDone + '/' + ACT_ITEMS.length + ' clasificadas' + (actDone === ACT_ITEMS.length ? ' · ' + actCorrect + ' correctas' : '');
+}
+renderActivity();
 
-  Object.keys(CORRECTAS).forEach(q => {
-    const container = document.querySelector(`[data-question="${q}"]`);
-    if (!container) return;
-    const userAns = answers[q];
-    const correctAns = CORRECTAS[q];
-    const opts = container.querySelectorAll('.eval-option');
+// ===== Evaluación final — 10 preguntas =====
+const QUIZ = [
+  { q: '¿Qué diferencia principal existe entre un objetivo de enseñanza y un objetivo de aprendizaje?', opts: ['El objetivo de enseñanza es más largo','El objetivo de enseñanza describe la intención del instructor; el de aprendizaje describe una conducta verificable del estudiante','No hay diferencia real, son sinónimos','El objetivo de aprendizaje siempre se redacta en inglés'], ans: 1 },
+  { q: '¿Qué representa la letra "C" en el modelo ABCD?', opts: ['Contenido del curso','Condición bajo la cual se demuestra la conducta','Criterio del instructor','Currículo institucional'], ans: 1 },
+  { q: 'En el objetivo "el estudiante resolverá, dado un set de 5 casos y sin calculadora, al menos 4 correctamente", ¿cuál es el componente D (Grado)?', opts: ['"el estudiante"','"resolverá"','"dado un set de 5 casos y sin calculadora"','"al menos 4 correctamente"'], ans: 3 },
+  { q: '¿Cuál de estos verbos es observable y por lo tanto adecuado para un objetivo de aprendizaje?', opts: ['Comprender','Apreciar','Clasificar','Familiarizarse'], ans: 2 },
+  { q: '¿Qué cambió principalmente la revisión de Anderson y Krathwohl (2001) respecto a la taxonomía original de Bloom (1956)?', opts: ['Eliminó el nivel más alto de la taxonomía','Convirtió las categorías de sustantivos a verbos de proceso cognitivo, entre otros ajustes','Agregó un séptimo nivel cognitivo','Eliminó por completo el nivel "Recordar"'], ans: 1 },
+  { q: 'Un objetivo pide "diseñar un plan de evaluación original combinando tres instrumentos vistos en el curso". ¿Qué nivel de la Taxonomía de Bloom revisada corresponde?', opts: ['Recordar','Aplicar','Analizar','Crear'], ans: 3 },
+  { q: '¿Qué dimensión adicional al proceso cognitivo introdujo la revisión de 2001?', opts: ['El tiempo estimado de la actividad','El tipo de conocimiento (factual, conceptual, procedimental, metacognitivo)','El número de estudiantes por sección','El formato del LMS a utilizar'], ans: 1 },
+  { q: '¿Por qué un verbo como "comprender" es problemático en un objetivo de aprendizaje?', opts: ['Porque es una palabra demasiado larga','Porque describe un estado mental interno que no se puede observar ni medir directamente','Porque no existe en la Taxonomía de Bloom','Porque solo aplica a educación superior'], ans: 1 },
+  { q: 'Si el objetivo usa el verbo "aplicar", ¿qué tipo de instrumento de evaluación es generalmente más alineado?', opts: ['Una prueba de selección múltiple sobre definiciones','Un estudio de caso o ejercicio práctico con datos nuevos','Una lista de verdadero o falso','Ninguno, "aplicar" no se puede evaluar'], ans: 1 },
+  { q: 'El objetivo "el curso presentará los conceptos clave de accesibilidad web" tiene un error principal. ¿Cuál es?', opts: ['Es demasiado corto','El sujeto es el curso, no el estudiante, por lo que describe contenido y no una conducta del aprendiz', 'Usa un verbo del nivel Evaluar, que es demasiado avanzado','No menciona el nombre del instructor'], ans: 1 },
+];
 
-    opts.forEach((opt, idx) => {
-      opt.style.pointerEvents = 'none';
-      if (idx + 1 === userAns) {
-        if (userAns === correctAns) { opt.classList.add('correct'); score++; }
-        else opt.classList.add('incorrect');
-      }
+function renderQuiz() {
+  document.getElementById('quizRoot').innerHTML = QUIZ.map((item, qi) => `
+    <div class="eval-q">${qi + 1}. ${item.q}</div>
+    <div class="quiz-opts" data-q="${qi}">
+      ${item.opts.map((opt, oi) => `
+        <label class="eval-option"><input type="radio" name="q${qi}" value="${oi}" onchange="updateQuizCounter()"> ${opt}</label>
+      `).join('')}
+    </div>`).join('');
+}
+function answered() {
+  let n = 0;
+  for (let i = 0; i < QUIZ.length; i++) if (document.querySelector('input[name=q' + i + ']:checked')) n++;
+  return n;
+}
+function updateQuizCounter() {
+  const n = answered();
+  document.getElementById('quizCounter').textContent = 'Respondidas: ' + n + '/' + QUIZ.length;
+  document.getElementById('quizSubmit').disabled = n < QUIZ.length;
+}
+function submitQuiz() {
+  let correct = 0;
+  QUIZ.forEach((item, qi) => {
+    const sel = document.querySelector('input[name=q' + qi + ']:checked');
+    const val = sel ? parseInt(sel.value) : -1;
+    document.querySelectorAll('[data-q="' + qi + '"] .eval-option').forEach((opt, oi) => {
+      opt.classList.remove('correct','incorrect');
+      if (oi === item.ans) opt.classList.add('correct');
+      else if (oi === val) opt.classList.add('incorrect');
     });
-
-    if (userAns !== undefined) {
-      const fb = FEEDBACK[q];
-      const isOk = userAns === correctAns;
-      const fbEl = document.createElement('div');
-      fbEl.className = 'feedback-box ' + (isOk ? 'feedback-ok' : 'feedback-fail');
-      fbEl.innerHTML = (isOk ? '<i class="bi bi-check-circle me-1"></i>' : '<i class="bi bi-x-circle me-1"></i>') + (isOk ? fb.ok : fb.fail);
-      container.appendChild(fbEl);
-    }
+    if (val === item.ans) correct++;
   });
-
-  const answered = Object.keys(answers).length;
-  const pct = Math.round(score / total * 100);
-  const msg = pct >= 90 ? 'Excelente dominio de esta unidad.' : pct >= 70 ? 'Buen resultado. Repasa lo que fallaste antes de avanzar.' : 'Hay conceptos que requieren repaso. Revisa las secciones donde cometiste errores.';
-
-  document.getElementById('evalResult').innerHTML = `
-    <div class="result-card">
-      <div class="result-score">${score}/${total}</div>
-      <div class="result-label">${pct}% de respuestas correctas (${answered} respondidas)</div>
-      <div class="result-msg">${msg}</div>
-    </div>`;
-
-  document.getElementById('submitBtn').style.display = 'none';
-  document.getElementById('retryBtn').style.display = 'inline-block';
-  document.getElementById('nextBtn').style.display = 'inline-block';
-  guardarPuntaje(score / total);
+  const pct = correct / QUIZ.length;
+  saveScore(pct, correct);
 }
-
-function retryEval() {
-  submitted = false;
-  answers = {};
-  document.querySelectorAll('.eval-option').forEach(o => {
-    o.classList.remove('selected','correct','incorrect');
-    o.style.pointerEvents = '';
-  });
-  document.querySelectorAll('.feedback-box').forEach(f => f.remove());
-  document.getElementById('evalResult').innerHTML = '';
-  document.getElementById('answeredCount').textContent = '0';
-  document.getElementById('submitBtn').style.display = 'inline-block';
-  document.getElementById('retryBtn').style.display = 'none';
-  document.getElementById('nextBtn').style.display = 'none';
-  showToast('Inténtalo de nuevo — repasa el contenido antes de responder', 'info');
-  document.querySelector('.eval-section').scrollIntoView({ behavior:'smooth' });
-}
-
-function getScores() { try { return JSON.parse(localStorage.getItem('di_scores')||'{}'); } catch(e) { return {}; } }
-
-function jsonp(params) {
-  return new Promise(function(resolve, reject) {
-    var cb = 'cb_' + Date.now() + '_' + Math.floor(Math.random()*1e6);
-    var script = document.createElement('script');
-    function cleanup(){ try { delete window[cb]; } catch(e) { window[cb] = undefined; } if (script.parentNode) script.parentNode.removeChild(script); }
-    window[cb] = function(data){ cleanup(); resolve(data); };
-    var qp = new URLSearchParams(Object.assign({}, params, { callback: cb }));
-    script.src = SCRIPT_URL + '?' + qp.toString();
-    script.onerror = function(){ cleanup(); reject(new Error('conexion')); };
-    setTimeout(function(){ if (window[cb]) { cleanup(); reject(new Error('timeout')); } }, 20000);
-    document.head.appendChild(script);
-  });
-}
-
-async function guardarPuntaje(ratio) {
-  const s = getScores(); s[UNIDAD_ID] = ratio; localStorage.setItem('di_scores', JSON.stringify(s));
-  updateSidebar();
+function saveScore(pct, correct) {
   try {
-    await jsonp({ action: 'saveScore', id: UNIDAD_ID, score: ratio, label: UNIDAD_LABEL, date: new Date().toLocaleDateString('es-CL') });
+    const scores = JSON.parse(localStorage.getItem('di_scores_v2') || '{}');
+    scores[UNIT_ID] = pct;
+    localStorage.setItem('di_scores_v2', JSON.stringify(scores));
   } catch(e) {}
-}
 
-function updateSidebar() {
-  const s = getScores();
-  const ids = ['m2-1','m2-2','m2-3'];
-  const done = ids.filter(id => s[id] !== undefined && s[id] > 0).length;
-  document.getElementById('sidebarPct').textContent = done + '/3';
-  document.getElementById('sidebarBar').style.width = Math.round(done/3*100) + '%';
-  ids.forEach(id => {
-    const el = document.getElementById('num-' + id);
-    if (el && s[id] !== undefined && s[id] > 0) { el.style.background = 'var(--success)'; el.style.color = '#fff'; }
-  });
-  document.getElementById('headerProgress').textContent = done + '/3 completadas';
-}
+  const card = document.getElementById('resultCard');
+  card.className = 'result-card show';
+  card.style.background = pct >= 0.7 ? 'var(--done-soft)' : 'var(--msoft)';
+  document.getElementById('resultScore').textContent = Math.round(pct * 100) + '%';
+  document.getElementById('resultMsg').textContent = correct + '/' + QUIZ.length + ' correctas · ' + (pct >= 0.7 ? 'Unidad completada en tu ruta.' : 'Puedes repasar y reintentar — sin límite de intentos.');
 
-function showToast(msg, type) {
-  const colors = { warning:'#c85c3a', info:'#3a6b8a', success:'#2d7a4f' };
-  const t = document.createElement('div');
-  t.className = 'toast-di';
-  t.style.background = colors[type] || colors.info;
-  t.innerHTML = msg;
-  document.body.appendChild(t);
-  setTimeout(() => { t.style.opacity='0'; t.style.transition='opacity 0.3s'; setTimeout(()=>t.remove(),300); }, 3000);
-}
-
-function scrollToTop() { window.scrollTo({top:0,behavior:'smooth'}); }
-
-updateSidebar();
-
-async function syncSheet() {
-  try {
-    const data = await jsonp({ action: 'getAll' });
-    if (data && data.ok) {
-      const s = getScores();
-      (data.scores || []).forEach(function(row){
-        if (row.id && row.score !== undefined) s[row.id] = parseFloat(row.score);
-      });
-      localStorage.setItem('di_scores', JSON.stringify(s));
-      updateSidebar();
-      showCompletedState();
-    }
-  } catch(e) {}
-}
-
-function showCompletedState() {
-  const ratio = getScores()[UNIDAD_ID];
-  if (ratio === undefined || ratio <= 0) return;
-  const pct = Math.round(ratio * 100);
-  const ok = pct >= 70;
-  const sec = document.querySelector('.eval-section');
-  if (!sec) return;
-  let banner = document.getElementById('completedBanner');
-  if (!banner) {
-    banner = document.createElement('div');
-    banner.id = 'completedBanner';
-    sec.insertBefore(banner, sec.firstChild);
+  if (pct >= 0.7) {
+    Gami.award('m2-2_eval', 30, 'Evaluación de la unidad aprobada — ' + correct + '/' + QUIZ.length);
   }
-  banner.innerHTML =
-    '<div style="display:flex;align-items:center;gap:0.9rem;background:' + (ok ? '#edf7f2' : 'var(--terra-light)') +
-    ';border:1px solid ' + (ok ? '#b0ddc5' : '#e0b0a0') + ';border-left:4px solid ' + (ok ? 'var(--success)' : 'var(--terra)') +
-    ';border-radius:8px;padding:0.9rem 1.1rem;margin-bottom:1.2rem">' +
-      '<i class="bi bi-' + (ok ? 'check-circle-fill' : 'arrow-repeat') + '" style="color:' + (ok ? 'var(--success)' : 'var(--terra)') + ';font-size:1.5rem"></i>' +
-      '<div style="flex:1">' +
-        '<div style="font-weight:bold;font-size:0.9rem;color:var(--dark)">Ya completaste esta unidad</div>' +
-        '<div style="font-size:0.82rem;color:var(--muted)">Puntaje guardado: <strong>' + pct + '%</strong>. Puedes repasar el contenido o volver a responder más abajo.</div>' +
-      '</div>' +
-    '</div>';
-}
-
-function trackVisit() {
   try {
-    let vid = localStorage.getItem('di_vid');
-    if (!vid) { vid = 'v' + Date.now().toString(36) + Math.random().toString(36).slice(2,8); localStorage.setItem('di_vid', vid); }
-    let sid = sessionStorage.getItem('di_sid');
-    if (!sid) { sid = 's' + Date.now().toString(36) + Math.random().toString(36).slice(2,8); sessionStorage.setItem('di_sid', sid); }
-    const qs = new URLSearchParams(location.search);
-    if (qs.get('owner') === '1') localStorage.setItem('di_owner', '1');
-    if (qs.get('owner') === '0') localStorage.removeItem('di_owner');
-    const owner = localStorage.getItem('di_owner') === '1' ? '1' : '0';
-    const device = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'movil' : 'escritorio';
-    const params = new URLSearchParams({ action: 'logVisit', page: UNIDAD_ID, vid: vid, sid: sid, owner: owner, device: device, t: String(Date.now()) });
     const img = new Image();
-    img.referrerPolicy = 'no-referrer';
-    img.src = SCRIPT_URL + '?' + params.toString();
+    img.src = SCRIPT_URL + '?action=saveScore&id=' + UNIT_ID + '&score=' + pct + '&t=' + Date.now();
   } catch(e) {}
 }
-
-trackVisit();
-syncSheet();
+renderQuiz();
+updateQuizCounter();
 </script>
 </body>
 </html>
