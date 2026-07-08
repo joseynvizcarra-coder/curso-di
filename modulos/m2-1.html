@@ -3,729 +3,744 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>2.1 Modelos de Diseño Instruccional: ADDIE, SAM y UbD — Curso DI</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<title>2.1 Análisis de necesidades y audiencia — Cuaderno de taller</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --cream: #f5f2ec;
-  --dark: #0f1117;
-  --terra: #c85c3a;
-  --blue: #3a6b8a;
-  --muted: #7a7570;
-  --border: #ddd8d0;
-  --success: #2d7a4f;
-  --terra-light: #f7ede8;
-  --blue-light: #e8f0f5;
+  --paper: #EDEAE3; --paper-alt: #E4DFD3; --card: #F8F6F1;
+  --ink: #1C1A17; --ink-muted: #6B665D; --border: #D8D1C0; --border-soft: #E2DCCC;
+  --mc: #2A5CAA; --msoft: #DCE5F2;
+  --ia: #2A5CAA; --ia-soft: #DCE5F2;
+  --done: #4A6B3E; --done-soft: #E9F0E5;
+  --warn: #B9862C; --warn-soft: #F1E5CC;
 }
-body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif; color: var(--dark); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--paper); color: var(--ink); font-family: 'IBM Plex Sans', sans-serif; line-height: 1.55; }
+a { color: inherit; }
 
-/* HEADER */
-.header-di {
-  background: linear-gradient(135deg, var(--dark) 0%, #1e2030 100%);
-  border-bottom: 3px solid var(--terra);
-  padding: 0.9rem 0;
-  position: sticky; top: 0; z-index: 1030;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+.topbar {
+  background: var(--ink); color: #EDEAE3;
+  padding: 0.7rem 1.5rem;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem;
+  position: sticky; top: 0; z-index: 50;
 }
-.header-di .course-name { color: #fff; font-family: Georgia, serif; font-size: 1.1rem; font-weight: normal; }
-.header-di .unit-name { color: var(--terra); font-size: 0.82rem; }
-.btn-back { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; border-radius: 20px; padding: 0.4rem 1rem; font-size: 0.82rem; text-decoration: none; transition: all 0.2s; }
-.btn-back:hover { background: rgba(255,255,255,0.2); color: #fff; }
+.topbar a.back { color: #C9C3B5; text-decoration: none; }
+.topbar a.back:hover { color: #fff; }
+.gami-chips { display: flex; gap: 0.9rem; color: #C9C3B5; flex-wrap: wrap; }
 
-/* SIDEBAR */
-.sidebar-di {
-  background: #fff;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  overflow: hidden;
+.layout { display: grid; grid-template-columns: 250px 1fr; max-width: 1120px; margin: 0 auto; }
+@media (max-width: 880px) { .layout { grid-template-columns: 1fr; } .sidebar { order: 2; } }
+.sidebar { border-right: 1px solid var(--border); padding: 1.4rem 1.2rem; }
+@media (max-width: 880px) { .sidebar { border-right: none; border-top: 1px solid var(--border); } }
+.sidebar h6 { font-family: 'Fraunces', serif; font-size: 0.95rem; color: var(--mc); margin-bottom: 0.2rem; }
+.sidebar .sidebar-sub { font-size: 0.74rem; color: var(--ink-muted); margin-bottom: 1rem; }
+.side-item {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.55rem 0.5rem; border-radius: 3px; text-decoration: none; color: var(--ink);
+  font-size: 0.84rem; margin-bottom: 0.15rem;
 }
-@media(min-width:992px){ .sidebar-di { position: sticky; top: 80px; max-height: calc(100vh - 100px); overflow-y: auto; } }
-.sidebar-header { background: var(--dark); color: #fff; padding: 1rem 1.2rem; }
-.sidebar-header h6 { font-family: Georgia, serif; font-weight: normal; font-size: 0.9rem; margin: 0; color: var(--terra); }
-.sidebar-header p { font-size: 0.75rem; color: #a09a94; margin: 0.2rem 0 0; }
-.lesson-item { display: flex; align-items: center; gap: 0.8rem; padding: 0.75rem 1.2rem; border-bottom: 1px solid var(--border); cursor: pointer; transition: all 0.2s; text-decoration: none; color: var(--dark); }
-.lesson-item:hover { background: var(--cream); }
-.lesson-item.active { background: var(--terra-light); border-left: 3px solid var(--terra); }
-.lesson-item.done { color: var(--muted); }
-.lesson-num { width: 30px; height: 30px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold; flex-shrink: 0; color: var(--muted); }
-.lesson-item.active .lesson-num { background: var(--terra); color: #fff; }
-.lesson-item.done .lesson-num { background: var(--success); color: #fff; }
-.lesson-info { flex: 1; }
-.lesson-info strong { font-size: 0.83rem; display: block; }
-.lesson-info span { font-size: 0.74rem; color: var(--muted); }
-.sidebar-progress { padding: 1rem 1.2rem; background: var(--cream); }
-.progress-di { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
-.progress-di-fill { height: 100%; background: linear-gradient(90deg, var(--terra), #e07a5a); border-radius: 99px; transition: width 0.5s ease; }
-.sidebar-footer { padding: 0.8rem 1.2rem; text-align: center; border-top: 1px solid var(--border); }
+.side-item.active { background: var(--msoft); font-weight: 600; color: var(--mc); }
+.side-mark { width: 22px; height: 22px; border-radius: 3px; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; flex-shrink: 0; }
+.side-item.active .side-mark { background: var(--mc); border-color: var(--mc); color: #fff; }
+.side-toc { margin-top: 1.4rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+.side-toc .toc-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.64rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); margin-bottom: 0.5rem; }
+.side-toc a { display: block; font-size: 0.78rem; color: var(--ink-muted); text-decoration: none; padding: 0.3rem 0; }
+.side-toc a:hover { color: var(--mc); }
 
-/* CONTENT */
-.content-di { background: #fff; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow: hidden; }
-.lesson-hero { background: linear-gradient(135deg, var(--dark) 0%, #1e2030 100%); color: #fff; padding: 2rem 2rem 1.5rem; }
-.lesson-hero .unit-tag { font-size: 0.72rem; color: var(--terra); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.4rem; }
-.lesson-hero h1 { font-family: Georgia, serif; font-size: 1.6rem; font-weight: normal; margin-bottom: 0.4rem; }
-.lesson-hero p { color: #a09a94; font-size: 0.88rem; margin: 0; }
-.lesson-badges { padding: 1rem 2rem; background: var(--terra-light); border-bottom: 1px solid var(--border); display: flex; gap: 0.6rem; flex-wrap: wrap; }
-.lbadge { font-size: 0.78rem; padding: 0.3rem 0.7rem; border-radius: 20px; border: 1px solid var(--border); background: #fff; color: var(--muted); }
-.lbadge i { color: var(--terra); }
-.lesson-body { padding: 1.8rem 2rem; }
+main { padding: 2.2rem 2rem 4rem; min-width: 0; }
+.unit-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--mc); margin-bottom: 0.5rem; }
+h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(1.5rem, 3.5vw, 2.1rem); margin-bottom: 0.6rem; max-width: 24ch; }
+.lesson-dek { color: #423E37; max-width: 64ch; margin-bottom: 1rem; }
+.lesson-badges { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.6rem; }
+.lbadge { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; border: 1px solid var(--border); background: var(--card); border-radius: 3px; padding: 0.25rem 0.6rem; color: var(--ink-muted); }
 
-/* PRESENTACIÓN placeholder */
-.presentacion { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
-.presentacion-head { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; flex-wrap: wrap; background: var(--dark); color: #fff; padding: 0.8rem 1.2rem; }
-.pres-title { font-size: 0.95rem; font-weight: bold; display: flex; align-items: center; gap: 0.6rem; }
-.pres-title i { color: var(--terra); font-size: 1.1rem; }
-.pres-tag { font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: #a09a94; border: 1px solid rgba(255,255,255,0.18); border-radius: 20px; padding: 0.12rem 0.55rem; }
-.presentacion-viewer { height: 220px; background: var(--cream); }
-.pres-placeholder { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: var(--muted); padding: 2rem; }
-.pres-placeholder i { font-size: 2.4rem; color: #c9c2b8; margin-bottom: 0.8rem; }
-.pres-placeholder p { font-size: 0.98rem; font-weight: bold; color: var(--dark); margin-bottom: 0.3rem; }
-.pres-placeholder small { font-size: 0.82rem; line-height: 1.6; max-width: 420px; }
+.objetivo-box {
+  background: var(--card); border: 1px solid var(--border); border-left: 4px solid var(--mc);
+  border-radius: 4px; padding: 1.1rem 1.3rem; margin-bottom: 2rem;
+}
+.objetivo-box .label { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mc); margin-bottom: 0.4rem; }
+.objetivo-box p { font-size: 0.92rem; font-style: italic; color: #322E28; }
 
-/* ACCORDION */
-.accordion-di { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1rem; }
-.accordion-di-btn { background: var(--cream); border: none; width: 100%; text-align: left; padding: 1rem 1.2rem; display: flex; align-items: center; gap: 0.8rem; cursor: pointer; transition: background 0.2s; font-size: 0.95rem; font-weight: bold; color: var(--dark); }
-.accordion-di-btn:hover { background: #ede9e2; }
-.accordion-di-btn.open { background: var(--dark); color: #fff; }
-.accordion-di-btn.open .acc-icon { color: var(--terra); }
-.accordion-di-btn .acc-chevron { margin-left: auto; transition: transform 0.25s; font-size: 0.8rem; }
-.accordion-di-btn.open .acc-chevron { transform: rotate(180deg); }
-.acc-icon { font-size: 1rem; color: var(--terra); }
-.accordion-di-body { display: none; padding: 1.2rem 1.4rem; border-top: 1px solid var(--border); background: #fff; font-size: 0.92rem; line-height: 1.7; }
-.accordion-di-body.show { display: block; }
-.accordion-di-body h5 { font-family: Georgia, serif; font-size: 1rem; font-weight: normal; color: var(--blue); margin: 1.2rem 0 0.5rem; }
-.accordion-di-body h5:first-child { margin-top: 0; }
+/* mapa de unidad */
+.mapa-block { border: 1px solid var(--border); border-radius: 4px; background: var(--card); margin-bottom: 2rem; overflow: hidden; }
+.mapa-head { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); padding: 0.7rem 1rem; border-bottom: 1px solid var(--border-soft); }
+.mapa-body { padding: 1rem; background: #fff; }
+.mapa-note { font-size: 0.78rem; color: var(--ink-muted); padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
 
-/* CARDS */
-.card-di { background: var(--cream); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; margin-bottom: 0.7rem; }
-.card-di h6 { font-size: 0.85rem; font-weight: bold; color: var(--blue); margin-bottom: 0.3rem; }
-.card-di p { font-size: 0.88rem; margin: 0; }
-.callout-terra { border-left: 4px solid var(--terra); background: var(--terra-light); padding: 0.9rem 1.1rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: 0.88rem; }
-.callout-terra strong { color: var(--terra); }
-.callout-blue { border-left: 4px solid var(--blue); background: var(--blue-light); padding: 0.9rem 1.1rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: 0.88rem; }
-.callout-blue strong { color: var(--blue); }
-.table-di { font-size: 0.85rem; }
-.table-di th { background: var(--dark); color: #fff; font-weight: normal; }
-.table-di td { vertical-align: top; }
+/* multimodal */
+.media-block { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin-bottom: 2.2rem; background: var(--card); }
+.media-tabs { display: flex; border-bottom: 1px solid var(--border); background: var(--paper-alt); flex-wrap: wrap; }
+.media-tab {
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; padding: 0.7rem 1rem;
+  cursor: pointer; border: none; background: none; color: var(--ink-muted);
+  border-bottom: 2px solid transparent;
+}
+.media-tab.active { color: var(--mc); border-bottom-color: var(--mc); background: var(--card); }
+.media-pane { display: none; }
+.media-pane.active { display: block; }
+.media-note { font-size: 0.76rem; color: var(--ink-muted); padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
+.pdf-frame { width: 100%; height: 480px; border: none; display: block; background: #fff; }
+.pdf-actions { display: flex; gap: 0.6rem; padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
+.pdf-actions a { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--mc); text-decoration: none; border: 1px solid var(--border); border-radius: 3px; padding: 0.3rem 0.7rem; }
+.audio-pane { padding: 1.2rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.audio-pane audio { flex: 1; min-width: 240px; }
+.audio-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: var(--ink-muted); }
+.video-wrap { position: relative; padding-top: 56.25%; background: #111; }
+.video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+.video-empty {
+  position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 0.5rem; color: #C9C3B5; font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; text-align: center; padding: 1rem;
+}
 
-/* HERRAMIENTA card (módulo 4) */
-.tool-di { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; margin-bottom: 0.8rem; }
-.tool-di-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; }
-.tool-di-head h6 { font-family: Georgia, serif; font-size: 1rem; font-weight: normal; color: var(--dark); margin: 0; }
-.tool-price { font-size: 0.72rem; padding: 0.2rem 0.6rem; border-radius: 20px; background: var(--terra-light); color: var(--terra); border: 1px solid var(--border); }
-.tool-di a.tool-link { font-size: 0.8rem; color: var(--blue); text-decoration: none; }
-.tool-di a.tool-link:hover { text-decoration: underline; }
-.tool-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; margin-top: 0.6rem; font-size: 0.82rem; }
-@media(max-width:640px) { .tool-grid { grid-template-columns: 1fr; } }
-.tool-grid div strong { display: block; color: var(--muted); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.15rem; }
+/* content */
+.content-section { margin-bottom: 2.6rem; }
+.content-section h2 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.3rem; margin-bottom: 0.8rem; padding-bottom: 0.4rem; border-bottom: 2px solid var(--mc); display: flex; align-items: baseline; gap: 0.6rem; }
+.content-section h2 .sec-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--mc); }
+.content-section h3 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.05rem; margin: 1.2rem 0 0.5rem; }
+.content-section p { margin-bottom: 0.8rem; font-size: 0.94rem; color: #2B2823; }
+.content-section ul { margin: 0.6rem 0 0.9rem 1.3rem; font-size: 0.92rem; }
+.content-section li { margin-bottom: 0.4rem; }
+.content-section strong { color: var(--mc); font-weight: 600; }
+.defbox { background: var(--msoft); border-radius: 4px; padding: 0.9rem 1.1rem; font-style: italic; font-size: 0.93rem; margin: 0.8rem 0 1.2rem; }
 
-/* EVALUACIÓN */
-.eval-section { background: var(--cream); border-radius: 10px; border: 1px solid var(--border); padding: 1.5rem; margin-top: 2rem; }
-.eval-section h4 { font-family: Georgia, serif; font-weight: normal; color: var(--dark); font-size: 1.1rem; margin-bottom: 0.3rem; }
-.eval-progress-text { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.2rem; }
-.eval-question { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem 1.3rem; margin-bottom: 1rem; }
-.eval-question h6 { font-size: 0.9rem; font-weight: bold; color: var(--dark); margin-bottom: 0.8rem; line-height: 1.5; }
-.eval-option { display: flex; align-items: flex-start; gap: 0.7rem; padding: 0.6rem 0.8rem; border-radius: 7px; border: 1px solid var(--border); margin-bottom: 0.5rem; cursor: pointer; font-size: 0.88rem; transition: all 0.15s; background: var(--cream); }
-.eval-option:hover { border-color: var(--blue); background: var(--blue-light); }
-.eval-option.selected { border-color: var(--blue); background: var(--blue-light); }
-.eval-option.correct { border-color: var(--success); background: #edf7f2; pointer-events: none; }
-.eval-option.incorrect { border-color: var(--terra); background: var(--terra-light); pointer-events: none; }
-.eval-option.disabled { pointer-events: none; opacity: 0.7; }
-.eval-radio { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px; transition: all 0.15s; }
-.eval-option.selected .eval-radio { border-color: var(--blue); background: var(--blue); }
-.eval-option.correct .eval-radio { border-color: var(--success); background: var(--success); }
-.eval-option.incorrect .eval-radio { border-color: var(--terra); background: var(--terra); }
-.feedback-box { font-size: 0.84rem; padding: 0.7rem 1rem; border-radius: 7px; margin-top: 0.5rem; line-height: 1.6; }
-.feedback-ok { background: #edf7f2; color: var(--success); border: 1px solid #b0ddc5; }
-.feedback-fail { background: var(--terra-light); color: #8a3020; border: 1px solid #e0b0a0; }
+/* pilares (sistemático/principios/planes) */
+.pilares { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; margin: 1rem 0 1.4rem; }
+@media (max-width: 700px) { .pilares { grid-template-columns: 1fr; } }
+.pilar { background: var(--card); border: 1px solid var(--border); border-top: 3px solid var(--mc); border-radius: 4px; padding: 0.9rem 1rem; }
+.pilar h4 { font-family: 'Fraunces', serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 0.4rem; }
+.pilar p { font-size: 0.82rem; color: #3A362F; margin: 0; }
 
-/* RESULT */
-.result-card { text-align: center; padding: 2rem; background: #fff; border-radius: 12px; border: 1px solid var(--border); margin-top: 1rem; }
-.result-score { font-family: Georgia, serif; font-size: 4rem; color: var(--terra); line-height: 1; }
-.result-label { font-size: 0.85rem; color: var(--muted); margin: 0.3rem 0 0.8rem; }
-.result-msg { font-size: 0.92rem; max-width: 400px; margin: 0 auto 1.5rem; line-height: 1.6; }
+/* nota destacada */
+.nota { border-radius: 4px; padding: 0.9rem 1.1rem; font-size: 0.88rem; margin: 1.1rem 0; border: 1px solid var(--border); }
+.nota .nota-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.07em; display: block; margin-bottom: 0.35rem; }
+.nota.clave { background: var(--done-soft); } .nota.clave .nota-tag { color: var(--done); }
+.nota.alerta { background: var(--warn-soft); } .nota.alerta .nota-tag { color: #8A6318; }
+.nota.contexto { background: var(--ia-soft); } .nota.contexto .nota-tag { color: var(--ia); }
 
-/* BTN */
-.btn-terra { background: var(--terra); border-color: var(--terra); color: #fff; border-radius: 8px; padding: 0.6rem 1.4rem; }
-.btn-terra:hover { background: #a8492d; border-color: #a8492d; color: #fff; }
-.btn-blue { background: var(--blue); border-color: var(--blue); color: #fff; border-radius: 8px; }
-.btn-blue:hover { background: #2d5570; border-color: #2d5570; color: #fff; }
-.btn-outline-terra { border-color: var(--terra); color: var(--terra); border-radius: 8px; }
-.btn-outline-terra:hover { background: var(--terra); color: #fff; }
+/* tablas */
+.compare-table { width: 100%; border-collapse: collapse; margin: 0.8rem 0 1.4rem; font-size: 0.86rem; }
+.compare-table th, .compare-table td { border: 1px solid var(--border); padding: 0.55rem 0.7rem; text-align: left; vertical-align: top; }
+.compare-table th { background: var(--card); font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-muted); }
+.compare-table td:first-child { font-weight: 600; }
+.si-no td.si { background: var(--done-soft); }
+.si-no td.no { background: #F5E5E2; }
 
-/* TOAST */
-.toast-di { position: fixed; top: 80px; right: 20px; padding: 0.9rem 1.3rem; border-radius: 8px; color: #fff; z-index: 9999; font-size: 0.88rem; box-shadow: 0 4px 16px rgba(0,0,0,0.2); animation: slideIn 0.3s ease; }
-@keyframes slideIn { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:translateX(0); } }
+/* timeline (reutilizado como flujo de decisión) */
+.timeline { border-left: 2px solid var(--border); margin: 1rem 0 1.5rem 0.4rem; padding-left: 1.2rem; }
+.tl-item { position: relative; margin-bottom: 1.1rem; }
+.tl-item::before { content: ''; position: absolute; left: -1.53rem; top: 0.3rem; width: 9px; height: 9px; border-radius: 50%; background: var(--mc); }
+.tl-year { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: var(--mc); font-weight: 500; }
+.tl-text { font-size: 0.88rem; color: #2B2823; }
+
+/* viñeta de taller (caso con think-first) */
+.vineta { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin: 1.2rem 0; }
+.vineta-head { background: var(--ink); color: #EDEAE3; font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.6rem 1rem; }
+.vineta-body { background: var(--card); padding: 1rem 1.2rem; font-size: 0.9rem; }
+.vineta-reveal-btn {
+  display: block; width: 100%; text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem;
+  background: var(--msoft); border: none; border-top: 1px solid var(--border); padding: 0.7rem; cursor: pointer; color: var(--mc);
+}
+.vineta-solution { display: none; background: #fff; border-top: 1px dashed var(--border); padding: 1rem 1.2rem; font-size: 0.9rem; }
+.vineta.revealed .vineta-solution { display: block; }
+.vineta.revealed .vineta-reveal-btn { display: none; }
+
+/* brechas — tarjetas (reutilizado para métodos/variables) */
+.brechas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; margin: 1rem 0; }
+@media (max-width: 760px) { .brechas { grid-template-columns: 1fr; } }
+.brecha { border: 1px solid var(--border); border-radius: 4px; background: var(--card); padding: 1rem; }
+.brecha h4 { font-family: 'Fraunces', serif; font-size: 0.98rem; font-weight: 600; margin-bottom: 0.4rem; }
+.brecha .b-def { font-size: 0.84rem; margin-bottom: 0.5rem; }
+.brecha .b-ej { font-size: 0.79rem; color: var(--ink-muted); border-top: 1px dashed var(--border); padding-top: 0.5rem; }
+.brecha.b1 { border-top: 3px solid var(--ia); }
+.brecha.b2 { border-top: 3px solid var(--warn); }
+.brecha.b3 { border-top: 3px solid #A83232; }
+
+/* audiencia — grid de variables */
+.audiencia-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8rem; margin: 1rem 0 1.4rem; }
+@media (max-width: 700px) { .audiencia-grid { grid-template-columns: 1fr; } }
+.avar { border: 1px solid var(--border); border-radius: 4px; background: var(--card); padding: 0.9rem 1rem; }
+.avar h4 { font-family: 'Fraunces', serif; font-size: 0.92rem; font-weight: 600; margin-bottom: 0.3rem; color: var(--mc); }
+.avar p { font-size: 0.82rem; color: #3A362F; margin: 0; }
+
+/* actividad clasificación */
+.activity { border: 1px solid var(--border); border-radius: 4px; background: var(--card); padding: 1.3rem; margin: 2rem 0; }
+.activity h2 { font-family: 'Fraunces', serif; font-size: 1.1rem; margin-bottom: 0.3rem; }
+.activity .act-sub { font-size: 0.8rem; color: var(--ink-muted); margin-bottom: 1rem; }
+.act-card { border: 1px solid var(--border); border-radius: 4px; background: var(--paper); padding: 0.9rem 1rem; margin-bottom: 0.8rem; }
+.act-statement { font-size: 0.9rem; margin-bottom: 0.7rem; }
+.act-buttons { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.act-btn { flex: 1; min-width: 110px; font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; padding: 0.5rem; border: 1px solid var(--border); border-radius: 3px; background: var(--card); cursor: pointer; transition: all 0.15s; }
+.act-btn:hover { border-color: var(--mc); }
+.act-card.ok { border-color: var(--done); background: var(--done-soft); }
+.act-card.ok .act-buttons { display: none; }
+.act-card.no { border-color: #A83232; }
+.act-verdict { font-size: 0.78rem; margin-top: 0.4rem; display: none; }
+.act-card.ok .act-verdict, .act-card.no .act-verdict { display: block; }
+.act-progress { font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; color: var(--ink-muted); margin-top: 0.4rem; }
+
+/* callouts */
+.callout { position: relative; border-radius: 4px; margin: 1.6rem 0; overflow: hidden; border: 1px solid var(--border); }
+.callout-header { display: flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.05em; color: #fff; }
+.callout.ia .callout-header { background: var(--ia); }
+.callout.entrevista .callout-header { background: var(--mc); }
+.callout-body { background: var(--card); padding: 1.1rem 1.3rem; font-size: 0.9rem; position: relative; }
+.callout-body p { margin-bottom: 0.7rem; }
+.callout-body p:last-child { margin-bottom: 0; }
+.capa {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+  cursor: pointer; user-select: none;
+  transition: transform 0.5s cubic-bezier(.65,0,.35,1), opacity 0.4s ease;
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--ink-muted);
+}
+.callout.ia .capa { background: var(--ia-soft); }
+.callout.entrevista .capa { background: var(--msoft); }
+.callout.revealed .capa { transform: translateX(105%); opacity: 0; pointer-events: none; }
+
+/* práctica de entrevista */
+.practica { border: 1px solid var(--border); border-radius: 4px; background: var(--card); margin: 1.4rem 0; overflow: hidden; }
+.practica-head { padding: 0.9rem 1.1rem; border-bottom: 1px solid var(--border-soft); }
+.practica-head .p-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--mc); text-transform: uppercase; letter-spacing: 0.06em; }
+.practica-head .p-q { font-size: 0.94rem; font-weight: 500; margin-top: 0.25rem; }
+.practica-body { padding: 1rem 1.1rem; }
+.practica-body textarea { width: 100%; min-height: 80px; font-family: 'IBM Plex Sans', sans-serif; font-size: 0.88rem; border: 1px solid var(--border); border-radius: 3px; padding: 0.7rem; resize: vertical; background: var(--paper); margin-bottom: 0.7rem; }
+.rm-toggle { font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; color: var(--mc); cursor: pointer; text-decoration: underline; background: none; border: none; padding: 0; }
+.rm { display: none; margin-top: 0.7rem; padding: 0.8rem 1rem; background: var(--msoft); border-radius: 3px; font-size: 0.87rem; }
+.rm.show { display: block; }
+.checklist { margin-top: 0.8rem; border-top: 1px dashed var(--border); padding-top: 0.8rem; }
+.checklist .cl-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); margin-bottom: 0.5rem; }
+.cl-item { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.84rem; padding: 0.35rem 0; cursor: pointer; }
+.cl-item input { accent-color: var(--done); margin-top: 0.2rem; }
+
+/* evaluación final */
+.eval-block { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 1.3rem; margin-top: 2.2rem; }
+.eval-block h2 { font-family: 'Fraunces', serif; font-size: 1.15rem; margin-bottom: 0.3rem; }
+.eval-sub { font-size: 0.8rem; color: var(--ink-muted); margin-bottom: 1.1rem; }
+.eval-q { font-size: 0.92rem; font-weight: 500; margin: 1.2rem 0 0.6rem; }
+.eval-option { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.6rem 0.8rem; border: 1px solid var(--border); border-radius: 3px; margin-bottom: 0.45rem; cursor: pointer; font-size: 0.87rem; background: var(--paper); transition: border-color 0.15s; }
+.eval-option:hover { border-color: var(--mc); }
+.eval-option input { accent-color: var(--mc); margin-top: 0.2rem; }
+.eval-option.correct { border-color: var(--done); background: var(--done-soft); }
+.eval-option.incorrect { border-color: #A83232; background: #F5E5E2; }
+.eval-submit { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; background: var(--mc); color: #fff; border: none; border-radius: 3px; padding: 0.7rem 1.4rem; cursor: pointer; margin-top: 1.2rem; }
+.eval-submit:disabled { opacity: 0.5; cursor: default; }
+.eval-counter { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: var(--ink-muted); margin-top: 0.5rem; }
+.result-card { display: none; margin-top: 1.2rem; padding: 1.1rem; border-radius: 4px; text-align: center; }
+.result-card.show { display: block; }
+.result-score { font-family: 'Fraunces', serif; font-size: 1.7rem; font-weight: 600; }
+
+.next-nav { display: flex; justify-content: space-between; margin-top: 2.5rem; padding-top: 1.2rem; border-top: 1px solid var(--border); font-size: 0.86rem; }
+.next-nav a { color: var(--mc); font-weight: 500; text-decoration: none; }
+.next-nav .disabled { color: var(--ink-muted); }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<div class="header-di">
-  <div class="container-fluid px-3">
-    <div class="d-flex align-items-center justify-content-between">
-      <div class="d-flex align-items-center gap-3">
-        <a href="../index.html" class="btn-back"><i class="bi bi-arrow-left me-1"></i>Inicio</a>
-        <div>
-          <div class="course-name">Diseño Instruccional</div>
-          <div class="unit-name">Módulo 2 · Unidad 2.1</div>
-        </div>
-      </div>
-      <div class="d-none d-md-flex align-items-center gap-2">
-        <span id="headerProgress" style="font-size:0.8rem;color:#a09a94"></span>
-      </div>
-    </div>
+<div class="topbar">
+  <a class="back" href="../index.html">← Ruta de aprendizaje</a>
+  <div class="gami-chips">
+    <span id="gamiNivel">Nivel 1 · Boceto</span>
+    <span id="gamiPoints">0 pts</span>
+    <span id="gamiStreak">0 días</span>
   </div>
 </div>
 
-<div class="container-fluid px-3 py-4" style="max-width:1200px;margin:0 auto">
-  <div class="row g-4">
+<div class="layout">
+  <aside class="sidebar">
+    <h6>Módulo 2</h6>
+    <div class="sidebar-sub">Análisis y definición</div>
+    <a class="side-item active" href="m2-1.html"><span class="side-mark">2.1</span> Análisis de necesidades</a>
+    <a class="side-item" href="m2-2.html"><span class="side-mark">2.2</span> Objetivos y taxonomías</a>
+    <a class="side-item" href="m2-3.html"><span class="side-mark">2.3</span> Backward Design</a>
+    <a class="side-item" href="m2-4.html"><span class="side-mark">2.4</span> Artefactos del DI</a>
+    <div class="side-toc">
+      <div class="toc-label">En esta unidad</div>
+      <a href="#s1">1 · Qué es el análisis de necesidades</a>
+      <a href="#s2">2 · Diagnóstico de la brecha</a>
+      <a href="#s3">3 · Métodos de recolección</a>
+      <a href="#s4">4 · Análisis de audiencia</a>
+      <a href="#s5">5 · Triangulación y síntesis</a>
+      <a href="#s6">6 · Comunicar los hallazgos</a>
+      <a href="#practica">Práctica de entrevista</a>
+      <a href="#evaluacion">Evaluación (10)</a>
+    </div>
+  </aside>
 
-    <!-- SIDEBAR -->
-    <div class="col-lg-3">
-      <div class="sidebar-di">
-        <div class="sidebar-header">
-          <h6>Módulo 2</h6>
-          <p>Proceso de diseño</p>
+  <main>
+    <div class="unit-eyebrow">Módulo 2 · Unidad 2.1</div>
+    <h1 class="lesson-title">Análisis de necesidades y audiencia</h1>
+    <p class="lesson-dek">Antes de diseñar cualquier objetivo o actividad, un DI necesita saber si realmente hay un problema que la formación pueda resolver, y para quién está diseñando. Esta unidad cubre cómo diagnosticar la brecha y cómo perfilar a la audiencia con los métodos correctos.</p>
+    <div class="lesson-badges">
+      <span class="lbadge">6 bloques de contenido</span>
+      <span class="lbadge">1 actividad interactiva</span>
+      <span class="lbadge">3 prácticas de entrevista</span>
+      <span class="lbadge">12 preguntas de evaluación</span>
+      <span class="lbadge">~45 min</span>
+    </div>
+
+    <div class="objetivo-box">
+      <div class="label">Objetivo de aprendizaje</div>
+      <p>Dado un caso o solicitud de formación, serás capaz de diagnosticar si existe una brecha de desempeño real y de qué tipo usando los tres niveles de análisis de Rossett y el modelo de Mager &amp; Pipe, y de perfilar la audiencia correspondiente (learner persona) seleccionando los métodos de recolección de datos más apropiados para el contexto, tiempo y presupuesto disponibles.</p>
+    </div>
+
+    <!-- MAPA DE LA UNIDAD (organizador previo) -->
+    <div class="mapa-block">
+      <div class="mapa-head">Mapa de esta unidad · organizador previo</div>
+      <div class="mapa-body">
+        <svg width="100%" viewBox="0 0 680 300" style="display:block" role="img" aria-label="Mapa conceptual de la unidad">
+          <line x1="340" y1="150" x2="150" y2="60" stroke="#D8D1C0" stroke-width="1.2"/>
+          <line x1="340" y1="150" x2="530" y2="60" stroke="#D8D1C0" stroke-width="1.2"/>
+          <line x1="340" y1="150" x2="110" y2="240" stroke="#D8D1C0" stroke-width="1.2"/>
+          <line x1="340" y1="150" x2="340" y2="245" stroke="#D8D1C0" stroke-width="1.2"/>
+          <line x1="340" y1="150" x2="570" y2="240" stroke="#D8D1C0" stroke-width="1.2"/>
+          <rect x="245" y="122" width="190" height="52" rx="5" fill="#DCE5F2" stroke="#2A5CAA" stroke-width="1.4"/>
+          <text x="340" y="144" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#1C1A17">Análisis de necesidades</text>
+          <text x="340" y="162" text-anchor="middle" font-family="monospace" font-size="10" fill="#2A5CAA">unidad 2.1</text>
+          <rect x="60" y="30" width="180" height="46" rx="5" fill="#F8F6F1" stroke="#A85B32" stroke-width="1.2"/>
+          <text x="150" y="49" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1C1A17">Qué es (Rossett)</text>
+          <text x="150" y="66" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#A85B32">organización · tarea · audiencia</text>
+          <rect x="440" y="30" width="180" height="46" rx="5" fill="#F8F6F1" stroke="#A85B32" stroke-width="1.2"/>
+          <text x="530" y="49" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1C1A17">Diagnóstico</text>
+          <text x="530" y="66" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#A85B32">Mager &amp; Pipe</text>
+          <rect x="20" y="216" width="180" height="46" rx="5" fill="#F8F6F1" stroke="#A85B32" stroke-width="1.2"/>
+          <text x="110" y="235" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1C1A17">Métodos</text>
+          <text x="110" y="252" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#A85B32">encuesta · entrevista · observación</text>
+          <rect x="250" y="216" width="180" height="46" rx="5" fill="#F8F6F1" stroke="#A85B32" stroke-width="1.2"/>
+          <text x="340" y="235" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1C1A17">Audiencia</text>
+          <text x="340" y="252" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#A85B32">perfil y variables</text>
+          <rect x="480" y="216" width="180" height="46" rx="5" fill="#F8F6F1" stroke="#A85B32" stroke-width="1.2"/>
+          <text x="570" y="235" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1C1A17">Triangulación</text>
+          <text x="570" y="252" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#A85B32">cruzar fuentes</text>
+        </svg>
+      </div>
+      <div class="mapa-note">Estas 5 piezas son el corazón de esta unidad. Vuelve a este mapa al terminar y verifica que puedes explicar cada conexión en voz alta.</div>
+    </div>
+
+    <!-- MULTIMODAL -->
+    <div class="media-block">
+      <div class="media-tabs">
+        <button class="media-tab active" data-pane="pdf" onclick="switchMedia(this)">📑 Presentación</button>
+        <button class="media-tab" data-pane="audio" onclick="switchMedia(this)">🎧 Audio NotebookLM</button>
+        <button class="media-tab" data-pane="video" onclick="switchMedia(this)">▶ Video</button>
+      </div>
+      <div class="media-pane active" id="pane-pdf">
+        <iframe class="pdf-frame" src="m2-1.pdf#view=FitH" title="Presentación del tema" loading="lazy" onload="Gami.award('m2-1_pdf', 5, 'Revisaste la presentación'); checkMultimodal();"></iframe>
+        <div class="pdf-actions">
+          <a href="m2-1.pdf" target="_blank" rel="noopener">Pantalla completa</a>
+          <a href="m2-1.pdf" download>Descargar</a>
         </div>
-        <a class="lesson-item active" onclick="scrollToTop()">
-          <div class="lesson-num">1</div>
-          <div class="lesson-info"><strong>Modelos de DI: ADDIE, SAM, UbD</strong><span>Fases · diferencias · cuándo usar</span></div>
-        </a>
-        <a class="lesson-item" href="m2-2.html">
-          <div class="lesson-num" id="num-m2-2">2</div>
-          <div class="lesson-info"><strong>Análisis de necesidades y audiencia</strong><span>Diagnóstico · brechas · métodos</span></div>
-        </a>
-        <a class="lesson-item" href="m2-3.html">
-          <div class="lesson-num" id="num-m2-3">3</div>
-          <div class="lesson-info"><strong>Objetivos de aprendizaje y taxonomías</strong><span>Bloom · ABCD · alineación</span></div>
-        </a>
-        <div class="sidebar-progress">
-          <div class="d-flex justify-content-between mb-1">
-            <small style="color:var(--muted);font-size:0.75rem">Módulo 2</small>
-            <small id="sidebarPct" style="color:var(--terra);font-size:0.75rem;font-weight:bold">0/3</small>
+      </div>
+      <div class="media-pane" id="pane-audio">
+        <div class="audio-pane">
+          <span class="audio-label">Resumen en audio · NotebookLM</span>
+          <audio controls preload="metadata" src="m2-1-audio.mp3" onplay="Gami.award('m2-1_audio', 5, 'Escuchaste el resumen en audio'); checkMultimodal();"></audio>
+        </div>
+      </div>
+      <div class="media-pane" id="pane-video">
+        <div class="video-wrap" id="videoWrap">
+          <div class="video-empty" id="videoEmpty">
+            <span>▶ Espacio para video de YouTube</span>
+            <span style="opacity:0.6">Edita la constante YT_VIDEO_ID en este archivo con el ID del video que elijas.</span>
           </div>
-          <div class="progress-di"><div class="progress-di-fill" id="sidebarBar" style="width:0%"></div></div>
         </div>
-        <div class="sidebar-footer">
-          <a href="../index.html" style="font-size:0.8rem;color:var(--muted);text-decoration:none"><i class="bi bi-grid me-1"></i>Ver todos los módulos</a>
+      </div>
+      <div class="media-note">Misma unidad, cuatro formatos — elige el medio que te acomode hoy (diversificación de la representación, DUA pauta 1). El texto completo está abajo, siempre visible.</div>
+    </div>
+
+    <!-- ============ SECCIÓN 1: QUÉ ES EL ANÁLISIS DE NECESIDADES ============ -->
+    <div class="content-section" id="s1">
+      <h2><span class="sec-num">01</span> Qué es el análisis de necesidades</h2>
+      <p>El análisis de necesidades (también llamado <strong>front-end analysis</strong>) es el paso que precede a todo lo demás en el proceso de DI. Ocurre en la fase de <em>Análisis</em> de ADDIE, antes de escribir un solo objetivo de aprendizaje. Su pregunta central no es "¿qué curso hago?" sino <strong>"¿hay realmente un problema que la formación pueda resolver, y cuál es exactamente?"</strong></p>
+      <div class="defbox">Definición técnica: <strong>el proceso de recolectar y analizar información sobre una brecha de desempeño y su audiencia, para determinar si la formación es la solución correcta y, si lo es, qué debe cubrir.</strong></div>
+
+      <div class="pilares">
+        <div class="pilar"><h4>No se asume el formato</h4><p>La solicitud inicial casi siempre viene como "necesito un curso". El análisis de necesidades verifica si eso es cierto antes de diseñar nada.</p></div>
+        <div class="pilar"><h4>Se basa en evidencia</h4><p>No en la intuición del DI ni en lo que "el cliente cree que necesita", sino en datos recolectados con métodos apropiados.</p></div>
+        <div class="pilar"><h4>Define el punto de partida</h4><p>Sin este paso, los objetivos de la unidad 2.2 y el backward design de 2.3 se construyen sobre una base sin validar.</p></div>
+      </div>
+
+      <div class="nota clave"><span class="nota-tag">Distinción clave para entrevistas</span>Un cliente pide un "curso". Un DI con criterio primero pregunta: ¿este problema es de conocimiento, de habilidad o de otra cosa que la formación no resuelve? Esa pregunta es la que separa a un DI junior de uno con criterio de negocio.</div>
+
+      <h3>La solicitud inicial vs. el problema real</h3>
+      <table class="compare-table si-no">
+        <tr><th>Lo que el cliente suele decir</th><th>Lo que un análisis de necesidades revela a veces</th></tr>
+        <tr><td class="si">"Necesitamos un curso de liderazgo"</td><td class="no">Los supervisores ya saben liderar, pero no tienen tiempo protegido para hacerlo — es un problema de carga laboral, no de conocimiento</td></tr>
+        <tr><td class="si">"El equipo no sigue el protocolo de seguridad"</td><td class="no">El equipo lo conoce, pero el equipo de trabajo real no permite aplicarlo — es un problema de recursos, no de formación</td></tr>
+        <tr><td class="si">"Hagamos un curso de bienvenida más largo"</td><td class="no">La rotación temprana se debe a expectativas mal alineadas en la entrevista de contratación, no a falta de inducción</td></tr>
+      </table>
+
+      <div class="vineta">
+        <div class="vineta-head">Viñeta de taller · caso institucional</div>
+        <div class="vineta-body">Una universidad te pide "un curso corto de manejo de conflictos" para sus coordinadores de carrera, porque han recibido varias quejas de estudiantes. <strong>¿Aceptas el pedido tal como viene, o qué haces primero?</strong></div>
+        <button class="vineta-reveal-btn" onclick="revealVineta(this, 'v1')">Piénsalo primero → ver resolución</button>
+        <div class="vineta-solution">Antes de diseñar nada, propondrías una fase breve de análisis: revisar las quejas existentes (datos ya disponibles), entrevistar a 3-4 coordinadores y a algún estudiante, y observar si el problema se repite en un mismo tipo de situación. Solo con esa evidencia sabrás si es falta de herramientas de manejo de conflicto, de tiempo para atender a los estudiantes, o de claridad en los procesos de la carrera — cada causa tiene una solución distinta, y solo una de ellas es un curso.</div>
+      </div>
+
+      <h3>Los tres niveles clásicos de análisis (modelo de Rossett)</h3>
+      <p>Allison Rossett propuso ordenar el análisis de necesidades en tres niveles que se complementan. Preguntarte "¿en qué nivel estoy parada?" evita quedarte solo en el síntoma que reportó el cliente.</p>
+      <div class="pilares">
+        <div class="pilar"><h4>Análisis organizacional</h4><p>¿Cuál es el objetivo de negocio o institucional detrás de la solicitud? ¿Qué métrica se espera mover — retención, satisfacción, cumplimiento normativo?</p></div>
+        <div class="pilar"><h4>Análisis de tareas</h4><p>¿Qué debe hacer exactamente la persona en su puesto o rol? Se descompone la tarea en pasos observables y medibles, antes de decidir qué enseñar.</p></div>
+        <div class="pilar"><h4>Análisis de audiencia</h4><p>¿Quién es el aprendiz? Conocimientos previos, contexto, motivación, acceso a tecnología — se profundiza en la sección 4 de esta unidad.</p></div>
+      </div>
+      <div class="nota contexto"><span class="nota-tag">Por qué importa el análisis de tareas</span>Descomponer la tarea en pasos observables no es un ejercicio burocrático: es el insumo directo para diseñar actividades prácticas y evaluaciones auténticas en el Módulo 3. Sin esta descomposición, es fácil diseñar una evaluación que mide algo distinto de lo que la persona realmente necesita hacer en su puesto.</div>
+    </div>
+
+    <!-- ============ SECCIÓN 2: DIAGNÓSTICO DE LA BRECHA ============ -->
+    <div class="content-section" id="s2">
+      <h2><span class="sec-num">02</span> Diagnóstico de la brecha de desempeño</h2>
+      <p>Ya viste en la unidad 1.1 que existen brechas de conocimiento, de habilidad y de motivación. Los niveles de <strong>Rossett</strong> te dicen dónde mirar (organización, tarea, audiencia); el modelo clásico de <strong>Mager &amp; Pipe</strong> (<em>Analyzing Performance Problems</em>, 1970) da una forma concreta de diagnosticar el tipo exacto de brecha, con una sola pregunta de bisagra.</p>
+
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-year">Paso 1 · Describir el desempeño</div><div class="tl-text">¿Cuál es exactamente la brecha? Se describe en términos observables: "los supervisores no dan feedback correctivo en el momento", no "los supervisores son malos líderes".</div></div>
+        <div class="tl-item"><div class="tl-year">Paso 2 · La pregunta de bisagra</div><div class="tl-text">"¿Podría hacerlo si su vida dependiera de ello?" Si la respuesta es sí, la persona <strong>sabe</strong> hacerlo — el problema no es de capacitación, es de voluntad, incentivos, obstáculos del entorno o falta de retroalimentación sobre su desempeño.</div></div>
+        <div class="tl-item"><div class="tl-year">Paso 3 · Si la respuesta es no</div><div class="tl-text">Ahí sí hay una brecha de conocimiento o de habilidad, y la formación es una solución candidata — pero aún falta definir si necesita información nueva (conocimiento) o práctica guiada (habilidad).</div></div>
+        <div class="tl-item"><div class="tl-year">Paso 4 · Si la respuesta es sí</div><div class="tl-text">Se investigan causas no formativas: ¿tiene las herramientas y el tiempo para hacerlo? ¿Recibe consecuencias por no hacerlo? ¿Sabe que se espera eso de ella? Un curso no resuelve ninguna de estas causas.</div></div>
+      </div>
+
+      <div class="nota alerta"><span class="nota-tag">Error común en entrevistas</span>Saltarse la pregunta de bisagra y proponer un curso apenas se describe el síntoma. Nombrar explícitamente "¿es un problema de skill o de will?" en una entrevista es una señal fuerte de criterio profesional.</div>
+
+      <h3>Tres causas no formativas frecuentes</h3>
+      <div class="brechas">
+        <div class="brecha b1">
+          <h4>Falta de recursos o entorno</h4>
+          <div class="b-def">La persona sabe y quiere, pero el entorno se lo impide.</div>
+          <div class="b-ej">Ej.: sabe dar feedback correctivo, pero no tiene un espacio privado para hacerlo en su turno.</div>
+        </div>
+        <div class="brecha b2">
+          <h4>Falta de incentivos o consecuencias</h4>
+          <div class="b-def">No hay reconocimiento por hacerlo bien, ni consecuencia por no hacerlo.</div>
+          <div class="b-ej">Ej.: usar la plataforma virtual no afecta la evaluación de desempeño de nadie.</div>
+        </div>
+        <div class="brecha b3">
+          <h4>Falta de retroalimentación</h4>
+          <div class="b-def">La persona no sabe que lo está haciendo mal, porque nadie se lo ha dicho.</div>
+          <div class="b-ej">Ej.: un vendedor repite un error de protocolo hace meses porque nadie lo ha observado ni corregido.</div>
         </div>
       </div>
     </div>
 
-    <!-- CONTENT -->
-    <div class="col-lg-9">
-      <div class="content-di">
-        <div class="lesson-hero">
-          <div class="unit-tag">Módulo 2 · Unidad 2.1</div>
-          <h1>Modelos de Diseño Instruccional: ADDIE, SAM y UbD</h1>
-          <p>Fases de cada modelo · diferencias clave · cuándo usar cada uno</p>
+    <!-- ============ SECCIÓN 3: MÉTODOS DE RECOLECCIÓN ============ -->
+    <div class="content-section" id="s3">
+      <h2><span class="sec-num">03</span> Métodos de recolección de datos</h2>
+      <p>Diagnosticar la brecha y perfilar la audiencia requiere datos. No existe un método "mejor" en abstracto — cada uno responde a un tipo de pregunta, una escala y un presupuesto de tiempo distintos.</p>
+
+      <table class="compare-table">
+        <tr><th>Método</th><th>Cuándo usarlo</th><th>Límite principal</th></tr>
+        <tr><td>Encuesta</td><td>Datos cuantitativos, audiencias grandes, primera radiografía general</td><td>Poca profundidad; depende de que las preguntas estén bien formuladas</td></tr>
+        <tr><td>Entrevista individual</td><td>Temas sensibles, motivaciones, resistencias, matices que una encuesta no captura</td><td>Consume tiempo; muestra pequeña, riesgo de sesgo si son pocas personas</td></tr>
+        <tr><td>Focus group</td><td>Contrastar percepciones distintas sobre un mismo problema en una sola sesión</td><td>Efecto de grupo — algunos participantes pueden inhibirse frente a otros</td></tr>
+        <tr><td>Observación en terreno</td><td>Verificar si el problema está en el entorno o proceso, no solo en la persona</td><td>Costosa en tiempo; requiere acceso al lugar de trabajo real</td></tr>
+        <tr><td>Análisis de datos existentes</td><td>Reportes de incidentes, resultados de evaluaciones previas, métricas de LMS ya disponibles</td><td>Los datos existentes fueron recolectados para otro propósito — pueden no responder tu pregunta exacta</td></tr>
+      </table>
+
+      <div class="nota contexto"><span class="nota-tag">Regla práctica</span>Con poco tiempo y presupuesto, empieza por los datos que ya existen (son gratis) y una encuesta corta (rápida y escalable). Reserva las entrevistas y la observación en terreno para profundizar en lo que la encuesta y los datos existentes no explican.</div>
+
+      <div class="vineta">
+        <div class="vineta-head">Viñeta de taller · caso corporativo</div>
+        <div class="vineta-body">Tienes dos semanas y un presupuesto acotado para analizar por qué 200 vendedores en 15 sucursales no están aplicando un nuevo protocolo de atención. <strong>¿Con qué método empezarías, y por qué?</strong></div>
+        <button class="vineta-reveal-btn" onclick="revealVineta(this, 'v2')">Piénsalo primero → ver resolución</button>
+        <div class="vineta-solution">Empezarías por los reportes de desempeño y quejas ya existentes (gratis, inmediatos) para ver si el problema se concentra en algunas sucursales o es parejo. Con esa pista, harías una encuesta corta a las 15 sucursales para tener un panorama cuantitativo, y reservarías 4-5 entrevistas o una visita de observación a las sucursales con peor desempeño para entender la causa raíz — no alcanza el tiempo para entrevistar a los 200, y probablemente tampoco es necesario.</div>
+      </div>
+    </div>
+
+    <!-- ============ SECCIÓN 4: ANÁLISIS DE AUDIENCIA ============ -->
+    <div class="content-section" id="s4">
+      <h2><span class="sec-num">04</span> Análisis de audiencia</h2>
+      <p>Diagnosticar la brecha responde "qué problema hay". El análisis de audiencia responde <strong>"para quién estoy diseñando"</strong> — y determina decisiones tan concretas como el nivel de lenguaje, la duración de los módulos, el canal (móvil vs. escritorio) y cuánto conocimiento previo puedes asumir.</p>
+
+      <div class="audiencia-grid">
+        <div class="avar"><h4>Características generales</h4><p>Rango etario, rol o cargo, ubicación geográfica, cantidad de personas a formar.</p></div>
+        <div class="avar"><h4>Conocimiento y experiencia previa</h4><p>¿Son novatos o expertos en el tema? ¿Ya tomaron formación similar antes?</p></div>
+        <div class="avar"><h4>Contexto tecnológico</h4><p>¿Tienen acceso estable a internet? ¿Estudiarán desde el celular, en su turno de trabajo, o en un horario dedicado?</p></div>
+        <div class="avar"><h4>Motivación y actitud</h4><p>¿La formación es obligatoria o voluntaria? ¿Ven el tema como relevante para su trabajo o como un trámite?</p></div>
+        <div class="avar"><h4>Restricciones de tiempo</h4><p>¿Cuánto tiempo real pueden dedicar? Un vendedor en turno no tiene el mismo tiempo que un profesional de oficina.</p></div>
+        <div class="avar"><h4>Preferencias de formato</h4><p>¿Responden mejor a video, texto, simulaciones? Esto conecta directamente con los principios de Mayer de la unidad 1.4.</p></div>
+      </div>
+
+      <div class="nota clave"><span class="nota-tag">Para tus postulaciones</span>Un perfil de audiencia bien hecho no es una lista genérica de datos demográficos — es la evidencia que justifica cada decisión de diseño que tomarás después. Cuando defiendas un diseño en una entrevista, poder decir "elegí X formato porque mi audiencia tiene Y restricción" es mucho más fuerte que "elegí X porque me pareció mejor".</div>
+
+      <h3>De los datos al perfil: la learner persona</h3>
+      <p>Un error frecuente es recolectar estas variables y dejarlas como una lista sin usar. La forma más útil de sintetizarlas es una <strong>learner persona</strong> (o "persona de aprendiz"): un perfil semi-ficticio y concreto de la audiencia típica, construido con los datos reales recolectados, no con suposiciones. No reemplaza el análisis de tareas ni define presupuesto — su función es servir como referencia rápida para todo el equipo durante el proyecto, para no perder de vista para quién se está diseñando en medio de decisiones de producción. Este perfil se vuelve un documento de referencia que se cita en el syllabus y la ruta de aprendizaje que verás en la unidad 2.4.</p>
+      <div class="nota clave"><span class="nota-tag">Aplicación directa a tu portafolio</span>En tus proyectos de virtualización, puedes mencionar explícitamente qué supuestos de audiencia (learner persona) guiaron tus decisiones de diseño — es evidencia concreta de que no solo produces contenido, sino que lo fundamentas.</div>
+    </div>
+
+    <!-- ============ SECCIÓN 5: TRIANGULACIÓN Y SÍNTESIS ============ -->
+    <div class="content-section" id="s5">
+      <h2><span class="sec-num">05</span> Triangulación y síntesis de hallazgos</h2>
+      <p>Ningún método por sí solo da una imagen completa. Una encuesta te dice <em>qué tan extendido</em> está un problema, pero no <em>por qué</em> ocurre. Una entrevista te da profundidad, pero con pocas personas puede no ser representativa. <strong>Triangular</strong> significa cruzar al menos dos fuentes o métodos distintos antes de sacar una conclusión de diseño.</p>
+
+      <div class="defbox">Definición técnica: <strong>la práctica de confirmar un hallazgo cruzando varias fuentes de datos o métodos de recolección, para reducir el riesgo de diseñar sobre un dato sesgado o incompleto.</strong></div>
+
+      <div class="nota alerta"><span class="nota-tag">Error común en entrevistas</span>Basar todo el diseño en lo que dijo una sola persona — típicamente el cliente o jefe que hizo el pedido — sin contrastarlo con quienes viven el problema día a día. El cliente ve el síntoma; la audiencia vive la causa.</div>
+
+      <h3>Ejemplo de triangulación</h3>
+      <table class="compare-table">
+        <tr><th>Fuente</th><th>Lo que dice</th></tr>
+        <tr><td>Reportes de incidentes (dato existente)</td><td>El 60% de los errores de protocolo ocurren en el mismo turno (noche)</td></tr>
+        <tr><td>Encuesta a los 200 vendedores</td><td>El 70% dice conocer el protocolo correctamente</td></tr>
+        <tr><td>Observación en terreno en turno noche</td><td>El sistema de turnos deja a un solo supervisor para tres sucursales — no alcanza a verificar el protocolo</td></tr>
+      </table>
+      <p>Solo cruzando las tres fuentes aparece la conclusión real: el problema no es de conocimiento (la encuesta lo confirma) sino de falta de supervisión estructural en un turno específico — una causa que ningún curso resolvería por sí solo.</p>
+    </div>
+
+    <!-- ============ SECCIÓN 6: COMUNICAR LOS HALLAZGOS ============ -->
+    <div class="content-section" id="s6">
+      <h2><span class="sec-num">06</span> Comunicar los hallazgos</h2>
+      <p>El análisis de necesidades no vale nada si se queda en tus notas. No es solo un ejercicio mental: produce documentos concretos que se usan en las fases siguientes y que comunican con claridad los hallazgos a quien hizo el pedido original.</p>
+      <table class="compare-table">
+        <tr><th>Entregable</th><th>Contenido</th><th>Para qué sirve después</th></tr>
+        <tr><td>Informe de análisis de necesidades</td><td>Diagnóstico de la brecha (con Mager &amp; Pipe), evidencia recolectada, recomendación de si la formación es la solución</td><td>Justifica el proyecto ante stakeholders; define el alcance</td></tr>
+        <tr><td>Matriz de brechas</td><td>Tabla de conocimientos/habilidades requeridas (análisis de tareas) vs. nivel actual de la audiencia</td><td>Insumo directo para redactar objetivos de aprendizaje en la unidad 2.2</td></tr>
+        <tr><td>Learner persona</td><td>Perfil representativo de la audiencia con sus variables clave (sección 4)</td><td>Guía decisiones de tono, formato y extensión durante todo el diseño</td></tr>
+        <tr><td>Análisis de tareas</td><td>Descomposición paso a paso de la tarea a enseñar (Rossett, sección 1)</td><td>Base para diseñar actividades prácticas y evaluaciones auténticas en el Módulo 3</td></tr>
+      </table>
+      <div class="nota clave"><span class="nota-tag">Para tus postulaciones</span>Cuando te pregunten por tu metodología de análisis, nombra estos entregables explícitamente — muestra que entiendes el análisis como proceso documentado y transferible, no como intuición.</div>
+      <p>Este set de documentos es el puente directo hacia la unidad 2.2 (objetivos de aprendizaje) y hacia el syllabus y la ruta de aprendizaje que se documentan formalmente en la unidad 2.4. Nada de lo que sigue debería contradecir lo que este análisis encontró.</p>
+    </div>
+
+    <div class="activity">
+      <h2>Actividad — ¿Qué método usarías?</h2>
+      <div class="act-sub">Para cada situación, elige el método de recolección de datos más apropiado. Cada acierto suma puntos.</div>
+      <div id="actRoot"></div>
+      <div class="act-progress" id="actProgress"></div>
+    </div>
+
+    <!-- CALLOUTS -->
+    <div class="callout ia">
+      <div class="callout-header">🖌 IA en esta fase</div>
+      <div class="callout-body">
+        <div class="capa">＋ Toca para levantar la capa</div>
+        <p>En el análisis de necesidades, la IA generativa es útil para <strong>acelerar la síntesis</strong>, no para reemplazar la recolección real de datos. Ejemplos concretos:</p>
+        <p>• Pedirle que redacte un borrador de preguntas de encuesta o guion de entrevista sobre un tema, que luego ajustas con tu criterio del contexto real.</p>
+        <p>• Pegar transcripciones de varias entrevistas y pedirle que identifique patrones o temas recurrentes, como primer filtro antes de tu propia lectura.</p>
+        <p>• Pedirle que redacte un borrador de perfil de audiencia a partir de los datos que ya recolectaste, para editar en vez de partir de una hoja en blanco.</p>
+      </div>
+    </div>
+
+    <div class="callout entrevista">
+      <div class="callout-header">🎤 Nota de entrevista</div>
+      <div class="callout-body">
+        <div class="capa">＋ Toca para levantar la capa</div>
+        <p>Cuando te pregunten "¿cómo harías un análisis de necesidades?", evita responder solo con la lista de métodos. Una respuesta fuerte muestra la secuencia: (1) qué preguntarías primero para entender si es un problema de skill o de will; (2) qué método elegirías dado el tiempo y presupuesto típico de un proyecto real; (3) cómo triangularías antes de comprometerte con un diseño.</p>
+        <p>Evita decir solo "haría una encuesta" — sin mencionar el diagnóstico de la brecha, suena a que saltas directo a producir contenido sin verificar que la formación sea la solución correcta.</p>
+      </div>
+    </div>
+
+    <!-- ============ PRÁCTICA DE ENTREVISTA (3 con checklist) ============ -->
+    <div class="content-section" id="practica">
+      <h2><span class="sec-num">◆</span> Practica como en una entrevista</h2>
+      <p>Responde primero con tus propias palabras — <strong>en voz alta o por escrito</strong> — antes de revelar la respuesta modelo. El valor está en formular tu propia respuesta, no en leer la mía. Después usa el checklist: cada ítem que marques suma a tu autoevaluación.</p>
+
+      <div class="practica">
+        <div class="practica-head">
+          <div class="p-num">Práctica 1</div>
+          <div class="p-q">Un cliente te dice: "Necesito un curso de liderazgo para mis supervisores." ¿Qué haces antes de aceptar el pedido tal como viene?</div>
         </div>
-        <div class="lesson-badges">
-          <span class="lbadge"><i class="bi bi-book me-1"></i>4 bloques de contenido</span>
-          <span class="lbadge"><i class="bi bi-chat-square-text me-1"></i>3 preguntas de práctica oral</span>
-          <span class="lbadge"><i class="bi bi-clipboard-check me-1"></i>8 preguntas al final</span>
-          <span class="lbadge"><i class="bi bi-clock me-1"></i>~28 min</span>
+        <div class="practica-body">
+          <textarea placeholder="Escribe o practica en voz alta tu respuesta antes de revelar la modelo…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p1', 'p1')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p1">"Antes de aceptar el formato 'curso', haría un análisis de necesidades breve: revisaría datos existentes sobre el desempeño de los supervisores, y con una o dos entrevistas verificaría si el problema es que no saben liderar (conocimiento/habilidad) o si saben pero algo se lo impide — tiempo, incentivos, cultura. Solo si confirmo que es una brecha de conocimiento o habilidad, procedo a diseñar el curso."</div>
+          <div class="checklist">
+            <div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1a')"> ¿Mencionaste que no aceptas el formato "curso" de inmediato?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1b')"> ¿Nombraste un método concreto de recolección de datos?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1c')"> ¿Distinguiste entre skill/will o brecha de conocimiento vs. otra causa?</label>
+          </div>
         </div>
+      </div>
 
-        <div class="lesson-body">
-
-          <!-- MAPA CONCEPTUAL (organizador previo) -->
-          <div class="presentacion mb-4">
-            <div class="presentacion-head">
-              <div class="pres-title"><i class="bi bi-diagram-3"></i> Mapa de esta unidad</div>
-              <span class="pres-tag">Organizador previo</span>
-            </div>
-            <div style="background:#fff;padding:1.2rem">
-              <svg width="100%" viewBox="0 0 680 300" style="display:block">
-                <rect x="245" y="20" width="190" height="60" rx="8" fill="#f7ede8" stroke="#c85c3a" stroke-width="1"/>
-                <text x="340" y="44" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Modelos de diseño</text>
-                <text x="340" y="63" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#c85c3a">unidad 2.1</text>
-                <line x1="340" y1="80" x2="130" y2="150" stroke="#ddd8d0" stroke-width="1"/>
-                <line x1="340" y1="80" x2="340" y2="150" stroke="#ddd8d0" stroke-width="1"/>
-                <line x1="340" y1="80" x2="550" y2="150" stroke="#ddd8d0" stroke-width="1"/>
-                <rect x="30" y="150" width="200" height="70" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="130" y="178" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#0f1117">ADDIE</text>
-                <text x="130" y="196" text-anchor="middle" font-family="Calibri,sans-serif" font-size="10.5" fill="#3a6b8a">proceso documentado</text>
-                <rect x="240" y="150" width="200" height="70" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="340" y="178" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#0f1117">SAM</text>
-                <text x="340" y="196" text-anchor="middle" font-family="Calibri,sans-serif" font-size="10.5" fill="#3a6b8a">iterativo y ágil</text>
-                <rect x="450" y="150" width="200" height="70" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="550" y="178" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#0f1117">UbD</text>
-                <text x="550" y="196" text-anchor="middle" font-family="Calibri,sans-serif" font-size="10.5" fill="#3a6b8a">diseño hacia atrás</text>
-              </svg>
-              <p style="font-size:0.8rem;color:var(--muted);text-align:center;margin-top:0.5rem">Tres formas distintas de estructurar el mismo proceso. Ninguna es superior en abstracto — la elección depende del contexto del proyecto.</p>
-            </div>
+      <div class="practica">
+        <div class="practica-head">
+          <div class="p-num">Práctica 2</div>
+          <div class="p-q">Tienes poco tiempo y presupuesto para hacer un análisis de necesidades. ¿Cómo elegirías qué método de recolección de datos usar?</div>
+        </div>
+        <div class="practica-body">
+          <textarea placeholder="Tu respuesta…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p2', 'p2')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p2">"Empezaría por lo que ya existe y no cuesta nada recolectar de nuevo: reportes, métricas de LMS, evaluaciones previas. Con eso como punto de partida, elegiría un método rápido y escalable como una encuesta corta para tener un panorama general, y reservaría entrevistas o focus groups solo para profundizar en lo que los datos existentes y la encuesta no logran explicar. No trato de aplicar todos los métodos por igual — priorizo según lo que el tiempo real permite."</div>
+          <div class="checklist">
+            <div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2a')"> ¿Mencionaste empezar por datos ya existentes?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2b')"> ¿Justificaste la elección según tiempo/presupuesto, no solo preferencia?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2c')"> ¿Mostraste que combinarías más de un método (triangulación)?</label>
           </div>
+        </div>
+      </div>
 
-          <div class="presentacion">
-            <div class="presentacion-head">
-              <div class="pres-title"><i class="bi bi-easel2"></i> Presentación del tema <span class="pres-tag">Próximamente</span></div>
-            </div>
-            <div class="presentacion-viewer">
-              <div class="pres-placeholder">
-                <i class="bi bi-file-earmark-slides"></i>
-                <p>Material audiovisual en preparación</p>
-                <small>Por ahora, revisa el contenido en los bloques de esta unidad.</small>
-              </div>
-            </div>
+      <div class="practica">
+        <div class="practica-head">
+          <div class="p-num">Práctica 3</div>
+          <div class="p-q">Caso: una encuesta muestra que el 70% del equipo dice "conocer bien" un protocolo, pero los reportes de incidentes muestran errores constantes en ese mismo protocolo. ¿Cómo interpretas esta contradicción y qué haces?</div>
+        </div>
+        <div class="practica-body">
+          <textarea placeholder="Tu respuesta…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p3', 'p3')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p3">"La contradicción entre lo que la gente dice saber y lo que realmente ocurre es justamente la señal de que necesito triangular con una tercera fuente antes de concluir. Haría observación en terreno o algunas entrevistas puntuales para entender si el problema es que sobreestiman su propio conocimiento, o si conocen el protocolo en teoría pero el entorno de trabajo — tiempo, herramientas, supervisión — no les permite aplicarlo bien. No me quedaría solo con la encuesta, que por sí sola da una imagen incompleta."</div>
+          <div class="checklist">
+            <div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3a')"> ¿Identificaste la contradicción entre las dos fuentes como una señal, no un error a ignorar?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3b')"> ¿Propusiste una tercera fuente o método para resolver la contradicción?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3c')"> ¿Evitaste sacar una conclusión de diseño solo con una fuente?</label>
           </div>
+        </div>
+      </div>
+    </div>
 
-          <div class="accordion-di">
-            <button class="accordion-di-btn open" onclick="toggleAcc(this)">
-              <i class="bi bi-1-circle acc-icon"></i> ADDIE: el modelo clásico
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body show">
-              <p>ADDIE es el modelo más citado en DI. Su nombre es un acrónimo de sus cinco fases: <strong>A</strong>nálisis, <strong>D</strong>iseño, <strong>D</strong>esarrollo, <strong>I</strong>mplementación y <strong>E</strong>valuación. Nació en los años 70 en el ejército de EE.UU. y se volvió el estándar de facto en educación corporativa y superior.</p>
-              <table class="table table-di table-bordered mt-3">
-                <thead><tr><th>Fase</th><th>Qué ocurre</th><th>Entregable típico</th></tr></thead>
-                <tbody>
-                  <tr><td>Análisis</td><td>Se identifica la brecha de desempeño, la audiencia y las restricciones del proyecto</td><td>Informe de análisis de necesidades</td></tr>
-                  <tr><td>Diseño</td><td>Se redactan objetivos, se define la estrategia instruccional y la evaluación</td><td>Documento de Diseño Instruccional (DDI)</td></tr>
-                  <tr><td>Desarrollo</td><td>Se producen los materiales: guiones, video, H5P, actividades</td><td>Prototipo o curso piloto</td></tr>
-                  <tr><td>Implementación</td><td>Se despliega el curso en el LMS y se capacita a facilitadores</td><td>Curso publicado y funcionando</td></tr>
-                  <tr><td>Evaluación</td><td>Formativa (durante todo el proceso) y sumativa (al final, con datos de resultados)</td><td>Informe de resultados y mejora continua</td></tr>
-                </tbody>
-              </table>
-              <div class="callout-terra mt-3">
-                <strong>Mito común:</strong> ADDIE no es estrictamente lineal. En la práctica se aplica de forma iterativa: se puede volver de Desarrollo a Diseño si un piloto revela un problema. La crítica de "ADDIE es rígido" en realidad apunta a implementaciones mal hechas del modelo, no al modelo en sí.
-              </div>
-              <div class="callout-blue">
-                <strong>Cuándo usarlo:</strong> proyectos con requerimientos regulatorios o de acreditación (cursos financiados por FDI, procesos que necesitan documentación formal), equipos grandes, o cuando el cliente/institución pide evidencia de proceso en cada etapa.
-              </div>
-            </div>
-          </div>
+    <!-- ============ EVALUACIÓN FINAL (10) ============ -->
+    <div class="eval-block" id="evaluacion">
+      <h2>Evaluación — Unidad 2.1</h2>
+      <div class="eval-sub">12 preguntas. El puntaje se guarda en tu ruta de aprendizaje. Puedes reintentar sin límite.</div>
+      <div id="quizRoot"></div>
+      <div class="eval-counter" id="quizCounter">Respondidas: 0/12</div>
+      <button class="eval-submit" id="quizSubmit" onclick="submitQuiz()" disabled>Enviar evaluación</button>
+      <div class="result-card" id="resultCard">
+        <div class="result-score" id="resultScore">0%</div>
+        <div id="resultMsg" style="font-size:0.85rem;color:var(--ink-muted);margin-top:0.3rem;"></div>
+      </div>
+    </div>
 
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-2-circle acc-icon"></i> SAM: diseño ágil e iterativo
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p>SAM (Successive Approximation Model, Allen Interactions) surge como respuesta a la lentitud percibida de ADDIE. En vez de completar cada fase antes de pasar a la siguiente, SAM trabaja en <strong>ciclos cortos e iterativos</strong> de diseño-prototipo-revisión.</p>
-              <h5>Las tres fases de SAM</h5>
-              <div class="card-di"><h6><i class="bi bi-1-circle me-1"></i>Preparación</h6><p>Una fase breve de "information dump": se reúne todo lo que se sabe del proyecto sin analizarlo exhaustivamente todavía.</p></div>
-              <div class="card-di"><h6><i class="bi bi-2-circle me-1"></i>Diseño iterativo</h6><p>Ciclos rápidos de bosquejo → revisión → refinamiento, generalmente en reuniones de diseño colaborativo (SAM design sessions) con el SME presente.</p></div>
-              <div class="card-di"><h6><i class="bi bi-3-circle me-1"></i>Desarrollo iterativo</h6><p>Se construyen prototipos funcionales cada vez más completos (alfa → beta → final), probándolos con usuarios reales en cada ronda.</p></div>
-              <div class="callout-terra mt-3">
-                <strong>Ventaja clave:</strong> el cliente/SME ve algo tangible desde la primera semana, lo que reduce el riesgo de construir un curso completo que nadie valida hasta el final.
-              </div>
-              <div class="callout-blue">
-                <strong>Cuándo usarlo:</strong> proyectos pequeños o medianos con plazos ajustados, contenidos que cambian rápido (por ejemplo, capacitación sobre una nueva política interna), o cuando el SME tiene poca disponibilidad y conviene concentrarla en sesiones de diseño conjunto.
-              </div>
-            </div>
-          </div>
+    <div class="next-nav">
+      <a href="m1-4.html">← 1.4 Gagné, carga cognitiva y principios de Mayer</a>
+      <a href="m2-2.html">2.2 Objetivos de aprendizaje y taxonomías →</a>
+    </div>
+  </main>
+</div>
 
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-3-circle acc-icon"></i> UbD: diseño hacia atrás (Backward Design)
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p>Understanding by Design (Wiggins &amp; McTighe) propone <strong>empezar por el final</strong>: antes de pensar en actividades o contenidos, se define qué evidencia demostrará que el aprendizaje ocurrió. Por eso se le llama "diseño inverso" o backward design.</p>
-              <h5>Las tres etapas</h5>
-              <div class="card-di"><h6><i class="bi bi-flag me-1"></i>Etapa 1 — Identificar resultados deseados</h6><p>¿Qué deben comprender, saber y poder hacer los estudiantes al final? Se distinguen "grandes ideas" (understandings) de datos puntuales.</p></div>
-              <div class="card-di"><h6><i class="bi bi-clipboard-data me-1"></i>Etapa 2 — Determinar evidencia aceptable</h6><p>¿Cómo sabremos que comprendieron? Se diseñan las evaluaciones (tareas auténticas, rúbricas) antes que las actividades de enseñanza.</p></div>
-              <div class="card-di"><h6><i class="bi bi-signpost me-1"></i>Etapa 3 — Planificar experiencias de aprendizaje</h6><p>Recién aquí se seleccionan actividades, recursos y secuencia, siempre alineados con las etapas 1 y 2.</p></div>
-              <div class="callout-terra mt-3">
-                <strong>Por qué importa:</strong> UbD evita el error clásico de "diseño por actividades" (armar contenidos entretenidos que no se conectan con lo que realmente se va a evaluar). Fuerza la coherencia entre objetivo, evaluación y actividad — el mismo principio detrás de la alineación constructiva que verás en la Unidad 2.3.
-              </div>
-              <div class="callout-blue">
-                <strong>Cuándo usarlo:</strong> rediseño curricular profundo, cursos donde la comprensión conceptual importa más que la ejecución de una tarea puntual, y contextos académicos formales (educación superior, acreditación).
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-4-circle acc-icon"></i> Comparación y criterios de selección
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p>Ningún modelo es "superior" en abstracto. La elección depende del contexto del proyecto: plazo, tamaño del equipo, exigencias de documentación y naturaleza del contenido.</p>
-              <table class="table table-di table-bordered">
-                <thead><tr><th>Criterio</th><th>ADDIE</th><th>SAM</th><th>UbD</th></tr></thead>
-                <tbody>
-                  <tr><td>Enfoque</td><td>Proceso documentado, fase por fase</td><td>Prototipado rápido e iterativo</td><td>Diseño desde la evaluación hacia atrás</td></tr>
-                  <tr><td>Velocidad</td><td>Más lento, más predecible</td><td>Rápido, tolera cambios de rumbo</td><td>Variable — depende de la profundidad curricular</td></tr>
-                  <tr><td>Mejor para</td><td>Proyectos grandes, regulados o acreditados</td><td>Proyectos ágiles, contenidos cambiantes</td><td>Rediseño de cursos, coherencia curricular</td></tr>
-                  <tr><td>Riesgo si se usa mal</td><td>Burocracia, lentitud excesiva</td><td>Falta de documentación, deriva sin control</td><td>Sobrecarga de planificación antes de producir</td></tr>
-                </tbody>
-              </table>
-              <div class="callout-terra mt-2">
-                <strong>En la práctica profesional:</strong> muchos equipos combinan modelos — usan la lógica de ADDIE como estructura general de proyecto, aplican ciclos tipo SAM dentro de la fase de Desarrollo, y usan el pensamiento de UbD para redactar objetivos y evaluaciones coherentes. Puedes mencionar esto en entrevistas: demuestra criterio, no dogmatismo de modelo único.
-              </div>
-            </div>
-          </div>
-
-          <!-- AUTOEVALUACIÓN AUTOINSTRUCCIONAL -->
-          <div class="accordion-di" style="border-color:var(--blue)">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)" style="background:var(--blue-light)">
-              <i class="bi bi-chat-square-text acc-icon" style="color:var(--blue)"></i> Practica como en una entrevista
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p style="color:var(--muted);font-size:0.85rem">Responde primero con tus propias palabras antes de revelar la respuesta modelo.</p>
-
-              <div class="card-di" style="border-left:3px solid var(--blue)">
-                <h6><i class="bi bi-question-circle me-1"></i>1. Te presentan un proyecto: una institución necesita virtualizar 20 cursos en 2 meses, con presupuesto ajustado y contenidos que cambian frecuentemente. ¿Qué modelo propondrías y por qué?</h6>
-                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
-                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
-                  <p style="font-size:0.87rem"><em>"Propondría SAM. El plazo ajustado y los contenidos cambiantes hacen riesgoso invertir semanas en un análisis exhaustivo antes de mostrar algo tangible. SAM permite validar con el SME desde la primera semana mediante prototipos, reduciendo el riesgo de construir algo que después haya que rehacer por completo."</em></p>
-                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
-                  <ul style="font-size:0.83rem;color:var(--muted)">
-                    <li>¿Elegiste SAM y no ADDIE o UbD?</li>
-                    <li>¿Justificaste con las restricciones específicas del caso (plazo, cambio de contenido)?</li>
-                    <li>¿Mencionaste el prototipado temprano como ventaja concreta?</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="card-di" style="border-left:3px solid var(--blue)">
-                <h6><i class="bi bi-question-circle me-1"></i>2. Un colega dice "ADDIE está obsoleto, todo el mundo usa metodologías ágiles ahora". ¿Qué le respondes?</h6>
-                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
-                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
-                  <p style="font-size:0.87rem"><em>"Le diría que ADDIE no está obsoleto, pero sí se usa mal cuando se aplica de forma estrictamente lineal. Sigue siendo el modelo correcto para proyectos regulados o que necesitan documentación formal por acreditación, como los financiados por FDI. La elección de modelo depende del proyecto, no de una moda metodológica."</em></p>
-                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
-                  <ul style="font-size:0.83rem;color:var(--muted)">
-                    <li>¿Defendiste que ADDIE sigue siendo válido en ciertos contextos?</li>
-                    <li>¿Distinguiste "modelo rígido" de "implementación mal hecha del modelo"?</li>
-                    <li>¿Diste un ejemplo de cuándo ADDIE sigue siendo la mejor opción?</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="card-di" style="border-left:3px solid var(--blue)">
-                <h6><i class="bi bi-question-circle me-1"></i>3. ¿Por qué UbD empieza por diseñar la evaluación antes que las actividades? ¿No es al revés en la mayoría de los cursos que has visto?</h6>
-                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
-                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
-                  <p style="font-size:0.87rem"><em>"Efectivamente, en la práctica muchos diseñan actividades entretenidas primero y arman una evaluación después, sin verificar que midan lo mismo. UbD invierte ese orden a propósito: define primero qué evidencia demostrará la comprensión, y recién después diseña actividades que efectivamente preparen para esa evidencia. Es el mismo principio de la alineación constructiva que veremos en la Unidad 2.3."</em></p>
-                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
-                  <ul style="font-size:0.83rem;color:var(--muted)">
-                    <li>¿Explicaste el error común (actividades primero, evaluación después)?</li>
-                    <li>¿Conectaste esto con la coherencia objetivo-evaluación-actividad?</li>
-                    <li>¿Mencionaste que esto anticipa la alineación constructiva?</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- EVALUACIÓN -->
-          <div class="eval-section mt-4">
-            <h4><i class="bi bi-clipboard-check me-2" style="color:var(--terra)"></i>Evaluación — Unidad 2.1</h4>
-            <p class="eval-progress-text">Preguntas respondidas: <strong><span id="answeredCount">0</span>/8</strong> — puedes enviar en cualquier momento</p>
-
-            <div class="eval-question" data-question="q1">
-              <h6>1. ¿Qué significa la 'I' en ADDIE?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q1',1)"><div class="eval-radio"></div><span>Investigación</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',2)"><div class="eval-radio"></div><span>Implementación</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',3)"><div class="eval-radio"></div><span>Innovación</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',4)"><div class="eval-radio"></div><span>Interacción</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q2">
-              <h6>2. ¿Cuál es la crítica más común hacia ADDIE cuando se aplica mal?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q2',1)"><div class="eval-radio"></div><span>Que es demasiado creativo</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',2)"><div class="eval-radio"></div><span>Que es rígido y lento si se ejecuta linealmente sin iterar</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',3)"><div class="eval-radio"></div><span>Que no considera evaluación</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',4)"><div class="eval-radio"></div><span>Que ignora al SME</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q3">
-              <h6>3. ¿Cuál es la idea central de SAM?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q3',1)"><div class="eval-radio"></div><span>Evaluar solo al final del proyecto</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',2)"><div class="eval-radio"></div><span>Diseñar y prototipar en ciclos cortos e iterativos</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',3)"><div class="eval-radio"></div><span>Reemplazar completamente la fase de análisis</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',4)"><div class="eval-radio"></div><span>Trabajar sin la participación del SME</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q4">
-              <h6>4. ¿Cuándo conviene priorizar SAM sobre ADDIE?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q4',1)"><div class="eval-radio"></div><span>Cuando el proyecto requiere documentación extensa para acreditación</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',2)"><div class="eval-radio"></div><span>Cuando el contenido cambia rápido y el plazo es ajustado</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',3)"><div class="eval-radio"></div><span>Cuando el equipo es muy grande y jerárquico</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',4)"><div class="eval-radio"></div><span>Cuando no hay SME disponible en ningún momento</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q5">
-              <h6>5. En UbD, ¿qué se define primero?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q5',1)"><div class="eval-radio"></div><span>Las actividades de aprendizaje</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',2)"><div class="eval-radio"></div><span>Los recursos multimedia</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',3)"><div class="eval-radio"></div><span>La evidencia de evaluación aceptable, antes que las actividades</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',4)"><div class="eval-radio"></div><span>El cronograma del proyecto</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q6">
-              <h6>6. ¿Cuál es el nombre alternativo más usado para UbD?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q6',1)"><div class="eval-radio"></div><span>Diseño ágil</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',2)"><div class="eval-radio"></div><span>Diseño centrado en el usuario</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',3)"><div class="eval-radio"></div><span>Diseño hacia atrás (backward design)</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',4)"><div class="eval-radio"></div><span>Diseño modular</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q7">
-              <h6>7. ¿Cuáles son las tres etapas de UbD, en orden?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q7',1)"><div class="eval-radio"></div><span>Análisis, diseño, desarrollo</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',2)"><div class="eval-radio"></div><span>Resultados deseados, evidencia aceptable, experiencias de aprendizaje</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',3)"><div class="eval-radio"></div><span>Preparación, diseño, desarrollo</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',4)"><div class="eval-radio"></div><span>Diagnóstico, implementación, evaluación</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q8">
-              <h6>8. Un proyecto necesita evidencia documentada en cada fase para cumplir un requisito de acreditación institucional. ¿Qué modelo es más apropiado como estructura general?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q8',1)"><div class="eval-radio"></div><span>SAM puro</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',2)"><div class="eval-radio"></div><span>ADDIE</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',3)"><div class="eval-radio"></div><span>UbD puro sin ninguna estructura de proyecto</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',4)"><div class="eval-radio"></div><span>Ninguno, se puede improvisar</span></div>
-            </div>
-
-            <div id="evalResult" class="mt-3"></div>
-
-            <div class="d-flex flex-wrap gap-2 mt-3">
-              <button class="btn btn-terra" id="submitBtn" onclick="submitEval()">
-                <i class="bi bi-check-circle me-2"></i>Enviar evaluación
-              </button>
-              <button class="btn btn-outline-terra" id="retryBtn" style="display:none" onclick="retryEval()">
-                <i class="bi bi-arrow-clockwise me-2"></i>Reintentar
-              </button>
-              <a href="m2-2.html" class="btn btn-blue" id="nextBtn" style="display:none">
-                Siguiente unidad <i class="bi bi-arrow-right ms-2"></i>
-              </a>
-            </div>
-          </div>
-
-        </div><!-- /lesson-body -->
-      </div><!-- /content-di -->
-    </div><!-- /col -->
-  </div><!-- /row -->
-</div><!-- /container -->
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../gami.js"></script>
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbylYML8h2BnNgi2AXtZ8bkGaXPNRhurswPr5dfyGRldbVoCRvmoT2cHN0r3I4qGynLb/exec';
-const UNIDAD_ID = 'm2-1';
-const UNIDAD_LABEL = '2.1 Modelos de DI';
+const UNIT_ID = 'm2-1';
 
-const CORRECTAS = { q1:2, q2:2, q3:2, q4:2, q5:3, q6:3, q7:2, q8:2 };
-const FEEDBACK = {
-  q1: {ok:'Correcto. Implementación es la fase donde el curso se despliega y se capacita a facilitadores.',fail:'La \'I\' de ADDIE corresponde a Implementación: el despliegue del curso, no a investigación ni innovación.'},
-  q2: {ok:'Correcto. El problema no es el modelo en sí, sino aplicarlo como una secuencia estrictamente lineal sin retroalimentación entre fases.',fail:'ADDIE sí incluye evaluación y al SME. La crítica real apunta a la rigidez cuando se ejecuta de forma estrictamente secuencial.'},
-  q3: {ok:'Correcto. SAM se basa en aproximaciones sucesivas: prototipos cada vez más completos, validados tempranamente.',fail:'SAM se centra en iterar rápido con prototipos, no en eliminar el análisis ni excluir al SME — de hecho, lo integra activamente en las sesiones de diseño.'},
-  q4: {ok:'Correcto. SAM funciona bien con contenidos volátiles y plazos cortos, porque valida rápido con prototipos.',fail:'SAM es más adecuado para contenidos cambiantes y plazos ajustados; los proyectos con exigencias fuertes de documentación suelen alinearse mejor con ADDIE.'},
-  q5: {ok:'Correcto. UbD invierte el orden habitual: primero se decide cómo se evaluará la comprensión, luego se diseñan las actividades.',fail:'UbD parte de definir qué evidencia demostrará el aprendizaje (Etapa 2) antes de planificar actividades (Etapa 3), no al revés.'},
-  q6: {ok:'Correcto. UbD también se conoce como \'backward design\' porque parte del resultado final deseado.',fail:'UbD se conoce como diseño hacia atrás o backward design, no como diseño ágil ni diseño modular.'},
-  q7: {ok:'Correcto. Primero se identifican los resultados deseados, luego la evidencia de evaluación, y recién después las actividades.',fail:'Las tres etapas de UbD son: identificar resultados deseados, determinar evidencia aceptable, y planificar experiencias de aprendizaje — en ese orden.'},
-  q8: {ok:'Correcto. ADDIE, por su naturaleza documentada y por fases, se adapta mejor a exigencias de acreditación o regulación.',fail:'Para proyectos con exigencias formales de documentación, ADDIE ofrece una estructura de proyecto más trazable que SAM o UbD por sí solos.'}
-};
-
-let answers = {};
-let submitted = false;
-
-function toggleAcc(btn) {
-  const body = btn.nextElementSibling;
-  const isOpen = body.classList.contains('show');
-  body.classList.toggle('show', !isOpen);
-  btn.classList.toggle('open', !isOpen);
+// ===== VIDEO: pega aquí el ID de YouTube =====
+const YT_VIDEO_ID = '';
+if (YT_VIDEO_ID) {
+  document.getElementById('videoWrap').innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + YT_VIDEO_ID + '" title="Video de la unidad" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
 }
 
-function toggleModelo(btn) {
-  const box = btn.nextElementSibling;
-  const isOpen = box.style.display === 'block';
-  box.style.display = isOpen ? 'none' : 'block';
-  btn.textContent = isOpen ? 'Ver respuesta modelo' : 'Ocultar respuesta modelo';
+function switchMedia(btn) {
+  document.querySelectorAll('.media-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.media-pane').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('pane-' + btn.dataset.pane).classList.add('active');
+  if (btn.dataset.pane === 'video' && YT_VIDEO_ID) { Gami.award('m2-1_video', 5, 'Viste el video de la unidad'); checkMultimodal(); }
+}
+function checkMultimodal() {
+  if (Gami.hasSeen('m2-1_pdf') && Gami.hasSeen('m2-1_audio') && (YT_VIDEO_ID ? Gami.hasSeen('m2-1_video') : true)) Gami.badge('multimodal');
 }
 
-function selectOpt(el, question, optNum) {
-  if (submitted) return;
-  const container = el.closest('[data-question]');
-  container.querySelectorAll('.eval-option').forEach(o => o.classList.remove('selected'));
-  el.classList.add('selected');
-  answers[question] = optNum;
-  document.getElementById('answeredCount').textContent = Object.keys(answers).length;
+// Viñetas think-first
+function revealVineta(btn, id) {
+  btn.closest('.vineta').classList.add('revealed');
+  Gami.award('m2-1_vineta_' + id, 5, 'Resolviste una viñeta de taller');
 }
 
-function submitEval() {
-  if (Object.keys(answers).length === 0) {
-    showToast('Responde al menos una pregunta para enviar', 'warning');
-    return;
-  }
-  submitted = true;
-  let score = 0;
-  const total = Object.keys(CORRECTAS).length;
+// Capas
+let capasReveladas = 0;
+document.querySelectorAll('.capa').forEach((capa, i) => {
+  capa.addEventListener('click', () => {
+    capa.closest('.callout').classList.add('revealed');
+    Gami.award('m2-1_capa' + i, 5, 'Levantaste una capa');
+    capasReveladas++;
+    if (capasReveladas >= 2) Gami.badge('curiosa');
+  });
+});
 
-  Object.keys(CORRECTAS).forEach(q => {
-    const container = document.querySelector(`[data-question="${q}"]`);
-    if (!container) return;
-    const userAns = answers[q];
-    const correctAns = CORRECTAS[q];
-    const opts = container.querySelectorAll('.eval-option');
+// Respuestas modelo y checklists de práctica
+function toggleRM(id, pid) {
+  document.getElementById(id).classList.toggle('show');
+  Gami.award('m2-1_rm_' + pid, 3, 'Contrastaste con la respuesta modelo');
+}
+function clCheck(el, id) {
+  if (el.checked) Gami.award('m2-1_cl_' + id, 2, 'Ítem de checklist verificado');
+}
 
-    opts.forEach((opt, idx) => {
-      opt.style.pointerEvents = 'none';
-      if (idx + 1 === userAns) {
-        if (userAns === correctAns) { opt.classList.add('correct'); score++; }
-        else opt.classList.add('incorrect');
-      }
+// ===== Actividad ¿Qué método usarías? =====
+const ACT_ITEMS = [
+  { text: 'Necesitas datos cuantitativos rápidos de 300 vendedores en 15 sucursales sobre cuánto conocen el nuevo protocolo.', ans: 'encuesta', why: 'Audiencia grande y necesidad de un panorama cuantitativo — la encuesta es el método más escalable.' },
+  { text: 'Quieres entender en profundidad por qué los supervisores evitan dar feedback correctivo — las razones son sensibles y variadas.', ans: 'entrevista', why: 'Tema sensible y con matices individuales — la entrevista permite esa profundidad.' },
+  { text: 'Sospechas que el problema no es de conocimiento, sino de que el sistema de turnos no permite aplicar el protocolo en el punto de venta.', ans: 'observacion', why: 'Verificar una hipótesis sobre el entorno de trabajo requiere ver el proceso real en terreno.' },
+  { text: 'Tienes acceso a los reportes de incidentes de los últimos seis meses y quieres identificar patrones antes de diseñar nada.', ans: 'observacion', why: 'Análisis de datos ya existentes — se agrupa con la exploración directa del problema real, previa a recolectar datos nuevos.' },
+  { text: 'Un focus group con seis docentes te permitiría contrastar percepciones distintas sobre el mismo problema en una sola sesión.', ans: 'entrevista', why: 'El focus group es una variante grupal de la entrevista — profundidad cualitativa con varias perspectivas a la vez.' },
+  { text: 'Quieres una primera radiografía general del problema antes de decidir en qué profundizar con entrevistas.', ans: 'encuesta', why: 'Primer filtro rápido y escalable — clásico punto de partida antes de invertir tiempo en métodos más profundos.' },
+];
+let actDone = 0, actCorrect = 0;
+const LABELS = { encuesta: 'Encuesta', entrevista: 'Entrevista / focus group', observacion: 'Observación / datos existentes' };
+function renderActivity() {
+  document.getElementById('actRoot').innerHTML = ACT_ITEMS.map((item, i) => `
+    <div class="act-card" id="act-${i}">
+      <div class="act-statement">${item.text}</div>
+      <div class="act-buttons">
+        <button class="act-btn" onclick="answerAct(${i},'encuesta')">Encuesta</button>
+        <button class="act-btn" onclick="answerAct(${i},'entrevista')">Entrevista / focus group</button>
+        <button class="act-btn" onclick="answerAct(${i},'observacion')">Observación / datos existentes</button>
+      </div>
+      <div class="act-verdict" id="verdict-${i}"></div>
+    </div>`).join('');
+  updateActProgress();
+}
+function answerAct(i, choice) {
+  const item = ACT_ITEMS[i];
+  const card = document.getElementById('act-' + i);
+  const verdict = document.getElementById('verdict-' + i);
+  actDone++;
+  if (choice === item.ans) { actCorrect++; card.classList.add('ok'); verdict.style.color = '#315226'; verdict.textContent = '✓ ' + item.why; }
+  else { card.classList.add('no'); card.querySelector('.act-buttons').style.display = 'none'; verdict.style.color = '#6E2A2A'; verdict.textContent = '✗ Era ' + LABELS[item.ans] + '. ' + item.why; }
+  updateActProgress();
+  if (actDone === ACT_ITEMS.length) Gami.award('m2-1_actividad', Math.round(15 * actCorrect / ACT_ITEMS.length) + 5, 'Actividad ¿Qué método usarías? — ' + actCorrect + '/' + ACT_ITEMS.length);
+}
+function updateActProgress() { document.getElementById('actProgress').textContent = actDone + '/' + ACT_ITEMS.length + ' resueltas' + (actDone === ACT_ITEMS.length ? ' · ' + actCorrect + ' correctas' : ''); }
+renderActivity();
+
+// ===== Evaluación final — 10 preguntas =====
+const QUIZ = [
+  { q: '¿En qué momento del proceso de DI ocurre típicamente el análisis de necesidades?', opts: ['Al final, para validar el curso ya terminado','Al inicio, antes de definir objetivos y diseñar contenido','Solo si el cliente lo pide explícitamente','Durante la fase de evaluación de ADDIE'], ans: 1 },
+  { q: 'Según el modelo de Mager & Pipe, si una persona "podría hacerlo aunque su vida dependiera de ello" pero no lo hace, el problema es principalmente de…', opts: ['Conocimiento — necesita más información','Habilidad — necesita más práctica','Voluntad, incentivos u obstáculos del entorno, no de capacitación','Motivación intrínseca que ningún diseño puede resolver'], ans: 2 },
+  { q: 'Según el modelo de Rossett, ¿cuáles son los tres niveles de análisis?', opts: ['Diseño, desarrollo, evaluación','Organizacional, de tareas, de audiencia','Cognitivo, conductual, social','Formativo, sumativo, diagnóstico'], ans: 1 },
+  { q: '¿Qué método es más apropiado para obtener datos cuantitativos rápidos de una audiencia grande?', opts: ['Entrevista individual','Observación en terreno','Encuesta','Focus group'], ans: 2 },
+  { q: '¿Qué método permite explorar en profundidad motivaciones y resistencias sensibles?', opts: ['Encuesta masiva','Entrevista individual','Análisis de datos existentes','Ninguno — eso no se puede investigar'], ans: 1 },
+  { q: 'La observación en terreno es especialmente útil cuando…', opts: ['Se necesita una muestra muy grande','Se sospecha que el entorno o proceso de trabajo, no el conocimiento, es la barrera','No hay tiempo disponible para el análisis','El cliente prefiere no involucrar a su equipo'], ans: 1 },
+  { q: '¿Cuál de las siguientes NO es una variable típica de un análisis de audiencia?', opts: ['Conocimiento previo del tema','Contexto tecnológico de acceso','El presupuesto total asignado al proyecto de DI','Restricciones de tiempo disponible para estudiar'], ans: 2 },
+  { q: '¿Para qué sirve específicamente una learner persona?', opts: ['Para reemplazar el análisis de tareas','Para servir como referencia rápida del equipo sobre el perfil de audiencia durante todo el diseño','Para definir el presupuesto del proyecto','Para elegir el LMS que se usará'], ans: 1 },
+  { q: 'El propósito principal de "triangular" los hallazgos es…', opts: ['Reducir el número de preguntas de la encuesta','Confirmar patrones cruzando varias fuentes o métodos antes de decidir el diseño','Evitar hacer entrevistas','Acortar el tiempo total del proyecto a toda costa'], ans: 1 },
+  { q: '¿Por qué es riesgoso basar un análisis de necesidades en una sola fuente de datos?', opts: ['Porque toma más tiempo usar una sola fuente','Porque una sola fuente puede dar una imagen sesgada o incompleta del problema','Porque las encuestas siempre mienten','Porque los datos existentes nunca son confiables'], ans: 1 },
+  { q: '¿Qué entregable del análisis de necesidades cruza los conocimientos/habilidades requeridos con el nivel actual de la audiencia, y sirve de insumo directo para redactar objetivos?', opts: ['El informe de visitas a terreno','La matriz de brechas','La bitácora de reuniones con el cliente','El cronograma del proyecto'], ans: 1 },
+  { q: 'Un cliente insiste en "necesito un curso de X" sin que se haya hecho ningún análisis previo. ¿Cuál es la respuesta más profesional?', opts: ['Aceptar el pedido tal cual, ya que el cliente conoce mejor su problema','Rechazar el proyecto por completo','Proponer primero un diagnóstico breve antes de comprometerse con el formato "curso"','Diseñar el curso y ajustar después según los resultados de la evaluación final'], ans: 2 },
+];
+function renderQuiz() {
+  document.getElementById('quizRoot').innerHTML = QUIZ.map((item, qi) => `
+    <div class="eval-q">${qi + 1}. ${item.q}</div>
+    <div class="quiz-opts" data-q="${qi}">${item.opts.map((opt, oi) => `<label class="eval-option"><input type="radio" name="q${qi}" value="${oi}" onchange="updateQuizCounter()"> ${opt}</label>`).join('')}</div>`).join('');
+}
+function answered() { let n = 0; for (let i = 0; i < QUIZ.length; i++) if (document.querySelector('input[name=q' + i + ']:checked')) n++; return n; }
+function updateQuizCounter() { const n = answered(); document.getElementById('quizCounter').textContent = 'Respondidas: ' + n + '/' + QUIZ.length; document.getElementById('quizSubmit').disabled = n < QUIZ.length; }
+function submitQuiz() {
+  let correct = 0;
+  QUIZ.forEach((item, qi) => {
+    const sel = document.querySelector('input[name=q' + qi + ']:checked');
+    const val = sel ? parseInt(sel.value) : -1;
+    document.querySelectorAll('[data-q="' + qi + '"] .eval-option').forEach((opt, oi) => {
+      opt.classList.remove('correct','incorrect');
+      if (oi === item.ans) opt.classList.add('correct'); else if (oi === val) opt.classList.add('incorrect');
     });
-
-    if (userAns !== undefined) {
-      const fb = FEEDBACK[q];
-      const isOk = userAns === correctAns;
-      const fbEl = document.createElement('div');
-      fbEl.className = 'feedback-box ' + (isOk ? 'feedback-ok' : 'feedback-fail');
-      fbEl.innerHTML = (isOk ? '<i class="bi bi-check-circle me-1"></i>' : '<i class="bi bi-x-circle me-1"></i>') + (isOk ? fb.ok : fb.fail);
-      container.appendChild(fbEl);
-    }
+    if (val === item.ans) correct++;
   });
-
-  const answered = Object.keys(answers).length;
-  const pct = Math.round(score / total * 100);
-  const msg = pct >= 90 ? 'Excelente dominio de esta unidad.' : pct >= 70 ? 'Buen resultado. Repasa lo que fallaste antes de avanzar.' : 'Hay conceptos que requieren repaso. Revisa las secciones donde cometiste errores.';
-
-  document.getElementById('evalResult').innerHTML = `
-    <div class="result-card">
-      <div class="result-score">${score}/${total}</div>
-      <div class="result-label">${pct}% de respuestas correctas (${answered} respondidas)</div>
-      <div class="result-msg">${msg}</div>
-    </div>`;
-
-  document.getElementById('submitBtn').style.display = 'none';
-  document.getElementById('retryBtn').style.display = 'inline-block';
-  document.getElementById('nextBtn').style.display = 'inline-block';
-  guardarPuntaje(score / total);
+  saveScore(correct / QUIZ.length, correct);
 }
-
-function retryEval() {
-  submitted = false;
-  answers = {};
-  document.querySelectorAll('.eval-option').forEach(o => {
-    o.classList.remove('selected','correct','incorrect');
-    o.style.pointerEvents = '';
-  });
-  document.querySelectorAll('.feedback-box').forEach(f => f.remove());
-  document.getElementById('evalResult').innerHTML = '';
-  document.getElementById('answeredCount').textContent = '0';
-  document.getElementById('submitBtn').style.display = 'inline-block';
-  document.getElementById('retryBtn').style.display = 'none';
-  document.getElementById('nextBtn').style.display = 'none';
-  showToast('Inténtalo de nuevo — repasa el contenido antes de responder', 'info');
-  document.querySelector('.eval-section').scrollIntoView({ behavior:'smooth' });
+function saveScore(pct, correct) {
+  try { const scores = JSON.parse(localStorage.getItem('di_scores_v2') || '{}'); scores[UNIT_ID] = pct; localStorage.setItem('di_scores_v2', JSON.stringify(scores)); } catch(e) {}
+  const card = document.getElementById('resultCard');
+  card.className = 'result-card show';
+  card.style.background = pct >= 0.7 ? 'var(--done-soft)' : 'var(--msoft)';
+  document.getElementById('resultScore').textContent = Math.round(pct * 100) + '%';
+  document.getElementById('resultMsg').textContent = correct + '/' + QUIZ.length + ' correctas · ' + (pct >= 0.7 ? 'Unidad completada en tu ruta — Módulo 2 iniciado.' : 'Puedes repasar y reintentar — sin límite.');
+  if (pct >= 0.7) { Gami.award('m2-1_eval', 30, 'Evaluación 2.1 aprobada — ' + correct + '/' + QUIZ.length); Gami.badge('primeraCapa'); }
+  try { const img = new Image(); img.src = SCRIPT_URL + '?action=saveScore&id=' + UNIT_ID + '&score=' + pct + '&t=' + Date.now(); } catch(e) {}
 }
-
-function getScores() { try { return JSON.parse(localStorage.getItem('di_scores')||'{}'); } catch(e) { return {}; } }
-
-function jsonp(params) {
-  return new Promise(function(resolve, reject) {
-    var cb = 'cb_' + Date.now() + '_' + Math.floor(Math.random()*1e6);
-    var script = document.createElement('script');
-    function cleanup(){ try { delete window[cb]; } catch(e) { window[cb] = undefined; } if (script.parentNode) script.parentNode.removeChild(script); }
-    window[cb] = function(data){ cleanup(); resolve(data); };
-    var qp = new URLSearchParams(Object.assign({}, params, { callback: cb }));
-    script.src = SCRIPT_URL + '?' + qp.toString();
-    script.onerror = function(){ cleanup(); reject(new Error('conexion')); };
-    setTimeout(function(){ if (window[cb]) { cleanup(); reject(new Error('timeout')); } }, 20000);
-    document.head.appendChild(script);
-  });
-}
-
-async function guardarPuntaje(ratio) {
-  const s = getScores(); s[UNIDAD_ID] = ratio; localStorage.setItem('di_scores', JSON.stringify(s));
-  updateSidebar();
-  try {
-    await jsonp({ action: 'saveScore', id: UNIDAD_ID, score: ratio, label: UNIDAD_LABEL, date: new Date().toLocaleDateString('es-CL') });
-  } catch(e) {}
-}
-
-function updateSidebar() {
-  const s = getScores();
-  const ids = ['m2-1','m2-2','m2-3'];
-  const done = ids.filter(id => s[id] !== undefined && s[id] > 0).length;
-  document.getElementById('sidebarPct').textContent = done + '/3';
-  document.getElementById('sidebarBar').style.width = Math.round(done/3*100) + '%';
-  ids.forEach(id => {
-    const el = document.getElementById('num-' + id);
-    if (el && s[id] !== undefined && s[id] > 0) { el.style.background = 'var(--success)'; el.style.color = '#fff'; }
-  });
-  document.getElementById('headerProgress').textContent = done + '/3 completadas';
-}
-
-function showToast(msg, type) {
-  const colors = { warning:'#c85c3a', info:'#3a6b8a', success:'#2d7a4f' };
-  const t = document.createElement('div');
-  t.className = 'toast-di';
-  t.style.background = colors[type] || colors.info;
-  t.innerHTML = msg;
-  document.body.appendChild(t);
-  setTimeout(() => { t.style.opacity='0'; t.style.transition='opacity 0.3s'; setTimeout(()=>t.remove(),300); }, 3000);
-}
-
-function scrollToTop() { window.scrollTo({top:0,behavior:'smooth'}); }
-
-updateSidebar();
-
-async function syncSheet() {
-  try {
-    const data = await jsonp({ action: 'getAll' });
-    if (data && data.ok) {
-      const s = getScores();
-      (data.scores || []).forEach(function(row){
-        if (row.id && row.score !== undefined) s[row.id] = parseFloat(row.score);
-      });
-      localStorage.setItem('di_scores', JSON.stringify(s));
-      updateSidebar();
-      showCompletedState();
-    }
-  } catch(e) {}
-}
-
-function showCompletedState() {
-  const ratio = getScores()[UNIDAD_ID];
-  if (ratio === undefined || ratio <= 0) return;
-  const pct = Math.round(ratio * 100);
-  const ok = pct >= 70;
-  const sec = document.querySelector('.eval-section');
-  if (!sec) return;
-  let banner = document.getElementById('completedBanner');
-  if (!banner) {
-    banner = document.createElement('div');
-    banner.id = 'completedBanner';
-    sec.insertBefore(banner, sec.firstChild);
-  }
-  banner.innerHTML =
-    '<div style="display:flex;align-items:center;gap:0.9rem;background:' + (ok ? '#edf7f2' : 'var(--terra-light)') +
-    ';border:1px solid ' + (ok ? '#b0ddc5' : '#e0b0a0') + ';border-left:4px solid ' + (ok ? 'var(--success)' : 'var(--terra)') +
-    ';border-radius:8px;padding:0.9rem 1.1rem;margin-bottom:1.2rem">' +
-      '<i class="bi bi-' + (ok ? 'check-circle-fill' : 'arrow-repeat') + '" style="color:' + (ok ? 'var(--success)' : 'var(--terra)') + ';font-size:1.5rem"></i>' +
-      '<div style="flex:1">' +
-        '<div style="font-weight:bold;font-size:0.9rem;color:var(--dark)">Ya completaste esta unidad</div>' +
-        '<div style="font-size:0.82rem;color:var(--muted)">Puntaje guardado: <strong>' + pct + '%</strong>. Puedes repasar el contenido o volver a responder más abajo.</div>' +
-      '</div>' +
-    '</div>';
-}
-
-function trackVisit() {
-  try {
-    let vid = localStorage.getItem('di_vid');
-    if (!vid) { vid = 'v' + Date.now().toString(36) + Math.random().toString(36).slice(2,8); localStorage.setItem('di_vid', vid); }
-    let sid = sessionStorage.getItem('di_sid');
-    if (!sid) { sid = 's' + Date.now().toString(36) + Math.random().toString(36).slice(2,8); sessionStorage.setItem('di_sid', sid); }
-    const qs = new URLSearchParams(location.search);
-    if (qs.get('owner') === '1') localStorage.setItem('di_owner', '1');
-    if (qs.get('owner') === '0') localStorage.removeItem('di_owner');
-    const owner = localStorage.getItem('di_owner') === '1' ? '1' : '0';
-    const device = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'movil' : 'escritorio';
-    const params = new URLSearchParams({ action: 'logVisit', page: UNIDAD_ID, vid: vid, sid: sid, owner: owner, device: device, t: String(Date.now()) });
-    const img = new Image();
-    img.referrerPolicy = 'no-referrer';
-    img.src = SCRIPT_URL + '?' + params.toString();
-  } catch(e) {}
-}
-
-trackVisit();
-syncSheet();
+renderQuiz();
+updateQuizCounter();
 </script>
 </body>
 </html>
