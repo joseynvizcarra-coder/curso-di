@@ -3,507 +3,367 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Diseño Instruccional — Joselyn Vizcarra</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<title>Diseño Instruccional — Cuaderno de taller</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --cream: #f5f2ec;
-  --dark: #0f1117;
-  --terra: #c85c3a;
-  --blue: #3a6b8a;
-  --muted: #7a7570;
-  --border: #ddd8d0;
-  --success: #2d7a4f;
-  --terra-light: #f7ede8;
-  --blue-light: #e8f0f5;
+  --paper: #EDEAE3;
+  --paper-alt: #E4DFD3;
+  --card: #F8F6F1;
+  --ink: #1C1A17;
+  --ink-muted: #6B665D;
+  --border: #D8D1C0;
+  --border-soft: #E2DCCC;
+
+  --m1: #A85B32; /* tierra siena */
+  --m1-soft: #F1E2D6;
+  --m2: #2A5CAA; /* azul cobalto */
+  --m2-soft: #DCE5F2;
+  --m3: #5B7052; /* verde óxido */
+  --m3-soft: #E3E8DE;
+  --m4: #B9862C; /* ocre */
+  --m4-soft: #F1E5CC;
+  --m5: #6B4C7A; /* violeta manganeso */
+  --m5-soft: #E9E0EC;
+
+  --done: #4A6B3E;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--cream); color: var(--dark); font-family: 'Calibri', 'Segoe UI', sans-serif; min-height: 100vh; }
 
-/* HEADER */
-.header-main {
-  background: linear-gradient(135deg, var(--dark) 0%, #1e2030 100%);
-  border-bottom: 3px solid var(--terra);
-  padding: 2.5rem 0 2rem;
+body {
+  background: var(--paper);
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(168,91,50,0.05), transparent 40%),
+    radial-gradient(circle at 88% 92%, rgba(42,92,170,0.05), transparent 40%);
+  color: var(--ink);
+  font-family: 'IBM Plex Sans', sans-serif;
+  min-height: 100vh;
 }
-.header-main h1 { font-family: Georgia, serif; font-size: 2rem; font-weight: normal; color: #fff; margin-bottom: 0.3rem; }
-.header-main p { color: #a09a94; font-size: 0.9rem; }
-.header-tag { display: inline-block; background: var(--terra); color: #fff; font-size: 0.72rem; padding: 0.25rem 0.7rem; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.8rem; }
 
-/* STATS BAR */
-.stats-bar {
-  background: var(--dark);
-  border-bottom: 1px solid #2a2a35;
-  padding: 1rem 0;
+.serif { font-family: 'Fraunces', serif; }
+.mono { font-family: 'IBM Plex Mono', monospace; }
+
+/* ============ HERO ============ */
+.hero {
+  padding: 3.5rem 1.5rem 2.5rem;
+  border-bottom: 1px solid var(--border);
+  position: relative;
 }
-.stat-item { text-align: center; padding: 0 1rem; border-right: 1px solid #2a2a35; }
-.stat-item:last-child { border-right: none; }
-.stat-num { font-family: Georgia, serif; font-size: 1.8rem; color: var(--terra); line-height: 1; }
-.stat-label { font-size: 0.72rem; color: #a09a94; margin-top: 0.2rem; }
-.global-progress { background: #2a2a35; border-radius: 99px; height: 4px; margin-top: 0.6rem; overflow: hidden; }
-.global-progress-fill { height: 100%; background: linear-gradient(90deg, var(--terra), #e07a5a); border-radius: 99px; transition: width 0.6s ease; }
+.hero-inner { max-width: 900px; margin: 0 auto; }
+.eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.eyebrow::before {
+  content: '';
+  width: 18px; height: 2px;
+  background: var(--m1);
+}
+.hero h1 {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-optical-sizing: auto;
+  font-size: clamp(1.7rem, 4vw, 2.5rem);
+  line-height: 1.15;
+  margin-bottom: 1rem;
+  max-width: 20ch;
+}
+.hero p.thesis {
+  font-size: 1rem;
+  color: #423E37;
+  line-height: 1.6;
+  max-width: 62ch;
+  margin-bottom: 0.5rem;
+}
+.hero-meta {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  color: var(--ink-muted);
+}
+.hero-meta span strong { color: var(--ink); }
 
-/* SYNC */
+/* ============ PROGRESS — veta de pigmento ============ */
+.progress-block { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
+.progress-strip {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  padding: 1.4rem 0 0.8rem;
+  gap: 1.5rem; flex-wrap: wrap;
+}
+.progress-num { font-family: 'Fraunces', serif; font-size: 2.2rem; font-weight: 600; line-height: 1; }
+.progress-label { font-size: 0.75rem; color: var(--ink-muted); margin-top: 0.25rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.progress-stats { display: flex; gap: 2rem; }
+
+.vein-track {
+  position: relative;
+  height: 14px;
+  background: var(--paper-alt);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 1.8rem;
+}
+.vein-fill {
+  position: relative;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--m1) 0%, var(--m2) 35%, var(--m3) 60%, var(--m4) 80%, var(--m5) 100%);
+  transition: width 0.7s cubic-bezier(.4,0,.2,1);
+}
+.vein-fill::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(78deg, rgba(255,255,255,0.14) 0 2px, transparent 2px 9px);
+  mix-blend-mode: overlay;
+}
+
+/* ============ SYNC PILL ============ */
 .sync-pill {
   display: inline-flex; align-items: center; gap: 0.5rem;
-  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 20px; padding: 0.35rem 0.9rem; font-size: 0.78rem; color: #a09a94;
+  font-family: 'IBM Plex Mono', monospace;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 3px; padding: 0.35rem 0.8rem; font-size: 0.72rem; color: var(--ink-muted);
 }
-.sync-dot { width: 7px; height: 7px; border-radius: 50%; background: #555; flex-shrink: 0; }
-.sync-dot.ok { background: #2d7a4f; box-shadow: 0 0 6px rgba(45,122,79,0.6); }
-.sync-dot.error { background: var(--terra); }
-.sync-dot.loading { background: #f0a040; animation: pulse 1s infinite; }
-@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+.sync-dot { width: 6px; height: 6px; border-radius: 50%; background: #999; flex-shrink: 0; }
+.sync-dot.ok { background: var(--done); }
+.sync-dot.error { background: var(--m1); }
+.sync-dot.loading { background: var(--m4); animation: pulse 1s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
 
-/* MAIN */
-.main-container { max-width: 1000px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+/* ============ MAIN ============ */
+.main-container { max-width: 900px; margin: 0 auto; padding: 1rem 1.5rem 3rem; }
 
-/* SECTION TITLE */
-.section-title { font-family: Georgia, serif; font-size: 0.75rem; font-weight: normal; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1.2rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--border); }
-
-/* MÓDULO CARD */
-.modulo-card {
-  background: #fff;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  overflow: hidden;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
-  transition: box-shadow 0.2s;
+.module-block { margin-bottom: 2.4rem; }
+.module-head {
+  display: flex; align-items: baseline; gap: 0.9rem;
+  padding-bottom: 0.7rem; margin-bottom: 1rem;
+  border-bottom: 2px solid var(--mc);
 }
-.modulo-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
-
-.modulo-head {
-  display: flex; align-items: center; gap: 1.2rem;
-  padding: 1.2rem 1.5rem;
-  background: var(--dark);
-  border-bottom: 1px solid #2a2a35;
+.module-index {
+  font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.05rem;
+  color: var(--mc); flex-shrink: 0;
 }
-.modulo-num {
-  width: 44px; height: 44px; border-radius: 10px;
-  background: var(--terra); color: #fff;
-  display: flex; align-items: center; justify-content: center;
-  font-family: Georgia, serif; font-size: 1.3rem; flex-shrink: 0;
-}
-.modulo-head-info { flex: 1; }
-.modulo-head-title { font-family: Georgia, serif; font-size: 1rem; font-weight: normal; color: #fff; margin-bottom: 0.15rem; }
-.modulo-head-sub { font-size: 0.78rem; color: #a09a94; }
-.modulo-head-progress { text-align: right; }
-.modulo-pct { font-size: 0.8rem; color: #a09a94; margin-bottom: 0.3rem; }
-.modulo-mini-bar { background: #2a2a35; border-radius: 99px; height: 4px; width: 80px; overflow: hidden; }
-.modulo-mini-fill { height: 100%; background: var(--terra); border-radius: 99px; transition: width 0.5s ease; }
+.module-titles { flex: 1; }
+.module-head h2 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.15rem; }
+.module-head .module-sub { font-size: 0.78rem; color: var(--ink-muted); margin-top: 0.1rem; }
+.module-head .module-pct { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--ink-muted); white-space: nowrap; }
 
-/* UNIDADES */
-.unidades-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
-@media(max-width: 640px) { .unidades-grid { grid-template-columns: 1fr; } }
-
-.unidad-item {
-  display: flex; flex-direction: column;
-  padding: 1.1rem 1.3rem;
-  border-right: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  text-decoration: none; color: var(--dark);
+.unit-list { display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; background: var(--card); }
+.unit-item {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 0.9rem 1.1rem;
+  border-bottom: 1px solid var(--border-soft);
+  text-decoration: none; color: var(--ink);
   transition: background 0.15s;
   position: relative;
 }
-.unidad-item:nth-child(3n) { border-right: none; }
-.unidad-item:nth-last-child(-n+3) { border-bottom: none; }
-@media(max-width:640px){
-  .unidad-item { border-right: none; }
-  .unidad-item:last-child { border-bottom: none; }
-}
-.unidad-item:hover { background: var(--cream); }
+.unit-item:last-child { border-bottom: none; }
+.unit-item:hover:not(.locked) { background: var(--msoft); }
+.unit-item.locked { cursor: default; color: var(--ink-muted); }
 
-.unidad-top { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.5rem; }
-.unidad-badge {
-  width: 34px; height: 34px; border-radius: 8px; flex-shrink: 0;
+.unit-mark {
+  width: 30px; height: 30px; flex-shrink: 0; border-radius: 3px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 0.75rem; font-weight: bold;
-  background: var(--cream); border: 2px solid var(--border); color: var(--muted);
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; font-weight: 500;
+  border: 1.5px solid var(--border);
+  color: var(--ink-muted);
+  background: var(--paper);
 }
-.unidad-badge.done { background: var(--success); border-color: var(--success); color: #fff; }
-.unidad-badge.partial { background: var(--terra); border-color: var(--terra); color: #fff; }
-.unidad-badge.inprogress { background: var(--blue); border-color: var(--blue); color: #fff; }
+.unit-mark.done { background: var(--mc); border-color: var(--mc); color: #fff; }
+.unit-mark.partial { background: var(--msoft); border-color: var(--mc); color: var(--mc); }
 
-.unidad-num { font-size: 0.7rem; color: var(--muted); font-weight: bold; }
-.unidad-title { font-size: 0.9rem; font-weight: bold; color: var(--dark); line-height: 1.3; margin-bottom: 0.25rem; }
-.unidad-desc { font-size: 0.76rem; color: var(--muted); line-height: 1.4; flex: 1; }
-.unidad-score {
-  margin-top: 0.7rem; padding-top: 0.6rem;
+.unit-body { flex: 1; min-width: 0; }
+.unit-title { font-size: 0.9rem; font-weight: 500; line-height: 1.3; }
+.unit-note { font-size: 0.74rem; color: var(--ink-muted); margin-top: 0.15rem; }
+.unit-note.new { color: var(--mc); font-family: 'IBM Plex Mono', monospace; }
+
+.unit-score { font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; color: var(--ink-muted); white-space: nowrap; }
+.unit-score.done { color: var(--done); }
+
+.tag-new {
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; text-transform: uppercase;
+  letter-spacing: 0.05em; background: var(--mc); color: #fff; padding: 0.1rem 0.4rem; border-radius: 2px;
+}
+.tag-soon {
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; text-transform: uppercase;
+  letter-spacing: 0.05em; color: var(--ink-muted); border: 1px solid var(--border); padding: 0.1rem 0.4rem; border-radius: 2px;
+}
+
+/* module color scoping */
+.m1 { --mc: var(--m1); --msoft: var(--m1-soft); }
+.m2 { --mc: var(--m2); --msoft: var(--m2-soft); }
+.m3 { --mc: var(--m3); --msoft: var(--m3-soft); }
+.m4 { --mc: var(--m4); --msoft: var(--m4-soft); }
+.m5 { --mc: var(--m5); --msoft: var(--m5-soft); }
+
+/* ============ CROSS-CUTTING LEGEND ============ */
+.legend {
+  display: flex; gap: 1.5rem; flex-wrap: wrap;
+  padding: 1rem 0 0.4rem;
+  font-size: 0.76rem; color: var(--ink-muted);
   border-top: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 0.6rem;
 }
-.unidad-score-num { font-size: 0.8rem; font-weight: bold; }
-.unidad-score-num.done { color: var(--success); }
-.unidad-score-num.partial { color: var(--terra); }
-.unidad-score-num.pending { color: var(--muted); }
-.unidad-arrow { font-size: 0.8rem; color: var(--muted); }
+.legend span { display: flex; align-items: center; gap: 0.4rem; }
+.legend .dot { width: 9px; height: 9px; border-radius: 2px; }
+.legend .dot.ia { background: #2A5CAA; }
+.legend .dot.entrevista { background: #A85B32; }
 
-/* SCORE BAR mini */
-.score-mini-bar { height: 3px; background: var(--border); border-radius: 99px; margin-top: 0.3rem; overflow: hidden; }
-.score-mini-fill { height: 100%; border-radius: 99px; transition: width 0.4s ease; }
-.score-mini-fill.done { background: var(--success); }
-.score-mini-fill.partial { background: var(--terra); }
-
-/* FOOTER */
-footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.78rem; border-top: 1px solid var(--border); margin-top: 1rem; }
+footer { text-align: center; padding: 2rem 1rem 3rem; color: var(--ink-muted); font-size: 0.76rem; }
+footer strong { color: var(--ink); font-weight: 500; }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<div class="header-main">
-  <div class="main-container py-0">
-    <div class="d-flex flex-column flex-md-row align-items-start align-items-md-end justify-content-between gap-3">
+<div class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Cuaderno de taller · Diseño Instruccional</div>
+    <h1>Diseñar, producir y defender una instancia formativa completa</h1>
+    <p class="thesis">Ruta de estudio personal construida con backward design: cada módulo parte de lo que necesito ser capaz de hacer al final, no de una lista de temas sueltos. Reconstrucción v2 — en progreso.</p>
+    <div class="hero-meta">
+      <span><strong>16</strong> unidades</span>
+      <span><strong>5</strong> módulos</span>
+      <span id="headerSync" class="sync-pill"><span class="sync-dot loading" id="syncDot"></span><span id="syncMsg">Sincronizando…</span></span>
+    </div>
+  </div>
+</div>
+
+<div class="progress-block">
+  <div class="progress-strip">
+    <div>
+      <div class="progress-num" id="globalPct">0%</div>
+      <div class="progress-label">Avance total</div>
+    </div>
+    <div class="progress-stats">
       <div>
-        <div class="header-tag">Guía de estudio personal</div>
-        <h1>Diseño Instruccional</h1>
-        <p>Joselyn Vizcarra Romero · Junio 2026</p>
+        <div class="progress-num" style="font-size:1.3rem" id="statCompletadas">0</div>
+        <div class="progress-label">Completadas</div>
       </div>
-      <div class="sync-pill">
-        <div class="sync-dot loading" id="syncDot"></div>
-        <span id="syncMsg">Sincronizando...</span>
+      <div>
+        <div class="progress-num" style="font-size:1.3rem" id="statPuntaje">—</div>
+        <div class="progress-label">Puntaje prom.</div>
+      </div>
+      <div>
+        <div class="progress-num" style="font-size:1.3rem" id="gamiNivel">Nivel 1</div>
+        <div class="progress-label" id="gamiPoints">0 pts</div>
+      </div>
+      <div>
+        <div class="progress-num" style="font-size:1.3rem" id="gamiStreak">0 días</div>
+        <div class="progress-label">Racha de estudio</div>
       </div>
     </div>
+  </div>
+  <div class="vein-track"><div class="vein-fill" id="globalBar"></div></div>
+</div>
+
+<div class="main-container" id="modulesRoot"></div>
+
+<div class="main-container" style="padding-top:0">
+  <div style="margin-bottom:1.4rem;">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--ink-muted);margin-bottom:0.5rem;">Insignias del taller</div>
+    <div id="gamiBadges"></div>
+  </div>
+  <div class="legend">
+    <span><span class="dot ia"></span> IA en esta fase — dónde y cómo usarla</span>
+    <span><span class="dot entrevista"></span> Nota de entrevista — cómo defenderlo</span>
   </div>
 </div>
 
-<!-- STATS BAR -->
-<div class="stats-bar">
-  <div class="main-container py-0">
-    <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
-      <div class="d-flex">
-        <div class="stat-item">
-          <div class="stat-num" id="statCompletadas">0</div>
-          <div class="stat-label">Unidades completadas</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num" id="statPuntaje">—</div>
-          <div class="stat-label">Puntaje promedio</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num">14</div>
-          <div class="stat-label">Unidades totales</div>
-        </div>
-      </div>
-      <div style="flex:1;max-width:300px;min-width:150px">
-        <div class="d-flex justify-content-between mb-1">
-          <span style="font-size:0.72rem;color:#a09a94">Progreso total</span>
-          <span style="font-size:0.72rem;color:var(--terra);font-weight:bold" id="globalPct">0%</span>
-        </div>
-        <div class="global-progress"><div class="global-progress-fill" id="globalBar" style="width:0%"></div></div>
-      </div>
-    </div>
-  </div>
-</div>
+<footer>Joselyn Vizcarra Romero · <strong>Cuaderno de taller de Diseño Instruccional</strong> · v2 · Julio 2026</footer>
 
-<!-- RUTA DE APRENDIZAJE -->
-<div class="main-container pb-0">
-  <p class="section-title">Ruta de aprendizaje</p>
-  <div style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:1.5rem 1.5rem 1.2rem;margin-bottom:1.5rem;box-shadow:0 2px 12px rgba(0,0,0,0.05)">
-    <svg width="100%" viewBox="0 0 680 200" style="display:block">
-      <defs>
-        <marker id="ruta-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#7a7570" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
-      </defs>
-      <line x1="180" y1="88" x2="198" y2="88" stroke="#7a7570" stroke-width="1" marker-end="url(#ruta-arrow)"/>
-      <line x1="330" y1="88" x2="348" y2="88" stroke="#7a7570" stroke-width="1" marker-end="url(#ruta-arrow)"/>
-      <line x1="480" y1="88" x2="498" y2="88" stroke="#7a7570" stroke-width="1" marker-end="url(#ruta-arrow)"/>
-      <a href="modulos/m1-1.html">
-        <rect x="50" y="60" width="130" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-        <text x="115" y="80" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Módulo 1</text>
-        <text x="115" y="99" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">Fundamentos</text>
-      </a>
-      <a href="modulos/m2-1.html">
-        <rect x="200" y="60" width="130" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-        <text x="265" y="80" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Módulo 2</text>
-        <text x="265" y="99" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">Modelos ADDIE</text>
-      </a>
-      <a href="modulos/m3-1.html">
-        <rect x="350" y="60" width="130" height="56" rx="8" fill="#f7ede8" stroke="#c85c3a" stroke-width="1"/>
-        <text x="415" y="80" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Módulo 3</text>
-        <text x="415" y="99" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#c85c3a">Implementación</text>
-      </a>
-      <a href="modulos/m4-1.html">
-        <rect x="500" y="60" width="130" height="56" rx="8" fill="#f7ede8" stroke="#c85c3a" stroke-width="1"/>
-        <text x="565" y="80" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Módulo 4</text>
-        <text x="565" y="99" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#c85c3a">Herramientas DI</text>
-      </a>
-      <rect x="180" y="150" width="14" height="14" rx="3" fill="#e8f0f5" stroke="#3a6b8a"/>
-      <text x="200" y="161" font-family="Calibri,sans-serif" font-size="12" fill="#7a7570">ya dominas</text>
-      <rect x="310" y="150" width="14" height="14" rx="3" fill="#f7ede8" stroke="#c85c3a"/>
-      <text x="330" y="161" font-family="Calibri,sans-serif" font-size="12" fill="#7a7570">a reforzar</text>
-    </svg>
-  </div>
-</div>
-
-<!-- CONTENIDO -->
-<div class="main-container pt-0">
-  <p class="section-title">Módulos del curso</p>
-
-  <!-- MÓDULO 1 -->
-  <div class="modulo-card">
-    <div class="modulo-head">
-      <div class="modulo-num">1</div>
-      <div class="modulo-head-info">
-        <div class="modulo-head-title">Fundamentos teóricos</div>
-        <div class="modulo-head-sub">Definición · historia · teorías del aprendizaje · Gagné · carga cognitiva</div>
-      </div>
-      <div class="modulo-head-progress">
-        <div class="modulo-pct" id="pct-m1">0/4 completadas</div>
-        <div class="modulo-mini-bar"><div class="modulo-mini-fill" id="bar-m1" style="width:0%"></div></div>
-      </div>
-    </div>
-    <div class="unidades-grid">
-      <a class="unidad-item" href="modulos/m1-1.html">
-        <div class="unidad-top">
-          <div class="unidad-badge" id="badge-m1-1">1.1</div>
-          <div class="unidad-num">Unidad 1.1</div>
-        </div>
-        <div class="unidad-title">¿Qué es el Diseño Instruccional?</div>
-        <div class="unidad-desc">Definición técnica, origen histórico, para qué sirve y perfil profesional del DI</div>
-        <div class="unidad-score">
-          <span class="unidad-score-num pending" id="score-m1-1">Pendiente</span>
-          <i class="bi bi-arrow-right-short unidad-arrow"></i>
-        </div>
-      </a>
-      <a class="unidad-item" href="modulos/m1-2.html">
-        <div class="unidad-top">
-          <div class="unidad-badge" id="badge-m1-2">1.2</div>
-          <div class="unidad-num">Unidad 1.2</div>
-        </div>
-        <div class="unidad-title">Teorías del aprendizaje</div>
-        <div class="unidad-desc">Conductismo, cognitivismo, constructivismo, andragogía y conectivismo</div>
-        <div class="unidad-score">
-          <span class="unidad-score-num pending" id="score-m1-2">Pendiente</span>
-          <i class="bi bi-arrow-right-short unidad-arrow"></i>
-        </div>
-      </a>
-      <a class="unidad-item" href="modulos/m1-3.html">
-        <div class="unidad-top">
-          <div class="unidad-badge" id="badge-m1-3">1.3</div>
-          <div class="unidad-num">Unidad 1.3</div>
-        </div>
-        <div class="unidad-title">Gagné y carga cognitiva</div>
-        <div class="unidad-desc">Nueve eventos de instrucción, teoría de Sweller y principios de diseño</div>
-        <div class="unidad-score">
-          <span class="unidad-score-num pending" id="score-m1-3">Pendiente</span>
-          <i class="bi bi-arrow-right-short unidad-arrow"></i>
-        </div>
-      </a>
-      <a class="unidad-item" href="modulos/m1-4.html">
-        <div class="unidad-top">
-          <div class="unidad-badge" id="badge-m1-4">1.4</div>
-          <div class="unidad-num">Unidad 1.4</div>
-        </div>
-        <div class="unidad-title">Artefactos y documentos del DI</div>
-        <div class="unidad-desc">Syllabus, guía didáctica y DDI, ruta de aprendizaje, APA, diversificación y DUA</div>
-        <div class="unidad-score">
-          <span class="unidad-score-num pending" id="score-m1-4">Pendiente</span>
-          <i class="bi bi-arrow-right-short unidad-arrow"></i>
-        </div>
-      </a>
-    </div>
-  </div>
-
-  <!-- MÓDULO 2 -->
-  <div class="modulo-card">
-    <div class="modulo-head">
-      <div class="modulo-num">2</div>
-      <div class="modulo-head-info">
-        <div class="modulo-head-title">Proceso de diseño</div>
-        <div class="modulo-head-sub">Modelos ADDIE, SAM, UbD · análisis · objetivos y taxonomías</div>
-      </div>
-      <div class="modulo-head-progress">
-        <div class="modulo-pct" id="pct-m2">0/3 completadas</div>
-        <div class="modulo-mini-bar"><div class="modulo-mini-fill" id="bar-m2" style="width:0%"></div></div>
-      </div>
-    </div>
-    <div class="unidades-grid">
-      <a class="unidad-item" href="modulos/m2-1.html">
-        <div class="unidad-top">
-          <div class="unidad-badge" id="badge-m2-1">2.1</div>
-          <div class="unidad-num">Unidad 2.1</div>
-        </div>
-        <div class="unidad-title">Modelos de DI: ADDIE, SAM, UbD</div>
-        <div class="unidad-desc">Fases de cada modelo, diferencias clave y cuándo usar cada uno</div>
-        <div class="unidad-score">
-          <span class="unidad-score-num pending" id="score-m2-1">Pendiente</span>
-          <i class="bi bi-arrow-right-short unidad-arrow"></i>
-        </div>
-      </a>
-      <a class="unidad-item" href="modulos/m2-2.html">
-        <div class="unidad-top">
-          <div class="unidad-badge" id="badge-m2-2">2.2</div>
-          <div class="unidad-num">Unidad 2.2</div>
-        </div>
-        <div class="unidad-title">Análisis de necesidades y audiencia</div>
-        <div class="unidad-desc">Diagnóstico, tipos de brechas, herramientas de análisis y contexto</div>
-        <div class="unidad-score">
-          <span class="unidad-score-num pending" id="score-m2-2">Pendiente</span>
-          <i class="bi bi-arrow-right-short unidad-arrow"></i>
-        </div>
-      </a>
-      <a class="unidad-item" href="modulos/m2-3.html">
-        <div class="unidad-top">
-          <div class="unidad-badge" id="badge-m2-3">2.3</div>
-          <div class="unidad-num">Unidad 2.3</div>
-        </div>
-        <div class="unidad-title">Objetivos de aprendizaje y taxonomías</div>
-        <div class="unidad-desc">Bloom revisado, modelo ABCD, alineación constructiva, SOLO y Fink</div>
-        <div class="unidad-score">
-          <span class="unidad-score-num pending" id="score-m2-3">Pendiente</span>
-          <i class="bi bi-arrow-right-short unidad-arrow"></i>
-        </div>
-      </a>
-    </div>
-  </div>
-
-  <!-- MÓDULO 3 -->
-  <div class="modulo-card">
-    <div class="modulo-head">
-      <div class="modulo-num">3</div>
-      <div class="modulo-head-info">
-        <div class="modulo-head-title">Implementación y contexto actual</div>
-        <div class="modulo-head-sub">Evaluación · LMS · SCORM · microcredenciales · IA aplicada al DI</div>
-      </div>
-      <div class="modulo-head-progress">
-        <div class="modulo-pct" id="pct-m3">0/3 completadas</div>
-        <div class="modulo-mini-bar"><div class="modulo-mini-fill" id="bar-m3" style="width:0%"></div></div>
-      </div>
-    </div>
-    <div class="unidades-grid">
-      <a class="unidad-item" href="modulos/m3-1.html">
-        <div class="unidad-top">
-          <div class="unidad-badge" id="badge-m3-1">3.1</div>
-          <div class="unidad-num">Unidad 3.1</div>
-        </div>
-        <div class="unidad-title">Evaluación y diseño de actividades</div>
-        <div class="unidad-desc">Evaluación auténtica, rúbricas, estrategias didácticas virtuales</div>
-        <div class="unidad-score">
-          <span class="unidad-score-num pending" id="score-m3-1">Pendiente</span>
-          <i class="bi bi-arrow-right-short unidad-arrow"></i>
-        </div>
-      </a>
-      <a class="unidad-item" href="modulos/m3-2.html">
-        <div class="unidad-top">
-          <div class="unidad-badge" id="badge-m3-2">3.2</div>
-          <div class="unidad-num">Unidad 3.2</div>
-        </div>
-        <div class="unidad-title">LMS, herramientas de autoría y SCORM</div>
-        <div class="unidad-desc">Plataformas, estructura de cursos, estándares, Moodle, Brightspace</div>
-        <div class="unidad-score">
-          <span class="unidad-score-num pending" id="score-m3-2">Pendiente</span>
-          <i class="bi bi-arrow-right-short unidad-arrow"></i>
-        </div>
-      </a>
-      <a class="unidad-item" href="modulos/m3-3.html">
-        <div class="unidad-top">
-          <div class="unidad-badge" id="badge-m3-3">3.3</div>
-          <div class="unidad-num">Unidad 3.3</div>
-        </div>
-        <div class="unidad-title">Microcredenciales e IA aplicada al DI</div>
-        <div class="unidad-desc">Marco chileno Mineduc, diseño de microcredenciales, IA generativa, tendencias 2026</div>
-        <div class="unidad-score">
-          <span class="unidad-score-num pending" id="score-m3-3">Pendiente</span>
-          <i class="bi bi-arrow-right-short unidad-arrow"></i>
-        </div>
-      </a>
-    </div>
-  </div>
-
-  <!-- MÓDULO 4 -->
-  <div class="modulo-card">
-    <div class="modulo-head">
-      <div class="modulo-num">4</div>
-      <div class="modulo-head-info">
-        <div class="modulo-head-title">Herramientas para el DI</div>
-        <div class="modulo-head-sub">Autoría · video · IA generativa · colaboración · gestión de proyectos</div>
-      </div>
-      <div class="modulo-head-progress">
-        <div class="modulo-pct" id="pct-m4">0/4 completadas</div>
-        <div class="modulo-mini-bar"><div class="modulo-mini-fill" id="bar-m4" style="width:0%"></div></div>
-      </div>
-    </div>
-    <div class="unidades-grid">
-      <a class="unidad-item" href="modulos/m4-1.html">
-        <div class="unidad-top">
-          <div class="unidad-badge" id="badge-m4-1">4.1</div>
-          <div class="unidad-num">Unidad 4.1</div>
-        </div>
-        <div class="unidad-title">Herramientas de autoría e interactividad</div>
-        <div class="unidad-desc">Articulate Storyline, H5P, Genially, Adobe Captivate — precios y uso real</div>
-        <div class="unidad-score">
-          <span class="unidad-score-num pending" id="score-m4-1">Pendiente</span>
-          <i class="bi bi-arrow-right-short unidad-arrow"></i>
-        </div>
-      </a>
-      <a class="unidad-item" href="modulos/m4-2.html">
-        <div class="unidad-top">
-          <div class="unidad-badge" id="badge-m4-2">4.2</div>
-          <div class="unidad-num">Unidad 4.2</div>
-        </div>
-        <div class="unidad-title">Herramientas de análisis</div>
-        <div class="unidad-desc">Power BI, GA4, reportes Moodle — del dato a la decisión de rediseño</div>
-        <div class="unidad-score">
-          <span class="unidad-score-num pending" id="score-m4-2">Pendiente</span>
-          <i class="bi bi-arrow-right-short unidad-arrow"></i>
-        </div>
-      </a>
-      <a class="unidad-item" href="modulos/m4-3.html">
-        <div class="unidad-top">
-          <div class="unidad-badge" id="badge-m4-3">4.3</div>
-          <div class="unidad-num">Unidad 4.3</div>
-        </div>
-        <div class="unidad-title">Producción multimedia y video con IA</div>
-        <div class="unidad-desc">Principios de Mayer, Camtasia, OBS, Loom, Synthesia, HeyGen, NotebookLM</div>
-        <div class="unidad-score">
-          <span class="unidad-score-num pending" id="score-m4-3">Pendiente</span>
-          <i class="bi bi-arrow-right-short unidad-arrow"></i>
-        </div>
-      </a>
-      <a class="unidad-item" href="modulos/m4-4.html">
-        <div class="unidad-top">
-          <div class="unidad-badge" id="badge-m4-4">4.4</div>
-          <div class="unidad-num">Unidad 4.4</div>
-        </div>
-        <div class="unidad-title">Colaboración y gestión de proyectos</div>
-        <div class="unidad-desc">Waterfall vs Agile, Miro, Trello, Notion — gestión de proyectos de DI</div>
-        <div class="unidad-score">
-          <span class="unidad-score-num pending" id="score-m4-4">Pendiente</span>
-          <i class="bi bi-arrow-right-short unidad-arrow"></i>
-        </div>
-      </a>
-    </div>
-  </div>
-
-</div><!-- /main-container -->
-
-<footer>Joselyn Vizcarra Romero · Diseño Instruccional · Junio 2026</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="gami.js"></script>
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbylYML8h2BnNgi2AXtZ8bkGaXPNRhurswPr5dfyGRldbVoCRvmoT2cHN0r3I4qGynLb/exec';
-const UNIDADES = ['m1-1','m1-2','m1-3','m1-4','m2-1','m2-2','m2-3','m3-1','m3-2','m3-3','m4-1','m4-2','m4-3','m4-4'];
-const MODULOS = { m1:['m1-1','m1-2','m1-3','m1-4'], m2:['m2-1','m2-2','m2-3'], m3:['m3-1','m3-2','m3-3'], m4:['m4-1','m4-2','m4-3','m4-4'] };
 
-function jsonp(params) {
-  return new Promise(function(resolve, reject) {
-    var cb = 'cb_' + Date.now() + '_' + Math.floor(Math.random()*1e6);
-    var script = document.createElement('script');
-    function cleanup(){ try { delete window[cb]; } catch(e) { window[cb] = undefined; } if (script.parentNode) script.parentNode.removeChild(script); }
-    window[cb] = function(data){ cleanup(); resolve(data); };
-    var qp = new URLSearchParams(Object.assign({}, params, { callback: cb }));
-    script.src = SCRIPT_URL + '?' + qp.toString();
-    script.onerror = function(){ cleanup(); reject(new Error('conexion')); };
-    setTimeout(function(){ if (window[cb]) { cleanup(); reject(new Error('timeout')); } }, 20000);
-    document.head.appendChild(script);
-  });
+// ===== ESTRUCTURA v2 — 5 módulos, backward design =====
+const MODULOS = [
+  {
+    id: 'm1', color: 'm1', titulo: 'Fundamentos y panorama', sub: 'De lo más amplio a lo aplicable',
+    unidades: [
+      { id: 'm1-1', titulo: '¿Qué es el Diseño Instruccional?', built: true },
+      { id: 'm1-2', titulo: 'Modelos de DI: ADDIE, SAM, UbD', built: false },
+      { id: 'm1-3', titulo: 'Teorías del aprendizaje', built: false },
+      { id: 'm1-4', titulo: 'Gagné, carga cognitiva y principios de Mayer', built: false },
+    ]
+  },
+  {
+    id: 'm2', color: 'm2', titulo: 'Análisis y definición', sub: 'Diagnóstico, objetivos y alineamiento',
+    unidades: [
+      { id: 'm2-1', titulo: 'Análisis de necesidades y audiencia', built: false },
+      { id: 'm2-2', titulo: 'Objetivos de aprendizaje y taxonomías', built: false },
+      { id: 'm2-3', titulo: 'Backward Design y alineamiento constructivo', built: false, nueva: true },
+      { id: 'm2-4', titulo: 'Artefactos y documentos del DI', built: false },
+    ]
+  },
+  {
+    id: 'm3', color: 'm3', titulo: 'Diseño de evaluación y experiencias', sub: 'De la evidencia a la actividad',
+    unidades: [
+      { id: 'm3-1', titulo: 'Evaluación y diseño de actividades', built: false },
+      { id: 'm3-2', titulo: 'Storyboarding', built: false, nueva: true },
+    ]
+  },
+  {
+    id: 'm4', color: 'm4', titulo: 'Implementación técnica', sub: 'Producción y despliegue',
+    unidades: [
+      { id: 'm4-1', titulo: 'LMS, SCORM, xAPI y SLA', built: false },
+      { id: 'm4-2', titulo: 'Herramientas de autoría — uso concreto', built: false },
+      { id: 'm4-3', titulo: 'Producción multimedia y video con IA', built: false },
+    ]
+  },
+  {
+    id: 'm5', color: 'm5', titulo: 'Gestión, impacto e IA crítica', sub: 'Sostener, medir y decidir',
+    unidades: [
+      { id: 'm5-1', titulo: 'Herramientas de análisis: PowerBI, GA4, reportes', built: false },
+      { id: 'm5-2', titulo: 'Colaboración y gestión de proyectos', built: false },
+      { id: 'm5-3', titulo: 'IA aplicada al DI — panorama crítico', built: false },
+    ]
+  },
+];
+
+const UNIDADES = MODULOS.flatMap(m => m.unidades.map(u => u.id));
+
+function renderModules() {
+  const root = document.getElementById('modulesRoot');
+  root.innerHTML = MODULOS.map(mod => `
+    <div class="module-block ${mod.color}">
+      <div class="module-head">
+        <div class="module-index">${mod.id.replace('m','')}</div>
+        <div class="module-titles">
+          <h2>${mod.titulo}</h2>
+          <div class="module-sub">${mod.sub}</div>
+        </div>
+        <div class="module-pct" id="pct-${mod.id}">0/${mod.unidades.length}</div>
+      </div>
+      <div class="unit-list">
+        ${mod.unidades.map(u => `
+          <a class="unit-item ${u.built ? '' : 'locked'}" href="${u.built ? 'modulos/'+u.id+'.html' : '#'}" ${u.built ? '' : 'onclick="return false;"'}>
+            <div class="unit-mark" id="mark-${u.id}">${u.id.split('-')[1]}</div>
+            <div class="unit-body">
+              <div class="unit-title">${u.titulo}</div>
+              <div class="unit-note ${u.nueva ? 'new' : ''}">${u.nueva ? 'Unidad nueva — backward design' : ('Unidad ' + mod.id.replace('m','') + '.' + u.id.split('-')[1])}</div>
+            </div>
+            ${u.built ? `<div class="unit-score" id="score-${u.id}">Pendiente</div>` : (u.nueva ? '<span class="tag-new">Nueva</span>' : '<span class="tag-soon">Por reconstruir</span>')}
+          </a>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
 }
 
 function getScores() {
-  try { return JSON.parse(localStorage.getItem('di_scores') || '{}'); } catch(e) { return {}; }
+  try { return JSON.parse(localStorage.getItem('di_scores_v2') || '{}'); } catch(e) { return {}; }
 }
 
 function updateUI() {
@@ -512,41 +372,27 @@ function updateUI() {
 
   UNIDADES.forEach(id => {
     const s = scores[id];
-    const badgeEl = document.getElementById('badge-' + id);
+    const markEl = document.getElementById('mark-' + id);
     const scoreEl = document.getElementById('score-' + id);
-    if (!badgeEl || !scoreEl) return;
-
+    if (!markEl) return;
     if (s !== undefined && s > 0) {
       const pct = Math.round(s * 100);
       completadas++; suma += pct; cont++;
-
-      if (pct >= 70) {
-        badgeEl.className = 'unidad-badge done';
-        badgeEl.innerHTML = '<i class="bi bi-check-lg"></i>';
-        scoreEl.className = 'unidad-score-num done';
-      } else {
-        badgeEl.className = 'unidad-badge partial';
-        badgeEl.innerHTML = '<i class="bi bi-arrow-repeat"></i>';
-        scoreEl.className = 'unidad-score-num partial';
-      }
-      scoreEl.textContent = pct + '%';
+      markEl.className = 'unit-mark ' + (pct >= 70 ? 'done' : 'partial');
+      if (scoreEl) { scoreEl.textContent = pct + '%'; scoreEl.className = 'unit-score' + (pct >= 70 ? ' done' : ''); }
     }
   });
 
-  // Stats globales
   document.getElementById('statCompletadas').textContent = completadas;
-  document.getElementById('statPuntaje').textContent = cont > 0 ? Math.round(suma/cont) + '%' : '—';
+  document.getElementById('statPuntaje').textContent = cont > 0 ? Math.round(suma / cont) + '%' : '—';
   const progPct = Math.round((completadas / UNIDADES.length) * 100);
-  document.getElementById('globalBar').style.width = progPct + '%';
   document.getElementById('globalPct').textContent = progPct + '%';
+  document.getElementById('globalBar').style.width = progPct + '%';
 
-  // Por módulo
-  Object.entries(MODULOS).forEach(([mod, ids]) => {
-    const done = ids.filter(id => scores[id] !== undefined && scores[id] > 0).length;
-    const pctEl = document.getElementById('pct-' + mod);
-    const barEl = document.getElementById('bar-' + mod);
-    if (pctEl) pctEl.textContent = done + '/' + ids.length + ' completadas';
-    if (barEl) barEl.style.width = Math.round(done/ids.length*100) + '%';
+  MODULOS.forEach(mod => {
+    const done = mod.unidades.filter(u => scores[u.id] !== undefined && scores[u.id] > 0).length;
+    const el = document.getElementById('pct-' + mod.id);
+    if (el) el.textContent = done + '/' + mod.unidades.length;
   });
 }
 
@@ -554,43 +400,30 @@ async function syncSheet() {
   const dot = document.getElementById('syncDot');
   const msg = document.getElementById('syncMsg');
   try {
-    const data = await jsonp({ action: 'getAll' });
+    const cb = 'cb_' + Date.now();
+    const data = await new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      window[cb] = (d) => { resolve(d); delete window[cb]; script.remove(); };
+      script.src = SCRIPT_URL + '?action=getAll&callback=' + cb;
+      script.onerror = () => reject(new Error('conexion'));
+      document.head.appendChild(script);
+      setTimeout(() => reject(new Error('timeout')), 15000);
+    });
     if (data.ok) {
       const scores = getScores();
-      (data.scores || []).forEach(row => {
-        if (row.id && row.score !== undefined) scores[row.id] = parseFloat(row.score);
-      });
-      localStorage.setItem('di_scores', JSON.stringify(scores));
+      (data.scores || []).forEach(row => { if (row.id && row.score !== undefined) scores[row.id] = parseFloat(row.score); });
+      localStorage.setItem('di_scores_v2', JSON.stringify(scores));
       dot.className = 'sync-dot ok';
-      msg.textContent = 'Sincronizado con Google Sheets' + (data.lastUpdate ? ' · ' + data.lastUpdate : '');
+      msg.textContent = 'Sincronizado';
       updateUI();
     } else { throw new Error('sin datos'); }
   } catch(e) {
     dot.className = 'sync-dot error';
-    msg.textContent = 'Datos locales — sin conexión con Sheets';
+    msg.textContent = 'Sin conexión — datos locales';
   }
 }
 
-// ---- Registro de visita (silencioso, sin login para el visitante) ----
-function trackVisit(pageId) {
-  try {
-    let vid = localStorage.getItem('di_vid');
-    if (!vid) { vid = 'v' + Date.now().toString(36) + Math.random().toString(36).slice(2,8); localStorage.setItem('di_vid', vid); }
-    let sid = sessionStorage.getItem('di_sid');
-    if (!sid) { sid = 's' + Date.now().toString(36) + Math.random().toString(36).slice(2,8); sessionStorage.setItem('di_sid', sid); }
-    const qs = new URLSearchParams(location.search);
-    if (qs.get('owner') === '1') localStorage.setItem('di_owner', '1');
-    if (qs.get('owner') === '0') localStorage.removeItem('di_owner');
-    const owner = localStorage.getItem('di_owner') === '1' ? '1' : '0';
-    const device = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'movil' : 'escritorio';
-    const params = new URLSearchParams({ action: 'logVisit', page: pageId, vid: vid, sid: sid, owner: owner, device: device, t: String(Date.now()) });
-    const img = new Image();
-    img.referrerPolicy = 'no-referrer';
-    img.src = SCRIPT_URL + '?' + params.toString();
-  } catch(e) {}
-}
-
-trackVisit('index');
+renderModules();
 updateUI();
 syncSheet();
 </script>
