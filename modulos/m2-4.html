@@ -81,6 +81,7 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
 .media-tab.active { color: var(--mc); border-bottom-color: var(--mc); background: var(--card); }
 .media-pane { display: none; }
 .media-pane.active { display: block; }
+.media-pending { padding: 2rem 1rem; text-align: center; color: var(--ink-muted); font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; }
 .media-note { font-size: 0.76rem; color: var(--ink-muted); padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
 .pdf-frame { width: 100%; height: 480px; border: none; display: block; background: #fff; }
 .pdf-actions { display: flex; gap: 0.6rem; padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
@@ -323,27 +324,10 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
         <button class="media-tab" data-pane="audio" onclick="switchMedia(this)">🎧 Audio NotebookLM</button>
         <button class="media-tab" data-pane="video" onclick="switchMedia(this)">▶ Video</button>
       </div>
-      <div class="media-pane active" id="pane-pdf">
-        <iframe class="pdf-frame" src="m2-4.pdf#view=FitH" title="Presentación del tema" loading="lazy" onload="Gami.award('m2-4_pdf', 5, 'Revisaste la presentación'); checkMultimodal();"></iframe>
-        <div class="pdf-actions">
-          <a href="m2-4.pdf" target="_blank" rel="noopener">Pantalla completa</a>
-          <a href="m2-4.pdf" download>Descargar</a>
-        </div>
-      </div>
-      <div class="media-pane" id="pane-audio">
-        <div class="audio-pane">
-          <span class="audio-label">Resumen en audio · NotebookLM</span>
-          <audio controls preload="metadata" src="m2-4-audio.mp3" onplay="Gami.award('m2-4_audio', 5, 'Escuchaste el resumen en audio'); checkMultimodal();"></audio>
-        </div>
-      </div>
-      <div class="media-pane" id="pane-video">
-        <div class="video-wrap" id="videoWrap">
-          <div class="video-empty" id="videoEmpty">
-            <span>▶ Espacio para video de YouTube</span>
-            <span style="opacity:0.6">Edita la constante YT_VIDEO_ID en este archivo con el ID del video que elijas.</span>
-          </div>
-        </div>
-      </div>
+            <div class="media-pane active" id="pane-pdf"><div id="pdfContainer"><div class="media-pending">Presentación en preparación — se activará al agregar <strong>m2-4.pdf</strong>.</div></div></div>
+      <div class="media-pane" id="pane-audio"><div id="audioContainer"><div class="media-pending">Audio en preparación — se activará al agregar <strong>m2-4-audio.mp3</strong>.</div></div></div>
+      <div class="media-pane" id="pane-video"><div id="videoContainer"><div class="media-pending">Video en preparación — pega el ID en <strong>YT_VIDEO_ID</strong> dentro del archivo.</div></div></div>
+      
       <div class="media-note">Misma unidad, cuatro formatos — elige el medio que te acomode hoy (diversificación de la representación, DUA pauta 1). El texto completo está abajo, siempre visible.</div>
     </div>
 
@@ -652,9 +636,19 @@ const UNIT_ID = 'm2-4';
 
 // ===== VIDEO: pega aquí el ID de YouTube =====
 const YT_VIDEO_ID = '';
-if (YT_VIDEO_ID) {
-  document.getElementById('videoWrap').innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + YT_VIDEO_ID + '" title="Video de la unidad" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+function detectMedia() {
+  fetch('m2-4.pdf', { method: 'HEAD' }).then(r => {
+    if (r.ok) document.getElementById('pdfContainer').innerHTML =
+      '<iframe class="pdf-frame" src="m2-4.pdf#view=FitH" title="Presentación" loading="lazy" onload="Gami.award(\'m2-4_pdf\',5,\'Revisaste la presentación\');checkMultimodal();"></iframe><div class="pdf-actions"><a href="m2-4.pdf" target="_blank" rel="noopener">Pantalla completa</a><a href="m2-4.pdf" download>Descargar</a></div>';
+  }).catch(()=>{});
+  fetch('m2-4-audio.mp3', { method: 'HEAD' }).then(r => {
+    if (r.ok) document.getElementById('audioContainer').innerHTML =
+      '<div class="audio-pane"><span class="audio-label">Resumen en audio · NotebookLM</span><audio controls preload="metadata" src="m2-4-audio.mp3" onplay="Gami.award(\'m2-4_audio\',5,\'Escuchaste el audio\');checkMultimodal();"></audio></div>';
+  }).catch(()=>{});
+  if (YT_VIDEO_ID) document.getElementById('videoContainer').innerHTML =
+    '<div class="video-wrap"><iframe src="https://www.youtube-nocookie.com/embed/' + YT_VIDEO_ID + '" title="Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>';
 }
+detectMedia();
 
 function switchMedia(btn) {
   document.querySelectorAll('.media-tab').forEach(t => t.classList.remove('active'));

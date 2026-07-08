@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>1.4 Gagné, carga cognitiva y principios de Mayer — Cuaderno de taller</title>
+<title>1.4 Gagné, carga cognitiva y Mayer — Cuaderno de taller</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -85,36 +85,34 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
 .compare-table th { background: var(--card); font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-muted); }
 .compare-table td:first-child { font-weight: 600; }
 
-/* teoría — tarjetas expandibles */
-.teoria { border: 1px solid var(--border); border-radius: 4px; background: var(--card); margin: 1rem 0; overflow: hidden; }
-.teoria-head { padding: 0.9rem 1.1rem; border-left: 5px solid var(--tc); }
-.teoria-head .t-era { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--tc); text-transform: uppercase; letter-spacing: 0.06em; }
-.teoria-head h3 { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 600; margin: 0.2rem 0 0.1rem; }
-.teoria-head .t-thinkers { font-size: 0.78rem; color: var(--ink-muted); }
-.teoria-body { padding: 0 1.1rem 1.1rem 1.1rem; }
-.teoria-metafora { background: var(--tc-soft); border-radius: 3px; padding: 0.6rem 0.9rem; font-size: 0.85rem; font-style: italic; margin: 0.6rem 0; }
-.teoria-aplica { border-top: 1px dashed var(--border); padding-top: 0.7rem; margin-top: 0.7rem; }
-.teoria-aplica .ta-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--tc); margin-bottom: 0.35rem; }
-.t-cond { --tc: #A83232; --tc-soft: #F5E5E2; }
-.t-cog { --tc: #2A5CAA; --tc-soft: #DCE5F2; }
-.t-const { --tc: #4A6B3E; --tc-soft: #E9F0E5; }
-.t-conect { --tc: #6B4C7A; --tc-soft: #E9E0EC; }
-.t-intrinseca { --tc: #A85B32; --tc-soft: #F1E2D6; }
-.t-extrana { --tc: #A83232; --tc-soft: #F5E5E2; }
-.t-germana { --tc: #4A6B3E; --tc-soft: #E9F0E5; }
+/* 9 eventos de Gagné — grid numerado clickeable */
+.eventos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; margin: 1rem 0 1.4rem; }
+@media (max-width: 760px) { .eventos { grid-template-columns: 1fr; } }
+.evento { border: 1px solid var(--border); border-radius: 4px; background: var(--card); padding: 0.8rem; cursor: pointer; transition: all 0.15s; }
+.evento:hover { border-color: var(--mc); }
+.evento.open { border-color: var(--mc); background: var(--msoft); }
+.evento-num { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.3rem; color: var(--mc); }
+.evento-titulo { font-size: 0.86rem; font-weight: 600; margin: 0.2rem 0; }
+.evento-desc { font-size: 0.8rem; color: #3A362F; display: none; }
+.evento.open .evento-desc { display: block; margin-top: 0.4rem; }
+.evento-fase { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-muted); }
 
-/* eventos de Gagné — pasos numerados clickeables */
-.fases { display: flex; flex-direction: column; gap: 0.6rem; margin: 1rem 0 1.4rem; }
-.fase { border: 1px solid var(--border); border-left: 4px solid var(--mc); border-radius: 4px; background: var(--card); overflow: hidden; }
-.fase-head { display: flex; align-items: center; gap: 0.9rem; padding: 0.8rem 1rem; cursor: pointer; }
-.fase-letra { width: 34px; height: 34px; border-radius: 50%; background: var(--mc); color: #fff; font-family: 'Fraunces', serif; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.9rem; }
-.fase-titulo { font-weight: 600; font-size: 0.94rem; flex: 1; }
-.fase-toggle { font-family: 'IBM Plex Mono', monospace; font-size: 1.1rem; color: var(--mc); }
-.fase-body { display: none; padding: 0 1rem 1rem 1rem; font-size: 0.88rem; }
-.fase.open .fase-body { display: block; }
-.fase.open .fase-toggle { transform: rotate(45deg); }
-.fase-entregable { background: var(--msoft); border-radius: 3px; padding: 0.5rem 0.8rem; margin-top: 0.6rem; font-size: 0.82rem; }
-.fase-entregable strong { color: var(--mc); }
+/* carga cognitiva — 3 tipos */
+.carga-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; margin: 1rem 0; }
+@media (max-width: 760px) { .carga-grid { grid-template-columns: 1fr; } }
+.carga { border: 1px solid var(--border); border-radius: 4px; padding: 1rem; background: var(--card); }
+.carga h4 { font-family: 'Fraunces', serif; font-size: 0.98rem; font-weight: 600; margin-bottom: 0.3rem; }
+.carga .c-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.64rem; text-transform: uppercase; padding: 0.15rem 0.4rem; border-radius: 2px; display: inline-block; margin-bottom: 0.5rem; }
+.carga.buena { border-top: 3px solid var(--done); } .carga.buena .c-tag { background: var(--done-soft); color: var(--done); }
+.carga.mala { border-top: 3px solid #A83232; } .carga.mala .c-tag { background: #F5E5E2; color: #A83232; }
+.carga.necesaria { border-top: 3px solid var(--warn); } .carga.necesaria .c-tag { background: var(--warn-soft); color: #8A6318; }
+.carga p { font-size: 0.83rem; margin: 0; }
+
+/* principios de Mayer */
+.mayer-list { display: flex; flex-direction: column; gap: 0.5rem; margin: 1rem 0; }
+.mayer-item { border: 1px solid var(--border); border-left: 4px solid var(--ia); border-radius: 4px; background: var(--card); padding: 0.8rem 1rem; }
+.mayer-item h4 { font-size: 0.9rem; font-weight: 600; color: var(--ia); margin-bottom: 0.25rem; }
+.mayer-item p { font-size: 0.85rem; margin: 0; }
 
 .vineta { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin: 1.2rem 0; }
 .vineta-head { background: var(--ink); color: #EDEAE3; font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.6rem 1rem; }
@@ -183,6 +181,9 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
 .next-nav { display: flex; justify-content: space-between; margin-top: 2.5rem; padding-top: 1.2rem; border-top: 1px solid var(--border); font-size: 0.86rem; }
 .next-nav a { color: var(--mc); font-weight: 500; text-decoration: none; }
 .next-nav .disabled { color: var(--ink-muted); }
+.modulo-fin { background: linear-gradient(135deg, var(--mc), #8A4A28); color: #fff; border-radius: 6px; padding: 1.4rem; margin-top: 2rem; text-align: center; }
+.modulo-fin h3 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.15rem; margin-bottom: 0.4rem; }
+.modulo-fin p { font-size: 0.88rem; opacity: 0.95; margin: 0; }
 </style>
 </head>
 <body>
@@ -206,12 +207,11 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
     <a class="side-item active" href="m1-4.html"><span class="side-mark">1.4</span> Gagné y carga cognitiva</a>
     <div class="side-toc">
       <div class="toc-label">En esta unidad</div>
-      <a href="#s1">1 · Por qué estas tres piezas</a>
-      <a href="#s2">2 · Los Nueve Eventos de Gagné</a>
+      <a href="#s1">1 · Del cognitivismo a la práctica</a>
+      <a href="#s2">2 · Los 9 eventos de Gagné</a>
       <a href="#s3">3 · Carga cognitiva (Sweller)</a>
       <a href="#s4">4 · Principios de Mayer</a>
-      <a href="#s5">5 · Cómo se integran</a>
-      <a href="#s6">6 · Síntesis del Módulo 1</a>
+      <a href="#s5">5 · Todo junto en un diseño</a>
       <a href="#practica">Práctica de entrevista</a>
       <a href="#evaluacion">Evaluación (10)</a>
     </div>
@@ -220,43 +220,40 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
   <main>
     <div class="unit-eyebrow">Módulo 1 · Unidad 1.4</div>
     <h1 class="lesson-title">Gagné, carga cognitiva y principios de Mayer</h1>
-    <p class="lesson-dek">Las tres piezas más aplicables del cognitivismo: cómo secuenciar una instrucción (Gagné), cómo no saturar la memoria de trabajo (Sweller) y cómo presentar contenido multimedia sin que compita consigo mismo (Mayer).</p>
+    <p class="lesson-dek">Las tres herramientas más aplicables del cognitivismo. Aquí la teoría se vuelve checklist: qué hacer, en qué orden, y qué evitar al diseñar una lección o un recurso multimedia.</p>
     <div class="lesson-badges">
-      <span class="lbadge">6 bloques de contenido</span>
-      <span class="lbadge">1 actividad interactiva</span>
+      <span class="lbadge">5 bloques de contenido</span>
+      <span class="lbadge">9 eventos interactivos</span>
       <span class="lbadge">3 prácticas de entrevista</span>
       <span class="lbadge">10 preguntas de evaluación</span>
-      <span class="lbadge">~45 min</span>
-      <span class="lbadge">Cierra el Módulo 1</span>
+      <span class="lbadge">~40 min</span>
     </div>
 
     <div class="objetivo-box">
       <div class="label">Objetivo de aprendizaje</div>
-      <p>Dado un fragmento de curso, serás capaz de secuenciarlo según los Nueve Eventos de Instrucción de Gagné, identificar fuentes de carga cognitiva extraña y proponer cómo eliminarlas, y aplicar al menos tres principios de Mayer para el diseño multimedia de esa instrucción.</p>
+      <p>Dada una lección o un recurso multimedia a diseñar, serás capaz de aplicar los Nueve Eventos de Gagné para secuenciarla, gestionar la carga cognitiva según Sweller, y evaluar el recurso con los principios de Mayer, identificando qué corregir.</p>
     </div>
 
     <div class="mapa-block">
       <div class="mapa-head">Mapa de esta unidad · organizador previo</div>
       <div class="mapa-body">
-        <svg width="100%" viewBox="0 0 680 250" style="display:block" role="img" aria-label="Mapa de Gagné, carga cognitiva y Mayer">
-          <rect x="255" y="12" width="170" height="44" rx="5" fill="#F1E2D6" stroke="#A85B32" stroke-width="1.4"/>
-          <text x="340" y="30" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1C1A17">Diseñar una instrucción</text>
-          <text x="340" y="47" text-anchor="middle" font-family="monospace" font-size="9" fill="#A85B32">3 piezas cognitivistas aplicadas</text>
-          <line x1="340" y1="56" x2="150" y2="120" stroke="#D8D1C0"/><line x1="340" y1="56" x2="340" y2="120" stroke="#D8D1C0"/>
-          <line x1="340" y1="56" x2="530" y2="120" stroke="#D8D1C0"/>
-          <rect x="40" y="120" width="220" height="52" rx="5" fill="#DCE5F2" stroke="#2A5CAA" stroke-width="1.2"/>
-          <text x="150" y="141" text-anchor="middle" font-family="Georgia,serif" font-size="12.5" fill="#1C1A17">Gagné</text>
-          <text x="150" y="159" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#2A5CAA">estructura: 9 eventos</text>
-          <rect x="230" y="120" width="220" height="52" rx="5" fill="#E9F0E5" stroke="#4A6B3E" stroke-width="1.2"/>
-          <text x="340" y="141" text-anchor="middle" font-family="Georgia,serif" font-size="12.5" fill="#1C1A17">Carga cognitiva</text>
-          <text x="340" y="159" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#4A6B3E">filtro: no saturar</text>
-          <rect x="420" y="120" width="220" height="52" rx="5" fill="#E9E0EC" stroke="#6B4C7A" stroke-width="1.2"/>
-          <text x="530" y="141" text-anchor="middle" font-family="Georgia,serif" font-size="12.5" fill="#1C1A17">Mayer</text>
-          <text x="530" y="159" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#6B4C7A">presentación multimedia</text>
-          <text x="340" y="205" text-anchor="middle" font-family="monospace" font-size="10" fill="#6B665D">Gagné da el orden, Sweller pone el límite, Mayer da las reglas de forma.</text>
+        <svg width="100%" viewBox="0 0 680 210" style="display:block" role="img" aria-label="Mapa de la unidad 1.4">
+          <rect x="255" y="12" width="170" height="42" rx="5" fill="#F1E2D6" stroke="#A85B32" stroke-width="1.4"/>
+          <text x="340" y="30" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1C1A17">Cognitivismo aplicado</text>
+          <text x="340" y="46" text-anchor="middle" font-family="monospace" font-size="9" fill="#A85B32">de la teoría al diseño</text>
+          <line x1="340" y1="54" x2="130" y2="115" stroke="#D8D1C0"/><line x1="340" y1="54" x2="340" y2="115" stroke="#D8D1C0"/><line x1="340" y1="54" x2="555" y2="115" stroke="#D8D1C0"/>
+          <rect x="45" y="115" width="180" height="52" rx="5" fill="#F8F6F1" stroke="#2A5CAA" stroke-width="1.2"/>
+          <text x="135" y="135" text-anchor="middle" font-family="Georgia,serif" font-size="12.5" fill="#1C1A17">9 Eventos de Gagné</text>
+          <text x="135" y="152" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#2A5CAA">cómo secuenciar</text>
+          <rect x="250" y="115" width="180" height="52" rx="5" fill="#F8F6F1" stroke="#2A5CAA" stroke-width="1.2"/>
+          <text x="340" y="135" text-anchor="middle" font-family="Georgia,serif" font-size="12.5" fill="#1C1A17">Carga cognitiva</text>
+          <text x="340" y="152" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#2A5CAA">Sweller · no saturar</text>
+          <rect x="455" y="115" width="180" height="52" rx="5" fill="#F8F6F1" stroke="#2A5CAA" stroke-width="1.2"/>
+          <text x="545" y="135" text-anchor="middle" font-family="Georgia,serif" font-size="12.5" fill="#1C1A17">Principios de Mayer</text>
+          <text x="545" y="152" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#2A5CAA">multimedia efectivo</text>
         </svg>
       </div>
-      <div class="mapa-note">Al terminar, deberías poder mirar una pantalla de curso y decir: en qué evento de Gagné está, si tiene carga extraña de sobra, y qué principio de Mayer se está rompiendo.</div>
+      <div class="mapa-note">Estas tres herramientas se usan juntas: Gagné para el orden, Sweller para no saturar, Mayer para los recursos.</div>
     </div>
 
     <div class="media-block" id="mediaBlock">
@@ -273,147 +270,95 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
 
     <!-- S1 -->
     <div class="content-section" id="s1">
-      <h2><span class="sec-num">01</span> Por qué estas tres piezas cierran el Módulo 1</h2>
-      <p>En la 1.3 viste que el cognitivismo entiende el aprendizaje como <strong>procesamiento de información</strong>. Esta unidad toma esa idea y la vuelve directamente aplicable con tres herramientas que vas a usar en casi cada proyecto de DI:</p>
+      <h2><span class="sec-num">01</span> Del cognitivismo a la práctica</h2>
+      <p>En la unidad 1.3 viste el cognitivismo como teoría. Esta unidad toma sus tres herramientas más concretas y las convierte en algo que usas al diseñar. Son, en cierto sentido, el "instrumental de taller" del DI:</p>
       <ul>
-        <li><strong>Los Nueve Eventos de Instrucción de Gagné</strong> — el "cómo secuencio esto" a nivel de lección</li>
-        <li><strong>La Teoría de la Carga Cognitiva de Sweller</strong> — el "cuánto le pido a la memoria de trabajo" en cada pantalla</li>
-        <li><strong>Los Principios de Mayer para el aprendizaje multimedia</strong> — el "cómo combino texto, imagen y audio" sin que se estorben entre sí</li>
+        <li><strong>Los Nueve Eventos de Gagné</strong> — una secuencia probada de pasos para estructurar cualquier lección</li>
+        <li><strong>La Teoría de la Carga Cognitiva de Sweller</strong> — cómo no saturar la memoria de trabajo del estudiante</li>
+        <li><strong>Los Principios de Mayer</strong> — reglas para diseñar multimedia (video, presentaciones) que enseñe en vez de estorbar</li>
       </ul>
-      <div class="defbox">Las tres comparten el mismo problema de fondo: la memoria de trabajo humana es <strong>limitada</strong>. Gagné estructura para que no se sobrecargue con el orden equivocado, Sweller mide directamente esa carga, y Mayer da reglas concretas para presentar contenido sin generarla de más.</div>
-      <p>Es la unidad más "manos a la obra" del módulo: no son solo marcos para entender el campo (eso fue 1.2), son reglas que aplicas directo al construir cada pantalla de un curso.</p>
-      <div class="nota contexto"><span class="nota-tag">Conexión</span>Gagné y Sweller ya se mencionaron de pasada en 1.3 como aplicaciones del cognitivismo. Aquí se profundizan y se les suma Mayer, que traduce ambos a decisiones de diseño multimedia concretas.</div>
+      <div class="defbox">Lo que une a las tres: parten de un mismo hecho — <strong>la memoria de trabajo es muy limitada</strong> (unos pocos elementos a la vez). Todo buen diseño respeta ese límite.</div>
     </div>
 
     <!-- S2 GAGNÉ -->
     <div class="content-section" id="s2">
       <h2><span class="sec-num">02</span> Los Nueve Eventos de Instrucción de Gagné</h2>
-      <p>Robert Gagné propuso que toda instrucción efectiva sigue una <strong>secuencia de eventos</strong> que activa distintos procesos cognitivos, desde captar la atención hasta consolidar la retención. No es una receta rígida de nueve pasos obligatorios: es un chequeo de qué condiciones internas y externas necesita el estudiante para aprender. Haz clic en cada evento para ver su función y un ejemplo:</p>
-      <div class="fases" id="fasesGagne">
-        <div class="fase" onclick="toggleFase(this,'e1')">
-          <div class="fase-head"><div class="fase-letra">1</div><div class="fase-titulo">Ganar la atención</div><div class="fase-toggle">+</div></div>
-          <div class="fase-body">Antes de enseñar algo, hay que capturar el foco del estudiante: una pregunta provocadora, un dato sorprendente, un caso real. Sin atención, no hay codificación posible.<div class="fase-entregable"><strong>Ejemplo:</strong> abrir un módulo de seguridad con la estadística real de accidentes evitables</div></div>
-        </div>
-        <div class="fase" onclick="toggleFase(this,'e2')">
-          <div class="fase-head"><div class="fase-letra">2</div><div class="fase-titulo">Informar el objetivo</div><div class="fase-toggle">+</div></div>
-          <div class="fase-body">Decir explícitamente qué podrá hacer el estudiante al terminar. Reduce ansiedad y le da un criterio para autoevaluarse mientras avanza.<div class="fase-entregable"><strong>Ejemplo:</strong> "Al final podrás calcular la dosis correcta según peso del paciente"</div></div>
-        </div>
-        <div class="fase" onclick="toggleFase(this,'e3')">
-          <div class="fase-head"><div class="fase-letra">3</div><div class="fase-titulo">Estimular el recuerdo de lo previo</div><div class="fase-toggle">+</div></div>
-          <div class="fase-body">Activar en la memoria de largo plazo lo que el estudiante ya sabe, para que el contenido nuevo tenga dónde "engancharse". Es el organizador previo de Ausubel en acción.<div class="fase-entregable"><strong>Ejemplo:</strong> recordar fórmulas básicas antes de introducir un cálculo más complejo</div></div>
-        </div>
-        <div class="fase" onclick="toggleFase(this,'e4')">
-          <div class="fase-head"><div class="fase-letra">4</div><div class="fase-titulo">Presentar el contenido</div><div class="fase-toggle">+</div></div>
-          <div class="fase-body">Aquí entra el contenido nuevo propiamente tal, organizado con contraste y ejemplos claros. Es el único evento que es "puramente" contenido — todos los demás son andamiaje alrededor de él.<div class="fase-entregable"><strong>Ejemplo:</strong> explicar las 5 fases de ADDIE con un diagrama y un caso</div></div>
-        </div>
-        <div class="fase" onclick="toggleFase(this,'e5')">
-          <div class="fase-head"><div class="fase-letra">5</div><div class="fase-titulo">Proveer guía de aprendizaje</div><div class="fase-toggle">+</div></div>
-          <div class="fase-body">Ayudas adicionales para codificar el contenido en memoria de largo plazo: analogías, mnemotecnias, esquemas, ejemplos resueltos paso a paso.<div class="fase-entregable"><strong>Ejemplo:</strong> un ejemplo resuelto completo antes de pedir que el estudiante resuelva uno solo</div></div>
-        </div>
-        <div class="fase" onclick="toggleFase(this,'e6')">
-          <div class="fase-head"><div class="fase-letra">6</div><div class="fase-titulo">Provocar el desempeño</div><div class="fase-toggle">+</div></div>
-          <div class="fase-body">El estudiante practica activamente lo que acaba de aprender — no observa, hace. Esto confirma que realmente adquirió la habilidad, no solo la vio pasar.<div class="fase-entregable"><strong>Ejemplo:</strong> un ejercicio práctico donde el estudiante calcula la dosis él mismo</div></div>
-        </div>
-        <div class="fase" onclick="toggleFase(this,'e7')">
-          <div class="fase-head"><div class="fase-letra">7</div><div class="fase-titulo">Dar retroalimentación</div><div class="fase-toggle">+</div></div>
-          <div class="fase-body">Feedback específico e inmediato sobre el desempeño — no solo "correcto/incorrecto", sino por qué. Es lo que consolida el aprendizaje correcto y corrige el error antes de que se fije.<div class="fase-entregable"><strong>Ejemplo:</strong> explicar por qué una respuesta está mal y cuál es el razonamiento correcto</div></div>
-        </div>
-        <div class="fase" onclick="toggleFase(this,'e8')">
-          <div class="fase-head"><div class="fase-letra">8</div><div class="fase-titulo">Evaluar el desempeño</div><div class="fase-toggle">+</div></div>
-          <div class="fase-body">Una evaluación formal, sin las ayudas del evento 5, para confirmar que el aprendizaje ocurrió de forma independiente. Es la evidencia real de logro del objetivo.<div class="fase-entregable"><strong>Ejemplo:</strong> la evaluación final de la unidad, sin pistas ni ejemplos resueltos</div></div>
-        </div>
-        <div class="fase" onclick="toggleFase(this,'e9')">
-          <div class="fase-head"><div class="fase-letra">9</div><div class="fase-titulo">Mejorar la retención y transferencia</div><div class="fase-toggle">+</div></div>
-          <div class="fase-body">Actividades para que lo aprendido se generalice a contextos nuevos y no se olvide: práctica espaciada, variedad de ejemplos, aplicación en escenarios distintos al de práctica.<div class="fase-entregable"><strong>Ejemplo:</strong> pedir que aplique el cálculo de dosis a un caso clínico distinto, semanas después</div></div>
-        </div>
-      </div>
-      <div class="nota clave"><span class="nota-tag">En la práctica</span>No todos los eventos necesitan el mismo peso en cada lección, y algunos pueden fusionarse. Pero si una lección salta directo del contenido (4) a la evaluación (8) sin práctica (6) ni feedback (7), ahí está fallando la mayoría de los cursos mal diseñados que has visto.</div>
+      <p>Robert Gagné propuso que toda instrucción efectiva sigue una secuencia de nueve eventos, agrupados en tres fases: <strong>preparación, instrucción y cierre/transferencia</strong>. No es obligatorio usar los nueve siempre, pero son un checklist excelente para no olvidar pasos críticos. Haz clic en cada uno para ver qué significa en la práctica:</p>
+
+      <div class="eventos" id="eventosGagne"></div>
+
+      <div class="nota clave"><span class="nota-tag">Cómo usarlos de verdad</span>No son una camisa de fuerza. Úsalos como lista de verificación al diseñar una lección: "¿capté la atención?, ¿dije el objetivo?, ¿activé lo previo?…". Los eventos 1-3 son los que más se olvidan y los que más impacto tienen en si el estudiante engancha o no.</div>
     </div>
 
     <!-- S3 CARGA COGNITIVA -->
     <div class="content-section" id="s3">
-      <h2><span class="sec-num">03</span> Carga cognitiva (Sweller)</h2>
-      <p>John Sweller propuso que la <strong>memoria de trabajo</strong> —donde procesamos activamente la información nueva— tiene una capacidad muy limitada (aprox. 4 elementos a la vez). Si un diseño le exige más de lo que puede manejar, el aprendizaje se cae, sin importar cuán bueno sea el contenido. La teoría distingue tres tipos de carga:</p>
-      <div class="teoria t-intrinseca">
-        <div class="teoria-head">
-          <div class="t-era">Inevitable</div>
-          <h3>Carga intrínseca</h3>
-          <div class="t-thinkers">La dificultad propia del contenido</div>
+      <h2><span class="sec-num">03</span> Teoría de la Carga Cognitiva (Sweller)</h2>
+      <p>John Sweller parte de un hecho incómodo: la <strong>memoria de trabajo solo puede procesar unos pocos elementos a la vez</strong> (clásicamente, 7±2; hoy se estima aún menos para material nuevo). Si la instrucción exige más de lo que la memoria de trabajo aguanta, el aprendizaje se cae. La teoría distingue tres tipos de carga:</p>
+
+      <div class="carga-grid">
+        <div class="carga necesaria">
+          <div class="c-tag">Intrínseca</div>
+          <h4>Carga intrínseca</h4>
+          <p>La dificultad propia del contenido. Aprender álgebra es intrínsecamente más pesado que aprender una fecha. No se elimina, pero se puede secuenciar (de simple a complejo).</p>
         </div>
-        <div class="teoria-body">
-          <p>Depende de cuán complejo es el tema en sí y de cuánto sabe ya el estudiante. No se elimina, pero se <strong>gestiona</strong>: fragmentando contenido complejo en partes más simples (chunking) y respetando prerrequisitos.</p>
+        <div class="carga mala">
+          <div class="c-tag">Extraña — evitar</div>
+          <h4>Carga extrínseca</h4>
+          <p>La que <em>añade el mal diseño</em>: instrucciones confusas, información irrelevante, elementos que distraen. Es la que el DI debe reducir a cero. Cada elemento decorativo inútil roba memoria de trabajo.</p>
         </div>
-      </div>
-      <div class="teoria t-extrana">
-        <div class="teoria-head">
-          <div class="t-era">Evitable — el enemigo real</div>
-          <h3>Carga extraña</h3>
-          <div class="t-thinkers">Esfuerzo mental desperdiciado en el diseño, no en el contenido</div>
-        </div>
-        <div class="teoria-body">
-          <p>La genera un <strong>mal diseño</strong>: buscar información dispersa en la pantalla, texto redundante con narración idéntica, decoración irrelevante, animaciones innecesarias. Es carga que no aporta nada al aprendizaje — y la buena noticia es que casi toda se puede eliminar.</p>
+        <div class="carga buena">
+          <div class="c-tag">Pertinente — fomentar</div>
+          <h4>Carga pertinente</h4>
+          <p>La que se invierte en construir esquemas mentales: hacer conexiones, practicar, reflexionar. Esta sí queremos maximizarla — es donde ocurre el aprendizaje real.</p>
         </div>
       </div>
-      <div class="teoria t-germana">
-        <div class="teoria-head">
-          <div class="t-era">Deseable</div>
-          <h3>Carga germana</h3>
-          <div class="t-thinkers">El esfuerzo que sí construye aprendizaje</div>
-        </div>
-        <div class="teoria-body">
-          <p>El esfuerzo de procesar activamente el contenido para formar esquemas mentales duraderos: relacionar ideas, practicar recuperación, elaborar ejemplos propios. A esta carga <strong>sí</strong> se le quiere dar espacio — para eso hay que primero reducir la extraña.</p>
-        </div>
-      </div>
-      <div class="nota alerta"><span class="nota-tag">La regla práctica</span>El objetivo de diseño no es "reducir toda la carga cognitiva" — es <strong>eliminar la carga extraña</strong> para dejarle espacio a la carga germana, dentro del límite que impone la carga intrínseca.</div>
+
+      <div class="defbox">La misión del DI en una frase: <strong>reducir la carga extrínseca, gestionar la intrínseca, y liberar memoria de trabajo para la carga pertinente.</strong></div>
+      <div class="nota alerta"><span class="nota-tag">Ejemplos de carga extrínseca que tú puedes eliminar</span>Un slide con 200 palabras que el narrador lee igual (redundancia); una animación decorativa que no aporta; un diagrama con la leyenda en otra página (efecto de atención dividida); jerga sin explicar. Detectar y quitar esto es de las intervenciones de mayor impacto y menor costo que hace un DI.</div>
     </div>
 
     <!-- S4 MAYER -->
     <div class="content-section" id="s4">
       <h2><span class="sec-num">04</span> Principios de Mayer para el aprendizaje multimedia</h2>
-      <p>Richard Mayer investigó durante décadas cómo aprendemos de la combinación de texto, imagen y audio, y de ahí derivó una docena de principios basados en evidencia. Estos son los que un DI aplica con más frecuencia:</p>
-      <table class="compare-table">
-        <tr><th>Principio</th><th>Regla</th><th>Por qué (carga cognitiva)</th></tr>
-        <tr><td>Multimedia</td><td>Combina palabras + imágenes, mejor que solo palabras</td><td>Usa los dos canales (visual y auditivo) en vez de saturar uno solo</td></tr>
-        <tr><td>Contigüidad espacial</td><td>Pon el texto junto a la imagen que describe, no separado</td><td>Evita que el ojo busque y gaste carga extraña en encontrar la relación</td></tr>
-        <tr><td>Contigüidad temporal</td><td>Narración e imagen relacionada, al mismo tiempo, no una después de otra</td><td>Igual: reduce el esfuerzo de mantener una en memoria esperando la otra</td></tr>
-        <tr><td>Coherencia</td><td>Elimina palabras, imágenes o sonidos irrelevantes o decorativos</td><td>La decoración "linda" sin función instruccional es carga extraña pura</td></tr>
-        <tr><td>Redundancia</td><td>No repitas el mismo texto en pantalla Y como narración idéntica</td><td>Leer y escuchar lo mismo a la vez compite por el mismo canal verbal</td></tr>
-        <tr><td>Modalidad</td><td>Narración hablada + animación, mejor que texto en pantalla + animación</td><td>Reparte la carga entre el canal visual (imagen) y el auditivo (narración)</td></tr>
-        <tr><td>Personalización</td><td>Usa tono conversacional ("tú", "vamos a ver") en vez de formal-impersonal</td><td>Genera más compromiso activo con el contenido</td></tr>
-      </table>
-      <div class="nota clave"><span class="nota-tag">El más citado en entrevista</span>Si solo recuerdas uno, que sea <strong>redundancia</strong>: es el error más común en cursos online (subtítulos idénticos a la narración) y el más fácil de detectar y corregir.</div>
+      <p>Richard Mayer investigó empíricamente qué hace que un recurso multimedia (video, presentación animada) realmente enseñe. Sus principios son la aplicación directa de la carga cognitiva al diseño de medios. Estos son los más usados:</p>
+
+      <div class="mayer-list">
+        <div class="mayer-item"><h4>Coherencia</h4><p>Elimina todo lo que no sea esencial: música de fondo innecesaria, imágenes decorativas, texto de relleno. Menos es más.</p></div>
+        <div class="mayer-item"><h4>Señalización</h4><p>Destaca lo importante con flechas, resaltados o énfasis. Guía la atención a lo que importa.</p></div>
+        <div class="mayer-item"><h4>Redundancia</h4><p>No pongas texto en pantalla idéntico a lo que dice el narrador. Leer y escuchar lo mismo satura, no refuerza.</p></div>
+        <div class="mayer-item"><h4>Contigüidad espacial</h4><p>Pon el texto junto al elemento gráfico que describe, no separado. Evita que el ojo salte buscando la relación.</p></div>
+        <div class="mayer-item"><h4>Contigüidad temporal</h4><p>Presenta la narración y la imagen correspondiente al mismo tiempo, no una después de la otra.</p></div>
+        <div class="mayer-item"><h4>Modalidad</h4><p>Para explicar una imagen o animación, usa narración hablada en vez de texto escrito — reparte la carga entre el canal visual y el auditivo.</p></div>
+        <div class="mayer-item"><h4>Segmentación</h4><p>Divide el contenido en segmentos manejables que el estudiante controle, en vez de un flujo continuo largo.</p></div>
+        <div class="mayer-item"><h4>Personalización</h4><p>Usa un tono conversacional ("tú", "vamos a…") en vez de formal y distante. Mejora el compromiso.</p></div>
+      </div>
+      <div class="nota contexto"><span class="nota-tag">Conexión con tu trabajo</span>Estos principios son tu criterio técnico al producir en Storyline, Genially o al grabar video con IA (unidad 4.3). Cuando en entrevista te pregunten "¿cómo aseguras que un video sea efectivo?", citar Mayer — coherencia, modalidad, redundancia — te distingue de quien solo dice "que se vea bonito".</div>
     </div>
 
-    <!-- S5 INTEGRACIÓN -->
+    <!-- S5 -->
     <div class="content-section" id="s5">
-      <h2><span class="sec-num">05</span> Cómo se integran los tres</h2>
-      <p>En un proyecto real no se aplican por separado — se combinan en capas dentro de la misma pantalla o lección:</p>
-      <ul>
-        <li><strong>Gagné</strong> te da la estructura macro: en qué orden aparecen atención, contenido, práctica y evaluación a lo largo de la lección</li>
-        <li><strong>Sweller (carga cognitiva)</strong> es el filtro que revisas evento por evento: ¿este evento le está pidiendo más a la memoria de trabajo de lo necesario?</li>
-        <li><strong>Mayer</strong> te da las reglas de forma para el evento de "presentar el contenido" (evento 4) y "guía de aprendizaje" (evento 5): cómo combinar texto, imagen y audio en esa pantalla específica sin generar carga extraña</li>
-      </ul>
-      <div class="defbox">Ejemplo integrado: en el evento 4 (presentar contenido) de una lección sobre anatomía, aplicas contigüidad espacial (la etiqueta junto a la parte del cuerpo, no en una lista aparte), modalidad (narración en vez de texto largo en pantalla) y coherencia (sin música de fondo ni imágenes decorativas) — todo mientras la carga intrínseca del tema define cuánto puedes fragmentar el contenido.</div>
-      <div class="nota contexto"><span class="nota-tag">Dónde vuelve a aparecer esto</span>Estos tres marcos reaparecen en el Módulo 3 (diseño de actividades) y el Módulo 4 (producción multimedia) — aquí sientas la base teórica que ahí se vuelve decisión de producción concreta.</div>
-    </div>
-
-    <!-- S6 SÍNTESIS MÓDULO 1 -->
-    <div class="content-section" id="s6">
-      <h2><span class="sec-num">06</span> Síntesis — cierre del Módulo 1</h2>
-      <p>Con esta unidad termina el Módulo 1. La tabla resume qué responde cada pieza y cuándo la usas:</p>
+      <h2><span class="sec-num">05</span> Las tres herramientas juntas en un diseño</h2>
+      <p>En la práctica no eliges "una": las usas en capas. Un ejemplo de cómo se combinan al diseñar una micro-lección en video:</p>
       <table class="compare-table">
-        <tr><th>Pieza</th><th>Responde a…</th><th>La usas para…</th></tr>
-        <tr><td>Gagné</td><td>¿En qué orden enseño esto?</td><td>Estructurar cualquier lección o módulo</td></tr>
-        <tr><td>Carga cognitiva</td><td>¿Estoy pidiendo demasiado a la memoria de trabajo?</td><td>Auditar y simplificar cualquier pantalla</td></tr>
-        <tr><td>Mayer</td><td>¿Cómo combino texto, imagen y audio?</td><td>Diseñar contenido multimedia específico</td></tr>
+        <tr><th>Decisión</th><th>Herramienta que la fundamenta</th></tr>
+        <tr><td>Empiezo con una pregunta intrigante y muestro el objetivo</td><td>Gagné (eventos 1-2: atención + objetivo)</td></tr>
+        <tr><td>Divido el video en segmentos de 3-4 min con control del usuario</td><td>Mayer (segmentación) + Sweller (no saturar)</td></tr>
+        <tr><td>Narro sobre la animación en vez de llenar la pantalla de texto</td><td>Mayer (modalidad + redundancia)</td></tr>
+        <tr><td>Agrego una práctica con feedback antes de cerrar</td><td>Gagné (eventos 6-7: práctica + retroalimentación)</td></tr>
+        <tr><td>Quito la música de fondo y las imágenes decorativas</td><td>Sweller (carga extrínseca) + Mayer (coherencia)</td></tr>
       </table>
-      <p>Y el hilo del módulo completo: 1.1 definió qué es el DI, 1.2 dio los modelos de proceso, 1.3 las teorías del aprendizaje, y esta 1.4 tomó la rama cognitivista de esas teorías y la volvió aplicable. Desde aquí, el Módulo 2 entra al análisis de necesidades y la escritura de objetivos — el primer paso real de un proyecto.</p>
-      <div class="nota clave"><span class="nota-tag">Antes de seguir</span>Si puedes mirar cualquier pantalla de un curso y nombrar en qué evento de Gagné está, si tiene carga extraña de sobra, y qué principio de Mayer aplicarías — el Módulo 1 cumplió su objetivo.</div>
+
+      <div class="vineta">
+        <div class="vineta-head">Viñeta de taller · diagnostica el problema</div>
+        <div class="vineta-body">Recibes para revisar un video de capacitación: dura 25 minutos sin cortes, tiene música épica de fondo, cada slide está lleno de texto que el narrador lee palabra por palabra, y la leyenda del diagrama está en la esquina opuesta a la imagen. <strong>¿Qué tres problemas identificas y con qué principio los corriges?</strong></div>
+        <button class="vineta-reveal-btn" onclick="revealVineta(this,'v1')">Piénsalo primero → ver resolución</button>
+        <div class="vineta-solution">1) <strong>Redundancia</strong> (Mayer): el narrador lee el texto idéntico en pantalla — quitar el texto o resumirlo a palabras clave. 2) <strong>Coherencia/carga extrínseca</strong> (Mayer/Sweller): la música épica no aporta y roba atención — eliminarla. 3) <strong>Contigüidad espacial</strong> (Mayer): la leyenda lejos del diagrama obliga a dividir la atención — ponerla junto a lo que describe. Bonus: 25 min sin cortes viola <strong>segmentación</strong> — trocear en segmentos de 3-4 min.</div>
+      </div>
     </div>
 
     <div class="activity">
-      <h2>Actividad — Diagnostica la pantalla</h2>
-      <div class="act-sub">Cada escenario describe una pantalla o decisión de diseño. Identifica el marco que mejor explica el problema o la solución.</div>
+      <h2>Actividad — ¿Qué principio corrige este problema?</h2>
+      <div class="act-sub">Cada tarjeta muestra un error de diseño. Identifica el principio que lo resuelve.</div>
       <div id="actRoot"></div>
       <div class="act-progress" id="actProgress"></div>
     </div>
@@ -422,10 +367,10 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
       <div class="callout-header">🖌 IA en esta fase</div>
       <div class="callout-body">
         <div class="capa">＋ Toca para levantar la capa</div>
-        <p>Estos tres marcos son de los que más rinden al usar IA porque son <strong>criterios de auditoría</strong>, no solo de creación:</p>
-        <p>• Pídele que revise el guión de una lección y te diga qué eventos de Gagné faltan (típicamente falta el 7, retroalimentación, o el 9, transferencia).</p>
-        <p>• Pídele que detecte redundancia texto-narración en un storyboard — es mecánico y la IA lo hace rápido y bien.</p>
-        <p>• Cuidado: pídele ejemplos de carga extraña "de libro" (decoración, animación innecesaria), pero el juicio de qué es carga intrínseca real de tu contenido lo tienes que dar tú — ahí la IA generaliza mal.</p>
+        <p>Estas herramientas son ideales para usar la IA como <strong>revisor de calidad</strong>:</p>
+        <p>• Pásale el guion de tu video o tus slides y pídele que detecte violaciones a los principios de Mayer (redundancia, coherencia) — es un buen segundo par de ojos.</p>
+        <p>• Pídele que estructure un borrador de lección siguiendo los 9 eventos de Gagné a partir de tu contenido, y luego tú lo afinas.</p>
+        <p>• Pídele que evalúe si un texto tiene demasiada carga extrínseca (jerga, información irrelevante) y sugiera qué recortar.</p>
       </div>
     </div>
 
@@ -433,8 +378,8 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
       <div class="callout-header">🎤 Nota de entrevista</div>
       <div class="callout-body">
         <div class="capa">＋ Toca para levantar la capa</div>
-        <p>Pregunta típica: "¿cómo evitas sobrecargar cognitivamente a un estudiante?". La respuesta fuerte nombra los tres tipos de carga (no solo dice "simplifico"), y da un ejemplo concreto de carga extraña que hayas eliminado — subtítulos redundantes es el clásico y siempre creíble.</p>
-        <p>Bonus: si te preguntan por Gagné directo, no te limites a listar los nueve — señala que el error más común en cursos mal hechos es saltarse el evento 7 (retroalimentación) o el 9 (transferencia), y que ahí es donde revisas primero cuando audita un curso existente.</p>
+        <p>Esta unidad es oro puro para entrevistas técnicas, porque son principios que puedes <em>aplicar</em> en vivo. Si te muestran un recurso y te preguntan "¿qué mejorarías?", nombrar el principio específico (no "le bajaría el texto" sino "aplicaría el principio de redundancia de Mayer") demuestra fundamento real.</p>
+        <p>Prepárate para la pregunta "¿cómo gestionas la carga cognitiva?" — respuesta: distinguir las tres cargas, reducir la extrínseca, secuenciar la intrínseca. Es una de las preguntas técnicas más frecuentes.</p>
       </div>
     </div>
 
@@ -443,43 +388,43 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
       <p>Responde primero con tus propias palabras — <strong>en voz alta o por escrito</strong> — antes de revelar la respuesta modelo. Luego marca el checklist.</p>
 
       <div class="practica">
-        <div class="practica-head"><div class="p-num">Práctica 1</div><div class="p-q">"Explícame brevemente los Nueve Eventos de Gagné, como si tuvieras 2 minutos en una entrevista."</div></div>
+        <div class="practica-head"><div class="p-num">Práctica 1</div><div class="p-q">"Explícame la teoría de la carga cognitiva y cómo la aplicas."</div></div>
         <div class="practica-body">
           <textarea placeholder="Tu respuesta…"></textarea>
           <button class="rm-toggle" onclick="toggleRM('rm-p1','p1')">Ver respuesta modelo</button>
-          <div class="rm" id="rm-p1">"Gagné propone nueve eventos que estructuran una lección efectiva: primero ganas la atención y comunicas el objetivo, luego activas conocimiento previo. Ahí presentas el contenido nuevo con guía de aprendizaje —ejemplos resueltos, analogías. Después el estudiante practica activamente, recibe retroalimentación específica, y se evalúa de forma independiente. Cierras con actividades de transferencia para que no se olvide y se aplique en contextos nuevos. No son un checklist rígido, pero si una lección salta del contenido a la evaluación sin práctica ni feedback, ahí está fallando."</div>
+          <div class="rm" id="rm-p1">"La teoría de Sweller parte de que la memoria de trabajo es muy limitada. Distingue tres cargas: la intrínseca, que es la dificultad propia del contenido y se gestiona secuenciando de simple a complejo; la extrínseca, que añade el mal diseño y hay que eliminar — jerga, redundancia, distractores; y la pertinente, que se invierte en construir esquemas y hay que fomentar. Mi trabajo como DI es bajar la extrínseca al mínimo para liberar memoria de trabajo para el aprendizaje real."</div>
           <div class="checklist"><div class="cl-label">Checklist de tu respuesta</div>
-            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1a')"> ¿Mencionaste al menos 6 de los 9 eventos en orden correcto?</label>
-            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1b')"> ¿Distinguiste práctica (evento 6) de evaluación (evento 8)?</label>
-            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1c')"> ¿Aclaraste que no es una receta rígida?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1a')"> ¿Mencionaste la memoria de trabajo limitada como base?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1b')"> ¿Nombraste las tres cargas (intrínseca/extrínseca/pertinente)?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1c')"> ¿Dijiste qué haces con cada una?</label>
           </div>
         </div>
       </div>
 
       <div class="practica">
-        <div class="practica-head"><div class="p-num">Práctica 2</div><div class="p-q">"Te muestro un curso con mucho texto en pantalla leído palabra por palabra por la narración. ¿Qué le dirías al equipo?"</div></div>
+        <div class="practica-head"><div class="p-num">Práctica 2</div><div class="p-q">"¿Por qué está mal poner en un slide el mismo texto que el narrador va leyendo?"</div></div>
         <div class="practica-body">
           <textarea placeholder="Tu respuesta…"></textarea>
           <button class="rm-toggle" onclick="toggleRM('rm-p2','p2')">Ver respuesta modelo</button>
-          <div class="rm" id="rm-p2">"Ese es el principio de redundancia de Mayer: cuando el texto en pantalla es idéntico a la narración, el estudiante intenta leer y escuchar lo mismo a la vez, y eso compite por el mismo canal verbal en vez de repartir la carga entre el canal visual y el auditivo. Genera carga cognitiva extraña sin aportar nada. Recomendaría dejar solo la narración con imágenes de apoyo, o el texto con imágenes pero sin narración duplicada — no ambos completos a la vez."</div>
+          <div class="rm" id="rm-p2">"Por el principio de redundancia de Mayer. Cuando el texto en pantalla es idéntico a la narración, el estudiante intenta leer y escuchar lo mismo a la vez, y eso satura el canal de procesamiento en vez de reforzar. Es más efectivo narrar sobre una imagen o palabras clave, no sobre el texto completo — eso reparte la carga entre el canal visual y el auditivo, que es el principio de modalidad."</div>
           <div class="checklist"><div class="cl-label">Checklist de tu respuesta</div>
-            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2a')"> ¿Nombraste el principio de redundancia por su nombre?</label>
-            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2b')"> ¿Explicaste que es carga extraña, no solo "se ve mal"?</label>
-            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2c')"> ¿Diste una solución concreta, no solo la crítica?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2a')"> ¿Nombraste el principio de redundancia?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2b')"> ¿Explicaste por qué satura (leer + escuchar lo mismo)?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2c')"> ¿Propusiste la alternativa (modalidad)?</label>
           </div>
         </div>
       </div>
 
       <div class="practica">
-        <div class="practica-head"><div class="p-num">Práctica 3</div><div class="p-q">"¿Cuál es la diferencia entre carga intrínseca, extraña y germana, con un ejemplo de cada una?"</div></div>
+        <div class="practica-head"><div class="p-num">Práctica 3</div><div class="p-q">"Diséñame la estructura de una micro-lección usando Gagné." (te dan un tema simple)</div></div>
         <div class="practica-body">
           <textarea placeholder="Tu respuesta…"></textarea>
           <button class="rm-toggle" onclick="toggleRM('rm-p3','p3')">Ver respuesta modelo</button>
-          <div class="rm" id="rm-p3">"La intrínseca es la dificultad propia del contenido — por ejemplo, aprender cálculo diferencial siempre va a exigir más que sumar números, y no se elimina, solo se fragmenta. La extraña es la que genera un mal diseño y no aporta nada, como buscar información dispersa en distintas partes de la pantalla o música de fondo innecesaria — esta sí se elimina casi por completo. Y la germana es el esfuerzo que sí construye aprendizaje, como relacionar un concepto nuevo con uno que ya sabes o practicar recuperación activa — a esta se le quiere dar espacio, y para eso primero hay que sacar la extraña de en medio."</div>
+          <div class="rm" id="rm-p3">"Empezaría captando la atención con una pregunta o un caso llamativo (evento 1), luego declaro el objetivo — qué van a poder hacer al final (evento 2), y activo lo que ya saben con una pregunta de conexión (evento 3). Presento el contenido nuevo fragmentado (evento 4), doy una guía o ejemplo modelado (evento 5), y propongo una práctica (evento 6) con retroalimentación inmediata (evento 7). Cierro evaluando el desempeño (evento 8) y dando una actividad de transferencia a un caso real (evento 9)."</div>
           <div class="checklist"><div class="cl-label">Checklist de tu respuesta</div>
-            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3a')"> ¿Diste un ejemplo distinto y correcto para cada tipo?</label>
-            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3b')"> ¿Dijiste cuál se elimina (extraña) y cuál se gestiona (intrínseca)?</label>
-            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3c')"> ¿Mencionaste que la germana es la que se quiere fomentar?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3a')"> ¿Empezaste por atención + objetivo (no por el contenido)?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3b')"> ¿Incluiste práctica + retroalimentación?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3c')"> ¿Cerraste con transferencia a un caso real?</label>
           </div>
         </div>
       </div>
@@ -494,9 +439,14 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
       <div class="result-card" id="resultCard"><div class="result-score" id="resultScore">0%</div><div id="resultMsg" style="font-size:0.85rem;color:var(--ink-muted);margin-top:0.3rem;"></div></div>
     </div>
 
+    <div class="modulo-fin" id="moduloFin" style="display:none">
+      <h3>🎨 Módulo 1 completo</h3>
+      <p>Terminaste Fundamentos y panorama. Ya tienes la base teórica del DI — sigue con el Módulo 2: Análisis y definición.</p>
+    </div>
+
     <div class="next-nav">
       <a href="m1-3.html">← 1.3 Teorías del aprendizaje</a>
-      <span class="disabled">Módulo 2 · próximamente →</span>
+      <a href="m2-1.html">2.1 Análisis de necesidades →</a>
     </div>
   </main>
 </div>
@@ -530,6 +480,36 @@ function switchMedia(btn) {
 }
 function checkMultimodal() { if (Gami.hasSeen('m1-4_pdf') && Gami.hasSeen('m1-4_audio')) Gami.badge('multimodal'); }
 
+// 9 eventos de Gagné
+const EVENTOS = [
+  { fase: 'Preparación', t: 'Captar la atención', d: 'Un estímulo que rompe la rutina: una pregunta provocadora, un dato sorprendente, un problema. Sin atención no hay nada.' },
+  { fase: 'Preparación', t: 'Informar el objetivo', d: 'Dile al estudiante qué será capaz de hacer al final. Reduce la ansiedad y orienta el esfuerzo.' },
+  { fase: 'Preparación', t: 'Estimular el recuerdo previo', d: 'Activa lo que ya sabe para anclar lo nuevo. "¿Recuerdas cuando…?" — construye sobre esquemas existentes.' },
+  { fase: 'Instrucción', t: 'Presentar el contenido', d: 'El material nuevo, fragmentado y organizado. Aquí aplica la carga cognitiva y los principios de Mayer.' },
+  { fase: 'Instrucción', t: 'Guiar el aprendizaje', d: 'Ejemplos, modelado, analogías, andamiaje. Muestra cómo se hace antes de pedir que lo hagan solos.' },
+  { fase: 'Instrucción', t: 'Provocar el desempeño', d: 'La práctica. El estudiante hace, no solo mira. Recuperación activa: aplicar lo aprendido.' },
+  { fase: 'Instrucción', t: 'Dar retroalimentación', d: 'Feedback inmediato y específico sobre la práctica. Corrige el rumbo antes de que el error se fije.' },
+  { fase: 'Cierre', t: 'Evaluar el desempeño', d: 'Mide si se logró el objetivo. La evaluación sumativa de esta lección.' },
+  { fase: 'Cierre', t: 'Mejorar retención y transferencia', d: 'Actividades para llevar lo aprendido a contextos nuevos y reales. Sin esto, el conocimiento queda inerte.' },
+];
+function renderEventos() {
+  document.getElementById('eventosGagne').innerHTML = EVENTOS.map((e, i) => `
+    <div class="evento" onclick="toggleEvento(this, ${i})">
+      <div class="evento-num">${i + 1}</div>
+      <div class="evento-fase">${e.fase}</div>
+      <div class="evento-titulo">${e.t}</div>
+      <div class="evento-desc">${e.d}</div>
+    </div>`).join('');
+}
+let eventosAbiertos = 0;
+function toggleEvento(el, i) {
+  el.classList.toggle('open');
+  if (el.classList.contains('open')) { Gami.award('m1-4_evento_' + i, 2, 'Exploraste un evento de Gagné'); eventosAbiertos++; if (eventosAbiertos >= 9) Gami.badge('curiosa'); }
+}
+renderEventos();
+
+function revealVineta(btn, id) { btn.closest('.vineta').classList.add('revealed'); Gami.award('m1-4_vineta_' + id, 5, 'Resolviste una viñeta'); }
+
 let capasReveladas = 0;
 document.querySelectorAll('.capa').forEach((capa, i) => {
   capa.addEventListener('click', () => {
@@ -540,27 +520,27 @@ document.querySelectorAll('.capa').forEach((capa, i) => {
   });
 });
 function toggleRM(id, pid) { document.getElementById(id).classList.toggle('show'); Gami.award('m1-4_rm_' + pid, 3, 'Contrastaste con la respuesta modelo'); }
-function toggleFase(el, eid) { el.classList.toggle('open'); el.querySelector('.fase-toggle').textContent = el.classList.contains('open') ? '−' : '+'; if (el.classList.contains('open')) Gami.award('m1-4_fase_' + eid, 2, 'Revisaste el evento de Gagné: ' + eid); }
 function clCheck(el, id) { if (el.checked) Gami.award('m1-4_cl_' + id, 2, 'Ítem de checklist verificado'); }
 
 const ACT_ITEMS = [
-  { text: 'Una lección termina con la evaluación justo después de explicar el contenido, sin ningún ejercicio práctico intermedio.', ans: 'gagne', why: 'Faltan los eventos 6 y 7 de Gagné: provocar el desempeño y dar retroalimentación antes de evaluar.' },
-  { text: 'Un video tiene subtítulos que repiten palabra por palabra lo que dice la narración en off.', ans: 'mayer', why: 'Principio de redundancia (Mayer): texto y narración idénticos compiten por el mismo canal verbal.' },
-  { text: 'Una pantalla de curso tiene música de fondo alegre y una animación decorativa que no aporta nada al contenido técnico que se explica.', ans: 'carga', why: 'Carga extraña (Sweller): elementos que no aportan al aprendizaje y consumen memoria de trabajo.' },
-  { text: 'Antes de enseñar un concepto nuevo, la lección hace un repaso breve de lo que el estudiante vio la semana anterior.', ans: 'gagne', why: 'Evento 3 de Gagné: estimular el recuerdo de conocimiento previo.' },
-  { text: 'Un diagrama pone las etiquetas de cada parte directamente sobre la imagen, en vez de una lista numerada aparte.', ans: 'mayer', why: 'Principio de contigüidad espacial (Mayer): texto e imagen relacionados van juntos.' },
-  { text: 'Un tema de por sí muy complejo (ej. estadística avanzada) sigue siendo difícil de aprender aunque el diseño esté perfectamente optimizado.', ans: 'carga', why: 'Carga intrínseca (Sweller): la dificultad propia del contenido no se elimina, solo se fragmenta.' },
+  { text: 'Un slide con 150 palabras que el narrador lee palabra por palabra.', ans: 'red', why: 'Leer y escuchar lo mismo satura = principio de redundancia.' },
+  { text: 'Música épica de fondo en un tutorial de software.', ans: 'coh', why: 'Elemento no esencial que roba atención = principio de coherencia / carga extrínseca.' },
+  { text: 'La leyenda de un gráfico está en la esquina opuesta a la imagen.', ans: 'cont', why: 'Obliga a dividir la atención buscando la relación = contigüidad espacial.' },
+  { text: 'Un video de 30 minutos sin ninguna pausa ni división.', ans: 'seg', why: 'Flujo continuo largo que no se puede controlar = principio de segmentación.' },
+  { text: 'Explicar una animación compleja con texto escrito encima en vez de narración.', ans: 'mod', why: 'Sobrecarga el canal visual; conviene repartir con audio = principio de modalidad.' },
 ];
 let actDone = 0, actCorrect = 0;
-const LABELS = { gagne: 'Eventos de Gagné', mayer: 'Principio de Mayer', carga: 'Carga cognitiva' };
+const LABELS = { red: 'Redundancia', coh: 'Coherencia', cont: 'Contigüidad espacial', seg: 'Segmentación', mod: 'Modalidad' };
 function renderActivity() {
   document.getElementById('actRoot').innerHTML = ACT_ITEMS.map((item, i) => `
     <div class="act-card" id="act-${i}">
       <div class="act-statement">${item.text}</div>
       <div class="act-buttons">
-        <button class="act-btn" onclick="answerAct(${i},'gagne')">Eventos de Gagné</button>
-        <button class="act-btn" onclick="answerAct(${i},'carga')">Carga cognitiva</button>
-        <button class="act-btn" onclick="answerAct(${i},'mayer')">Principio de Mayer</button>
+        <button class="act-btn" onclick="answerAct(${i},'red')">Redundancia</button>
+        <button class="act-btn" onclick="answerAct(${i},'coh')">Coherencia</button>
+        <button class="act-btn" onclick="answerAct(${i},'cont')">Contigüidad</button>
+        <button class="act-btn" onclick="answerAct(${i},'seg')">Segmentación</button>
+        <button class="act-btn" onclick="answerAct(${i},'mod')">Modalidad</button>
       </div>
       <div class="act-verdict" id="verdict-${i}"></div>
     </div>`).join('');
@@ -574,22 +554,22 @@ function answerAct(i, choice) {
   if (choice === item.ans) { actCorrect++; card.classList.add('ok'); verdict.style.color = '#315226'; verdict.textContent = '✓ ' + item.why; }
   else { card.classList.add('no'); card.querySelector('.act-buttons').style.display = 'none'; verdict.style.color = '#6E2A2A'; verdict.textContent = '✗ Era ' + LABELS[item.ans] + '. ' + item.why; }
   updateActProgress();
-  if (actDone === ACT_ITEMS.length) Gami.award('m1-4_actividad', Math.round(15 * actCorrect / ACT_ITEMS.length) + 5, 'Actividad de diagnóstico — ' + actCorrect + '/' + ACT_ITEMS.length);
+  if (actDone === ACT_ITEMS.length) Gami.award('m1-4_actividad', Math.round(15 * actCorrect / ACT_ITEMS.length) + 5, 'Actividad de principios — ' + actCorrect + '/' + ACT_ITEMS.length);
 }
 function updateActProgress() { document.getElementById('actProgress').textContent = actDone + '/' + ACT_ITEMS.length + ' resueltas' + (actDone === ACT_ITEMS.length ? ' · ' + actCorrect + ' correctas' : ''); }
 renderActivity();
 
 const QUIZ = [
-  { q: '¿Cuál es el primer evento de instrucción de Gagné?', opts: ['Presentar el contenido','Ganar la atención','Evaluar el desempeño','Dar retroalimentación'], ans: 1 },
-  { q: 'Una lección que va directo del contenido a la evaluación, sin práctica ni feedback, está saltándose los eventos…', opts: ['1 y 2','3 y 4','6 y 7','8 y 9'], ans: 2 },
-  { q: 'El evento 9 de Gagné ("mejorar la retención y transferencia") busca principalmente…', opts: ['Captar la atención inicial','Que lo aprendido se generalice a contextos nuevos y no se olvide','Evaluar formalmente sin ayudas','Activar conocimiento previo'], ans: 1 },
-  { q: 'Según Sweller, la carga cognitiva que un buen diseño debe eliminar casi por completo es la…', opts: ['Intrínseca','Extraña','Germana','Ninguna, todas son deseables'], ans: 1 },
-  { q: 'La carga germana es…', opts: ['La dificultad propia e inevitable del contenido','El esfuerzo desperdiciado por mal diseño','El esfuerzo que sí construye esquemas mentales duraderos','Un tipo de evaluación sumativa'], ans: 2 },
-  { q: '¿Qué principio de Mayer se rompe cuando el texto en pantalla es idéntico a la narración hablada?', opts: ['Contigüidad espacial','Modalidad','Redundancia','Personalización'], ans: 2 },
-  { q: 'Poner la etiqueta de una imagen justo sobre la parte que describe, en vez de en una lista aparte, aplica el principio de…', opts: ['Coherencia','Contigüidad espacial','Redundancia','Personalización'], ans: 1 },
-  { q: 'El principio de coherencia de Mayer indica que hay que…', opts: ['Agregar música para hacer la lección más amena','Eliminar palabras, imágenes o sonidos irrelevantes o decorativos','Repetir el contenido en varios formatos','Usar siempre narración en vez de texto'], ans: 1 },
-  { q: 'La memoria de trabajo, según Sweller, puede procesar activamente…', opts: ['Una cantidad ilimitada de información si está bien organizada','Un número muy limitado de elementos a la vez (aprox. 4)','Solo información visual, nunca auditiva','Solo información ya memorizada previamente'], ans: 1 },
-  { q: 'Al auditar una pantalla de curso combinando los tres marcos de esta unidad, el orden lógico de análisis es…', opts: ['Solo revisar ortografía y diseño visual','Ver en qué evento de Gagné está, cuánta carga cognitiva extraña tiene, y qué principios de Mayer aplican a su presentación', 'Ignorar la estructura y evaluar solo el color de fondo','Preguntar únicamente si el video dura menos de 5 minutos'], ans: 1 },
+  { q: '¿Cuál es el primer evento de instrucción de Gagné?', opts: ['Presentar el contenido','Captar la atención','Evaluar el desempeño','Dar retroalimentación'], ans: 1 },
+  { q: 'La carga cognitiva que añade el mal diseño y hay que eliminar se llama…', opts: ['Intrínseca','Extrínseca','Pertinente','Necesaria'], ans: 1 },
+  { q: '¿En qué se basa la teoría de la carga cognitiva de Sweller?', opts: ['En que la memoria de largo plazo es limitada','En que la memoria de trabajo puede procesar pocos elementos a la vez','En que el aprendizaje es puramente social','En que hay que memorizar por repetición'], ans: 1 },
+  { q: 'Poner en pantalla el mismo texto que dice el narrador viola el principio de…', opts: ['Segmentación','Personalización','Redundancia','Señalización'], ans: 2 },
+  { q: 'El principio de Mayer que recomienda narración hablada sobre imágenes (no texto) es…', opts: ['Modalidad','Coherencia','Contigüidad','Personalización'], ans: 0 },
+  { q: '¿Qué tipo de carga cognitiva queremos MAXIMIZAR?', opts: ['Extrínseca','Intrínseca','Pertinente','Ninguna'], ans: 2 },
+  { q: 'Dividir un video largo en segmentos que el usuario controla es el principio de…', opts: ['Redundancia','Segmentación','Coherencia','Modalidad'], ans: 1 },
+  { q: 'Según Gagné, ¿qué debe ocurrir ANTES de presentar el contenido nuevo?', opts: ['La evaluación final','Captar atención, dar objetivo y activar conocimiento previo','La transferencia','La retroalimentación'], ans: 1 },
+  { q: 'El principio de coherencia de Mayer dice que debemos…', opts: ['Agregar música y decoración para motivar','Eliminar todo lo que no sea esencial','Repetir el texto en pantalla y audio','Usar lenguaje muy formal'], ans: 1 },
+  { q: '¿Por qué estas tres herramientas se relacionan entre sí?', opts: ['Son de la misma década','Todas parten del límite de la memoria de trabajo','Todas son constructivistas','Ninguna se usa hoy'], ans: 1 },
 ];
 function renderQuiz() {
   document.getElementById('quizRoot').innerHTML = QUIZ.map((item, qi) => `
@@ -617,8 +597,8 @@ function saveScore(pct, correct) {
   card.className = 'result-card show';
   card.style.background = pct >= 0.7 ? 'var(--done-soft)' : 'var(--msoft)';
   document.getElementById('resultScore').textContent = Math.round(pct * 100) + '%';
-  document.getElementById('resultMsg').textContent = correct + '/' + QUIZ.length + ' correctas · ' + (pct >= 0.7 ? 'Unidad completada en tu ruta — Módulo 1 cerrado.' : 'Puedes repasar y reintentar — sin límite.');
-  if (pct >= 0.7) { Gami.award('m1-4_eval', 30, 'Evaluación 1.4 aprobada — ' + correct + '/' + QUIZ.length); Gami.badge('primeraCapa'); }
+  document.getElementById('resultMsg').textContent = correct + '/' + QUIZ.length + ' correctas · ' + (pct >= 0.7 ? 'Unidad completada en tu ruta.' : 'Puedes repasar y reintentar — sin límite.');
+  if (pct >= 0.7) { Gami.award('m1-4_eval', 30, 'Evaluación 1.4 aprobada — ' + correct + '/' + QUIZ.length); Gami.badge('primeraCapa'); document.getElementById('moduloFin').style.display = 'block'; }
   try { const img = new Image(); img.src = SCRIPT_URL + '?action=saveScore&id=' + UNIT_ID + '&score=' + pct + '&t=' + Date.now(); } catch(e) {}
 }
 renderQuiz();
