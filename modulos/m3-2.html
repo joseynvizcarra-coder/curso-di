@@ -3,899 +3,592 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>3.2 LMS, herramientas de autoría, SCORM, xAPI y SLA — Curso DI</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<title>3.2 Storyboarding — Cuaderno de taller</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --cream: #f5f2ec;
-  --dark: #0f1117;
-  --terra: #c85c3a;
-  --blue: #3a6b8a;
-  --muted: #7a7570;
-  --border: #ddd8d0;
-  --success: #2d7a4f;
-  --terra-light: #f7ede8;
-  --blue-light: #e8f0f5;
+  --paper: #EDEAE3; --paper-alt: #E4DFD3; --card: #F8F6F1;
+  --ink: #1C1A17; --ink-muted: #6B665D; --border: #D8D1C0; --border-soft: #E2DCCC;
+  --mc: #5B7052; --msoft: #E3E8DE;
+  --ia: #2A5CAA; --ia-soft: #DCE5F2;
+  --done: #4A6B3E; --done-soft: #E9F0E5;
+  --warn: #B9862C; --warn-soft: #F1E5CC;
 }
-body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif; color: var(--dark); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--paper); color: var(--ink); font-family: 'IBM Plex Sans', sans-serif; line-height: 1.55; }
+a { color: inherit; }
+.topbar { background: var(--ink); color: #EDEAE3; padding: 0.7rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; position: sticky; top: 0; z-index: 50; }
+.topbar a.back { color: #C9C3B5; text-decoration: none; }
+.topbar a.back:hover { color: #fff; }
+.gami-chips { display: flex; gap: 0.9rem; color: #C9C3B5; flex-wrap: wrap; }
+.layout { display: grid; grid-template-columns: 250px 1fr; max-width: 1120px; margin: 0 auto; }
+@media (max-width: 880px) { .layout { grid-template-columns: 1fr; } .sidebar { order: 2; } }
+.sidebar { border-right: 1px solid var(--border); padding: 1.4rem 1.2rem; }
+@media (max-width: 880px) { .sidebar { border-right: none; border-top: 1px solid var(--border); } }
+.sidebar h6 { font-family: 'Fraunces', serif; font-size: 0.95rem; color: var(--mc); margin-bottom: 0.2rem; }
+.sidebar .sidebar-sub { font-size: 0.74rem; color: var(--ink-muted); margin-bottom: 1rem; }
+.side-item { display: flex; align-items: center; gap: 0.6rem; padding: 0.55rem 0.5rem; border-radius: 3px; text-decoration: none; color: var(--ink); font-size: 0.84rem; margin-bottom: 0.15rem; }
+.side-item.active { background: var(--msoft); font-weight: 600; color: var(--mc); }
+.side-mark { width: 22px; height: 22px; border-radius: 3px; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; flex-shrink: 0; }
+.side-item.active .side-mark { background: var(--mc); border-color: var(--mc); color: #fff; }
+.side-toc { margin-top: 1.4rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+.side-toc .toc-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.64rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); margin-bottom: 0.5rem; }
+.side-toc a { display: block; font-size: 0.78rem; color: var(--ink-muted); text-decoration: none; padding: 0.3rem 0; }
+.side-toc a:hover { color: var(--mc); }
+main { padding: 2.2rem 2rem 4rem; min-width: 0; }
+.unit-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--mc); margin-bottom: 0.5rem; }
+h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(1.5rem, 3.5vw, 2.1rem); margin-bottom: 0.6rem; max-width: 24ch; }
+.lesson-dek { color: #423E37; max-width: 64ch; margin-bottom: 1rem; }
+.lesson-badges { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.6rem; }
+.lbadge { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; border: 1px solid var(--border); background: var(--card); border-radius: 3px; padding: 0.25rem 0.6rem; color: var(--ink-muted); }
+.objetivo-box { background: var(--card); border: 1px solid var(--border); border-left: 4px solid var(--mc); border-radius: 4px; padding: 1.1rem 1.3rem; margin-bottom: 2rem; }
+.objetivo-box .label { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mc); margin-bottom: 0.4rem; }
+.objetivo-box p { font-size: 0.92rem; font-style: italic; color: #322E28; }
+.mapa-block { border: 1px solid var(--border); border-radius: 4px; background: var(--card); margin-bottom: 2rem; overflow: hidden; }
+.mapa-head { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); padding: 0.7rem 1rem; border-bottom: 1px solid var(--border-soft); }
+.mapa-body { padding: 1rem; background: #fff; }
+.mapa-note { font-size: 0.78rem; color: var(--ink-muted); padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
+.media-block { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin-bottom: 2.2rem; background: var(--card); }
+.media-tabs { display: flex; border-bottom: 1px solid var(--border); background: var(--paper-alt); flex-wrap: wrap; }
+.media-tab { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; padding: 0.7rem 1rem; cursor: pointer; border: none; background: none; color: var(--ink-muted); border-bottom: 2px solid transparent; }
+.media-tab.active { color: var(--mc); border-bottom-color: var(--mc); background: var(--card); }
+.media-pane { display: none; }
+.media-pane.active { display: block; }
+.media-note { font-size: 0.76rem; color: var(--ink-muted); padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
+.media-pending { padding: 2rem 1rem; text-align: center; color: var(--ink-muted); font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; }
+.pdf-frame { width: 100%; height: 480px; border: none; display: block; background: #fff; }
+.pdf-actions { display: flex; gap: 0.6rem; padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
+.pdf-actions a { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--mc); text-decoration: none; border: 1px solid var(--border); border-radius: 3px; padding: 0.3rem 0.7rem; }
+.audio-pane { padding: 1.2rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.audio-pane audio { flex: 1; min-width: 240px; }
+.audio-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: var(--ink-muted); }
+.video-wrap { position: relative; padding-top: 56.25%; background: #111; }
+.video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+.content-section { margin-bottom: 2.6rem; }
+.content-section h2 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.3rem; margin-bottom: 0.8rem; padding-bottom: 0.4rem; border-bottom: 2px solid var(--mc); display: flex; align-items: baseline; gap: 0.6rem; }
+.content-section h2 .sec-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--mc); }
+.content-section h3 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.05rem; margin: 1.2rem 0 0.5rem; }
+.content-section p { margin-bottom: 0.8rem; font-size: 0.94rem; color: #2B2823; }
+.content-section ul, .content-section ol { margin: 0.6rem 0 0.9rem 1.3rem; font-size: 0.92rem; }
+.content-section li { margin-bottom: 0.4rem; }
+.content-section strong { color: var(--mc); font-weight: 600; }
+.defbox { background: var(--msoft); border-radius: 4px; padding: 0.9rem 1.1rem; font-style: italic; font-size: 0.93rem; margin: 0.8rem 0 1.2rem; }
+.nota { border-radius: 4px; padding: 0.9rem 1.1rem; font-size: 0.88rem; margin: 1.1rem 0; border: 1px solid var(--border); }
+.nota .nota-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.07em; display: block; margin-bottom: 0.35rem; }
+.nota.clave { background: var(--done-soft); } .nota.clave .nota-tag { color: var(--done); }
+.nota.alerta { background: var(--warn-soft); } .nota.alerta .nota-tag { color: #8A6318; }
+.nota.contexto { background: var(--ia-soft); } .nota.contexto .nota-tag { color: var(--ia); }
+.compare-table { width: 100%; border-collapse: collapse; margin: 0.8rem 0 1.4rem; font-size: 0.86rem; }
+.compare-table th, .compare-table td { border: 1px solid var(--border); padding: 0.55rem 0.7rem; text-align: left; vertical-align: top; }
+.compare-table th { background: var(--card); font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-muted); }
+.compare-table td:first-child { font-weight: 600; }
 
-/* HEADER */
-.header-di {
-  background: linear-gradient(135deg, var(--dark) 0%, #1e2030 100%);
-  border-bottom: 3px solid var(--terra);
-  padding: 0.9rem 0;
-  position: sticky; top: 0; z-index: 1030;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-}
-.header-di .course-name { color: #fff; font-family: Georgia, serif; font-size: 1.1rem; font-weight: normal; }
-.header-di .unit-name { color: var(--terra); font-size: 0.82rem; }
-.btn-back { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; border-radius: 20px; padding: 0.4rem 1rem; font-size: 0.82rem; text-decoration: none; transition: all 0.2s; }
-.btn-back:hover { background: rgba(255,255,255,0.2); color: #fff; }
+/* tipos de storyboard */
+.tipos-sb { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; margin: 1rem 0 1.4rem; }
+@media (max-width: 760px) { .tipos-sb { grid-template-columns: 1fr; } }
+.tipo-sb { border: 1px solid var(--border); border-radius: 4px; background: var(--card); padding: 1rem; border-top: 3px solid var(--mc); }
+.tipo-sb h4 { font-family: 'Fraunces', serif; font-size: 0.98rem; font-weight: 600; margin-bottom: 0.4rem; }
+.tipo-sb p { font-size: 0.83rem; margin: 0; }
 
-/* SIDEBAR */
-.sidebar-di {
-  background: #fff;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  overflow: hidden;
-}
-@media(min-width:992px){ .sidebar-di { position: sticky; top: 80px; max-height: calc(100vh - 100px); overflow-y: auto; } }
-.sidebar-header { background: var(--dark); color: #fff; padding: 1rem 1.2rem; }
-.sidebar-header h6 { font-family: Georgia, serif; font-weight: normal; font-size: 0.9rem; margin: 0; color: var(--terra); }
-.sidebar-header p { font-size: 0.75rem; color: #a09a94; margin: 0.2rem 0 0; }
-.lesson-item { display: flex; align-items: center; gap: 0.8rem; padding: 0.75rem 1.2rem; border-bottom: 1px solid var(--border); cursor: pointer; transition: all 0.2s; text-decoration: none; color: var(--dark); }
-.lesson-item:hover { background: var(--cream); }
-.lesson-item.active { background: var(--terra-light); border-left: 3px solid var(--terra); }
-.lesson-item.done { color: var(--muted); }
-.lesson-num { width: 30px; height: 30px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold; flex-shrink: 0; color: var(--muted); }
-.lesson-item.active .lesson-num { background: var(--terra); color: #fff; }
-.lesson-item.done .lesson-num { background: var(--success); color: #fff; }
-.lesson-info { flex: 1; }
-.lesson-info strong { font-size: 0.83rem; display: block; }
-.lesson-info span { font-size: 0.74rem; color: var(--muted); }
-.sidebar-progress { padding: 1rem 1.2rem; background: var(--cream); }
-.progress-di { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
-.progress-di-fill { height: 100%; background: linear-gradient(90deg, var(--terra), #e07a5a); border-radius: 99px; transition: width 0.5s ease; }
-.sidebar-footer { padding: 0.8rem 1.2rem; text-align: center; border-top: 1px solid var(--border); }
+/* plantilla de storyboard visual */
+.sb-frame { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin: 1rem 0 1.4rem; }
+.sb-row { display: grid; grid-template-columns: 60px 1fr 1fr; border-bottom: 1px solid var(--border); }
+.sb-row:last-child { border-bottom: none; }
+.sb-row.head { background: var(--card); font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; text-transform: uppercase; color: var(--ink-muted); }
+.sb-cell { padding: 0.7rem 0.8rem; font-size: 0.83rem; border-right: 1px solid var(--border-soft); }
+.sb-cell:last-child { border-right: none; }
+.sb-num { display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-weight: 600; color: var(--mc); background: var(--msoft); }
+.sb-visual { background: #fff; }
+.sb-visual .sb-thumb { width: 100%; height: 70px; background: repeating-linear-gradient(45deg, #EDEAE3, #EDEAE3 8px, #E4DFD3 8px, #E4DFD3 16px); border: 1px dashed var(--border); border-radius: 3px; display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--ink-muted); margin-bottom: 0.4rem; }
+.sb-audio-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.64rem; color: var(--ia); text-transform: uppercase; margin-bottom: 0.2rem; display: block; }
 
-/* CONTENT */
-.content-di { background: #fff; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow: hidden; }
-.lesson-hero { background: linear-gradient(135deg, var(--dark) 0%, #1e2030 100%); color: #fff; padding: 2rem 2rem 1.5rem; }
-.lesson-hero .unit-tag { font-size: 0.72rem; color: var(--terra); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.4rem; }
-.lesson-hero h1 { font-family: Georgia, serif; font-size: 1.6rem; font-weight: normal; margin-bottom: 0.4rem; }
-.lesson-hero p { color: #a09a94; font-size: 0.88rem; margin: 0; }
-.lesson-badges { padding: 1rem 2rem; background: var(--terra-light); border-bottom: 1px solid var(--border); display: flex; gap: 0.6rem; flex-wrap: wrap; }
-.lbadge { font-size: 0.78rem; padding: 0.3rem 0.7rem; border-radius: 20px; border: 1px solid var(--border); background: #fff; color: var(--muted); }
-.lbadge i { color: var(--terra); }
-.lesson-body { padding: 1.8rem 2rem; }
+/* checklist de errores comunes — clickeable */
+.errores { display: flex; flex-direction: column; gap: 0.5rem; margin: 1rem 0; }
+.error-item { border: 1px solid var(--border); border-radius: 4px; background: var(--card); padding: 0.8rem 1rem; cursor: pointer; }
+.error-item .e-titulo { font-weight: 600; font-size: 0.88rem; display: flex; justify-content: space-between; align-items: center; }
+.error-item .e-toggle { font-family: 'IBM Plex Mono', monospace; color: var(--mc); }
+.error-item .e-detalle { display: none; font-size: 0.83rem; margin-top: 0.5rem; color: #3A362F; border-top: 1px dashed var(--border); padding-top: 0.5rem; }
+.error-item.open .e-detalle { display: block; }
 
-/* PRESENTACIÓN placeholder */
-.presentacion { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
-.presentacion-head { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; flex-wrap: wrap; background: var(--dark); color: #fff; padding: 0.8rem 1.2rem; }
-.pres-title { font-size: 0.95rem; font-weight: bold; display: flex; align-items: center; gap: 0.6rem; }
-.pres-title i { color: var(--terra); font-size: 1.1rem; }
-.pres-tag { font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: #a09a94; border: 1px solid rgba(255,255,255,0.18); border-radius: 20px; padding: 0.12rem 0.55rem; }
-.presentacion-viewer { height: 220px; background: var(--cream); }
-.pres-placeholder { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: var(--muted); padding: 2rem; }
-.pres-placeholder i { font-size: 2.4rem; color: #c9c2b8; margin-bottom: 0.8rem; }
-.pres-placeholder p { font-size: 0.98rem; font-weight: bold; color: var(--dark); margin-bottom: 0.3rem; }
-.pres-placeholder small { font-size: 0.82rem; line-height: 1.6; max-width: 420px; }
+.vineta { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin: 1.2rem 0; }
+.vineta-head { background: var(--ink); color: #EDEAE3; font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.6rem 1rem; }
+.vineta-body { background: var(--card); padding: 1rem 1.2rem; font-size: 0.9rem; }
+.vineta-reveal-btn { display: block; width: 100%; text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; background: var(--msoft); border: none; border-top: 1px solid var(--border); padding: 0.7rem; cursor: pointer; color: var(--mc); }
+.vineta-solution { display: none; background: #fff; border-top: 1px dashed var(--border); padding: 1rem 1.2rem; font-size: 0.9rem; }
+.vineta.revealed .vineta-solution { display: block; }
+.vineta.revealed .vineta-reveal-btn { display: none; }
 
-/* ACCORDION */
-.accordion-di { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1rem; }
-.accordion-di-btn { background: var(--cream); border: none; width: 100%; text-align: left; padding: 1rem 1.2rem; display: flex; align-items: center; gap: 0.8rem; cursor: pointer; transition: background 0.2s; font-size: 0.95rem; font-weight: bold; color: var(--dark); }
-.accordion-di-btn:hover { background: #ede9e2; }
-.accordion-di-btn.open { background: var(--dark); color: #fff; }
-.accordion-di-btn.open .acc-icon { color: var(--terra); }
-.accordion-di-btn .acc-chevron { margin-left: auto; transition: transform 0.25s; font-size: 0.8rem; }
-.accordion-di-btn.open .acc-chevron { transform: rotate(180deg); }
-.acc-icon { font-size: 1rem; color: var(--terra); }
-.accordion-di-body { display: none; padding: 1.2rem 1.4rem; border-top: 1px solid var(--border); background: #fff; font-size: 0.92rem; line-height: 1.7; }
-.accordion-di-body.show { display: block; }
-.accordion-di-body h5 { font-family: Georgia, serif; font-size: 1rem; font-weight: normal; color: var(--blue); margin: 1.2rem 0 0.5rem; }
-.accordion-di-body h5:first-child { margin-top: 0; }
+.activity { border: 1px solid var(--border); border-radius: 4px; background: var(--card); padding: 1.3rem; margin: 2rem 0; }
+.activity h2 { font-family: 'Fraunces', serif; font-size: 1.1rem; margin-bottom: 0.3rem; }
+.activity .act-sub { font-size: 0.8rem; color: var(--ink-muted); margin-bottom: 1rem; }
+.act-card { border: 1px solid var(--border); border-radius: 4px; background: var(--paper); padding: 0.9rem 1rem; margin-bottom: 0.8rem; }
+.act-statement { font-size: 0.9rem; margin-bottom: 0.7rem; }
+.act-buttons { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.act-btn { flex: 1; min-width: 90px; font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; padding: 0.5rem; border: 1px solid var(--border); border-radius: 3px; background: var(--card); cursor: pointer; transition: all 0.15s; }
+.act-btn:hover { border-color: var(--mc); }
+.act-card.ok { border-color: var(--done); background: var(--done-soft); }
+.act-card.ok .act-buttons { display: none; }
+.act-card.no { border-color: #A83232; }
+.act-verdict { font-size: 0.78rem; margin-top: 0.4rem; display: none; }
+.act-card.ok .act-verdict, .act-card.no .act-verdict { display: block; }
+.act-progress { font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; color: var(--ink-muted); margin-top: 0.4rem; }
 
-/* CARDS */
-.card-di { background: var(--cream); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; margin-bottom: 0.7rem; }
-.card-di h6 { font-size: 0.85rem; font-weight: bold; color: var(--blue); margin-bottom: 0.3rem; }
-.card-di p { font-size: 0.88rem; margin: 0; }
-.callout-terra { border-left: 4px solid var(--terra); background: var(--terra-light); padding: 0.9rem 1.1rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: 0.88rem; }
-.callout-terra strong { color: var(--terra); }
-.callout-blue { border-left: 4px solid var(--blue); background: var(--blue-light); padding: 0.9rem 1.1rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: 0.88rem; }
-.callout-blue strong { color: var(--blue); }
-.table-di { font-size: 0.85rem; }
-.table-di th { background: var(--dark); color: #fff; font-weight: normal; }
-.table-di td { vertical-align: top; }
+.callout { position: relative; border-radius: 4px; margin: 1.6rem 0; overflow: hidden; border: 1px solid var(--border); }
+.callout-header { display: flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.05em; color: #fff; }
+.callout.ia .callout-header { background: var(--ia); }
+.callout.entrevista .callout-header { background: var(--mc); }
+.callout-body { background: var(--card); padding: 1.1rem 1.3rem; font-size: 0.9rem; position: relative; }
+.callout-body p { margin-bottom: 0.7rem; }
+.callout-body p:last-child { margin-bottom: 0; }
+.capa { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 0.6rem; cursor: pointer; user-select: none; transition: transform 0.5s cubic-bezier(.65,0,.35,1), opacity 0.4s ease; font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--ink-muted); }
+.callout.ia .capa { background: var(--ia-soft); }
+.callout.entrevista .capa { background: var(--msoft); }
+.callout.revealed .capa { transform: translateX(105%); opacity: 0; pointer-events: none; }
 
-/* CODE BLOCK (JSON / variables técnicas) */
-.code-block { background: var(--dark); color: #d8d4cc; border-radius: 8px; padding: 1rem 1.2rem; font-family: 'Consolas', 'Courier New', monospace; font-size: 0.82rem; line-height: 1.6; overflow-x: auto; margin: 0.8rem 0; }
-.code-block .ck { color: #7ab8d9; }
-.code-block .cv { color: #e0a95a; }
-.code-block .cs { color: #a3d99a; }
-.code-block .cc { color: #7a7570; }
+.practica { border: 1px solid var(--border); border-radius: 4px; background: var(--card); margin: 1.4rem 0; overflow: hidden; }
+.practica-head { padding: 0.9rem 1.1rem; border-bottom: 1px solid var(--border-soft); }
+.practica-head .p-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--mc); text-transform: uppercase; letter-spacing: 0.06em; }
+.practica-head .p-q { font-size: 0.94rem; font-weight: 500; margin-top: 0.25rem; }
+.practica-body { padding: 1rem 1.1rem; }
+.practica-body textarea { width: 100%; min-height: 80px; font-family: 'IBM Plex Sans', sans-serif; font-size: 0.88rem; border: 1px solid var(--border); border-radius: 3px; padding: 0.7rem; resize: vertical; background: var(--paper); margin-bottom: 0.7rem; }
+.rm-toggle { font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; color: var(--mc); cursor: pointer; text-decoration: underline; background: none; border: none; padding: 0; }
+.rm { display: none; margin-top: 0.7rem; padding: 0.8rem 1rem; background: var(--msoft); border-radius: 3px; font-size: 0.87rem; }
+.rm.show { display: block; }
+.checklist { margin-top: 0.8rem; border-top: 1px dashed var(--border); padding-top: 0.8rem; }
+.checklist .cl-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); margin-bottom: 0.5rem; }
+.cl-item { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.84rem; padding: 0.35rem 0; cursor: pointer; }
+.cl-item input { accent-color: var(--done); margin-top: 0.2rem; }
 
-/* EVALUACIÓN */
-.eval-section { background: var(--cream); border-radius: 10px; border: 1px solid var(--border); padding: 1.5rem; margin-top: 2rem; }
-.eval-section h4 { font-family: Georgia, serif; font-weight: normal; color: var(--dark); font-size: 1.1rem; margin-bottom: 0.3rem; }
-.eval-progress-text { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.2rem; }
-.eval-question { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem 1.3rem; margin-bottom: 1rem; }
-.eval-question h6 { font-size: 0.9rem; font-weight: bold; color: var(--dark); margin-bottom: 0.8rem; line-height: 1.5; }
-.eval-option { display: flex; align-items: flex-start; gap: 0.7rem; padding: 0.6rem 0.8rem; border-radius: 7px; border: 1px solid var(--border); margin-bottom: 0.5rem; cursor: pointer; font-size: 0.88rem; transition: all 0.15s; background: var(--cream); }
-.eval-option:hover { border-color: var(--blue); background: var(--blue-light); }
-.eval-option.selected { border-color: var(--blue); background: var(--blue-light); }
-.eval-option.correct { border-color: var(--success); background: #edf7f2; pointer-events: none; }
-.eval-option.incorrect { border-color: var(--terra); background: var(--terra-light); pointer-events: none; }
-.eval-option.disabled { pointer-events: none; opacity: 0.7; }
-.eval-radio { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px; transition: all 0.15s; }
-.eval-option.selected .eval-radio { border-color: var(--blue); background: var(--blue); }
-.eval-option.correct .eval-radio { border-color: var(--success); background: var(--success); }
-.eval-option.incorrect .eval-radio { border-color: var(--terra); background: var(--terra); }
-.feedback-box { font-size: 0.84rem; padding: 0.7rem 1rem; border-radius: 7px; margin-top: 0.5rem; line-height: 1.6; }
-.feedback-ok { background: #edf7f2; color: var(--success); border: 1px solid #b0ddc5; }
-.feedback-fail { background: var(--terra-light); color: #8a3020; border: 1px solid #e0b0a0; }
-
-/* RESULT */
-.result-card { text-align: center; padding: 2rem; background: #fff; border-radius: 12px; border: 1px solid var(--border); margin-top: 1rem; }
-.result-score { font-family: Georgia, serif; font-size: 4rem; color: var(--terra); line-height: 1; }
-.result-label { font-size: 0.85rem; color: var(--muted); margin: 0.3rem 0 0.8rem; }
-.result-msg { font-size: 0.92rem; max-width: 400px; margin: 0 auto 1.5rem; line-height: 1.6; }
-
-/* BTN */
-.btn-terra { background: var(--terra); border-color: var(--terra); color: #fff; border-radius: 8px; padding: 0.6rem 1.4rem; }
-.btn-terra:hover { background: #a8492d; border-color: #a8492d; color: #fff; }
-.btn-blue { background: var(--blue); border-color: var(--blue); color: #fff; border-radius: 8px; }
-.btn-blue:hover { background: #2d5570; border-color: #2d5570; color: #fff; }
-.btn-outline-terra { border-color: var(--terra); color: var(--terra); border-radius: 8px; }
-.btn-outline-terra:hover { background: var(--terra); color: #fff; }
-
-/* TOAST */
-.toast-di { position: fixed; top: 80px; right: 20px; padding: 0.9rem 1.3rem; border-radius: 8px; color: #fff; z-index: 9999; font-size: 0.88rem; box-shadow: 0 4px 16px rgba(0,0,0,0.2); animation: slideIn 0.3s ease; }
-@keyframes slideIn { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:translateX(0); } }
+.eval-block { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 1.3rem; margin-top: 2.2rem; }
+.eval-block h2 { font-family: 'Fraunces', serif; font-size: 1.15rem; margin-bottom: 0.3rem; }
+.eval-sub { font-size: 0.8rem; color: var(--ink-muted); margin-bottom: 1.1rem; }
+.eval-q { font-size: 0.92rem; font-weight: 500; margin: 1.2rem 0 0.6rem; }
+.eval-option { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.6rem 0.8rem; border: 1px solid var(--border); border-radius: 3px; margin-bottom: 0.45rem; cursor: pointer; font-size: 0.87rem; background: var(--paper); transition: border-color 0.15s; }
+.eval-option:hover { border-color: var(--mc); }
+.eval-option input { accent-color: var(--mc); margin-top: 0.2rem; }
+.eval-option.correct { border-color: var(--done); background: var(--done-soft); }
+.eval-option.incorrect { border-color: #A83232; background: #F5E5E2; }
+.eval-submit { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; background: var(--mc); color: #fff; border: none; border-radius: 3px; padding: 0.7rem 1.4rem; cursor: pointer; margin-top: 1.2rem; }
+.eval-submit:disabled { opacity: 0.5; cursor: default; }
+.eval-counter { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: var(--ink-muted); margin-top: 0.5rem; }
+.result-card { display: none; margin-top: 1.2rem; padding: 1.1rem; border-radius: 4px; text-align: center; }
+.result-card.show { display: block; }
+.result-score { font-family: 'Fraunces', serif; font-size: 1.7rem; font-weight: 600; }
+.next-nav { display: flex; justify-content: space-between; margin-top: 2.5rem; padding-top: 1.2rem; border-top: 1px solid var(--border); font-size: 0.86rem; }
+.next-nav a { color: var(--mc); font-weight: 500; text-decoration: none; }
+.next-nav .disabled { color: var(--ink-muted); }
+.modulo-fin { background: linear-gradient(135deg, var(--mc), #3E4F38); color: #fff; border-radius: 6px; padding: 1.4rem; margin-top: 2rem; text-align: center; }
+.modulo-fin h3 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.15rem; margin-bottom: 0.4rem; }
+.modulo-fin p { font-size: 0.88rem; opacity: 0.95; margin: 0; }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<div class="header-di">
-  <div class="container-fluid px-3">
-    <div class="d-flex align-items-center justify-content-between">
-      <div class="d-flex align-items-center gap-3">
-        <a href="../index.html" class="btn-back"><i class="bi bi-arrow-left me-1"></i>Inicio</a>
-        <div>
-          <div class="course-name">Diseño Instruccional</div>
-          <div class="unit-name">Módulo 3 · Unidad 3.2</div>
-        </div>
-      </div>
-      <div class="d-none d-md-flex align-items-center gap-2">
-        <span id="headerProgress" style="font-size:0.8rem;color:#a09a94"></span>
-      </div>
-    </div>
+<div class="topbar">
+  <a class="back" href="../index.html">← Ruta de aprendizaje</a>
+  <div class="gami-chips">
+    <span id="gamiNivel">Nivel 1 · Boceto</span>
+    <span id="gamiPoints">0 pts</span>
+    <span id="gamiStreak">0 días</span>
   </div>
 </div>
 
-<div class="container-fluid px-3 py-4" style="max-width:1200px;margin:0 auto">
-  <div class="row g-4">
+<div class="layout">
+  <aside class="sidebar">
+    <h6>Módulo 3</h6>
+    <div class="sidebar-sub">Diseño de evaluación y experiencias</div>
+    <a class="side-item" href="m3-1.html"><span class="side-mark">3.1</span> Evaluación y actividades</a>
+    <a class="side-item active" href="m3-2.html"><span class="side-mark">3.2</span> Storyboarding</a>
+    <div class="side-toc">
+      <div class="toc-label">En esta unidad</div>
+      <a href="#s1">1 · Qué es y por qué es un puente</a>
+      <a href="#s2">2 · Tipos de storyboard</a>
+      <a href="#s3">3 · Anatomía de un storyboard</a>
+      <a href="#s4">4 · Storyboard según el formato</a>
+      <a href="#s5">5 · Proceso paso a paso</a>
+      <a href="#s6">6 · Errores comunes</a>
+      <a href="#practica">Práctica de entrevista</a>
+      <a href="#evaluacion">Evaluación (10)</a>
+    </div>
+  </aside>
 
-    <!-- SIDEBAR -->
-    <div class="col-lg-3">
-      <div class="sidebar-di">
-        <div class="sidebar-header">
-          <h6>Módulo 3</h6>
-          <p>Implementación y contexto actual</p>
+  <main>
+    <div class="unit-eyebrow">Módulo 3 · Unidad 3.2</div>
+    <h1 class="lesson-title">Storyboarding</h1>
+    <p class="lesson-dek">El puente entre "qué vas a enseñar" y "cómo lo vas a producir". Aquí el diseño deja de ser un documento de texto y se vuelve algo que un desarrollador o una herramienta de autoría puede construir.</p>
+    <div class="lesson-badges">
+      <span class="lbadge">6 bloques de contenido</span>
+      <span class="lbadge">1 actividad interactiva</span>
+      <span class="lbadge">3 prácticas de entrevista</span>
+      <span class="lbadge">10 preguntas de evaluación</span>
+      <span class="lbadge">~40 min</span>
+    </div>
+
+    <div class="objetivo-box">
+      <div class="label">Objetivo de aprendizaje</div>
+      <p>Dado un objetivo de aprendizaje y su actividad de evaluación (unidad 3.1), serás capaz de traducirlos en un storyboard funcional — con guion, elementos visuales, narración e interacciones especificadas — listo para producción en una herramienta de autoría.</p>
+    </div>
+
+    <div class="mapa-block">
+      <div class="mapa-head">Mapa de esta unidad · organizador previo</div>
+      <div class="mapa-body">
+        <svg width="100%" viewBox="0 0 680 200" style="display:block" role="img" aria-label="Mapa de storyboarding">
+          <rect x="30" y="70" width="150" height="52" rx="5" fill="#F1E2D6" stroke="#A85B32" stroke-width="1.2"/>
+          <text x="105" y="90" text-anchor="middle" font-family="Georgia,serif" font-size="12.5" fill="#1C1A17">DDI / objetivos</text>
+          <text x="105" y="107" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#A85B32">módulo 2</text>
+          <line x1="180" y1="96" x2="255" y2="96" stroke="#5B7052" stroke-width="2" marker-end="url(#arr)"/>
+          <rect x="260" y="70" width="160" height="52" rx="5" fill="#E3E8DE" stroke="#5B7052" stroke-width="1.4"/>
+          <text x="340" y="90" text-anchor="middle" font-family="Georgia,serif" font-size="12.5" fill="#1C1A17">Storyboard</text>
+          <text x="340" y="107" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#5B7052">esta unidad</text>
+          <line x1="420" y1="96" x2="495" y2="96" stroke="#5B7052" stroke-width="2" marker-end="url(#arr)"/>
+          <rect x="500" y="70" width="150" height="52" rx="5" fill="#F8F6F1" stroke="#2A5CAA" stroke-width="1.2"/>
+          <text x="575" y="90" text-anchor="middle" font-family="Georgia,serif" font-size="12.5" fill="#1C1A17">Producción</text>
+          <text x="575" y="107" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#2A5CAA">módulo 4</text>
+          <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#5B7052"/></marker></defs>
+          <text x="340" y="165" text-anchor="middle" font-family="monospace" font-size="10" fill="#6B665D">El storyboard es lo que hace que otra persona (o herramienta) pueda construir tu diseño</text>
+        </svg>
+      </div>
+      <div class="mapa-note">Sin storyboard, pasar de "objetivos definidos" a "curso construido" depende de que quede todo en tu cabeza. El storyboard lo hace transferible.</div>
+    </div>
+
+    <div class="media-block">
+      <div class="media-tabs">
+        <button class="media-tab active" data-pane="pdf" onclick="switchMedia(this)">📑 Presentación</button>
+        <button class="media-tab" data-pane="audio" onclick="switchMedia(this)">🎧 Audio NotebookLM</button>
+        <button class="media-tab" data-pane="video" onclick="switchMedia(this)">▶ Video</button>
+      </div>
+      <div class="media-pane active" id="pane-pdf"><div id="pdfContainer"><div class="media-pending">Presentación en preparación — se activará al agregar <strong>m3-2.pdf</strong>.</div></div></div>
+      <div class="media-pane" id="pane-audio"><div id="audioContainer"><div class="media-pending">Audio en preparación — se activará al agregar <strong>m3-2-audio.mp3</strong>.</div></div></div>
+      <div class="media-pane" id="pane-video"><div id="videoContainer"><div class="media-pending">Video en preparación — pega el ID en <strong>YT_VIDEO_ID</strong> dentro del archivo.</div></div></div>
+      <div class="media-note">Misma unidad, varios formatos (DUA pauta 1). El texto completo está siempre visible abajo.</div>
+    </div>
+
+    <!-- S1 -->
+    <div class="content-section" id="s1">
+      <h2><span class="sec-num">01</span> Qué es y por qué es un puente</h2>
+      <p>Un storyboard es la <strong>especificación visual y detallada</strong> de cada pantalla, escena o interacción de un curso: qué se ve, qué se escucha, qué hace el estudiante, y qué pasa técnicamente. Es el paso entre "sé qué quiero enseñar" (el DDI, unidad 2.4) y "está construido en Storyline" (Módulo 4).</p>
+      <div class="defbox">Sin storyboard, el desarrollo depende de que todo el diseño viva en la cabeza del DI. Con storyboard, <strong>cualquier persona con la herramienta correcta puede construir exactamente lo que diseñaste</strong> — incluida tú misma, semanas después, cuando ya no recuerdes el detalle.</div>
+      <div class="nota clave"><span class="nota-tag">Por qué esta unidad no existía antes en tu curso</span>Sin storyboard, el salto de "objetivos definidos" a "herramientas de autoría" (módulo 4) queda con un vacío — es exactamente el vacío que detectamos al reordenar el curso completo. Storyboarding es la traducción práctica de todo el Módulo 2.</div>
+    </div>
+
+    <!-- S2 -->
+    <div class="content-section" id="s2">
+      <h2><span class="sec-num">02</span> Tipos de storyboard</h2>
+      <p>No hay un único formato — el nivel de detalle depende de la complejidad del proyecto y de quién lo va a producir:</p>
+      <div class="tipos-sb">
+        <div class="tipo-sb"><h4>De texto / guion</h4><p>Solo el guion narrativo, escena por escena, sin diseño visual detallado. Rápido de producir, sirve para validar contenido antes de invertir en diseño.</p></div>
+        <div class="tipo-sb"><h4>Visual / wireframe</h4><p>Bocetos de baja fidelidad de cada pantalla: dónde va cada elemento, sin diseño final. El más usado — equilibra detalle y velocidad.</p></div>
+        <div class="tipo-sb"><h4>Técnico detallado</h4><p>Especifica también la lógica de interacción: qué pasa al hacer clic, condiciones de branching, variables. Necesario para cursos interactivos complejos.</p></div>
+      </div>
+      <div class="nota contexto"><span class="nota-tag">Para tu contexto</span>Si trabajas sola o con un equipo pequeño, un storyboard visual con notas técnicas suele ser suficiente. El detallado se justifica en proyectos con ramificaciones (branching) o lógica compleja — por ejemplo, una simulación con distintos caminos según la decisión del estudiante.</div>
+    </div>
+
+    <!-- S3 -->
+    <div class="content-section" id="s3">
+      <h2><span class="sec-num">03</span> Anatomía de un storyboard — ejemplo de plantilla</h2>
+      <p>Un storyboard efectivo, sin importar el formato, especifica siempre las mismas cinco columnas de información. Aquí un ejemplo de dos pantallas para una micro-lección sobre "tipos de brechas" (contenido que ya viste en 1.1):</p>
+      <div class="sb-frame">
+        <div class="sb-row head">
+          <div class="sb-cell">#</div>
+          <div class="sb-cell">Visual</div>
+          <div class="sb-cell">Audio / narración / interacción</div>
         </div>
-        <a class="lesson-item" href="m3-1.html">
-          <div class="lesson-num" id="num-m3-1">1</div>
-          <div class="lesson-info"><strong>Evaluación y diseño de actividades</strong><span>Evaluación auténtica · rúbricas</span></div>
-        </a>
-        <a class="lesson-item active" onclick="scrollToTop()">
-          <div class="lesson-num">2</div>
-          <div class="lesson-info"><strong>LMS, SCORM, xAPI, SLA y reportes</strong><span>Estándares · Moodle · SLA</span></div>
-        </a>
-        <a class="lesson-item" href="m3-3.html">
-          <div class="lesson-num" id="num-m3-3">3</div>
-          <div class="lesson-info"><strong>Microcredenciales e IA aplicada al DI</strong><span>Mineduc · microcredenciales · IA</span></div>
-        </a>
-        <div class="sidebar-progress">
-          <div class="d-flex justify-content-between mb-1">
-            <small style="color:var(--muted);font-size:0.75rem">Módulo 3</small>
-            <small id="sidebarPct" style="color:var(--terra);font-size:0.75rem;font-weight:bold">0/3</small>
+        <div class="sb-row">
+          <div class="sb-num">1</div>
+          <div class="sb-cell sb-visual"><div class="sb-thumb">boceto: título + ícono de brecha</div>Título "Tipos de brechas" con ícono simple. Fondo neutro, sin distractores.</div>
+          <div class="sb-cell"><span class="sb-audio-label">Narración</span>"¿Sabías que no todas las brechas se resuelven con un curso? Veamos por qué."<br><span class="sb-audio-label">Interacción</span>Botón "Continuar" — sin auto-avance.</div>
+        </div>
+        <div class="sb-row">
+          <div class="sb-num">2</div>
+          <div class="sb-cell sb-visual"><div class="sb-thumb">boceto: 3 tarjetas (conocimiento/habilidad/motivación)</div>Tres tarjetas clickeables, cada una con ícono distinto. Layout horizontal.</div>
+          <div class="sb-cell"><span class="sb-audio-label">Narración</span>"Hay tres tipos. Toca cada una para ver un ejemplo real."<br><span class="sb-audio-label">Interacción</span>Clic en cada tarjeta revela un ejemplo (capa tipo acordeón). Debe interactuar con las 3 antes de avanzar.</div>
+        </div>
+      </div>
+      <div class="nota alerta"><span class="nota-tag">Lo que NO puede faltar</span>Notarás que cada fila especifica la <em>interacción</em>, no solo lo visual y el audio. Un storyboard que solo describe "lo que se ve" no es completo — quien lo construya necesita saber qué pasa cuando el estudiante hace clic, qué se bloquea hasta que interactúe, y qué dispara el avance.</div>
+    </div>
+
+    <!-- S4 -->
+    <div class="content-section" id="s4">
+      <h2><span class="sec-num">04</span> Storyboard según el formato final</h2>
+      <p>El nivel de detalle técnico cambia según qué vas a producir:</p>
+      <table class="compare-table">
+        <tr><th>Formato final</th><th>Qué debe especificar el storyboard</th></tr>
+        <tr><td>Video narrado</td><td>Guion palabra por palabra, descripción de cada toma, tiempos aproximados, elementos en pantalla</td></tr>
+        <tr><td>Curso interactivo (Storyline/H5P)</td><td>Cada pantalla, tipo de interacción, condiciones de avance, feedback de cada opción — el detalle técnico que verás en la unidad 4.2</td></tr>
+        <tr><td>Presentación / Genially</td><td>Estructura de navegación, qué se revela con cada clic, jerarquía de la información</td></tr>
+        <tr><td>Paquete SCORM con evaluación</td><td>Además de lo anterior, cómo se calcula el puntaje y qué dispara "completado" — conecta con la unidad 4.1</td></tr>
+      </table>
+    </div>
+
+    <!-- S5 -->
+    <div class="content-section" id="s5">
+      <h2><span class="sec-num">05</span> Proceso paso a paso</h2>
+      <ol>
+        <li><strong>Parte del objetivo y la evaluación</strong> (unidad 3.1) — el storyboard no se inventa desde cero, traduce lo ya definido</li>
+        <li><strong>Esboza la secuencia</strong> usando los 9 Eventos de Gagné (1.4) como columna vertebral: atención, objetivo, contenido, práctica, cierre</li>
+        <li><strong>Bocetea pantalla por pantalla</strong> — no te detengas en el diseño final, solo en la disposición y el contenido de cada una</li>
+        <li><strong>Especifica narración e interacción</strong> para cada pantalla — el paso que más se salta y el que más problemas causa después</li>
+        <li><strong>Revisa contra los principios de Mayer</strong> (1.4) — ¿hay redundancia?, ¿la narración está separada del texto en pantalla?</li>
+        <li><strong>Valida con el SME o cliente antes de producir</strong> — corregir un storyboard cuesta minutos; corregir un curso ya construido, horas</li>
+      </ol>
+      <div class="vineta">
+        <div class="vineta-head">Viñeta de taller · falta de storyboard</div>
+        <div class="vineta-body">Un colega empieza a construir directo en Storyline sin storyboard, "porque ya tiene claro el contenido en la cabeza". A mitad de camino, el cliente pide cambiar el orden de dos secciones. <strong>¿Qué problema concreto va a enfrentar que no habría tenido con storyboard?</strong></div>
+        <button class="vineta-reveal-btn" onclick="revealVineta(this,'v1')">Piénsalo primero → ver resolución</button>
+        <div class="vineta-solution">Sin storyboard, reordenar significa reconstruir manualmente cada pantalla ya hecha en la herramienta — un trabajo técnico lento y propenso a errores (enlaces rotos, variables desalineadas). Con storyboard, el cambio se hace primero en el documento (minutos), se valida con el cliente, y solo después se reconstruye en la herramienta una sola vez. El storyboard es más barato de cambiar que el producto final.</div>
+      </div>
+    </div>
+
+    <!-- S6 -->
+    <div class="content-section" id="s6">
+      <h2><span class="sec-num">06</span> Errores comunes al hacer storyboards</h2>
+      <p>Haz clic en cada uno para ver el detalle:</p>
+      <div class="errores" id="erroresList"></div>
+    </div>
+
+    <div class="activity">
+      <h2>Actividad — Completa el storyboard</h2>
+      <div class="act-sub">Cada fila de storyboard tiene un elemento faltante. Identifica cuál columna está incompleta.</div>
+      <div id="actRoot"></div>
+      <div class="act-progress" id="actProgress"></div>
+    </div>
+
+    <div class="callout ia">
+      <div class="callout-header">🖌 IA en esta fase</div>
+      <div class="callout-body">
+        <div class="capa">＋ Toca para levantar la capa</div>
+        <p>El storyboarding es donde la IA acelera más el trabajo mecánico, dejándote el criterio a ti:</p>
+        <p>• Dale tu objetivo y actividad, y pídele un primer borrador de storyboard siguiendo los 9 eventos de Gagné — tú lo revisas, ajustas el tono y corriges lo que no calza.</p>
+        <p>• Pídele que revise un storyboard ya escrito y señale dónde falta especificar la interacción (el error más común, según la sección 3).</p>
+        <p>• Para video, pídele variantes del guion narrado y elige o combina lo mejor de cada una — más rápido que escribir desde cero.</p>
+      </div>
+    </div>
+
+    <div class="callout entrevista">
+      <div class="callout-header">🎤 Nota de entrevista</div>
+      <div class="callout-body">
+        <div class="capa">＋ Toca para levantar la capa</div>
+        <p>Si te piden mostrar tu proceso de trabajo, mencionar el storyboard como paso explícito entre diseño y desarrollo te distingue de quien "construye directo en la herramienta". Puedes decir: "diseño el storyboard antes de tocar Storyline — así valido con el cliente o el SME antes de invertir tiempo en producción, y cualquier cambio de secuencia es barato de hacer."</p>
+        <p>Si te muestran un storyboard ajeno, revisa primero si especifica la interacción, no solo lo visual — es el chequeo que más impresiona porque es el error más común.</p>
+      </div>
+    </div>
+
+    <div class="content-section" id="practica">
+      <h2><span class="sec-num">◆</span> Practica como en una entrevista</h2>
+      <p>Responde primero con tus propias palabras — <strong>en voz alta o por escrito</strong> — antes de revelar la respuesta modelo. Luego marca el checklist.</p>
+
+      <div class="practica">
+        <div class="practica-head"><div class="p-num">Práctica 1</div><div class="p-q">"¿Por qué haces un storyboard en vez de construir directo en la herramienta de autoría?"</div></div>
+        <div class="practica-body">
+          <textarea placeholder="Tu respuesta…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p1','p1')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p1">"Porque cambiar un documento es mucho más barato que cambiar un curso ya construido. El storyboard me permite validar la secuencia, el contenido y la interacción con el cliente o SME antes de invertir tiempo técnico en Storyline o H5P. Si algo cambia — y casi siempre cambia — lo ajusto en minutos en el documento, no reconstruyendo pantallas ya hechas."</div>
+          <div class="checklist"><div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1a')"> ¿Mencionaste el costo de cambiar (documento vs. producto)?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1b')"> ¿Mencionaste la validación previa con cliente/SME?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1c')"> ¿Sonó a proceso, no a preferencia personal?</label>
           </div>
-          <div class="progress-di"><div class="progress-di-fill" id="sidebarBar" style="width:0%"></div></div>
         </div>
-        <div class="sidebar-footer">
-          <a href="../index.html" style="font-size:0.8rem;color:var(--muted);text-decoration:none"><i class="bi bi-grid me-1"></i>Ver todos los módulos</a>
+      </div>
+
+      <div class="practica">
+        <div class="practica-head"><div class="p-num">Práctica 2</div><div class="p-q">"¿Qué información no puede faltar en un storyboard?"</div></div>
+        <div class="practica-body">
+          <textarea placeholder="Tu respuesta…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p2','p2')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p2">"Cinco cosas por pantalla: qué se ve, qué se escucha o lee, qué hace el estudiante, qué dispara el avance, y cómo se retroalimenta cada interacción. El error más común es especificar solo lo visual y la narración, y dejar la interacción implícita — eso obliga a quien lo produce a inventar sobre la marcha lo que yo debí haber definido."</div>
+          <div class="checklist"><div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2a')"> ¿Nombraste visual, audio e interacción como mínimo?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2b')"> ¿Mencionaste la lógica de avance/feedback?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2c')"> ¿Identificaste el error de dejar la interacción implícita?</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="practica">
+        <div class="practica-head"><div class="p-num">Práctica 3</div><div class="p-q">"Tenemos poco tiempo, ¿podemos saltarnos el storyboard e ir directo a producción?"</div></div>
+        <div class="practica-body">
+          <textarea placeholder="Tu respuesta…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p3','p3')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p3">"Entiendo la urgencia, pero saltarnos el storyboard suele costar más tiempo, no menos — cualquier cambio de secuencia o contenido significa reconstruir en la herramienta en vez de editar un documento. Lo que sí podemos acortar es el nivel de detalle: hacemos un storyboard de texto rápido, no uno visual completo, para validar contenido antes de producir. Eso nos da velocidad sin perder el control de cambios."</div>
+          <div class="checklist"><div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3a')"> ¿No cediste sin más a saltarte el paso?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3b')"> ¿Propusiste una alternativa más rápida en vez de eliminarlo?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3c')"> ¿Explicaste el riesgo de saltárselo completo?</label>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- CONTENT -->
-    <div class="col-lg-9">
-      <div class="content-di">
-        <div class="lesson-hero">
-          <div class="unit-tag">Módulo 3 · Unidad 3.2</div>
-          <h1>LMS, herramientas de autoría, SCORM, xAPI y SLA</h1>
-          <p>Guía técnica exhaustiva: arquitectura de plataformas · estándares de empaquetado · ITIL aplicado a SLA · ETL de reportes</p>
-        </div>
-        <div class="lesson-badges">
-          <span class="lbadge"><i class="bi bi-book me-1"></i>5 bloques de contenido</span>
-          <span class="lbadge"><i class="bi bi-chat-square-text me-1"></i>3 preguntas de práctica oral</span>
-          <span class="lbadge"><i class="bi bi-clipboard-check me-1"></i>8 preguntas de certificación</span>
-          <span class="lbadge"><i class="bi bi-clock me-1"></i>~65 min</span>
-        </div>
+    <div class="eval-block" id="evaluacion">
+      <h2>Evaluación — Unidad 3.2</h2>
+      <div class="eval-sub">10 preguntas. El puntaje se guarda en tu ruta. Puedes reintentar sin límite.</div>
+      <div id="quizRoot"></div>
+      <div class="eval-counter" id="quizCounter">Respondidas: 0/10</div>
+      <button class="eval-submit" id="quizSubmit" onclick="submitQuiz()" disabled>Enviar evaluación</button>
+      <div class="result-card" id="resultCard"><div class="result-score" id="resultScore">0%</div><div id="resultMsg" style="font-size:0.85rem;color:var(--ink-muted);margin-top:0.3rem;"></div></div>
+    </div>
 
-        <div class="lesson-body">
+    <div class="modulo-fin" id="moduloFin" style="display:none">
+      <h3>🎨 Módulo 3 completo</h3>
+      <p>Terminaste Diseño de evaluación y experiencias. Ya sabes evaluar y traducir tu diseño a producción — sigue con el Módulo 4: Implementación técnica.</p>
+    </div>
 
-          <!-- MAPA CONCEPTUAL (organizador previo) -->
-          <div class="presentacion mb-4">
-            <div class="presentacion-head">
-              <div class="pres-title"><i class="bi bi-diagram-3"></i> Mapa de esta unidad</div>
-              <span class="pres-tag">Organizador previo</span>
-            </div>
-            <div style="background:#fff;padding:1.2rem">
-              <svg width="100%" viewBox="0 0 680 460" style="display:block">
-                <line x1="340" y1="192" x2="220" y2="96" stroke="#ddd8d0" stroke-width="1"/>
-                <line x1="340" y1="192" x2="460" y2="96" stroke="#ddd8d0" stroke-width="1"/>
-                <line x1="260" y1="220" x2="210" y2="220" stroke="#ddd8d0" stroke-width="1"/>
-                <line x1="420" y1="220" x2="470" y2="220" stroke="#ddd8d0" stroke-width="1"/>
-                <line x1="340" y1="248" x2="340" y2="360" stroke="#ddd8d0" stroke-width="1"/>
-                <rect x="245" y="192" width="190" height="56" rx="8" fill="#f7ede8" stroke="#c85c3a" stroke-width="1"/>
-                <text x="340" y="212" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">LMS y estándares</text>
-                <text x="340" y="230" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#c85c3a">unidad 3.2</text>
-                <rect x="40" y="40" width="190" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="135" y="60" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Panorama de LMS</text>
-                <text x="135" y="78" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">Moodle, Brightspace, Canvas</text>
-                <rect x="450" y="40" width="190" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="545" y="60" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">SCORM</text>
-                <text x="545" y="78" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">estándar clásico</text>
-                <rect x="20" y="192" width="190" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="115" y="212" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">xAPI (Tin Can)</text>
-                <text x="115" y="230" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">estándar moderno</text>
-                <rect x="470" y="192" width="190" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="565" y="212" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">SLA en LMS</text>
-                <text x="565" y="230" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">gestión de servicio</text>
-                <rect x="250" y="360" width="180" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="340" y="380" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Reportes en Moodle</text>
-                <text x="340" y="398" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">del dato a la decisión</text>
-              </svg>
-              <p style="font-size:0.8rem;color:var(--muted);text-align:center;margin-top:0.5rem">Esta es la unidad más técnica del curso — no necesitas memorizar cada dato, sino saber cuándo aplica SCORM vs. xAPI y qué mirar en un reporte para decidir un rediseño.</p>
-            </div>
-          </div>
+    <div class="next-nav">
+      <a href="m3-1.html">← 3.1 Evaluación y actividades</a>
+      <a href="m4-1.html">4.1 LMS, SCORM, xAPI y SLA →</a>
+    </div>
+  </main>
+</div>
 
-          <div class="presentacion">
-            <div class="presentacion-head">
-              <div class="pres-title"><i class="bi bi-easel2"></i> Presentación del tema <span class="pres-tag">Próximamente</span></div>
-            </div>
-            <div class="presentacion-viewer">
-              <div class="pres-placeholder">
-                <i class="bi bi-file-earmark-slides"></i>
-                <p>Material audiovisual en preparación</p>
-                <small>Por ahora, revisa el contenido en los bloques de esta unidad.</small>
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-di">
-            <button class="accordion-di-btn open" onclick="toggleAcc(this)">
-              <i class="bi bi-1-circle acc-icon"></i> Panorama de LMS: Moodle, Brightspace, Canvas, Blackboard
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body show">
-              <p>Un LMS (Learning Management System) es la plataforma donde se aloja, distribuye y rastrea el consumo de los cursos. Conocer las diferencias entre plataformas es una competencia que se pregunta con frecuencia en procesos de selección de DI.</p>
-              <table class="table table-di table-bordered mt-2">
-                <thead><tr><th>LMS</th><th>Tipo</th><th>Fortaleza</th><th>Dónde se usa típicamente</th></tr></thead>
-                <tbody>
-                  <tr><td>Moodle</td><td>Open source, autoalojable o MoodleCloud</td><td>Altamente configurable, gratis, comunidad enorme de plugins</td><td>Universidades chilenas (muchas), institutos, K-12</td></tr>
-                  <tr><td>Brightspace (D2L)</td><td>Comercial</td><td>Interfaz moderna, buenas analíticas de aprendizaje</td><td>Educación superior, algunos programas corporativos</td></tr>
-                  <tr><td>Canvas</td><td>Comercial / open source (Canvas LMS)</td><td>UX muy cuidada, fuerte en Norteamérica</td><td>Universidades, cada vez más presente en Chile</td></tr>
-                  <tr><td>Blackboard</td><td>Comercial</td><td>Robusto, orientado a instituciones grandes y tradicionales</td><td>Universidades con contratos institucionales de larga data</td></tr>
-                </tbody>
-              </table>
-              <div class="callout-terra mt-2">
-                <strong>Tu experiencia real:</strong> tienes MoodleCloud (curso "Dibujo Anatómico" con H5P y quiz) y virtualización en Brightspace (5 cursos). Eso te permite hablar con propiedad de ambas familias — open source configurable vs. comercial con soporte — en una entrevista.
-              </div>
-
-              <h5>Por qué existe un LMS (y por qué no basta con "subir archivos a una nube")</h5>
-              <p>Un repositorio de archivos (Drive, Dropbox) almacena contenido, pero no sabe quién lo vio, cuánto avanzó, si aprobó una evaluación ni cuándo vence una inscripción. El LMS existe para resolver tres problemas a la vez: <strong>distribución</strong> (que cada estudiante vea solo lo que le corresponde), <strong>seguimiento</strong> (registrar avance y notas) y <strong>gestión</strong> (matrículas, roles, comunicaciones). Por eso ninguna institución seria reemplaza el LMS por una carpeta compartida, por ordenada que esté.</p>
-
-              <h5>Cómo se opera un LMS en el día a día (flujo típico de un DI/coordinador)</h5>
-              <div class="card-di"><h6><i class="bi bi-1-circle me-1"></i>Estructurar el curso</h6><p>Crear el "shell" del curso, definir el formato (semanal, por temas, social) y organizar secciones según el diseño instruccional ya definido — no al revés: primero se diseña, luego se estructura en el LMS.</p></div>
-              <div class="card-di"><h6><i class="bi bi-2-circle me-1"></i>Cargar y enlazar recursos</h6><p>Subir archivos, insertar paquetes SCORM/H5P, enlazar videos, y configurar la secuencia (a veces con restricciones de acceso: "no ver la Unidad 2 sin completar la Unidad 1").</p></div>
-              <div class="card-di"><h6><i class="bi bi-3-circle me-1"></i>Configurar evaluaciones y calificaciones</h6><p>Definir cuestionarios, rúbricas, ponderaciones y el libro de calificaciones (gradebook), que es lo que finalmente reporta la institución.</p></div>
-              <div class="card-di"><h6><i class="bi bi-4-circle me-1"></i>Matricular y comunicar</h6><p>Inscribir estudiantes (manual, por cohorte o vía sincronización con el sistema académico), y usar los foros/anuncios del LMS para comunicación oficial del curso.</p></div>
-              <div class="card-di"><h6><i class="bi bi-5-circle me-1"></i>Monitorear y ajustar</h6><p>Revisar reportes de avance durante el curso (no solo al final) para detectar quién se está quedando atrás o qué contenido genera fricción — este punto se profundiza en el bloque de Reportes de Moodle.</p></div>
-
-              <div class="callout-blue mt-2">
-                <strong>Cómo aplicarlo si te preguntan en una entrevista:</strong> no describas el LMS solo como "la plataforma donde se sube el curso". Explica el flujo completo — estructurar, cargar, evaluar, matricular, monitorear — porque eso demuestra que entiendes el LMS como herramienta de gestión pedagógica, no solo de alojamiento de archivos.
-              </div>
-
-              <h5>Arquitectura avanzada: Cohortes y Agrupamientos (Groupings)</h5>
-              <p>El error más común de un DI sin experiencia de escala es <strong>duplicar el curso</strong> por cada paralelo o sección. Si tienes 7 paralelos de séptimo básico, crear 7 cursos idénticos en Moodle significa mantener 7 copias del mismo contenido: cada corrección, cada actualización de material, hay que repetirla 7 veces. La arquitectura correcta usa un <strong>curso maestro único</strong> con dos mecanismos de segmentación:</p>
-              <div class="card-di"><h6><i class="bi bi-people-fill me-1"></i>Cohortes (a nivel de sitio)</h6><p>Son listas de usuarios definidas a nivel de toda la plataforma (no de un curso específico) — por ejemplo, "7ºA 2026", "7ºB 2026". Se crean una vez en Administración del sitio y sirven para matricular masivamente a un grupo completo en uno o varios cursos con un solo clic, en vez de inscribir estudiante por estudiante.</p></div>
-              <div class="card-di"><h6><i class="bi bi-diagram-2 me-1"></i>Grupos y Agrupamientos (a nivel de curso)</h6><p>Dentro del curso maestro, cada cohorte se asigna a un <strong>Grupo</strong> (ej. "Grupo 7ºA"). Los "Agrupamientos" (Groupings) permiten reunir varios grupos bajo una misma etiqueta cuando una actividad debe compartirse entre algunos paralelos pero no todos.</p></div>
-              <div class="card-di"><h6><i class="bi bi-eye-slash me-1"></i>Modo "Grupos separados"</h6><p>Al activar este modo en el curso (o en una actividad específica, como un foro), cada paralelo solo ve las publicaciones, entregas y compañeros de su propio grupo — aunque todos comparten literalmente el mismo curso y el mismo contenido base.</p></div>
-
-              <div class="callout-terra mt-2">
-                <strong>Por qué esto importa para tu rol:</strong> esta arquitectura es lo que separa a un DI que "sabe usar Moodle" de uno que sabe <em>diseñar la estructura de un curso a escala</em>. Un solo curso maestro con grupos separados significa un solo lugar donde corregir un error, una sola vez que actualizar un recurso, y reportes de finalización que se pueden filtrar por paralelo sin perder la vista consolidada del séptimo básico completo.
-              </div>
-              <div class="callout-blue">
-                <strong>Cómo se opera:</strong> Administración del sitio → Usuarios → Cohortes (crear y asignar estudiantes) → dentro del curso: Participantes → Cohortes de matriculación (para autoinscribir la cohorte completa) → Configuración del curso → Grupos (crear un grupo por cohorte y activar "Grupos separados" donde corresponda).
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-2-circle acc-icon"></i> SCORM: el estándar clásico de empaquetado
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p>SCORM (Sharable Content Object Reference Model) es el estándar más usado para empaquetar contenido e-learning de forma que cualquier LMS compatible pueda reproducirlo y registrar resultados básicos.</p>
-              <h5>SCORM 1.2 vs SCORM 2004</h5>
-              <table class="table table-di table-bordered">
-                <thead><tr><th></th><th>SCORM 1.2</th><th>SCORM 2004</th></tr></thead>
-                <tbody>
-                  <tr><td>Adopción</td><td>El más ampliamente soportado — casi universal</td><td>Menos universal, algunos LMS lo soportan parcialmente</td></tr>
-                  <tr><td>Secuenciación</td><td>Básica, lineal</td><td>Permite reglas de secuenciación y navegación más complejas</td></tr>
-                  <tr><td>Datos que registra</td><td>Estado de finalización, puntaje, tiempo</td><td>Igual que 1.2, con mayor granularidad de intentos</td></tr>
-                  <tr><td>Recomendación práctica</td><td>Usar si la compatibilidad es prioridad</td><td>Usar solo si el LMS lo soporta bien y se necesita secuenciación avanzada</td></tr>
-                </tbody>
-              </table>
-              <div class="callout-blue mt-2">
-                <strong>Limitación clave de SCORM:</strong> requiere conexión constante al LMS (no funciona bien offline), registra datos limitados (esencialmente "completó / no completó" y puntaje final), y no rastrea aprendizaje fuera del LMS (por ejemplo, una simulación en otra plataforma o una práctica en el mundo real).
-              </div>
-              <p>En Articulate Storyline y Rise, el paquete final se exporta típicamente como SCORM 1.2 o 2004 para subirlo a un LMS como Moodle.</p>
-
-              <h5>Para qué sirve en la práctica (el problema que resuelve)</h5>
-              <p>SCORM permite crear un contenido interactivo <strong>una sola vez</strong> (en Storyline, Rise, iSpring, etc.) y que ese mismo paquete funcione en cualquier LMS compatible sin reprogramarlo. Sin SCORM, cada LMS necesitaría su propio formato y el contenido no sería portable entre instituciones.</p>
-
-              <h5>Cómo operarlo: de Storyline a Moodle, paso a paso</h5>
-              <div class="card-di"><h6><i class="bi bi-1-circle me-1"></i>Publicar el proyecto</h6><p>En Storyline: Archivo → Publicar → pestaña LMS → elegir SCORM 1.2 o 2004 → definir criterio de finalización (por ejemplo, "completado" al llegar a la última diapositiva, o por puntaje del quiz).</p></div>
-              <div class="card-di"><h6><i class="bi bi-2-circle me-1"></i>Generar el paquete .zip</h6><p>Storyline exporta una carpeta con un archivo <code>imsmanifest.xml</code> (la "ficha técnica" que el LMS lee para saber cómo reproducir el contenido) — todo comprimido en un único .zip, sin descomprimir.</p></div>
-              <div class="card-di"><h6><i class="bi bi-3-circle me-1"></i>Subir a Moodle</h6><p>Dentro del curso: Activar edición → Agregar actividad → "Paquete SCORM" → subir el .zip directamente (Moodle lo descomprime automáticamente).</p></div>
-              <div class="card-di"><h6><i class="bi bi-4-circle me-1"></i>Configurar el registro de intentos</h6><p>Definir si se permite un intento o varios, y qué calificación se guarda (el más alto, el promedio, el último intento) — esto determina qué ve el docente en el gradebook.</p></div>
-              <div class="card-di"><h6><i class="bi bi-5-circle me-1"></i>Probar antes de publicar</h6><p>Siempre revisar el paquete como estudiante de prueba: un error común es que el criterio de "completado" quede mal configurado y el sistema nunca marque el curso como terminado aunque el estudiante lo haya visto entero.</p></div>
-
-              <div class="callout-terra mt-2">
-                <strong>Error típico que debes saber detectar:</strong> si un estudiante dice "vi todo el módulo pero me sigue apareciendo como incompleto", casi siempre es un problema de configuración del criterio de finalización en la publicación del SCORM, no un error del LMS. Es una de las fallas más frecuentes que un DI resuelve en el día a día.
-              </div>
-
-              <h5>Dentro del paquete: el imsmanifest.xml y las variables de comunicación (API)</h5>
-              <p>El archivo <code>imsmanifest.xml</code> es la "ficha técnica" que declara la estructura del paquete: qué archivo abrir primero, cómo se organizan las secciones (los "SCOs", Sharable Content Objects) y qué versión de SCORM se está usando. Pero lo que realmente conecta el contenido con el LMS mientras el estudiante interactúa son las <strong>variables del modelo de datos SCORM (CMI)</strong>, que el paquete "escribe" y el LMS "lee" en tiempo real:</p>
-              <table class="table table-di table-bordered mt-2">
-                <thead><tr><th>Variable</th><th>Qué guarda</th><th>Por qué le importa a un DI</th></tr></thead>
-                <tbody>
-                  <tr><td><code>cmi.core.lesson_status</code></td><td>El estado del intento: <em>incomplete, completed, passed, failed</em></td><td>Es la variable que determina si el curso aparece como "completado" para el estudiante — la causa más común de reclamos.</td></tr>
-                  <tr><td><code>cmi.core.score.raw</code></td><td>El puntaje numérico obtenido en el intento</td><td>Es lo que se refleja en el gradebook de Moodle; si no coincide, el problema suele estar en cómo se configuró el quiz dentro de Storyline.</td></tr>
-                  <tr><td><code>cmi.suspend_data</code></td><td>Un "punto de guardado": en qué pantalla exacta quedó el estudiante</td><td>Permite retomar donde quedó en vez de empezar de cero — si esta variable se corrompe o excede el límite de caracteres que soporta el LMS, el estudiante pierde el avance.</td></tr>
-                  <tr><td><code>cmi.core.session_time</code></td><td>Tiempo que duró esa sesión específica de uso</td><td>Se usa para reportar tiempos de dedicación reales, útil para justificar la duración estimada de un curso.</td></tr>
-                </tbody>
-              </table>
-
-              <h5>Cómo hacer debugging cuando una nota no se guarda</h5>
-              <div class="card-di"><h6><i class="bi bi-1-circle me-1"></i>Confirmar el síntoma exacto</h6><p>¿No se guarda el estado de completado, o se guarda pero con el puntaje en cero? Son dos problemas distintos: el primero suele ser el criterio de finalización mal definido en Storyline; el segundo, un desajuste entre cómo el quiz calcula el puntaje y qué variable CMI se está reportando.</p></div>
-              <div class="card-di"><h6><i class="bi bi-2-circle me-1"></i>Revisar el reporte SCORM en Moodle</h6><p>Dentro de la actividad SCORM: Informes → ver el intento del estudiante — Moodle muestra el valor crudo de <code>lesson_status</code> y <code>score.raw</code> que recibió, lo que permite distinguir si el problema está en el paquete o en la configuración del LMS.</p></div>
-              <div class="card-di"><h6><i class="bi bi-3-circle me-1"></i>Probar en modo incógnito</h6><p>El navegador a veces cachea una versión antigua del paquete SCORM; probar en una ventana de incógnito descarta ese factor antes de escalar el problema como un error real.</p></div>
-              <div class="card-di"><h6><i class="bi bi-4-circle me-1"></i>Revisar el límite de suspend_data</h6><p>Algunos LMS truncan <code>cmi.suspend_data</code> si el paquete guarda demasiada información de estado (común en simulaciones muy largas o con muchas variables internas) — si el estudiante "pierde el avance" a mitad de curso, este es el primer sospechoso.</p></div>
-
-              <div class="callout-blue mt-2">
-                <strong>Cómo aplicarlo:</strong> no necesitas leer XML ni programar el SCO. Lo que se espera de un DI es que, ante "a un estudiante no le guardó la nota", sepa hacer las preguntas correctas y ubicar el dato exacto (¿qué dice el reporte SCORM del intento?) antes de derivar el caso a soporte técnico como una caja negra.
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-3-circle acc-icon"></i> xAPI (Tin Can API): el estándar moderno
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p>xAPI (Experience API, también llamado Tin Can API) es un estándar más reciente y flexible que SCORM. En vez de depender de un LMS, xAPI envía "declaraciones" (statements) del tipo <strong>sujeto-verbo-objeto</strong> (ej. "Joselyn completó el módulo de SCORM") a un <strong>LRS</strong> (Learning Record Store).</p>
-              <h5>Ventajas de xAPI sobre SCORM</h5>
-              <div class="card-di"><h6><i class="bi bi-wifi-off me-1"></i>Funciona offline</h6><p>Las declaraciones se pueden guardar localmente y sincronizar cuando vuelve la conexión — clave para apps móviles o simulaciones sin internet constante.</p></div>
-              <div class="card-di"><h6><i class="bi bi-diagram-3 me-1"></i>Rastrea aprendizaje fuera del LMS</h6><p>Puede registrar experiencias en simuladores, videojuegos educativos, apps de práctica, incluso actividades presenciales reportadas manualmente.</p></div>
-              <div class="card-di"><h6><i class="bi bi-graph-up me-1"></i>Datos más granulares</h6><p>No solo "completó/no completó": puede registrar cada interacción, respuesta, tiempo por pantalla, decisiones tomadas dentro de una simulación.</p></div>
-              <div class="callout-terra mt-2">
-                <strong>Relación con Moodle:</strong> Moodle puede actuar como LRS con plugins (o integrarse con un LRS externo como Learning Locker). Es un tema técnico que normalmente gestiona el administrador de plataforma, pero el DI debe entender qué datos puede pedir y para qué sirven en reportes de aprendizaje.
-              </div>
-              <div class="callout-blue">
-                <strong>Para entrevistas:</strong> si te preguntan "¿SCORM o xAPI?", la respuesta correcta no es elegir uno — es explicar que SCORM sigue siendo el estándar más compatible y suficiente para cursos e-learning tradicionales, mientras que xAPI se justifica cuando se necesita rastrear aprendizaje distribuido en múltiples plataformas o fuera de línea.
-              </div>
-
-              <h5>Cómo se ve un statement de xAPI (para perder el miedo al formato)</h5>
-              <p>Cada declaración sigue la estructura <strong>actor – verbo – objeto</strong>, con datos adicionales opcionales de resultado y contexto. Así viaja realmente ese dato, como objeto JSON, desde una app móvil sin conexión hacia el LRS en cuanto vuelve la señal:</p>
-              <div class="code-block">{<br>
-&nbsp;&nbsp;<span class="ck">"actor"</span>: {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="ck">"name"</span>: <span class="cs">"Joselyn Vizcarra"</span>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="ck">"mbox"</span>: <span class="cs">"mailto:joselyn@correo.cl"</span><br>
-&nbsp;&nbsp;},<br>
-&nbsp;&nbsp;<span class="ck">"verb"</span>: {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="ck">"id"</span>: <span class="cs">"http://adlnet.gov/expapi/verbs/completed"</span>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="ck">"display"</span>: { <span class="ck">"es-CL"</span>: <span class="cs">"completó"</span> }<br>
-&nbsp;&nbsp;},<br>
-&nbsp;&nbsp;<span class="ck">"object"</span>: {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="ck">"id"</span>: <span class="cs">"https://curso.di/modulo-anatomia-osea"</span>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="ck">"definition"</span>: { <span class="ck">"name"</span>: { <span class="ck">"es-CL"</span>: <span class="cs">"Módulo de Anatomía Ósea"</span> } }<br>
-&nbsp;&nbsp;},<br>
-&nbsp;&nbsp;<span class="ck">"result"</span>: { <span class="ck">"score"</span>: { <span class="ck">"raw"</span>: <span class="cv">85</span>, <span class="ck">"max"</span>: <span class="cv">100</span> } },<br>
-&nbsp;&nbsp;<span class="ck">"context"</span>: { <span class="ck">"platform"</span>: <span class="cs">"App móvil — offline"</span> } <span class="cc">// se guarda local y sincroniza al reconectar</span><br>
-}</div>
-              <p>Ese objeto JSON se envía al LRS a través de una API REST cuando el dispositivo recupera conexión — el detalle técnico exacto lo maneja normalmente un desarrollador o el administrador de plataforma, pero el DI debe poder leer esta estructura e identificar qué información aporta cada campo.</p>
-
-              <h5>Cómo se aplica esto en un proyecto real (flujo conceptual)</h5>
-              <div class="card-di"><h6><i class="bi bi-1-circle me-1"></i>Definir qué se quiere medir</h6><p>El DI decide qué comportamientos o hitos importan pedagógicamente: "intentó la simulación 3 veces", "revisó el material de apoyo antes del examen", "practicó en la app fuera del horario de clases".</p></div>
-              <div class="card-di"><h6><i class="bi bi-2-circle me-1"></i>Especificar los verbos y objetos</h6><p>Junto al equipo técnico, se define el vocabulario xAPI a usar (existen "perfiles" estándar reutilizables, como el ADL Vocabulary, para no inventar verbos desde cero).</p></div>
-              <div class="card-di"><h6><i class="bi bi-3-circle me-1"></i>Configurar el LRS</h6><p>Se conecta la herramienta de autoría o app con un LRS (puede ser un plugin de Moodle o uno externo como Learning Locker), que queda como el repositorio central de todas las declaraciones.</p></div>
-              <div class="card-di"><h6><i class="bi bi-4-circle me-1"></i>Analizar los datos</h6><p>El DI o el equipo de analítica consulta el LRS (o lo conecta a un dashboard) para responder preguntas pedagógicas: ¿el material opcional se está usando?, ¿hay correlación entre práctica extra y mejor desempeño?</p></div>
-
-              <div class="callout-terra mt-2">
-                <strong>Cómo aplicarlo en tu discurso profesional:</strong> no necesitas saber programar el LRS. Lo que se evalúa en tu rol es que puedas <em>traducir una necesidad pedagógica en un requerimiento de datos</em> — decirle al equipo técnico "necesito saber si practican fuera del LMS" y entender la respuesta que te entregan.
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-4-circle acc-icon"></i> SLA en la gestión de LMS
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p>Un SLA (Service Level Agreement, Acuerdo de Nivel de Servicio) define los compromisos medibles entre quien administra la plataforma LMS y sus usuarios (estudiantes, docentes, institución). Es un tema técnico-administrativo que un coordinador o jefe de diseño instruccional online debe manejar, especialmente en instituciones con LMS institucional propio.</p>
-              <h5>Métricas típicas de un SLA de LMS</h5>
-              <table class="table table-di table-bordered mt-2">
-                <thead><tr><th>Métrica</th><th>Qué mide</th><th>Ejemplo de compromiso</th></tr></thead>
-                <tbody>
-                  <tr><td>Disponibilidad (uptime)</td><td>% de tiempo que la plataforma está operativa</td><td>99.5% de disponibilidad mensual</td></tr>
-                  <tr><td>Tiempo de respuesta a incidentes</td><td>Cuánto tarda soporte en responder un ticket</td><td>Respuesta inicial en menos de 4 horas hábiles</td></tr>
-                  <tr><td>Tiempo de resolución</td><td>Cuánto tarda en resolverse el problema reportado</td><td>Incidentes críticos resueltos en 24 horas</td></tr>
-                  <tr><td>Respaldo de datos</td><td>Frecuencia y retención de backups</td><td>Backup diario, retención de 30 días</td></tr>
-                  <tr><td>Capacidad / rendimiento</td><td>Usuarios concurrentes soportados sin degradación</td><td>Soporta 500 usuarios simultáneos sin caídas</td></tr>
-                </tbody>
-              </table>
-              <div class="callout-terra mt-2">
-                <strong>Por qué esto es relevante para tu rol:</strong> un coordinador o jefe de DI online no administra el servidor directamente, pero sí gestiona la relación con TI o el proveedor: reporta incidentes, verifica que se cumplan los tiempos de respuesta, y comunica a docentes y estudiantes cuando hay mantenciones programadas. Entender el lenguaje de SLA te permite participar en esas conversaciones con propiedad.
-              </div>
-              <div class="callout-blue">
-                <strong>Para INACAP:</strong> si preguntan por gestión de SLA, enfócate en tu rol de coordinación — escalar incidentes, dar seguimiento a tickets, comunicar interrupciones — más que en aspectos puramente técnicos de servidor, que corresponden a TI.
-              </div>
-
-              <h5>Cómo se opera un SLA en la práctica: flujo de un incidente</h5>
-              <div class="card-di"><h6><i class="bi bi-1-circle me-1"></i>Detección</h6><p>Un docente o estudiante reporta un problema (no puede acceder, un video no carga, el LMS está lento) — o el propio coordinador lo detecta al monitorear la plataforma.</p></div>
-              <div class="card-di"><h6><i class="bi bi-2-circle me-1"></i>Registro (ticket)</h6><p>Se abre un ticket formal en el sistema de soporte de TI/proveedor, con fecha, hora y descripción clara del problema — esto es lo que activa el cronómetro del SLA.</p></div>
-              <div class="card-di"><h6><i class="bi bi-3-circle me-1"></i>Clasificación de severidad</h6><p>Se define si es crítico (el LMS completo caído), alto (una función específica falla para muchos usuarios) o bajo (un caso puntual) — la severidad determina el tiempo de respuesta comprometido en el SLA.</p></div>
-              <div class="card-di"><h6><i class="bi bi-4-circle me-1"></i>Seguimiento y escalamiento</h6><p>El coordinador da seguimiento al ticket; si el proveedor no responde dentro del plazo pactado, corresponde escalar (contactar a un nivel superior de soporte o al encargado de la cuenta).</p></div>
-              <div class="card-di"><h6><i class="bi bi-5-circle me-1"></i>Comunicación a la comunidad</h6><p>Mientras se resuelve, el coordinador informa a docentes y estudiantes con lenguaje claro: qué pasó, desde cuándo, y una estimación de cuándo se resuelve — esta comunicación es tan parte del rol como el ticket mismo.</p></div>
-              <div class="card-di"><h6><i class="bi bi-6-circle me-1"></i>Cierre y registro</h6><p>Una vez resuelto, se documenta el incidente (causa, tiempo real de resolución vs. comprometido) — este historial sirve para negociar renovaciones de contrato o evaluar si el proveedor cumple sistemáticamente.</p></div>
-
-              <div class="callout-terra mt-2">
-                <strong>Cómo aplicarlo:</strong> si te preguntan "¿qué harías si el LMS se cae un lunes en la mañana antes de un examen?", la respuesta esperada sigue este flujo: registrar el ticket con severidad crítica, comunicar de inmediato a la comunidad con una alternativa (posponer, usar canal de respaldo), y dar seguimiento activo hasta el cierre — no simplemente "esperar a que TI lo resuelva".
-              </div>
-
-              <h5>Vocabulario ITIL que un SLA de LMS maduro debe incluir</h5>
-              <p>Los compromisos de un SLA bien redactado no se limitan a "tiempo de respuesta". Tres conceptos del marco <strong>ITIL</strong> (el estándar de gestión de servicios de TI) son los que distinguen un SLA operativo de uno solo administrativo:</p>
-              <table class="table table-di table-bordered mt-2">
-                <thead><tr><th>Concepto</th><th>Qué significa</th><th>Por qué debe estar en el SLA</th></tr></thead>
-                <tbody>
-                  <tr><td>Concurrencia máxima</td><td>Número máximo de usuarios usando la plataforma <strong>al mismo tiempo</strong> sin que se degrade el rendimiento</td><td>Un LMS puede soportar 5.000 usuarios registrados pero solo 300 concurrentes — si toda una cohorte rinde examen a la misma hora, este número (no el total de matriculados) es el que puede tumbar la plataforma.</td></tr>
-                  <tr><td>RPO (Recovery Point Objective)</td><td>Cuánta información como máximo se puede perder, medida en tiempo, si el sistema falla</td><td>Un RPO de 24 horas significa que, en el peor caso, se pierde hasta un día de calificaciones y actividad si no hubo backup más reciente — es distinto de "cuánto tarda en volver el sistema" (eso es el RTO, Recovery Time Objective).</td></tr>
-                  <tr><td>Los "Tres Nueves" (99.9% uptime)</td><td>Un compromiso de disponibilidad del 99.9% equivale a un máximo de ~8,7 horas de caída <strong>al año</strong></td><td>Sirve para contrastar promesas de marketing ("alta disponibilidad") con un número verificable y exigible contractualmente.</td></tr>
-                </tbody>
-              </table>
-              <div class="callout-blue mt-2">
-                <strong>Cómo aplicarlo:</strong> si en una negociación de contrato con un proveedor de LMS solo se habla de "tiempo de respuesta a tickets", falta exigir también el RPO (qué tan atrás se puede perder información) y la concurrencia máxima garantizada (no solo el total de usuarios permitidos) — son las dos preguntas técnicas que revelan si el proveedor entiende de verdad el uso real de la plataforma en época de exámenes o matrícula masiva.
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-5-circle acc-icon"></i> Reportes en Moodle
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p>Moodle ofrece varios niveles de reportes que un DI o coordinador debe saber leer e interpretar para tomar decisiones pedagógicas, no solo administrativas.</p>
-              <div class="row g-2 mt-2">
-                <div class="col-md-6"><div class="card-di"><h6><i class="bi bi-check2-square me-1"></i>Finalización de curso (Completion)</h6><p>Muestra qué actividades y qué porcentaje de estudiantes completaron cada componente del curso.</p></div></div>
-                <div class="col-md-6"><div class="card-di"><h6><i class="bi bi-journal-text me-1"></i>Registros (Logs)</h6><p>Detalle de cada acción de cada usuario: ingreso, vista de recurso, envío de tarea, con fecha y hora exactas.</p></div></div>
-                <div class="col-md-6"><div class="card-di"><h6><i class="bi bi-graph-up-arrow me-1"></i>Calificaciones (Gradebook)</h6><p>Vista consolidada de notas por actividad y curso; exportable a Excel/CSV para análisis externo.</p></div></div>
-                <div class="col-md-6"><div class="card-di"><h6><i class="bi bi-clipboard-data me-1"></i>Informes de actividad</h6><p>Vistas por recurso: cuántos estudiantes accedieron a cada material, útil para detectar contenidos poco usados.</p></div></div>
-              </div>
-              <div class="callout-terra mt-2">
-                <strong>Uso pedagógico de los reportes:</strong> un reporte de finalización con caída abrupta en una unidad específica es una señal de que esa unidad puede tener un problema de diseño (demasiado larga, poco clara, mal secuenciada) — no solo un dato administrativo, sino una alerta de rediseño.
-              </div>
-              <div class="callout-blue">
-                <strong>Limitación a mencionar con honestidad:</strong> los reportes nativos de Moodle son funcionales pero poco visuales comparados con un dashboard de PowerBI. Para reportes ejecutivos más sofisticados, se exportan los datos de Moodle (vía CSV o su API) hacia PowerBI — tema que se profundiza en la Unidad 4.2.
-              </div>
-
-              <h5>Cómo operar los reportes: ruta de navegación y flujo de lectura</h5>
-              <div class="card-di"><h6><i class="bi bi-1-circle me-1"></i>Dónde encontrarlos</h6><p>Dentro del curso: Participantes → Finalización de actividad (para Completion), o Informes → Registros (para Logs), o Calificaciones → Vista de calificador (para el Gradebook). En Moodle 4.x el menú "Informes" del curso centraliza la mayoría de estas vistas.</p></div>
-              <div class="card-di"><h6><i class="bi bi-2-circle me-1"></i>Qué mirar primero</h6><p>Empieza por el reporte de Finalización: te da la foto general de dónde está el curso en su conjunto antes de bajar al detalle de un estudiante o actividad específica.</p></div>
-              <div class="card-di"><h6><i class="bi bi-3-circle me-1"></i>Cómo interpretar una caída</h6><p>Si el 90% completa la Unidad 1 pero solo el 40% la Unidad 2, compara duración, tipo de actividad y claridad de instrucciones entre ambas unidades antes de asumir que "los estudiantes no se esfuerzan" — el dato apunta primero al diseño.</p></div>
-              <div class="card-di"><h6><i class="bi bi-4-circle me-1"></i>Cómo actuar sobre el hallazgo</h6><p>Documenta el hallazgo con datos concretos, propón un ajuste (acortar la unidad, dividir la actividad, agregar un ejemplo) y vuelve a medir en la siguiente cohorte — cerrar el ciclo es lo que distingue un reporte útil de un dato archivado.</p></div>
-
-              <div class="callout-terra mt-2">
-                <strong>Cómo aplicarlo en tu portafolio de entrevista:</strong> si tienes acceso a tus cursos de MoodleCloud, exporta una captura de un reporte de finalización real y ten lista una frase tipo: "detecté que el X% abandonaba en la unidad Y, y ajusté Z" — eso convierte una competencia técnica en una historia de impacto pedagógico, que es lo que de verdad se evalúa en una entrevista de DI.
-              </div>
-
-              <h5>De datos crudos a dashboard: el proceso ETL para un tablero de deserción</h5>
-              <p>Cuando un reporte nativo de Moodle no basta y se necesita un dashboard ejecutivo en PowerBI, el camino no es "exportar y listo" — sigue el proceso estándar de <strong>ETL: Extracción, Transformación y Carga</strong>.</p>
-              <div class="card-di"><h6><i class="bi bi-database me-1"></i>Extracción (Extract)</h6><p>Los datos crudos de comportamiento viven en tablas internas de la base de datos de Moodle, como <code>mdl_logstore_standard_log</code> (el registro de cada clic y acción de cada usuario) y <code>mdl_course_modules_completion</code> (el detalle de finalización). Se extraen vía consulta SQL directa, el reporte de Logs exportado a CSV, o la API web de Moodle.</p></div>
-              <div class="card-di"><h6><i class="bi bi-funnel me-1"></i>Transformación (Transform)</h6><p>Los datos crudos vienen con IDs numéricos en vez de nombres, timestamps en formato Unix, y registros duplicados o irrelevantes (como accesos de administradores). En Power Query (dentro de PowerBI) se limpian: se cruzan los IDs con las tablas de usuarios y cursos, se convierten las fechas a formato legible, y se filtran los eventos que no aportan al análisis.</p></div>
-              <div class="card-di"><h6><i class="bi bi-bar-chart-line me-1"></i>Carga (Load) y modelado con DAX</h6><p>Ya en PowerBI, se construyen medidas con <strong>DAX</strong> (Data Analysis Expressions, el lenguaje de fórmulas de PowerBI) para calcular indicadores que Moodle no entrega directo — por ejemplo, una medida que calcule el <em>% de deserción por unidad</em> comparando estudiantes activos en la Unidad 1 versus la Unidad 4, o el promedio de días de inactividad antes del abandono.</p></div>
-
-              <div class="callout-blue mt-2">
-                <strong>Cómo aplicarlo:</strong> no se espera que un DI escriba las consultas SQL o las fórmulas DAX desde cero sin apoyo, pero sí que entienda el flujo completo para poder <em>especificarle a un analista de datos</em> qué necesita ver: "quiero un tablero que cruce el log de acceso con la finalización por unidad, para identificar en qué punto exacto se desconectan los estudiantes que después desertan" — esa es la traducción de una necesidad pedagógica en un requerimiento de ETL.
-              </div>
-            </div>
-          </div>
-
-          <!-- AUTOEVALUACIÓN AUTOINSTRUCCIONAL -->
-          <div class="accordion-di" style="border-color:var(--blue)">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)" style="background:var(--blue-light)">
-              <i class="bi bi-chat-square-text acc-icon" style="color:var(--blue)"></i> Practica como en una entrevista
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p style="color:var(--muted);font-size:0.85rem">Responde primero con tus propias palabras antes de revelar la respuesta modelo.</p>
-
-              <div class="card-di" style="border-left:3px solid var(--blue)">
-                <h6><i class="bi bi-question-circle me-1"></i>1. Te preguntan cuándo usarías SCORM y cuándo xAPI para un curso nuevo. ¿Qué respondes?</h6>
-                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
-                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
-                  <p style="font-size:0.87rem"><em>"Usaría SCORM si el curso vive completo dentro de un LMS tradicional y solo necesito registrar finalización y puntaje. Usaría xAPI si necesito rastrear aprendizaje que ocurre fuera del LMS —una simulación, una app móvil, una práctica en terreno— porque xAPI puede registrar experiencias de aprendizaje en cualquier sistema, no solo dentro del curso empaquetado."</em></p>
-                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
-                  <ul style="font-size:0.83rem;color:var(--muted)">
-                    <li>¿Explicaste que xAPI rastrea experiencias fuera del LMS y SCORM no?</li>
-                    <li>¿Diste un ejemplo concreto para cada estándar?</li>
-                    <li>¿Evitaste decir que uno es "mejor" que el otro en abstracto?</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="card-di" style="border-left:3px solid var(--blue)">
-                <h6><i class="bi bi-question-circle me-1"></i>2. Un jefe de área te pregunta por qué le importaría a la institución tener un SLA definido con el proveedor del LMS. ¿Qué le explicas?</h6>
-                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
-                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
-                  <p style="font-size:0.87rem"><em>"Le explicaría que el SLA define compromisos medibles de disponibilidad y tiempo de respuesta ante fallas — sin eso, si el LMS cae durante un examen final masivo, no hay ningún compromiso formal de cuánto tardará en resolverse. Un SLA protege a la institución de depender de la buena voluntad del proveedor."</em></p>
-                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
-                  <ul style="font-size:0.83rem;color:var(--muted)">
-                    <li>¿Diste un ejemplo concreto de riesgo sin SLA?</li>
-                    <li>¿Mencionaste disponibilidad y tiempo de respuesta como componentes clave?</li>
-                    <li>¿Explicaste el valor institucional, no solo técnico?</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="card-di" style="border-left:3px solid var(--blue)">
-                <h6><i class="bi bi-question-circle me-1"></i>3. Necesitas pedirle a un analista de datos un tablero sobre deserción estudiantil en Moodle. ¿Cómo le planteas el requerimiento sin saber SQL ni DAX?</h6>
-                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
-                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
-                  <p style="font-size:0.87rem"><em>"Le pediría un tablero que cruce el log de acceso con la finalización por unidad, para identificar en qué punto exacto se desconectan los estudiantes que después desertan. No necesito escribir la consulta SQL ni la fórmula DAX — necesito traducir la necesidad pedagógica en un requerimiento claro de qué datos cruzar y qué pregunta responder."</em></p>
-                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
-                  <ul style="font-size:0.83rem;color:var(--muted)">
-                    <li>¿Formulaste el requerimiento en términos pedagógicos, no técnicos?</li>
-                    <li>¿Mencionaste el cruce específico de datos (acceso + finalización)?</li>
-                    <li>¿Reconociste que no necesitas saber SQL/DAX para especificar bien?</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- EVALUACIÓN -->
-          <div class="eval-section mt-4">
-            <h4><i class="bi bi-clipboard-check me-2" style="color:var(--terra)"></i>Evaluación — Unidad 3.2</h4>
-            <p class="eval-progress-text">Preguntas respondidas: <strong><span id="answeredCount">0</span>/8</strong> — puedes enviar en cualquier momento</p>
-
-            <div class="eval-question" data-question="q1">
-              <h6>1. Tienes 7 paralelos de séptimo básico que deben ver exactamente el mismo curso, pero cada docente solo debe ver y calificar a su propio paralelo. ¿Cómo estructuras esto en Moodle sin duplicar trabajo?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q1',1)"><div class="eval-radio"></div><span>Creando 7 copias idénticas del curso, una por paralelo</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',2)"><div class="eval-radio"></div><span>Un curso maestro único, con una Cohorte y un Grupo por paralelo, activando el modo "Grupos separados"</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',3)"><div class="eval-radio"></div><span>Un curso maestro sin grupos, confiando en que cada docente ignore a los otros paralelos</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',4)"><div class="eval-radio"></div><span>Matriculando a todos los estudiantes como profesores para que administren su propio contenido</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q2">
-              <h6>2. Un estudiante reclama: "vi todo el módulo de Storyline pero me sigue apareciendo como incompleto en Moodle". ¿Cuál es la causa más probable y dónde la verificas primero?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q2',1)"><div class="eval-radio"></div><span>El LMS está caído; hay que escalar el caso a TI de inmediato como incidente crítico</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',2)"><div class="eval-radio"></div><span>El criterio de finalización quedó mal configurado al publicar el SCORM; se revisa el valor de <code>cmi.core.lesson_status</code> en el reporte del intento dentro de la actividad SCORM</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',3)"><div class="eval-radio"></div><span>SCORM no permite marcar cursos como completados, es una limitación sin solución</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',4)"><div class="eval-radio"></div><span>El estudiante debe reinstalar su navegador</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q3">
-              <h6>3. Necesitas registrar que un aprendiz practicó una simulación clínica en una app móvil, sin conexión a internet, y que ese dato se sincronice después con la plataforma de la institución. ¿Qué combinación de estándar y componente usarías?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q3',1)"><div class="eval-radio"></div><span>SCORM 1.2, porque es el más compatible con todos los LMS</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',2)"><div class="eval-radio"></div><span>xAPI, enviando statements a un LRS (Learning Record Store) cuando la app recupera conexión</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',3)"><div class="eval-radio"></div><span>Un reporte manual del docente al final del semestre, ya que ningún estándar cubre el uso offline</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',4)"><div class="eval-radio"></div><span>SCORM 2004, porque su secuenciación avanzada resuelve el problema de la conexión</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q4">
-              <h6>4. En un statement de xAPI en formato JSON, el campo <code>"result": {"score": {"raw": 85, "max": 100}}</code> — ¿qué información pedagógica específica está aportando?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q4',1)"><div class="eval-radio"></div><span>El nombre del curso que se está registrando</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',2)"><div class="eval-radio"></div><span>El puntaje obtenido por el actor en esa experiencia específica, sobre el puntaje máximo posible</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',3)"><div class="eval-radio"></div><span>La fecha en que se creó la cuenta del estudiante</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',4)"><div class="eval-radio"></div><span>El identificador del LRS donde se guardó el dato</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q5">
-              <h6>5. Un proveedor de LMS ofrece un SLA con "99.9% de disponibilidad" y "500 usuarios registrados soportados". Como coordinador, ¿qué pregunta técnica adicional es indispensable antes de firmar, pensando en la semana de exámenes?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q5',1)"><div class="eval-radio"></div><span>Ninguna; esos dos datos ya garantizan que la plataforma funcionará bien en exámenes</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',2)"><div class="eval-radio"></div><span>Cuál es la concurrencia máxima garantizada (usuarios simultáneos) y el RPO en caso de falla de la base de datos</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',3)"><div class="eval-radio"></div><span>Cuál es el color corporativo de la interfaz del proveedor</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',4)"><div class="eval-radio"></div><span>Cuántos empleados tiene la empresa proveedora</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q6">
-              <h6>6. Ocurre una falla que corrompe parte de la base de datos del LMS un martes a mediodía. ¿Qué métrica del SLA determina cuántas horas de actividad (calificaciones, entregas) se perderán como máximo, y cuál determina cuánto tardará en volver a estar disponible?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q6',1)"><div class="eval-radio"></div><span>Ambas cosas las determina el uptime (99.9%)</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',2)"><div class="eval-radio"></div><span>El RPO (Recovery Point Objective) determina cuánto se pierde; el RTO (Recovery Time Objective) determina cuánto tarda en volver</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',3)"><div class="eval-radio"></div><span>La concurrencia máxima determina ambas cosas</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',4)"><div class="eval-radio"></div><span>Ninguna métrica de un SLA cubre este escenario</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q7">
-              <h6>7. El reporte de Finalización muestra que el 90% de una cohorte completa la Unidad 1, pero solo el 40% completa la Unidad 2. ¿Cuál es la interpretación y siguiente paso correctos?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q7',1)"><div class="eval-radio"></div><span>Concluir de inmediato que los estudiantes de esa cohorte son menos comprometidos y no hacer nada más</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',2)"><div class="eval-radio"></div><span>Tratar la caída como una señal de posible problema de diseño en la Unidad 2, comparar duración/claridad con la Unidad 1, ajustar y volver a medir en la siguiente cohorte</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',3)"><div class="eval-radio"></div><span>Ignorar el dato porque el reporte de finalización no es confiable</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',4)"><div class="eval-radio"></div><span>Eliminar la Unidad 2 del curso sin más análisis</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q8">
-              <h6>8. Necesitas un tablero en PowerBI que muestre el % de deserción por unidad, cruzando el log de accesos con la finalización de actividades. ¿Cuál es la secuencia correcta del proceso ETL para construirlo?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q8',1)"><div class="eval-radio"></div><span>Cargar directamente el archivo <code>mdl_logstore_standard_log</code> a PowerBI sin ningún procesamiento previo</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',2)"><div class="eval-radio"></div><span>Extraer los datos crudos de las tablas de Moodle → transformarlos y limpiarlos en Power Query (cruzar IDs, formatear fechas) → cargarlos y construir medidas DAX para calcular la deserción</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',3)"><div class="eval-radio"></div><span>Pedirle al docente que cuente manualmente cuántos estudiantes abandonaron cada unidad</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',4)"><div class="eval-radio"></div><span>DAX se usa para extraer los datos, no existe una etapa de transformación</span></div>
-            </div>
-
-            <div id="evalResult" class="mt-3"></div>
-
-            <div class="d-flex flex-wrap gap-2 mt-3">
-              <button class="btn btn-terra" id="submitBtn" onclick="submitEval()">
-                <i class="bi bi-check-circle me-2"></i>Enviar evaluación
-              </button>
-              <button class="btn btn-outline-terra" id="retryBtn" style="display:none" onclick="retryEval()">
-                <i class="bi bi-arrow-clockwise me-2"></i>Reintentar
-              </button>
-              <a href="m3-3.html" class="btn btn-blue" id="nextBtn" style="display:none">
-                Siguiente unidad <i class="bi bi-arrow-right ms-2"></i>
-              </a>
-            </div>
-          </div>
-
-        </div><!-- /lesson-body -->
-      </div><!-- /content-di -->
-    </div><!-- /col -->
-  </div><!-- /row -->
-</div><!-- /container -->
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../gami.js"></script>
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbylYML8h2BnNgi2AXtZ8bkGaXPNRhurswPr5dfyGRldbVoCRvmoT2cHN0r3I4qGynLb/exec';
-const UNIDAD_ID = 'm3-2';
-const UNIDAD_LABEL = '3.2 LMS, SCORM, xAPI y SLA';
+const UNIT_ID = 'm3-2';
+const YT_VIDEO_ID = '';
 
-const CORRECTAS = { q1:2, q2:2, q3:2, q4:2, q5:2, q6:2, q7:2, q8:2 };
-const FEEDBACK = {
-  q1: {ok:'Correcto. Un curso maestro único con Cohortes (para matricular masivamente) y Grupos por paralelo en modo "Grupos separados" evita duplicar contenido: cada corrección o actualización se hace una sola vez, y cada docente ve solo a su paralelo.',fail:'Duplicar el curso 7 veces multiplica el trabajo de mantención por 7. La arquitectura correcta es un curso maestro único, con una Cohorte y un Grupo por paralelo, y el modo "Grupos separados" activado para que cada docente vea solo a su paralelo sin perder la vista consolidada del nivel completo.'},
-  q2: {ok:'Correcto. La variable cmi.core.lesson_status es la que determina si el LMS marca el intento como completado; revisar el reporte del intento en la actividad SCORM permite distinguir si el problema está en el paquete (criterio mal definido en Storyline) o en la configuración del LMS, antes de escalar como un incidente de infraestructura.',fail:'No es un problema de disponibilidad del LMS ni una limitación irresoluble de SCORM. La causa más común es que el criterio de finalización se configuró mal al publicar el paquete; se diagnostica revisando el valor de cmi.core.lesson_status en el reporte del intento, dentro de la propia actividad SCORM en Moodle.'},
-  q3: {ok:'Correcto. xAPI está diseñado justamente para este caso: las declaraciones se guardan localmente en el dispositivo sin conexión y se sincronizan al LRS apenas vuelve la señal — algo que SCORM no soporta, porque depende de conexión constante con el LMS.',fail:'SCORM requiere conexión constante al LMS y no está diseñado para funcionar offline ni fuera de la plataforma. El estándar correcto para este escenario es xAPI, enviando statements a un LRS cuando la app recupera conexión.'},
-  q4: {ok:'Correcto. El bloque "result.score" registra el puntaje obtenido (raw) sobre el puntaje máximo posible (max) para esa experiencia específica — es el equivalente xAPI a la nota de un intento.',fail:'Ese campo no identifica el curso, la fecha de creación de cuenta ni el LRS. El campo "result.score" registra específicamente el puntaje logrado (raw) sobre el puntaje máximo posible (max) en esa experiencia de aprendizaje.'},
-  q5: {ok:'Correcto. El uptime y el total de usuarios registrados no dicen nada sobre cuántos pueden usar el sistema al mismo tiempo, ni cuánta información se perdería ante una falla — la concurrencia máxima y el RPO son las preguntas que revelan si el proveedor realmente soporta un uso masivo simultáneo como una semana de exámenes.',fail:'El uptime y el número de usuarios registrados no garantizan que la plataforma resista a todos conectados a la misma hora. Antes de firmar, hay que exigir la concurrencia máxima garantizada y el RPO (cuánta información se podría perder ante una falla de base de datos).'},
-  q6: {ok:'Correcto. El RPO (Recovery Point Objective) acota cuánta información se pierde en el peor caso; el RTO (Recovery Time Objective) acota cuánto tiempo tarda el sistema en volver a estar disponible. Son dos compromisos distintos y ambos deben estar en un SLA maduro.',fail:'El uptime y la concurrencia máxima no responden a este escenario. Ante una falla que corrompe datos, el RPO determina cuánta información como máximo se pierde, y el RTO determina cuánto tiempo tarda el sistema en restablecerse — son las dos métricas relevantes.'},
-  q7: {ok:'Correcto. Un reporte de finalización con caída abrupta es una señal de diseño antes que un juicio sobre los estudiantes: se compara la unidad problemática con las anteriores, se ajusta y se vuelve a medir en la siguiente cohorte para cerrar el ciclo.',fail:'Concluir sin analizar, ignorar el dato o eliminar la unidad sin evidencia son respuestas apresuradas. Lo correcto es tratar la caída como una alerta de posible problema de diseño, comparar la unidad con las anteriores, ajustar y volver a medir.'},
-  q8: {ok:'Correcto. El proceso ETL sigue ese orden: Extracción de las tablas crudas de Moodle, Transformación/limpieza en Power Query, y Carga con medidas DAX que calculan indicadores como el % de deserción — saltarse la limpieza produce un tablero con datos sucios e inconsistentes.',fail:'DAX no extrae datos, y cargar tablas crudas sin limpiar produce un tablero poco confiable. El orden correcto es Extracción (tablas de Moodle) → Transformación en Power Query (limpieza, cruce de IDs, formato de fechas) → Carga y cálculo de medidas DAX.'}
-};
-
-let answers = {};
-let submitted = false;
-
-function toggleAcc(btn) {
-  const body = btn.nextElementSibling;
-  const isOpen = body.classList.contains('show');
-  body.classList.toggle('show', !isOpen);
-  btn.classList.toggle('open', !isOpen);
+function detectMedia() {
+  fetch('m3-2.pdf', { method: 'HEAD' }).then(r => {
+    if (r.ok) document.getElementById('pdfContainer').innerHTML =
+      '<iframe class="pdf-frame" src="m3-2.pdf#view=FitH" title="Presentación" loading="lazy" onload="Gami.award(\'m3-2_pdf\',5,\'Revisaste la presentación\');checkMultimodal();"></iframe><div class="pdf-actions"><a href="m3-2.pdf" target="_blank" rel="noopener">Pantalla completa</a><a href="m3-2.pdf" download>Descargar</a></div>';
+  }).catch(()=>{});
+  fetch('m3-2-audio.mp3', { method: 'HEAD' }).then(r => {
+    if (r.ok) document.getElementById('audioContainer').innerHTML =
+      '<div class="audio-pane"><span class="audio-label">Resumen en audio · NotebookLM</span><audio controls preload="metadata" src="m3-2-audio.mp3" onplay="Gami.award(\'m3-2_audio\',5,\'Escuchaste el audio\');checkMultimodal();"></audio></div>';
+  }).catch(()=>{});
+  if (YT_VIDEO_ID) document.getElementById('videoContainer').innerHTML =
+    '<div class="video-wrap"><iframe src="https://www.youtube-nocookie.com/embed/' + YT_VIDEO_ID + '" title="Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>';
 }
+detectMedia();
 
-function toggleModelo(btn) {
-  const box = btn.nextElementSibling;
-  const isOpen = box.style.display === 'block';
-  box.style.display = isOpen ? 'none' : 'block';
-  btn.textContent = isOpen ? 'Ver respuesta modelo' : 'Ocultar respuesta modelo';
+function switchMedia(btn) {
+  document.querySelectorAll('.media-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.media-pane').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('pane-' + btn.dataset.pane).classList.add('active');
+  if (btn.dataset.pane === 'video' && YT_VIDEO_ID) { Gami.award('m3-2_video',5,'Viste el video'); checkMultimodal(); }
 }
+function checkMultimodal() { if (Gami.hasSeen('m3-2_pdf') && Gami.hasSeen('m3-2_audio')) Gami.badge('multimodal'); }
 
-function selectOpt(el, question, optNum) {
-  if (submitted) return;
-  const container = el.closest('[data-question]');
-  container.querySelectorAll('.eval-option').forEach(o => o.classList.remove('selected'));
-  el.classList.add('selected');
-  answers[question] = optNum;
-  document.getElementById('answeredCount').textContent = Object.keys(answers).length;
+function revealVineta(btn, id) { btn.closest('.vineta').classList.add('revealed'); Gami.award('m3-2_vineta_' + id, 5, 'Resolviste una viñeta'); }
+
+// Errores comunes acordeón
+const ERRORES = [
+  { t: 'No especificar la interacción', d: 'Describir solo lo visual y el audio, dejando implícito qué pasa al hacer clic. Obliga a quien produce a inventar sobre la marcha.' },
+  { t: 'Redactar el guion final sin validar contenido primero', d: 'Pulir la narración palabra por palabra antes de que el SME valide que el contenido es correcto — se pule algo que después cambia.' },
+  { t: 'Ignorar la carga cognitiva en el storyboard', d: 'Llenar una pantalla con demasiados elementos porque "se ve completo" — el storyboard hereda los mismos riesgos de carga extrínseca vistos en 1.4.' },
+  { t: 'No indicar tiempos ni ritmo', d: 'Para video o audio, no estimar duración de cada escena hace imposible planificar la producción real.' },
+  { t: 'Diseñar sin volver al objetivo', d: 'Perder de vista el objetivo y la evaluación de 3.1 mientras se detalla el storyboard, terminando con una pantalla bonita pero desalineada.' },
+];
+function renderErrores() {
+  document.getElementById('erroresList').innerHTML = ERRORES.map((e, i) => `
+    <div class="error-item" id="err-${i}" onclick="toggleError(${i})">
+      <div class="e-titulo">${e.t} <span class="e-toggle" id="err-toggle-${i}">+</span></div>
+      <div class="e-detalle">${e.d}</div>
+    </div>`).join('');
 }
+let erroresAbiertos = 0;
+function toggleError(i) {
+  const el = document.getElementById('err-' + i);
+  el.classList.toggle('open');
+  document.getElementById('err-toggle-' + i).textContent = el.classList.contains('open') ? '−' : '+';
+  if (el.classList.contains('open')) { Gami.award('m3-2_error_' + i, 2, 'Revisaste un error común'); erroresAbiertos++; if (erroresAbiertos >= 5) Gami.badge('curiosa'); }
+}
+renderErrores();
 
-function submitEval() {
-  if (Object.keys(answers).length === 0) {
-    showToast('Responde al menos una pregunta para enviar', 'warning');
-    return;
-  }
-  submitted = true;
-  let score = 0;
-  const total = Object.keys(CORRECTAS).length;
+let capasReveladas = 0;
+document.querySelectorAll('.capa').forEach((capa, i) => {
+  capa.addEventListener('click', () => {
+    capa.closest('.callout').classList.add('revealed');
+    Gami.award('m3-2_capa' + i, 5, 'Levantaste una capa');
+    capasReveladas++;
+    if (capasReveladas >= 2) Gami.badge('curiosa');
+  });
+});
+function toggleRM(id, pid) { document.getElementById(id).classList.toggle('show'); Gami.award('m3-2_rm_' + pid, 3, 'Contrastaste con la respuesta modelo'); }
+function clCheck(el, id) { if (el.checked) Gami.award('m3-2_cl_' + id, 2, 'Ítem de checklist verificado'); }
 
-  Object.keys(CORRECTAS).forEach(q => {
-    const container = document.querySelector(`[data-question="${q}"]`);
-    if (!container) return;
-    const userAns = answers[q];
-    const correctAns = CORRECTAS[q];
-    const opts = container.querySelectorAll('.eval-option');
+const ACT_ITEMS = [
+  { text: 'Una fila de storyboard dice: "Pantalla con foto de un maletín. Narración: bienvenida al curso." No dice qué pasa si el estudiante hace clic.', ans: 'inter', why: 'Falta especificar la interacción — qué hace el estudiante y qué dispara el avance.' },
+  { text: 'Una fila describe perfectamente narración e interacción, pero no menciona qué se ve en pantalla.', ans: 'visual', why: 'Falta la columna visual — sin ella, nadie sabe qué diseñar.' },
+  { text: 'El storyboard tiene visual e interacción, pero el guion narrado está vacío.', ans: 'audio', why: 'Falta especificar audio/narración — clave para producción de video.' },
+  { text: 'Todo el storyboard está completo, pero no incluye tiempos estimados para un video de 10 escenas.', ans: 'tiempo', why: 'Falta estimación de tiempos — necesaria para planificar producción de video.' },
+];
+let actDone = 0, actCorrect = 0;
+const LABELS = { inter: 'Interacción', visual: 'Visual', audio: 'Audio/narración', tiempo: 'Tiempos' };
+function renderActivity() {
+  document.getElementById('actRoot').innerHTML = ACT_ITEMS.map((item, i) => `
+    <div class="act-card" id="act-${i}">
+      <div class="act-statement">${item.text}</div>
+      <div class="act-buttons">
+        <button class="act-btn" onclick="answerAct(${i},'inter')">Interacción</button>
+        <button class="act-btn" onclick="answerAct(${i},'visual')">Visual</button>
+        <button class="act-btn" onclick="answerAct(${i},'audio')">Audio</button>
+        <button class="act-btn" onclick="answerAct(${i},'tiempo')">Tiempos</button>
+      </div>
+      <div class="act-verdict" id="verdict-${i}"></div>
+    </div>`).join('');
+  updateActProgress();
+}
+function answerAct(i, choice) {
+  const item = ACT_ITEMS[i];
+  const card = document.getElementById('act-' + i);
+  const verdict = document.getElementById('verdict-' + i);
+  actDone++;
+  if (choice === item.ans) { actCorrect++; card.classList.add('ok'); verdict.style.color = '#315226'; verdict.textContent = '✓ ' + item.why; }
+  else { card.classList.add('no'); card.querySelector('.act-buttons').style.display = 'none'; verdict.style.color = '#6E2A2A'; verdict.textContent = '✗ Faltaba: ' + LABELS[item.ans] + '. ' + item.why; }
+  updateActProgress();
+  if (actDone === ACT_ITEMS.length) Gami.award('m3-2_actividad', Math.round(15 * actCorrect / ACT_ITEMS.length) + 5, 'Actividad de storyboard — ' + actCorrect + '/' + ACT_ITEMS.length);
+}
+function updateActProgress() { document.getElementById('actProgress').textContent = actDone + '/' + ACT_ITEMS.length + ' resueltas' + (actDone === ACT_ITEMS.length ? ' · ' + actCorrect + ' correctas' : ''); }
+renderActivity();
 
-    opts.forEach((opt, idx) => {
-      opt.style.pointerEvents = 'none';
-      if (idx + 1 === userAns) {
-        if (userAns === correctAns) { opt.classList.add('correct'); score++; }
-        else opt.classList.add('incorrect');
-      }
+const QUIZ = [
+  { q: '¿Qué es un storyboard en DI?', opts: ['El documento de análisis de necesidades','La especificación visual y detallada de cada pantalla o escena antes de producir','El informe final de evaluación','La lista de herramientas de autoría'], ans: 1 },
+  { q: '¿Entre qué dos fases actúa como puente el storyboard?', opts: ['Análisis y objetivos','Diseño/evaluación y producción técnica','Implementación y evaluación','Ninguna, es independiente'], ans: 1 },
+  { q: '¿Cuál de estos NO es un tipo de storyboard mencionado?', opts: ['De texto/guion','Visual/wireframe','Técnico detallado','Financiero'], ans: 3 },
+  { q: '¿Qué información no puede faltar en cada fila de un storyboard?', opts: ['Solo el texto en pantalla','Visual, audio/narración e interacción','Solo el presupuesto','Solo el nombre del autor'], ans: 1 },
+  { q: '¿Cuál es el error más común al hacer storyboards, según esta unidad?', opts: ['Usar demasiados colores','No especificar la interacción, dejándola implícita','Escribir demasiado guion','Usar Bloom incorrectamente'], ans: 1 },
+  { q: '¿Por qué es más barato cambiar un storyboard que un curso ya construido?', opts: ['No es cierto, cuesta lo mismo','Porque es un documento editable, no requiere reconstrucción técnica','Porque los storyboards no tienen contenido','Porque no se usan en la práctica'], ans: 1 },
+  { q: 'Para un curso con ramificaciones y lógica de decisión compleja conviene un storyboard…', opts: ['De texto simple','Técnico detallado','No es necesario storyboard','Solo visual sin interacción'], ans: 1 },
+  { q: '¿Con qué unidad previa debe conectar directamente un storyboard?', opts: ['Con el análisis financiero','Con el objetivo y la evaluación (unidad 3.1)','Con ninguna, es independiente','Solo con la unidad de IA'], ans: 1 },
+  { q: 'Antes de detallar el guion narrado palabra por palabra, ¿qué conviene validar primero?', opts: ['El presupuesto final','Que el SME o cliente valide el contenido','El color de fondo','Nada, se puede pulir directo'], ans: 1 },
+  { q: '¿Qué principio de la unidad 1.4 también aplica al diseñar un storyboard?', opts: ['Ninguno, son unidades no relacionadas','La gestión de carga cognitiva — no saturar cada pantalla','Solo el conductismo','Solo el conectivismo'], ans: 1 },
+];
+function renderQuiz() {
+  document.getElementById('quizRoot').innerHTML = QUIZ.map((item, qi) => `
+    <div class="eval-q">${qi + 1}. ${item.q}</div>
+    <div class="quiz-opts" data-q="${qi}">${item.opts.map((opt, oi) => `<label class="eval-option"><input type="radio" name="q${qi}" value="${oi}" onchange="updateQuizCounter()"> ${opt}</label>`).join('')}</div>`).join('');
+}
+function answered() { let n = 0; for (let i = 0; i < QUIZ.length; i++) if (document.querySelector('input[name=q' + i + ']:checked')) n++; return n; }
+function updateQuizCounter() { const n = answered(); document.getElementById('quizCounter').textContent = 'Respondidas: ' + n + '/' + QUIZ.length; document.getElementById('quizSubmit').disabled = n < QUIZ.length; }
+function submitQuiz() {
+  let correct = 0;
+  QUIZ.forEach((item, qi) => {
+    const sel = document.querySelector('input[name=q' + qi + ']:checked');
+    const val = sel ? parseInt(sel.value) : -1;
+    document.querySelectorAll('[data-q="' + qi + '"] .eval-option').forEach((opt, oi) => {
+      opt.classList.remove('correct','incorrect');
+      if (oi === item.ans) opt.classList.add('correct'); else if (oi === val) opt.classList.add('incorrect');
     });
-
-    if (userAns !== undefined) {
-      const fb = FEEDBACK[q];
-      const isOk = userAns === correctAns;
-      const fbEl = document.createElement('div');
-      fbEl.className = 'feedback-box ' + (isOk ? 'feedback-ok' : 'feedback-fail');
-      fbEl.innerHTML = (isOk ? '<i class="bi bi-check-circle me-1"></i>' : '<i class="bi bi-x-circle me-1"></i>') + (isOk ? fb.ok : fb.fail);
-      container.appendChild(fbEl);
-    }
+    if (val === item.ans) correct++;
   });
-
-  const answered = Object.keys(answers).length;
-  const pct = Math.round(score / total * 100);
-  const msg = pct >= 90 ? 'Excelente dominio de esta unidad.' : pct >= 70 ? 'Buen resultado. Repasa lo que fallaste antes de avanzar.' : 'Hay conceptos que requieren repaso. Revisa las secciones donde cometiste errores.';
-
-  document.getElementById('evalResult').innerHTML = `
-    <div class="result-card">
-      <div class="result-score">${score}/${total}</div>
-      <div class="result-label">${pct}% de respuestas correctas (${answered} respondidas)</div>
-      <div class="result-msg">${msg}</div>
-    </div>`;
-
-  document.getElementById('submitBtn').style.display = 'none';
-  document.getElementById('retryBtn').style.display = 'inline-block';
-  document.getElementById('nextBtn').style.display = 'inline-block';
-  guardarPuntaje(score / total);
+  saveScore(correct / QUIZ.length, correct);
 }
-
-function retryEval() {
-  submitted = false;
-  answers = {};
-  document.querySelectorAll('.eval-option').forEach(o => {
-    o.classList.remove('selected','correct','incorrect');
-    o.style.pointerEvents = '';
-  });
-  document.querySelectorAll('.feedback-box').forEach(f => f.remove());
-  document.getElementById('evalResult').innerHTML = '';
-  document.getElementById('answeredCount').textContent = '0';
-  document.getElementById('submitBtn').style.display = 'inline-block';
-  document.getElementById('retryBtn').style.display = 'none';
-  document.getElementById('nextBtn').style.display = 'none';
-  showToast('Inténtalo de nuevo — repasa el contenido antes de responder', 'info');
-  document.querySelector('.eval-section').scrollIntoView({ behavior:'smooth' });
+function saveScore(pct, correct) {
+  try { const scores = JSON.parse(localStorage.getItem('di_scores_v2') || '{}'); scores[UNIT_ID] = pct; localStorage.setItem('di_scores_v2', JSON.stringify(scores)); } catch(e) {}
+  const card = document.getElementById('resultCard');
+  card.className = 'result-card show';
+  card.style.background = pct >= 0.7 ? 'var(--done-soft)' : 'var(--msoft)';
+  document.getElementById('resultScore').textContent = Math.round(pct * 100) + '%';
+  document.getElementById('resultMsg').textContent = correct + '/' + QUIZ.length + ' correctas · ' + (pct >= 0.7 ? 'Unidad completada en tu ruta.' : 'Puedes repasar y reintentar — sin límite.');
+  if (pct >= 0.7) { Gami.award('m3-2_eval', 30, 'Evaluación 3.2 aprobada — ' + correct + '/' + QUIZ.length); Gami.badge('primeraCapa'); document.getElementById('moduloFin').style.display = 'block'; }
+  try { const img = new Image(); img.src = SCRIPT_URL + '?action=saveScore&id=' + UNIT_ID + '&score=' + pct + '&t=' + Date.now(); } catch(e) {}
 }
-
-function getScores() { try { return JSON.parse(localStorage.getItem('di_scores')||'{}'); } catch(e) { return {}; } }
-
-function jsonp(params) {
-  return new Promise(function(resolve, reject) {
-    var cb = 'cb_' + Date.now() + '_' + Math.floor(Math.random()*1e6);
-    var script = document.createElement('script');
-    function cleanup(){ try { delete window[cb]; } catch(e) { window[cb] = undefined; } if (script.parentNode) script.parentNode.removeChild(script); }
-    window[cb] = function(data){ cleanup(); resolve(data); };
-    var qp = new URLSearchParams(Object.assign({}, params, { callback: cb }));
-    script.src = SCRIPT_URL + '?' + qp.toString();
-    script.onerror = function(){ cleanup(); reject(new Error('conexion')); };
-    setTimeout(function(){ if (window[cb]) { cleanup(); reject(new Error('timeout')); } }, 20000);
-    document.head.appendChild(script);
-  });
-}
-
-async function guardarPuntaje(ratio) {
-  const s = getScores(); s[UNIDAD_ID] = ratio; localStorage.setItem('di_scores', JSON.stringify(s));
-  updateSidebar();
-  try {
-    await jsonp({ action: 'saveScore', id: UNIDAD_ID, score: ratio, label: UNIDAD_LABEL, date: new Date().toLocaleDateString('es-CL') });
-  } catch(e) {}
-}
-
-function updateSidebar() {
-  const s = getScores();
-  const ids = ['m3-1','m3-2','m3-3'];
-  const done = ids.filter(id => s[id] !== undefined && s[id] > 0).length;
-  document.getElementById('sidebarPct').textContent = done + '/3';
-  document.getElementById('sidebarBar').style.width = Math.round(done/3*100) + '%';
-  ids.forEach(id => {
-    const el = document.getElementById('num-' + id);
-    if (el && s[id] !== undefined && s[id] > 0) { el.style.background = 'var(--success)'; el.style.color = '#fff'; }
-  });
-  document.getElementById('headerProgress').textContent = done + '/3 completadas';
-}
-
-function showToast(msg, type) {
-  const colors = { warning:'#c85c3a', info:'#3a6b8a', success:'#2d7a4f' };
-  const t = document.createElement('div');
-  t.className = 'toast-di';
-  t.style.background = colors[type] || colors.info;
-  t.innerHTML = msg;
-  document.body.appendChild(t);
-  setTimeout(() => { t.style.opacity='0'; t.style.transition='opacity 0.3s'; setTimeout(()=>t.remove(),300); }, 3000);
-}
-
-function scrollToTop() { window.scrollTo({top:0,behavior:'smooth'}); }
-
-updateSidebar();
-
-async function syncSheet() {
-  try {
-    const data = await jsonp({ action: 'getAll' });
-    if (data && data.ok) {
-      const s = getScores();
-      (data.scores || []).forEach(function(row){
-        if (row.id && row.score !== undefined) s[row.id] = parseFloat(row.score);
-      });
-      localStorage.setItem('di_scores', JSON.stringify(s));
-      updateSidebar();
-      showCompletedState();
-    }
-  } catch(e) {}
-}
-
-function showCompletedState() {
-  const ratio = getScores()[UNIDAD_ID];
-  if (ratio === undefined || ratio <= 0) return;
-  const pct = Math.round(ratio * 100);
-  const ok = pct >= 70;
-  const sec = document.querySelector('.eval-section');
-  if (!sec) return;
-  let banner = document.getElementById('completedBanner');
-  if (!banner) {
-    banner = document.createElement('div');
-    banner.id = 'completedBanner';
-    sec.insertBefore(banner, sec.firstChild);
-  }
-  banner.innerHTML =
-    '<div style="display:flex;align-items:center;gap:0.9rem;background:' + (ok ? '#edf7f2' : 'var(--terra-light)') +
-    ';border:1px solid ' + (ok ? '#b0ddc5' : '#e0b0a0') + ';border-left:4px solid ' + (ok ? 'var(--success)' : 'var(--terra)') +
-    ';border-radius:8px;padding:0.9rem 1.1rem;margin-bottom:1.2rem">' +
-      '<i class="bi bi-' + (ok ? 'check-circle-fill' : 'arrow-repeat') + '" style="color:' + (ok ? 'var(--success)' : 'var(--terra)') + ';font-size:1.5rem"></i>' +
-      '<div style="flex:1">' +
-        '<div style="font-weight:bold;font-size:0.9rem;color:var(--dark)">Ya completaste esta unidad</div>' +
-        '<div style="font-size:0.82rem;color:var(--muted)">Puntaje guardado: <strong>' + pct + '%</strong>. Puedes repasar el contenido o volver a responder más abajo.</div>' +
-      '</div>' +
-    '</div>';
-}
-
-function trackVisit() {
-  try {
-    let vid = localStorage.getItem('di_vid');
-    if (!vid) { vid = 'v' + Date.now().toString(36) + Math.random().toString(36).slice(2,8); localStorage.setItem('di_vid', vid); }
-    let sid = sessionStorage.getItem('di_sid');
-    if (!sid) { sid = 's' + Date.now().toString(36) + Math.random().toString(36).slice(2,8); sessionStorage.setItem('di_sid', sid); }
-    const qs = new URLSearchParams(location.search);
-    if (qs.get('owner') === '1') localStorage.setItem('di_owner', '1');
-    if (qs.get('owner') === '0') localStorage.removeItem('di_owner');
-    const owner = localStorage.getItem('di_owner') === '1' ? '1' : '0';
-    const device = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'movil' : 'escritorio';
-    const params = new URLSearchParams({ action: 'logVisit', page: UNIDAD_ID, vid: vid, sid: sid, owner: owner, device: device, t: String(Date.now()) });
-    const img = new Image();
-    img.referrerPolicy = 'no-referrer';
-    img.src = SCRIPT_URL + '?' + params.toString();
-  } catch(e) {}
-}
-
-trackVisit();
-syncSheet();
+renderQuiz();
+updateQuizCounter();
 </script>
 </body>
 </html>
