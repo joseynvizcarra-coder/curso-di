@@ -201,6 +201,7 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
       <a href="#s1">1 · Qué es un LMS</a>
       <a href="#s1b">1b · Nativo vs. paquete importado</a>
       <a href="#s1c">1c · Moodle, Brightspace, Canvas, Blackboard</a>
+      <a href="#s1d">1d · Administración avanzada y programación</a>
       <a href="#s2">2 · SCORM</a>
       <a href="#s3">3 · xAPI (Tin Can)</a>
       <a href="#s4">4 · SCORM vs xAPI — cuál usar</a>
@@ -320,6 +321,33 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
         <button class="vineta-reveal-btn" onclick="revealVineta(this,'v2')">Piénsalo primero → ver resolución</button>
         <div class="vineta-solution">(a) <strong>Nativo</strong> — el Cuestionario de Moodle ya hace esto bien, sin necesidad de empaquetar nada, y el reporte de notas es inmediato. (b) <strong>SCORM</strong> — ya está construida en Storyline y es reutilizable entre clientes; empaquetarla como SCORM y subirla es más eficiente que reconstruirla nativa en Moodle. (c) <strong>LTI</strong> — Turnitin es una herramienta externa completa con su propio sistema; se integra vía LTI, no se "empaqueta" como contenido.</div>
       </div>
+    </div>
+
+    <!-- S1d -->
+    <div class="content-section" id="s1d">
+      <h2><span class="sec-num">01d</span> Administración avanzada de Moodle y lenguajes de programación</h2>
+      <p>Hasta acá hemos hablado de Moodle desde la mirada del DI que <em>usa</em> la plataforma. Un cargo de <strong>Coordinador/a LMS</strong> pide un paso más: administrar la plataforma misma. Esto es lo que cubre ese salto, con honestidad sobre qué es aprendible por adelantado y qué requiere práctica directa en el sistema.</p>
+
+      <h3>Roles y permisos — el corazón de la administración</h3>
+      <p>Moodle organiza el acceso mediante <strong>roles</strong> (Administrador, Gestor, Profesor, Profesor no editor, Estudiante) asignados en distintos <strong>contextos</strong> (sistema completo, categoría de curso, curso específico, incluso una actividad puntual). Un rol se define por un conjunto de <strong>capacidades</strong> (capabilities) — permisos atómicos como "puede calificar", "puede editar el curso", "puede matricular usuarios". Administrar esto bien significa dar acceso mínimo necesario, no "administrador para todos" por comodidad.</p>
+      <table class="compare-table">
+        <tr><th>Rol típico</th><th>Contexto habitual</th><th>Qué puede hacer</th></tr>
+        <tr><td>Gestor de categoría</td><td>Una facultad o sede completa</td><td>Crear cursos, asignar profesores, ver reportes — sin entrar al detalle de calificar</td></tr>
+        <tr><td>Profesor editor</td><td>Un curso específico</td><td>Editar contenido, calificar, matricular estudiantes de ese curso</td></tr>
+        <tr><td>Coordinador LMS (tu posible rol)</td><td>Sistema completo o multi-sede</td><td>Configurar plugins, gestionar backups, definir plantillas de curso, dar soporte de nivel 2</td></tr>
+      </table>
+
+      <h3>Copias de seguridad y restauración</h3>
+      <p>Moodle permite hacer <strong>backup</strong> de un curso completo (contenido, actividades, calificaciones, y opcionalmente datos de usuarios) y <strong>restaurarlo</strong> — ya sea en el mismo Moodle (para duplicar un curso de un semestre a otro) o importarlo a otra instancia. Como Coordinador LMS, esto es tarea recurrente: cada nuevo período académico, cursos "plantilla" se restauran y se despliegan a decenas de secciones.</p>
+
+      <h3>Plugins — cómo Moodle se extiende</h3>
+      <p>Moodle es modular: casi toda funcionalidad adicional (H5P, un tipo de reporte nuevo, una integración con Turnitin vía LTI) se instala como <strong>plugin</strong>. Un Coordinador LMS evalúa qué plugin instalar, lo prueba en un ambiente de prueba antes de producción, y gestiona sus actualizaciones — porque un plugin desactualizado es una causa común de fallas tras actualizar la versión de Moodle.</p>
+      <div class="nota alerta"><span class="nota-tag">Honestidad sobre este contenido</span>Esto te da el vocabulario y la lógica correcta para conversar con seguridad en la entrevista — pero administración real de roles/backups/plugins se aprende con acceso de administrador a una instancia real, que es justo lo que un cargo como este te daría. Está bien decir en la entrevista: "conozco la lógica de roles y contextos de Moodle; no he administrado a nivel de sistema completo, y es una de las cosas que espero profundizar en este rol."</div>
+
+      <h3>Lenguajes de programación — qué pide realmente esta vacante</h3>
+      <p>Moodle está construido en <strong>PHP</strong>, con su base de datos típicamente en MySQL o PostgreSQL. Cuando una vacante de Coordinador LMS pide "lenguajes de programación para desarrollo", generalmente no espera que programes el núcleo de Moodle — espera que puedas <strong>leer y razonar sobre código</strong> para dialogar con el equipo de desarrollo, entender qué hace un plugin, o hacer ajustes menores de configuración basados en código (temas, CSS personalizado, pequeños scripts).</p>
+      <div class="defbox">Aquí tienes algo que subestimas: <strong>construiste este mismo curso conmigo</strong> — HTML, CSS y JavaScript reales, con lógica condicional (el motor de búsqueda difusa del mentor), manejo de eventos, y estructuras de datos. Eso es programación real, aplicada, con código que funciona. No es lo mismo que dominar PHP, pero es evidencia genuina de que puedes leer, razonar y modificar código — no partes de cero.</div>
+      <div class="nota clave"><span class="nota-tag">Cómo defender esto en la entrevista</span>"No soy desarrolladora de formación, pero he trabajado directamente con HTML, CSS y JavaScript construyendo un LMS propio con lógica de seguimiento, gamificación y un asistente con matching de texto — entiendo estructuras de código, variables, condicionales y cómo depurar errores. Eso me da base real para leer PHP o dialogar con un equipo de desarrollo, aunque no sea mi lenguaje principal."</div>
     </div>
 
     <!-- S2 -->
@@ -562,6 +590,20 @@ API.<span class="kw">LMSFinish</span>(<span class="str">""</span>);</div>
             <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3a')"> ¿Explicaste el riesgo de un mal SLA?</label>
             <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3b')"> ¿Diste un ejemplo concreto de impacto (examen masivo)?</label>
             <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3c')"> ¿Mostraste que preguntas antes de comprometerte?</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="practica">
+        <div class="practica-head"><div class="p-num">Práctica 4 · Coordinador LMS</div><div class="p-q">"El cargo pide 'manejo de acuerdos de niveles de servicio' y 'conocimiento de lenguajes de programación para desarrollo'. No tienes experiencia de producción en ninguno de los dos — ¿cómo lo abordas en la entrevista?"</div></div>
+        <div class="practica-body">
+          <textarea placeholder="Tu respuesta…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p4','p4')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p4">"Soy honesta: no he administrado SLA de producción ni programo profesionalmente. Pero entiendo la lógica técnica con profundidad real — sé qué es RTO y RPO, cómo se estructuran los niveles de severidad de un incidente, y he trabajado directamente con HTML, CSS y JavaScript construyendo un sistema propio con lógica condicional y manejo de datos. Eso me da base sólida para aprender rápido en el rol, no estoy partiendo de cero conceptualmente — me falta la práctica de producción, que es justo lo que este cargo me daría."</div>
+          <div class="checklist"><div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p4a')"> ¿Fuiste honesta sobre la falta de experiencia de producción?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p4b')"> ¿Diste evidencia concreta de profundidad conceptual (RTO/RPO, código real)?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p4c')"> ¿Enmarcaste la brecha como algo que el rol mismo te daría, no como una debilidad fija?</label>
           </div>
         </div>
       </div>

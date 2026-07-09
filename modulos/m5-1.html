@@ -473,6 +473,20 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
           </div>
         </div>
       </div>
+
+      <div class="practica">
+        <div class="practica-head"><div class="p-num">Práctica 4 · Coordinador LMS</div><div class="p-q">"En INACAP necesitamos generar métricas de producción de habilitación de aulas virtuales — cumplimiento de SLA por sede, tiempos de respuesta a solicitudes del centro de ayuda. ¿Cómo lo armarías en Power BI?"</div></div>
+        <div class="practica-body">
+          <textarea placeholder="Tu respuesta…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p4','p4')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p4">"Modelaría un esquema en estrella: una tabla de hechos 'Solicitudes' (fecha de ingreso, fecha de resolución, sede, tipo de solicitud, severidad) y tablas de dimensión 'Sedes' y 'Tipos de solicitud'. Con DAX calcularía el tiempo de resolución promedio por sede, y una medida de cumplimiento de SLA usando DIVIDE() — solicitudes resueltas dentro del tiempo acordado sobre el total, evitando errores si una sede aún no tiene solicitudes. El dashboard priorizaría no el promedio general, sino dónde específicamente se incumple el SLA — igual que con el embudo de finalización, el detalle importa más que el número global."</div>
+          <div class="checklist"><div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p4a')"> ¿Propusiste un esquema en estrella con tablas concretas?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p4b')"> ¿Mencionaste DIVIDE() u otra fórmula DAX real?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p4c')"> ¿Conectaste con SLA (unidad 4.1), no solo con Power BI aislado?</label>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="eval-block" id="evaluacion">
