@@ -85,6 +85,15 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
 .compare-table th { background: var(--card); font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-muted); }
 .compare-table td:first-child { font-weight: 600; }
 
+/* bloques de código técnico */
+.code-block { background: #1C1A17; color: #E8E4DC; border-radius: 4px; padding: 1rem 1.2rem; margin: 1rem 0; font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; overflow-x: auto; line-height: 1.6; }
+.code-block .cm { color: #8A8478; }
+.code-block .tag { color: #E8A87C; }
+.code-block .attr { color: #B9862C; }
+.code-block .str { color: #A3C293; }
+.code-block .kw { color: #7CA8D8; }
+.code-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); margin-bottom: 0.4rem; }
+
 /* categorías de herramientas IA */
 .ia-tools { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8rem; margin: 1rem 0 1.4rem; }
 @media (max-width: 700px) { .ia-tools { grid-template-columns: 1fr; } }
@@ -197,6 +206,7 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
       <a href="#s4">4 · Guion y producción de video</a>
       <a href="#s5">5 · Edición y post-producción</a>
       <a href="#s6">6 · Checklist de calidad final</a>
+      <a href="#s7">7 · Ética y consideraciones legales</a>
       <a href="#practica">Práctica de entrevista</a>
       <a href="#evaluacion">Evaluación (10)</a>
     </div>
@@ -268,14 +278,29 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
 
     <!-- S2 -->
     <div class="content-section" id="s2">
-      <h2><span class="sec-num">02</span> Herramientas de IA para producción</h2>
-      <p>El panorama de IA aplicada a producción multimedia creció rápido. Categorías principales, sin listar marcas específicas que cambian constantemente:</p>
-      <div class="ia-tools">
-        <div class="ia-tool"><h4>Voz sintética (text-to-speech)</h4><p>Convierte guion escrito en narración con voz natural, en varios idiomas y acentos. Reemplaza la necesidad de grabar audio profesional para cada actualización de contenido.</p></div>
-        <div class="ia-tool"><h4>Avatares presentadores</h4><p>Generan un "presentador" digital que narra el guion con movimiento labial sincronizado. Útil para dar cara humana sin grabar cámara real cada vez.</p></div>
-        <div class="ia-tool"><h4>Generación/edición de video</h4><p>Desde texto a video corto, o edición automática (cortes, subtítulos, resúmenes) que acelera la post-producción.</p></div>
-        <div class="ia-tool"><h4>Generación de imágenes</h4><p>Ilustraciones o diagramas a partir de descripción textual — útil para recursos visuales cuando no hay banco de imágenes adecuado.</p></div>
-      </div>
+      <h2><span class="sec-num">02</span> Herramientas de IA para producción — cómo funcionan técnicamente</h2>
+      <p>El panorama de IA aplicada a producción multimedia creció rápido. Entender <em>cómo</em> funcionan estas categorías, no solo que existen, te permite usarlas con criterio en vez de aceptar el resultado por defecto:</p>
+
+      <h3>Voz sintética (TTS) — y el control fino que casi nadie usa</h3>
+      <p>La síntesis de voz moderna (TTS neuronal) no solo lee texto: puede controlarse con <strong>SSML</strong> (Speech Synthesis Markup Language), un lenguaje de marcado que ajusta pausas, énfasis y velocidad — exactamente lo que necesitas para que la narración de un curso no suene monótona.</p>
+      <div class="code-label">SSML — ejemplo de control de narración</div>
+      <div class="code-block">&lt;<span class="tag">speak</span>&gt;
+  Antes de seguir, <span class="kw">&lt;break time="500ms"/&gt;</span> piensa en esto.
+  &lt;<span class="tag">emphasis</span> <span class="attr">level</span>=<span class="str">"strong"</span>&gt;No todas las brechas se resuelven con un curso.&lt;/<span class="tag">emphasis</span>&gt;
+  &lt;<span class="tag">prosody</span> <span class="attr">rate</span>=<span class="str">"90%"</span>&gt;Vamos a verlo con calma.&lt;/<span class="tag">prosody</span>&gt;
+&lt;/<span class="tag">speak</span>&gt;</div>
+      <p>Sin SSML, el TTS lee todo al mismo ritmo y tono — técnicamente correcto, pedagógicamente plano. Con pausas y énfasis controlados, puedes replicar el ritmo natural que usarías narrando tú misma, aplicando directamente el principio de personalización de Mayer.</p>
+
+      <h3>Avatares presentadores — el mecanismo detrás del "hablar"</h3>
+      <p>Un avatar de IA no es un video pregrabado con voz superpuesta: el sistema genera <strong>sincronización labial (lip-sync)</strong> cuadro por cuadro, mapeando los fonemas del audio a movimientos de boca correspondientes. Esto significa que, técnicamente, puedes cambiar el guion y regenerar el video completo sin re-grabar nada — la ventaja real frente a video humano tradicional para contenido que se actualiza seguido.</p>
+
+      <h3>Generación de imágenes — de qué depende la calidad del resultado</h3>
+      <p>Los modelos de generación de imágenes responden a la especificidad del prompt. Un prompt vago ("una persona estudiando") da resultados genéricos e impredecibles; uno específico en composición, estilo y contexto da resultados usables directamente:</p>
+      <table class="compare-table">
+        <tr><th>Prompt genérico</th><th>Prompt específico</th></tr>
+        <tr><td>"Persona aprendiendo online"</td><td>"Ilustración plana minimalista, mujer adulta frente a laptop, paleta de colores tierra, sin texto, fondo neutro"</td></tr>
+        <tr><td>"Diagrama de proceso"</td><td>"Diagrama de flujo horizontal de 4 pasos, estilo línea fina, iconografía simple, sin sombras ni degradados"</td></tr>
+      </table>
       <div class="nota alerta"><span class="nota-tag">Criterio, no solo herramienta</span>Estas herramientas aceleran producción, pero no reemplazan el criterio pedagógico: un avatar con voz perfecta que viola el principio de redundancia (leyendo texto idéntico en pantalla) sigue siendo un mal diseño. La IA produce más rápido; tú sigues siendo responsable de que sea efectivo.</div>
     </div>
 
@@ -314,14 +339,42 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
 
     <!-- S5 -->
     <div class="content-section" id="s5">
-      <h2><span class="sec-num">05</span> Edición y post-producción básica</h2>
-      <p>No necesitas ser editora de video profesional, pero sí saber qué pedir o ajustar:</p>
+      <h2><span class="sec-num">05</span> Edición y post-producción — con especificaciones técnicas reales</h2>
+      <p>No necesitas ser editora de video profesional, pero sí saber qué pedir o ajustar — y qué significan los números que la herramienta te pide:</p>
+      <table class="compare-table">
+        <tr><th>Parámetro</th><th>Valor típico para e-learning</th><th>Por qué</th></tr>
+        <tr><td>Resolución</td><td>1920×1080 (Full HD)</td><td>Estándar suficiente; 4K infla el peso del archivo sin beneficio real en pantallas de curso</td></tr>
+        <tr><td>Formato de exportación</td><td>MP4 (códec H.264)</td><td>Máxima compatibilidad entre navegadores y LMS</td></tr>
+        <tr><td>Formato de subtítulos</td><td>.srt o .vtt</td><td>.vtt es el estándar web moderno, compatible con reproductores HTML5 nativos</td></tr>
+        <tr><td>Tasa de bits de audio</td><td>128–192 kbps</td><td>Suficiente para voz clara sin inflar el peso del archivo</td></tr>
+      </table>
       <ul>
         <li><strong>Cortes limpios</strong> — sin silencios largos ni muletillas si grabaste voz real</li>
-        <li><strong>Subtítulos accesibles</strong> — activables/desactivables, no siempre visibles por defecto (evita redundancia forzada)</li>
+        <li><strong>Subtítulos accesibles</strong> — activables/desactivables, no siempre visibles por defecto (evita redundancia forzada, y conecta con los criterios WCAG de la unidad 4.2)</li>
         <li><strong>Marcadores de capítulo</strong> — si el video es largo, permite saltar a secciones (apoya segmentación)</li>
         <li><strong>Verificación de audio</strong> — volumen parejo, sin ruido de fondo residual de herramientas de IA mal configuradas</li>
       </ul>
+      <div class="nota contexto"><span class="nota-tag">Un detalle que se ignora seguido</span>El peso del archivo importa más de lo que parece: un video de 10 minutos en 4K sin comprimir puede pesar 10 veces más que la misma pieza en Full HD bien comprimida — y en conexiones lentas, eso significa buffering constante que rompe la experiencia, sin importar cuán bueno sea el contenido pedagógico.</div>
+    </div>
+
+    <!-- S7 -->
+    <div class="content-section" id="s7">
+      <h2><span class="sec-num">07</span> Ética y consideraciones legales de la IA generativa</h2>
+      <p>Esta es la parte que la mayoría de los tutoriales de "cómo usar IA para producir video" omiten por completo — y es justo la que te distingue como profesional con criterio, no solo con acceso a herramientas.</p>
+
+      <h3>Clonación de voz — consentimiento explícito</h3>
+      <p>Si usas una herramienta que clona una voz específica (la tuya u otra persona), varias plataformas requieren <strong>consentimiento verificable</strong> de esa persona antes de generar contenido con su voz — no es solo cortesía, en algunas jurisdicciones es requisito legal explícito. Nunca clones la voz de alguien (un colega, un experto entrevistado) sin su autorización documentada.</p>
+
+      <h3>Divulgación — el estudiante tiene derecho a saber</h3>
+      <div class="defbox">Buena práctica profesional, cada vez más exigida institucionalmente: si un video usa un avatar o voz generada por IA, decláralo explícitamente al estudiante — un texto breve al inicio o en los créditos ("presentador generado con IA") es suficiente y evita generar desconfianza si se descubre después.</div>
+
+      <h3>Sesgo en contenido generado</h3>
+      <p>Los modelos de generación de imágenes pueden reproducir sesgos de sus datos de entrenamiento — por ejemplo, generar sistemáticamente ciertos roles profesionales con un perfil demográfico específico si no se especifica lo contrario en el prompt. Como DI, revisar el material generado con esta mirada crítica es responsabilidad tuya, no algo que la herramienta resuelve sola.</p>
+
+      <h3>Derechos de autor sobre el resultado</h3>
+      <p>La titularidad de contenido generado por IA es un área legal todavía en desarrollo y varía según jurisdicción y los términos de servicio de cada herramienta. Antes de usar un recurso generado en un proyecto comercial o institucional, verifica los términos de uso específicos de la herramienta que estés usando — no asumas que "lo generé, es mío" sin revisar la letra chica.</p>
+
+      <div class="nota alerta"><span class="nota-tag">Para tu narrativa profesional</span>Poder hablar de estos matices —consentimiento, divulgación, sesgo, derechos— en una entrevista te posiciona muy por encima de "sé usar la herramienta X". Es exactamente el tipo de criterio crítico que retomamos con más profundidad en la unidad 5.3, que cierra todo el curso.</div>
     </div>
 
     <!-- S6 -->
@@ -528,16 +581,16 @@ function updateActProgress() { document.getElementById('actProgress').textConten
 renderActivity();
 
 const QUIZ = [
-  { q: '¿Cuál NO es un tipo de recurso multimedia mencionado en esta unidad?', opts: ['Video narrado','Podcast educativo','Simulación interactiva','Examen escrito en papel'], ans: 3 },
-  { q: '¿Qué hace la voz sintética (text-to-speech)?', opts: ['Genera imágenes','Convierte guion escrito en narración con voz natural','Edita video automáticamente','Publica en SCORM'], ans: 1 },
-  { q: 'Un video con subtítulos idénticos a la narración viola el principio de…', opts: ['Segmentación','Redundancia','Modalidad','Coherencia'], ans: 1 },
-  { q: '¿Qué NO reemplaza la IA generativa al producir multimedia?', opts: ['La velocidad de producción','El criterio pedagógico de quien diseña','La generación de voz','La edición automática'], ans: 1 },
-  { q: 'Un video largo sin ninguna división viola el principio de…', opts: ['Coherencia','Segmentación','Redundancia','Personalización'], ans: 1 },
-  { q: '¿Qué documento debe preceder la producción de un video, según esta unidad?', opts: ['El informe financiero','El storyboard con el guion definido','El certificado del LMS','El manual del avatar IA'], ans: 1 },
-  { q: 'Un avatar con voz formal y distante en un curso de bienvenida podría mejorar aplicando…', opts: ['Redundancia','Personalización (tono conversacional)','Más elementos decorativos','Menos segmentación'], ans: 1 },
-  { q: '¿Qué se debe verificar según el checklist de calidad antes de publicar?', opts: ['Solo que el video se vea bonito','Que se haya probado en el LMS real y cumpla los principios de Mayer','Solo la duración','Nada, se publica directo'], ans: 1 },
-  { q: '¿Cuál es un riesgo de usar el mismo tipo de avatar IA en todos los cursos?', opts: ['Ninguno, siempre es mejor','Homogeneidad y pérdida de identidad, generando desconexión','Que sea más barato','Que sea más rápido'], ans: 1 },
-  { q: '¿Cuál es la respuesta más madura a "¿usas IA para producir video?"?', opts: ['"No, prefiero hacer todo manual siempre"','"Sí, para acelerar, pero reviso el resultado contra principios pedagógicos antes de publicar"','"Sí, publico todo sin revisar, la IA no se equivoca"','"No sé qué es eso"'], ans: 1 },
+  { q: '¿Qué es SSML y para qué sirve en producción de voz sintética?', opts: ['Un formato de video','Un lenguaje de marcado para controlar pausas, énfasis y velocidad en TTS','Un tipo de LMS','Un estándar de tracking'], ans: 1 },
+  { q: '¿Cómo genera un avatar de IA la sincronización con el audio?', opts: ['Grabando video real primero','Mapeando fonemas del audio a movimientos de boca (lip-sync) cuadro por cuadro','No hay sincronización, es aleatoria','Usando solo texto en pantalla'], ans: 1 },
+  { q: '¿Qué diferencia un prompt genérico de uno específico al generar imágenes con IA?', opts: ['No hay diferencia','El específico define composición, estilo y contexto, dando resultados más usables','El genérico siempre es mejor','Los prompts no afectan el resultado'], ans: 1 },
+  { q: '¿Cuál es el formato de video más recomendado para compatibilidad en e-learning?', opts: ['MOV sin comprimir','MP4 con códec H.264','AVI','Un formato propietario cualquiera'], ans: 1 },
+  { q: '¿Qué formato de subtítulos es el estándar web moderno?', opts: ['.doc','.vtt','.pdf','.xls'], ans: 1 },
+  { q: '¿Por qué exportar en 4K para un curso online puede ser contraproducente?', opts: ['Nunca es contraproducente','Infla el peso del archivo sin beneficio real, causando buffering en conexiones lentas','4K no existe en video','Se ve peor que Full HD'], ans: 1 },
+  { q: '¿Qué se requiere, en varias plataformas, antes de clonar la voz de una persona específica con IA?', opts: ['Nada, es libre','Consentimiento verificable de esa persona','Solo pagar la suscripción','Un contrato notarial obligatorio en todos los casos'], ans: 1 },
+  { q: '¿Qué buena práctica se recomienda si un video usa avatar o voz generada por IA?', opts: ['Ocultarlo siempre','Declararlo explícitamente al estudiante','Es irrelevante mencionarlo','Prohibir su uso'], ans: 1 },
+  { q: '¿Por qué puede ser problemático el contenido generado por IA en cuanto a sesgo?', opts: ['Nunca tiene sesgo','Puede reproducir sesgos de los datos de entrenamiento si el prompt no lo previene','Solo afecta al audio','No es responsabilidad del DI revisarlo'], ans: 1 },
+  { q: '¿Qué se debe verificar antes de usar contenido generado por IA en un proyecto comercial?', opts: ['Nada, es automáticamente tuyo','Los términos de uso específicos de la herramienta respecto a titularidad','Solo el precio de la suscripción','Solo la calidad visual'], ans: 1 },
 ];
 function renderQuiz() {
   document.getElementById('quizRoot').innerHTML = QUIZ.map((item, qi) => `

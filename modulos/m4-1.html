@@ -85,6 +85,15 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
 .compare-table th { background: var(--card); font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-muted); }
 .compare-table td:first-child { font-weight: 600; }
 
+/* bloques de código técnico */
+.code-block { background: #1C1A17; color: #E8E4DC; border-radius: 4px; padding: 1rem 1.2rem; margin: 1rem 0; font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; overflow-x: auto; line-height: 1.6; }
+.code-block .cm { color: #8A8478; }
+.code-block .tag { color: #E8A87C; }
+.code-block .attr { color: #B9862C; }
+.code-block .str { color: #A3C293; }
+.code-block .kw { color: #7CA8D8; }
+.code-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); margin-bottom: 0.4rem; }
+
 /* xAPI statement demo */
 .xapi-statement { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; background: #1C1A17; color: #EDEAE3; border-radius: 4px; padding: 1rem; margin: 1rem 0; font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; }
 .xapi-part { padding: 0.3rem 0.7rem; border-radius: 3px; }
@@ -190,6 +199,8 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
     <div class="side-toc">
       <div class="toc-label">En esta unidad</div>
       <a href="#s1">1 · Qué es un LMS</a>
+      <a href="#s1b">1b · Nativo vs. paquete importado</a>
+      <a href="#s1c">1c · Moodle, Brightspace, Canvas, Blackboard</a>
       <a href="#s2">2 · SCORM</a>
       <a href="#s3">3 · xAPI (Tin Can)</a>
       <a href="#s4">4 · SCORM vs xAPI — cuál usar</a>
@@ -254,36 +265,166 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
     <!-- S1 -->
     <div class="content-section" id="s1">
       <h2><span class="sec-num">01</span> Qué es un LMS y su rol técnico</h2>
-      <p>Un LMS (Learning Management System — Moodle, Brightspace, Canvas) es la plataforma que aloja el curso, matricula usuarios, y <strong>registra el progreso y los resultados</strong>. Para que el LMS entienda qué está pasando dentro de un curso (¿completó?, ¿qué puntaje sacó?, ¿cuánto tiempo estuvo?), el curso y el LMS necesitan "hablar el mismo idioma" — ahí entran los estándares SCORM y xAPI.</p>
-      <div class="defbox">Sin un estándar de comunicación, el LMS ve el curso como una caja negra: sabe que el estudiante lo abrió, pero no sabe si aprobó, en qué pantalla se quedó, o qué respondió. El estándar es lo que abre esa caja negra.</div>
+      <p>Un LMS (Learning Management System — Moodle, Brightspace, Canvas) es la plataforma que aloja el curso, matricula usuarios, y <strong>registra el progreso y los resultados</strong>. Pero "registrar" no es un concepto abstracto: técnicamente, el LMS necesita que el contenido le entregue datos en un formato específico, en momentos específicos del ciclo de vida de la sesión.</p>
+      <p>Cuando un estudiante abre tu curso, ocurre una secuencia técnica concreta:</p>
+      <ol>
+        <li>El LMS lee el manifest del paquete para saber qué archivo abrir primero (el "launch file")</li>
+        <li>Carga ese archivo en un <code>&lt;iframe&gt;</code> dentro de su propia interfaz</li>
+        <li>El contenido, vía JavaScript, busca la API del LMS en la ventana padre (o en ventanas ancestro, si hay iframes anidados)</li>
+        <li>Se establece la comunicación: el contenido "pregunta" y "escribe" datos usando funciones específicas del estándar (SCORM o xAPI)</li>
+        <li>Al cerrar, el contenido debe "confirmar" (commit) los datos antes de que la sesión termine — si no lo hace, se pierden</li>
+      </ol>
+      <div class="defbox">Sin un estándar de comunicación, el LMS ve el curso como una caja negra: sabe que el estudiante lo abrió, pero no sabe si aprobó, en qué pantalla se quedó, o qué respondió. Los pasos de arriba son exactamente el mecanismo que abre esa caja negra — y es lo que armamos, en versión simplificada, con la sincronización JSONP de tu curso-di.</div>
+      <div class="nota alerta"><span class="nota-tag">Un detalle técnico que se olvida seguido</span>Si el contenido no llama a la función de "commit" o "finish" antes de que el estudiante cierre la pestaña, los datos de esa sesión pueden perderse — el LMS nunca los recibió, aunque el estudiante sí completó la actividad. Es una causa común de "reclamos" de estudiantes que juran haber terminado un curso que el LMS marca como incompleto.</div>
+    </div>
+
+    <!-- S1b -->
+    <div class="content-section" id="s1b">
+      <h2><span class="sec-num">01b</span> Nativo vs. paquete importado — dos formas de construir un curso</h2>
+      <p>Todo lo de la sección anterior describe cómo se comunica un <strong>paquete SCORM/xAPI</strong> con el LMS. Pero en la práctica —y esto es especialmente cierto en tu experiencia con Moodle y Brightspace— gran parte de los cursos <strong>no usan ningún paquete</strong>: se construyen directamente con las herramientas nativas del LMS.</p>
+      <table class="compare-table">
+        <tr><th></th><th>Curso nativo (actividades del LMS)</th><th>Paquete SCORM/xAPI importado</th></tr>
+        <tr><td>Cómo se construye</td><td>Directo en el LMS: Cuestionario, Tarea, Lección, Foro, página H5P nativa</td><td>Se produce fuera (Storyline, H5P standalone) y se sube como .zip</td></tr>
+        <tr><td>Portabilidad</td><td>Baja — vive amarrado a ese LMS específico</td><td>Alta — el mismo paquete corre en cualquier LMS compatible con el estándar</td></tr>
+        <tr><td>Velocidad de edición</td><td>Alta — editas directo en la plataforma, cambios inmediatos</td><td>Baja — hay que editar en la herramienta origen, republicar y resubir</td></tr>
+        <tr><td>Reporte de datos</td><td>Usa el sistema de calificaciones nativo del LMS directamente</td><td>Pasa por la capa API de SCORM/xAPI antes de llegar al mismo sistema</td></tr>
+        <tr><td>Reutilización entre LMS</td><td>Requiere reconstruir manualmente en el otro sistema</td><td>Se reutiliza subiendo el mismo paquete</td></tr>
+      </table>
+      <div class="defbox">La pregunta que de verdad importa no es "¿qué es mejor?" sino <strong>"¿este curso vivirá siempre en esta plataforma, o necesito poder moverlo?"</strong> Si una institución nunca va a cambiar de LMS y quiere edición ágil, construir nativo es más eficiente. Si el contenido debe funcionar en varios clientes o instituciones distintas (típico en consultoría o venta de cursos B2B), un paquete portable es la única opción sensata.</div>
+      <div class="nota clave"><span class="nota-tag">Lo que realmente pasa en el terreno chileno</span>La mayoría de tu trabajo probablemente combina ambos: evaluaciones y foros nativos de Moodle (rápidos de armar, con buen reporte de notas), más algunas piezas interactivas empaquetadas (H5P o Storyline) para la parte más rica en interactividad. No es una decisión de "todo o nada".</div>
+    </div>
+
+    <!-- S1c -->
+    <div class="content-section" id="s1c">
+      <h2><span class="sec-num">01c</span> Moodle, Brightspace, Canvas, Blackboard — diferencias reales</h2>
+      <p>Cuatro LMS dominan el mercado educativo, y no son intercambiables — cada uno tiene una arquitectura y un público distinto. Esto es lo que un DI necesita saber más allá del nombre:</p>
+
+      <table class="compare-table">
+        <tr><th>Plataforma</th><th>Modelo</th><th>Fuerte en</th><th>Dónde se usa más</th></tr>
+        <tr><td><strong>Moodle</strong></td><td>Open source, autoalojable o cloud (MoodleCloud)</td><td>Flexibilidad total vía plugins; costo de licencia cero (el costo está en hosting/soporte)</td><td>Universidades y colegios en Latinoamérica y Europa — el más común en el contexto educativo chileno</td></tr>
+        <tr><td><strong>Brightspace (D2L)</strong></td><td>Propietario, cloud, enterprise</td><td>Analítica predictiva nativa (Intelligence Agents) que alerta sobre estudiantes en riesgo</td><td>Universidades medianas-grandes, K-12 en Norteamérica, instituciones con foco en retención</td></tr>
+        <tr><td><strong>Canvas (Instructure)</strong></td><td>Propietario con núcleo open source, cloud-first</td><td>UX moderna, API REST robusta, ecosistema de integraciones vía LTI muy maduro</td><td>Educación superior en EE.UU., expansión fuerte en LatAm en años recientes</td></tr>
+        <tr><td><strong>Blackboard (Anthology)</strong></td><td>Propietario, históricamente on-premise, migrando a cloud</td><td>Herencia institucional profunda — muchas universidades grandes llevan décadas con él</td><td>Universidades grandes y antiguas, especialmente en EE.UU.; perdiendo cuota frente a Canvas</td></tr>
+      </table>
+
+      <h3>La pieza técnica que las conecta a todas: LTI</h3>
+      <p>Más allá de SCORM, existe otro estándar clave que quizás no habías nombrado explícitamente: <strong>LTI (Learning Tools Interoperability)</strong>. A diferencia de SCORM (que empaqueta contenido), LTI permite que una <em>herramienta externa completa</em> (Turnitin, un LRS, una biblioteca de video, incluso otro LMS) se integre dentro del curso como si fuera nativa, con inicio de sesión automático (single sign-on) y paso de datos de vuelta al libro de calificaciones.</p>
+      <div class="nota contexto"><span class="nota-tag">Por qué esto te importa como DI</span>Cuando en Moodle insertas una actividad H5P alojada externamente, o cuando una universidad conecta Turnitin a sus tareas, generalmente es LTI trabajando detrás — no SCORM. Saber nombrar esto ("la integración corre por LTI, no por SCORM") es una distinción técnica que muy pocos DI sin trasfondo técnico manejan, y que te distingue en una entrevista técnica.</div>
+
+      <h3>Qué significa esto para tu perfil</h3>
+      <p>Tu experiencia real (Moodle, Brightspace, mención de Canvas y Blackboard en tu CV) cubre exactamente el espectro completo del mercado. La narrativa útil en entrevista no es "conozco Moodle" sino: "he trabajado con el LMS open source más usado regionalmente (Moodle) y con una plataforma enterprise con analítica predictiva (Brightspace) — entiendo tanto el contexto de flexibilidad/costo cero como el de soporte institucional pagado."</p>
+
+      <div class="vineta">
+        <div class="vineta-head">Viñeta de taller · nativo, SCORM o LTI</div>
+        <div class="vineta-body">Una universidad en Moodle te pide: (a) un cuestionario simple de 10 preguntas para la unidad 1, (b) una simulación interactiva compleja con ramificaciones que ya construiste en Storyline para otro cliente y quieres reutilizar, y (c) integrar Turnitin para revisión de plagio en los ensayos. <strong>¿Cómo resuelves cada una — nativo, SCORM, o LTI?</strong></div>
+        <button class="vineta-reveal-btn" onclick="revealVineta(this,'v2')">Piénsalo primero → ver resolución</button>
+        <div class="vineta-solution">(a) <strong>Nativo</strong> — el Cuestionario de Moodle ya hace esto bien, sin necesidad de empaquetar nada, y el reporte de notas es inmediato. (b) <strong>SCORM</strong> — ya está construida en Storyline y es reutilizable entre clientes; empaquetarla como SCORM y subirla es más eficiente que reconstruirla nativa en Moodle. (c) <strong>LTI</strong> — Turnitin es una herramienta externa completa con su propio sistema; se integra vía LTI, no se "empaqueta" como contenido.</div>
+      </div>
     </div>
 
     <!-- S2 -->
     <div class="content-section" id="s2">
-      <h2><span class="sec-num">02</span> SCORM — el estándar clásico</h2>
-      <p>SCORM (Sharable Content Object Reference Model) es el estándar más usado desde los 2000. Un paquete SCORM es un .zip con: el contenido (HTML/JS), un <strong>imsmanifest.xml</strong> que describe la estructura, y una capa de JavaScript (API wrapper) que se comunica con el LMS.</p>
+      <h2><span class="sec-num">02</span> SCORM — el estándar clásico, en detalle técnico</h2>
+      <p>SCORM (Sharable Content Object Reference Model) es el estándar más usado desde los 2000. Un paquete SCORM es un .zip con tres piezas: el contenido (HTML/JS/CSS), un <strong>imsmanifest.xml</strong> que describe la estructura del curso, y una capa de JavaScript (el "API wrapper") que localiza y llama a la API del LMS.</p>
+
+      <h3>El manifest — la "identidad" del paquete</h3>
+      <p>El imsmanifest.xml le dice al LMS qué contiene el paquete, cómo se organiza, y cuál es el archivo de inicio. Una versión simplificada real:</p>
+      <div class="code-label">imsmanifest.xml (fragmento)</div>
+      <div class="code-block">&lt;<span class="tag">manifest</span> <span class="attr">identifier</span>=<span class="str">"curso-di-m4-1"</span> <span class="attr">version</span>=<span class="str">"1.2"</span>&gt;
+  &lt;<span class="tag">organizations</span> <span class="attr">default</span>=<span class="str">"ORG1"</span>&gt;
+    &lt;<span class="tag">organization</span> <span class="attr">identifier</span>=<span class="str">"ORG1"</span>&gt;
+      &lt;<span class="tag">item</span> <span class="attr">identifier</span>=<span class="str">"ITEM1"</span> <span class="attr">identifierref</span>=<span class="str">"RES1"</span>&gt;
+        &lt;<span class="tag">title</span>&gt;Unidad 4.1&lt;/<span class="tag">title</span>&gt;
+      &lt;/<span class="tag">item</span>&gt;
+    &lt;/<span class="tag">organization</span>&gt;
+  &lt;/<span class="tag">organizations</span>&gt;
+  &lt;<span class="tag">resources</span>&gt;
+    &lt;<span class="tag">resource</span> <span class="attr">identifier</span>=<span class="str">"RES1"</span> <span class="attr">type</span>=<span class="str">"webcontent"</span> <span class="attr">href</span>=<span class="str">"index.html"</span>&gt;
+      &lt;<span class="tag">file</span> <span class="attr">href</span>=<span class="str">"index.html"</span>/&gt;
+    &lt;/<span class="tag">resource</span>&gt;
+  &lt;/<span class="tag">resources</span>&gt;
+&lt;/<span class="tag">manifest</span>&gt;</div>
+      <p><code>identifierref="RES1"</code> conecta el ítem de navegación con el recurso físico. Si el manifest está mal formado o el <code>href</code> apunta a un archivo que no existe, el paquete simplemente no carga — es el error de SCORM más común y más difícil de diagnosticar sin mirar el XML directamente.</p>
+
+      <h3>La comunicación en vivo — funciones de la API</h3>
+      <p>El contenido llama a funciones específicas para leer y escribir datos. En SCORM 1.2, las funciones son:</p>
+      <div class="code-label">wrapper.js (fragmento simplificado)</div>
+      <div class="code-block"><span class="cm">// Al cargar el curso</span>
+API.<span class="kw">LMSInitialize</span>(<span class="str">""</span>);
+
+<span class="cm">// Leer un valor (ej. saber si ya tiene un intento previo)</span>
+<span class="kw">var</span> estado = API.<span class="kw">LMSGetValue</span>(<span class="str">"cmi.core.lesson_status"</span>);
+
+<span class="cm">// Escribir el puntaje tras la evaluación</span>
+API.<span class="kw">LMSSetValue</span>(<span class="str">"cmi.core.score.raw"</span>, <span class="str">"85"</span>);
+API.<span class="kw">LMSSetValue</span>(<span class="str">"cmi.core.lesson_status"</span>, <span class="str">"completed"</span>);
+
+<span class="cm">// Confirmar que se guarde (crítico — sin esto se puede perder todo)</span>
+API.<span class="kw">LMSCommit</span>(<span class="str">""</span>);
+
+<span class="cm">// Al cerrar el curso</span>
+API.<span class="kw">LMSFinish</span>(<span class="str">""</span>);</div>
+      <p>En SCORM 2004 los nombres cambian (<code>Initialize</code>, <code>GetValue</code>, <code>SetValue</code>, <code>Commit</code>, <code>Terminate</code>, sin el prefijo "LMS") y el modelo de datos se expande — pero la lógica de "preguntar, escribir, confirmar, cerrar" es la misma.</p>
+
+      <h3>El modelo de datos CMI — qué se puede leer y escribir</h3>
       <table class="compare-table">
-        <tr><th>Versión</th><th>Qué permite</th><th>Limitación</th></tr>
-        <tr><td>SCORM 1.2</td><td>Completitud, puntaje, estado (completado/incompleto), tiempo total</td><td>Un solo intento de seguimiento por sesión, datos básicos</td></tr>
-        <tr><td>SCORM 2004</td><td>Todo lo anterior + secuenciación entre módulos, objetivos múltiples, navegación condicionada</td><td>Más complejo de implementar y de que el LMS lo soporte bien</td></tr>
+        <tr><th>Elemento CMI</th><th>Qué guarda</th><th>Valores típicos</th></tr>
+        <tr><td><code>cmi.core.lesson_status</code></td><td>Estado de la lección</td><td>passed, failed, completed, incomplete, browsed, not attempted</td></tr>
+        <tr><td><code>cmi.core.score.raw</code></td><td>Puntaje obtenido</td><td>0–100</td></tr>
+        <tr><td><code>cmi.core.session_time</code></td><td>Tiempo de esta sesión</td><td>formato HH:MM:SS</td></tr>
+        <tr><td><code>cmi.suspend_data</code></td><td>Datos propios que quieras guardar para retomar donde quedó (hasta 4KB en 1.2)</td><td>string libre, a menudo JSON serializado</td></tr>
+        <tr><td><code>cmi.core.exit</code></td><td>Cómo se cerró la sesión</td><td>suspend, logout, time-out, "" (normal)</td></tr>
       </table>
-      <div class="nota clave"><span class="nota-tag">Lo que reporta en la práctica</span>Datos típicos: <code>cmi.core.lesson_status</code> (completado/no), <code>cmi.core.score.raw</code> (puntaje), <code>cmi.core.total_time</code>. Esto es justo lo que armamos con el "action=saveScore" en tu propio curso-di — es una versión simplificada de lo mismo que hace SCORM.</div>
+      <div class="nota clave"><span class="nota-tag">suspend_data — el elemento que casi nadie explica bien</span>Este campo es tu única forma de guardar estado propio (en qué pantalla iba, qué respondió) para que el estudiante retome donde dejó. Como en SCORM 1.2 tiene un límite de 4KB, cursos complejos deben comprimir esos datos — típicamente serializando solo IDs y flags, no el contenido completo.</div>
+
+      <h3>Diferencias 1.2 vs 2004 — más allá de "más funciones"</h3>
+      <table class="compare-table">
+        <tr><th>Aspecto</th><th>SCORM 1.2</th><th>SCORM 2004</th></tr>
+        <tr><td>Objetivos</td><td>Uno solo por SCO</td><td>Múltiples objetivos, con seguimiento independiente de cada uno</td></tr>
+        <tr><td>Secuenciación</td><td>No define reglas — el LMS decide libremente</td><td>Reglas explícitas de secuenciación y navegación (IMS SS) — ej. "no permitir avanzar sin completar el anterior"</td></tr>
+        <tr><td>Rollup</td><td>No existe formalmente</td><td>Reglas de "rollup": cómo el estado de sub-actividades se combina hacia el ítem padre</td></tr>
+        <tr><td>Soporte real</td><td>Universal — casi todo LMS lo soporta bien</td><td>Variable — la implementación de sequencing varía mucho entre LMS, causando bugs</td></tr>
+      </table>
+      <div class="nota alerta"><span class="nota-tag">La ironía de SCORM 2004</span>Tiene más funciones, pero muchos LMS lo implementan mal o parcialmente — por eso, paradójicamente, muchos proyectos profesionales prefieren SCORM 1.2 "a propósito", sacrificando funciones avanzadas a cambio de compatibilidad garantizada.</div>
     </div>
 
     <!-- S3 -->
     <div class="content-section" id="s3">
-      <h2><span class="sec-num">03</span> xAPI (Tin Can API) — el estándar flexible</h2>
-      <p>xAPI resuelve la principal limitación de SCORM: solo trackea lo que pasa <em>dentro del LMS</em>. xAPI puede registrar aprendizaje en <strong>cualquier contexto</strong> — una app móvil, una simulación, incluso una capacitación presencial — enviando registros a un almacén llamado <strong>LRS (Learning Record Store)</strong>, no necesariamente al LMS.</p>
-      <p>Cada registro de xAPI es un "statement" con estructura fija: <strong>Actor — Verbo — Objeto</strong> ("Joselyn completó el módulo 1.1"):</p>
-      <div class="xapi-statement">
-        <span class="xapi-part xapi-actor">Actor: Joselyn</span>
-        <span class="xapi-arrow">→</span>
-        <span class="xapi-part xapi-verb">Verbo: completó</span>
-        <span class="xapi-arrow">→</span>
-        <span class="xapi-part xapi-object">Objeto: unidad 1.1</span>
-      </div>
-      <div class="nota contexto"><span class="nota-tag">Por qué es más potente</span>Con xAPI podrías registrar "Joselyn practicó una pincelada en su tablet" o "Joselyn vio un video de YouTube sobre ADDIE" — actividades fuera del LMS. SCORM no puede ver nada de eso; solo ve lo que pasa dentro de su propio paquete.</div>
+      <h2><span class="sec-num">03</span> xAPI (Tin Can API) — el estándar flexible, en detalle</h2>
+      <p>xAPI resuelve la principal limitación de SCORM: solo trackea lo que pasa <em>dentro de la sesión del LMS</em>. xAPI puede registrar aprendizaje en <strong>cualquier contexto</strong> — una app móvil, una simulación, incluso una capacitación presencial — enviando registros a un almacén llamado <strong>LRS (Learning Record Store)</strong>, que puede vivir dentro o fuera del LMS.</p>
+
+      <h3>Anatomía real de un statement</h3>
+      <p>Cada registro de xAPI es un "statement" JSON con estructura <strong>Actor — Verbo — Objeto</strong>. Esta es la forma real, no simplificada:</p>
+      <div class="code-label">statement xAPI (JSON real)</div>
+      <div class="code-block">{
+  <span class="attr">"actor"</span>: {
+    <span class="attr">"name"</span>: <span class="str">"Joselyn Vizcarra"</span>,
+    <span class="attr">"mbox"</span>: <span class="str">"mailto:joselyn@example.com"</span>
+  },
+  <span class="attr">"verb"</span>: {
+    <span class="attr">"id"</span>: <span class="str">"http://adlnet.gov/expapi/verbs/completed"</span>,
+    <span class="attr">"display"</span>: { <span class="attr">"es-CL"</span>: <span class="str">"completó"</span> }
+  },
+  <span class="attr">"object"</span>: {
+    <span class="attr">"id"</span>: <span class="str">"http://curso-di.dev/unidades/m4-1"</span>,
+    <span class="attr">"definition"</span>: {
+      <span class="attr">"name"</span>: { <span class="attr">"es-CL"</span>: <span class="str">"Unidad 4.1"</span> }
+    }
+  },
+  <span class="attr">"result"</span>: {
+    <span class="attr">"score"</span>: { <span class="attr">"raw"</span>: <span class="str">85</span>, <span class="attr">"max"</span>: <span class="str">100</span> },
+    <span class="attr">"completion"</span>: <span class="kw">true</span>
+  }
+}</div>
+      <p>Nota los <strong>IRI</strong> (Internationalized Resource Identifiers) — <code>http://adlnet.gov/expapi/verbs/completed</code> no es un link que se visita, es un identificador único global. Esto es lo que le da a xAPI su poder real: cualquier sistema en el mundo que registre "completed" con ese mismo IRI es semánticamente comparable, sin importar en qué plataforma ocurrió.</p>
+
+      <div class="nota contexto"><span class="nota-tag">El verbo importa más de lo que parece</span>ADL (quien mantiene el estándar) publica un <strong>registro de verbos</strong> reconocidos (completed, experienced, answered, attempted, mastered…). Usar verbos del registro en vez de inventar los tuyos es lo que permite que distintas herramientas —una app de terceros, tu LRS, un dashboard de analítica— interpreten los datos de forma consistente.</div>
+
+      <h3>Dónde viven los datos — el LRS</h3>
+      <p>El LRS es una base de datos especializada que recibe, almacena y permite consultar statements. A diferencia de un LMS, el LRS <strong>no aloja contenido</strong> — solo colecciona registros de actividad, potencialmente desde múltiples fuentes (tu curso, una app móvil, un simulador, incluso sensores de un taller físico).</p>
+      <div class="nota alerta"><span class="nota-tag">Un matiz técnico real</span>Muchos LMS modernos (Moodle con plugin, Brightspace) tienen un LRS embebido que puede recibir statements de contenido SCORM y no-SCORM a la vez. Esto significa que "SCORM vs xAPI" no siempre es una elección exclusiva — un curso SCORM puede además enviar statements xAPI en paralelo para analítica más rica, si el LMS lo soporta.</div>
     </div>
+
 
     <!-- S4 -->
     <div class="content-section" id="s4">
@@ -301,13 +442,44 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
     <!-- S5 -->
     <div class="content-section" id="s5">
       <h2><span class="sec-num">05</span> SLA técnico — el acuerdo detrás del servicio</h2>
-      <p>Un SLA (Service Level Agreement) es el documento que define qué nivel de servicio garantiza un proveedor — por ejemplo, quien aloja tu LMS o LRS. No es exclusivo de e-learning, pero como DI que trabaja con plataformas, necesitas entender sus términos básicos:</p>
+      <p>Un SLA (Service Level Agreement) es el documento que define qué nivel de servicio garantiza un proveedor — por ejemplo, quien aloja tu LMS o LRS. No es exclusivo de e-learning, pero como DI que trabaja con plataformas, necesitas entender sus términos técnicos, no solo la idea general.</p>
+
+      <h3>Las métricas que realmente importan</h3>
       <div class="sla-grid">
         <div class="sla-metric"><div class="sla-num">99.9%</div><div class="sla-label">Uptime garantizado — cuánto tiempo la plataforma debe estar disponible</div></div>
         <div class="sla-metric"><div class="sla-num">&lt;4h</div><div class="sla-label">Tiempo de respuesta ante incidente crítico</div></div>
         <div class="sla-metric"><div class="sla-num">24/7</div><div class="sla-label">Ventana de soporte técnico disponible</div></div>
       </div>
-      <div class="defbox">Un SLA importa porque si tu curso vive en una plataforma con mal SLA, y falla justo el día del examen final de 200 personas, el problema no es tuyo pero el impacto sí — por eso un DI que entiende de SLA sabe hacer las preguntas correctas antes de comprometerse con un proyecto.</div>
+
+      <h3>Lo que "99.9%" realmente significa</h3>
+      <p>El porcentaje de uptime suena abstracto hasta que lo traduces a tiempo real de caída tolerada:</p>
+      <table class="compare-table">
+        <tr><th>SLA de uptime</th><th>Downtime tolerado al año</th><th>Downtime tolerado al mes</th></tr>
+        <tr><td>99% ("dos nueves")</td><td>~3.65 días</td><td>~7.3 horas</td></tr>
+        <tr><td>99.9% ("tres nueves")</td><td>~8.76 horas</td><td>~43.8 minutos</td></tr>
+        <tr><td>99.99% ("cuatro nueves")</td><td>~52.6 minutos</td><td>~4.38 minutos</td></tr>
+      </table>
+      <div class="nota alerta"><span class="nota-tag">Por qué esta tabla cambia decisiones reales</span>Un proveedor que ofrece "99%" puede sonar casi igual a "99.9%", pero la diferencia es de horas a días de caída tolerada al año. Si tu curso tiene un examen sincrónico masivo, esa diferencia decide si aceptas o rechazas el proveedor — o si negocias una cláusula específica para esa ventana crítica.</div>
+
+      <h3>RTO y RPO — los conceptos que distinguen un SLA serio de uno de marketing</h3>
+      <ul>
+        <li><strong>RTO (Recovery Time Objective)</strong> — cuánto tiempo máximo tarda el proveedor en restaurar el servicio tras una caída total</li>
+        <li><strong>RPO (Recovery Point Objective)</strong> — cuántos datos como máximo se pueden perder (medido en tiempo) si hay una falla — ej. "RPO de 1 hora" significa que en el peor caso pierdes hasta 1 hora de datos de progreso de estudiantes</li>
+      </ul>
+      <div class="defbox">Un SLA que solo promete "uptime" sin especificar RTO/RPO es incompleto — te dice qué tan seguido puede fallar, pero no qué tan rápido se recupera ni cuánto puedes perder cuando falla. Preguntar por RTO y RPO explícitamente es la señal de que entiendes de infraestructura, no solo de pedagogía.</div>
+
+      <h3>Niveles de escalamiento — cómo se resuelve un incidente en la práctica</h3>
+      <p>Un SLA serio define niveles (tiers) de severidad, cada uno con su propio tiempo de respuesta:</p>
+      <table class="compare-table">
+        <tr><th>Severidad</th><th>Ejemplo</th><th>Tiempo de respuesta típico</th></tr>
+        <tr><td>Crítica (P1)</td><td>Plataforma completamente caída, nadie puede entrar</td><td>&lt;1 hora</td></tr>
+        <tr><td>Alta (P2)</td><td>Un módulo clave no funciona (ej. no se pueden reportar puntajes)</td><td>&lt;4 horas</td></tr>
+        <tr><td>Media (P3)</td><td>Un problema visible pero con solución alternativa disponible</td><td>&lt;24 horas</td></tr>
+        <tr><td>Baja (P4)</td><td>Consulta general, mejora cosmética</td><td>&lt;5 días hábiles</td></tr>
+      </table>
+
+      <h3>Penalidades — qué pasa si el proveedor no cumple</h3>
+      <p>Un SLA sin consecuencias es una promesa sin dientes. Los serios incluyen <strong>créditos de servicio</strong>: si el uptime real cae bajo el garantizado, el cliente recibe descuento proporcional en la facturación del período — no es indemnización completa por el daño, pero es la palanca contractual real que existe.</p>
     </div>
 
     <!-- S6 -->
@@ -489,16 +661,16 @@ function updateActProgress() { document.getElementById('actProgress').textConten
 renderActivity();
 
 const QUIZ = [
-  { q: '¿Qué es un LMS?', opts: ['Un tipo de video interactivo','La plataforma que aloja el curso, matricula y registra progreso','Un estándar de empaquetado','Una herramienta de autoría'], ans: 1 },
-  { q: '¿Qué contiene un paquete SCORM?', opts: ['Solo el video del curso','Contenido, imsmanifest.xml y una capa de comunicación (API wrapper)','Solo el certificado final','Solo la base de datos del LMS'], ans: 1 },
-  { q: '¿Cuál es la principal ventaja de SCORM 2004 sobre 1.2?', opts: ['Es más liviano','Permite secuenciación y objetivos múltiples','No requiere manifest','Funciona sin LMS'], ans: 1 },
-  { q: '¿Qué estructura tiene un statement de xAPI?', opts: ['Fecha-Hora-Usuario','Actor-Verbo-Objeto','Módulo-Puntaje-Tiempo','Curso-LMS-Servidor'], ans: 1 },
-  { q: '¿Dónde se almacenan los statements de xAPI?', opts: ['En el LMS únicamente','En un LRS (Learning Record Store)','En el navegador del usuario','No se almacenan'], ans: 1 },
-  { q: '¿Cuál es la principal ventaja de xAPI sobre SCORM?', opts: ['Es más antiguo','Puede trackear aprendizaje fuera del LMS','Es más simple de implementar','No necesita internet'], ans: 1 },
-  { q: 'En el contexto educativo chileno actual, ¿qué estándar es más común?', opts: ['xAPI exclusivamente','SCORM 1.2, por compatibilidad y simplicidad','Ninguno, no se usan estándares','SCORM 2004 exclusivamente'], ans: 1 },
-  { q: '¿Qué es un SLA?', opts: ['Un tipo de objetivo de aprendizaje','Un acuerdo que define el nivel de servicio garantizado por un proveedor','Un estándar de tracking','Un tipo de LMS'], ans: 1 },
-  { q: '¿Por qué le importa el SLA a un DI?', opts: ['No le importa, es solo tema de TI','Porque una falla de la plataforma en un momento crítico impacta el proyecto aunque no lo controle','Porque define el diseño pedagógico','Porque reemplaza la evaluación'], ans: 1 },
-  { q: 'Un proyecto necesita cruzar datos de un curso LMS con práctica en una app externa. ¿Qué eliges?', opts: ['SCORM 1.2, porque es más simple','xAPI con un LRS, porque puede trackear ambas fuentes','No es posible trackear eso','Un examen en papel'], ans: 1 },
+  { q: '¿Cuál es la diferencia principal entre construir un curso "nativo" en el LMS y usar un paquete SCORM importado?', opts: ['No hay diferencia real','El nativo vive amarrado a ese LMS; el paquete SCORM es portable entre plataformas','El paquete SCORM siempre es más rápido de editar','El nativo nunca reporta calificaciones'], ans: 1 },
+  { q: '¿Qué estándar permite integrar una herramienta externa completa (como Turnitin) dentro de un curso con inicio de sesión automático?', opts: ['SCORM 1.2','LTI (Learning Tools Interoperability)','xAPI únicamente','HTML5 estándar'], ans: 1 },
+  { q: '¿Cuál de estos LMS es open source y el más común en el contexto educativo chileno?', opts: ['Brightspace','Canvas','Moodle','Blackboard'], ans: 2 },
+  { q: '¿Qué distingue a Brightspace (D2L) de los otros LMS mencionados?', opts: ['Ser open source','Analítica predictiva nativa (Intelligence Agents) para detectar estudiantes en riesgo','No tener sistema de calificaciones','Ser exclusivo para colegios'], ans: 1 },
+  { q: '¿En qué situación conviene más construir un curso nativo en el LMS que empaquetarlo como SCORM?', opts: ['Cuando el curso se venderá a múltiples instituciones distintas','Cuando la institución nunca cambiará de LMS y se prioriza edición ágil','Nunca conviene construir nativo','Solo si no hay LMS disponible'], ans: 1 },
+  { q: '¿Qué archivo dentro de un paquete SCORM le dice al LMS qué archivo abrir primero y cómo se estructura el curso?', opts: ['index.html','El imsmanifest.xml','El wrapper.js','El archivo package.json'], ans: 1 },
+  { q: 'En SCORM 1.2, ¿qué función DEBE llamarse antes de cerrar la sesión para no perder los datos?', opts: ['LMSGetValue','LMSInitialize','LMSCommit','LMSSetValue'], ans: 2 },
+  { q: 'En un statement xAPI, ¿qué es un IRI como "http://adlnet.gov/expapi/verbs/completed"?', opts: ['Un link que el estudiante debe visitar','Un identificador único global del verbo, no una URL a visitar','La dirección del servidor LRS','Un error común de configuración'], ans: 1 },
+  { q: 'Si un SLA garantiza 99.9% de uptime, ¿cuánto downtime tolera aproximadamente al mes?', opts: ['~7 horas','~44 minutos','~1 día','Cero, siempre'], ans: 1 },
+  { q: 'Un incidente P1 (plataforma completamente caída) en un SLA serio debería tener un tiempo de respuesta de…', opts: ['Menos de 5 días hábiles','Menos de 1 hora','No hay tiempo garantizado','Una semana'], ans: 1 },
 ];
 function renderQuiz() {
   document.getElementById('quizRoot').innerHTML = QUIZ.map((item, qi) => `

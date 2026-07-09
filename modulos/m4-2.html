@@ -85,6 +85,15 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
 .compare-table th { background: var(--card); font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-muted); }
 .compare-table td:first-child { font-weight: 600; }
 
+/* bloques de código técnico */
+.code-block { background: #1C1A17; color: #E8E4DC; border-radius: 4px; padding: 1rem 1.2rem; margin: 1rem 0; font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; overflow-x: auto; line-height: 1.6; }
+.code-block .cm { color: #8A8478; }
+.code-block .tag { color: #E8A87C; }
+.code-block .attr { color: #B9862C; }
+.code-block .str { color: #A3C293; }
+.code-block .kw { color: #7CA8D8; }
+.code-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); margin-bottom: 0.4rem; }
+
 /* catálogo de herramientas */
 .tools-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8rem; margin: 1rem 0 1.4rem; }
 @media (max-width: 700px) { .tools-grid { grid-template-columns: 1fr; } }
@@ -195,6 +204,7 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
       <a href="#s4">4 · Cuándo elegir cada una</a>
       <a href="#s5">5 · Del storyboard a la herramienta</a>
       <a href="#s6">6 · Publicar y exportar</a>
+      <a href="#s7">7 · Accesibilidad, versiones, localización</a>
       <a href="#practica">Práctica de entrevista</a>
       <a href="#evaluacion">Evaluación (10)</a>
     </div>
@@ -266,30 +276,75 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
 
     <!-- S2 -->
     <div class="content-section" id="s2">
-      <h2><span class="sec-num">02</span> Flujo de trabajo en Storyline — paso a paso</h2>
-      <p>Ejemplo concreto: construir una interacción de "arrastrar y soltar" a partir de un storyboard (como el que armaste en 3.2), para el objetivo "clasificar tipos de brechas":</p>
+      <h2><span class="sec-num">02</span> Flujo de trabajo en Storyline — paso a paso, con la lógica real</h2>
+      <p>Ejemplo concreto: construir una interacción de "arrastrar y soltar" a partir de un storyboard (como el que armaste en 3.2), para el objetivo "clasificar tipos de brechas". Pero antes de los pasos, necesitas entender los tres bloques que hacen posible cualquier interactividad en Storyline:</p>
+
+      <h3>Los tres bloques de la lógica de Storyline</h3>
+      <ul>
+        <li><strong>Variables</strong> — contenedores de estado: <em>True/False</em> (¿ya intentó?, ¿aprobó?), <em>numéricas</em> (puntaje acumulado, intentos usados), <em>de texto</em> (nombre ingresado, respuesta seleccionada)</li>
+        <li><strong>Estados (states)</strong> — apariencias distintas de un mismo objeto: Normal, Hover, Visited, Correct, Incorrect. Un botón puede cambiar de estado "Normal" a "Visited" cuando el estudiante ya interactuó con él</li>
+        <li><strong>Triggers</strong> — reglas del tipo "cuando [evento] ocurre, hacer [acción], si [condición]". Es la unidad mínima de toda la lógica interactiva</li>
+      </ul>
+
+      <h3>Un trigger real, en pseudocódigo de la herramienta</h3>
+      <p>Así se ve un trigger típico para la interacción de arrastrar tarjetas de brechas a su categoría correcta:</p>
+      <div class="code-label">Panel de Triggers (Storyline)</div>
+      <div class="code-block"><span class="kw">Trigger:</span> Cambiar estado de Tarjeta_Motivacion a <span class="str">Correct</span>
+<span class="kw">Cuando:</span> El usuario suelta un objeto en Tarjeta_Motivacion
+<span class="kw">Condición:</span> Si Objeto_Arrastrado <span class="kw">es igual a</span> <span class="str">"Motivacion"</span>
+
+<span class="kw">Trigger:</span> Sumar 1 a Variable_Aciertos
+<span class="kw">Cuando:</span> El usuario suelta un objeto en Tarjeta_Motivacion
+<span class="kw">Condición:</span> Si Objeto_Arrastrado <span class="kw">es igual a</span> <span class="str">"Motivacion"</span>
+
+<span class="kw">Trigger:</span> Saltar a Diapositiva_Feedback
+<span class="kw">Cuando:</span> Variable_Aciertos <span class="kw">es igual a</span> <span class="str">3</span></div>
+      <p>Esto es lo que realmente conecta con el storyboard: cada fila de "interacción" que definiste en 3.2 se traduce a uno o más triggers como estos. Un storyboard que no especificó qué pasa al fallar, técnicamente significa que <em>no sabes qué trigger escribir</em> — de ahí la importancia de esa unidad.</p>
+
+      <h3>El flujo completo, ahora con la lógica de fondo</h3>
       <div class="flujo">
-        <div class="paso"><div class="paso-num">1</div><div class="paso-content"><h4>Crear la escena</h4><p>Nueva escena en blanco. Configurar el tamaño (16:9 estándar) según lo definido en el storyboard.</p></div></div>
-        <div class="paso"><div class="paso-num">2</div><div class="paso-content"><h4>Insertar el trigger de interacción</h4><p>Insertar → Convertir a arrastrar y soltar. Storyline detecta automáticamente los objetos en pantalla como candidatos a arrastrables.</p></div></div>
-        <div class="paso"><div class="paso-num">3</div><div class="paso-content"><h4>Definir zonas de destino</h4><p>Asignar cada tarjeta (conocimiento/habilidad/motivación) a su zona correcta — esto es la lógica condicional que el storyboard debió especificar.</p></div></div>
-        <div class="paso"><div class="paso-num">4</div><div class="paso-content"><h4>Configurar feedback</h4><p>Panel de Resultado → mensaje de éxito/error, siguiendo el principio de retroalimentación efectiva (unidad 3.1) — específico, no genérico.</p></div></div>
-        <div class="paso"><div class="paso-num">5</div><div class="paso-content"><h4>Vista previa y ajuste</h4><p>Probar la interacción completa antes de seguir — Storyline permite previsualizar sin publicar.</p></div></div>
-        <div class="paso"><div class="paso-num">6</div><div class="paso-content"><h4>Publicar como SCORM</h4><p>Archivo → Publicar → Web/LMS → seleccionar SCORM 1.2 o 2004 (unidad 4.1) → se genera el .zip listo para subir al LMS.</p></div></div>
+        <div class="paso"><div class="paso-num">1</div><div class="paso-content"><h4>Crear la escena y las variables</h4><p>Nueva escena en blanco (16:9). Crear las variables necesarias: <code>Variable_Aciertos</code> (numérica), <code>Intento_Realizado</code> (True/False).</p></div></div>
+        <div class="paso"><div class="paso-num">2</div><div class="paso-content"><h4>Insertar el trigger de interacción</h4><p>Insertar → Convertir a arrastrar y soltar. Storyline detecta automáticamente los objetos en pantalla como candidatos a arrastrables, generando triggers base que tú refinas.</p></div></div>
+        <div class="paso"><div class="paso-num">3</div><div class="paso-content"><h4>Definir zonas de destino y estados</h4><p>Asignar cada tarjeta a su zona correcta, y configurar los estados Correct/Incorrect de cada zona — esto es la lógica condicional que el storyboard debió especificar completa.</p></div></div>
+        <div class="paso"><div class="paso-num">4</div><div class="paso-content"><h4>Configurar feedback vía triggers</h4><p>Panel de Resultado → mensaje de éxito/error condicionado a la variable de aciertos, siguiendo el principio de retroalimentación efectiva (unidad 3.1) — específico, no genérico.</p></div></div>
+        <div class="paso"><div class="paso-num">5</div><div class="paso-content"><h4>Vista previa y ajuste</h4><p>Probar la interacción completa, revisando que cada trigger dispare en el orden correcto — un error común es que dos triggers compitan por el mismo evento y solo uno se ejecute.</p></div></div>
+        <div class="paso"><div class="paso-num">6</div><div class="paso-content"><h4>Publicar como SCORM</h4><p>Archivo → Publicar → Web/LMS → seleccionar SCORM 1.2 o 2004 (unidad 4.1). Storyline traduce automáticamente tus variables a los elementos CMI correspondientes (ej. tu variable de puntaje se mapea a <code>cmi.core.score.raw</code>).</p></div></div>
       </div>
+      <div class="nota alerta"><span class="nota-tag">El error técnico más común</span>Triggers que dependen de un orden específico de ejecución pero Storyline los procesa en el orden en que aparecen en el panel — no en el orden "lógico" que tú imaginaste. Si el feedback aparece antes de que se sume el punto, revisa el orden de los triggers en el panel, no la lógica en sí.</div>
     </div>
 
     <!-- S3 -->
     <div class="content-section" id="s3">
-      <h2><span class="sec-num">03</span> Flujo de trabajo en H5P — paso a paso</h2>
-      <p>El mismo tipo de interacción, pero en H5P (gratuito, integrado en Moodle):</p>
+      <h2><span class="sec-num">03</span> Flujo de trabajo en H5P — paso a paso, con su arquitectura real</h2>
+      <p>H5P no es "una herramienta" sino un <strong>framework de tipos de contenido</strong> (content types), cada uno definido por un archivo <code>semantics.json</code> que describe qué campos configurables tiene. Entender esto te permite razonar sobre cualquier tipo de contenido nuevo que aparezca, no solo memorizar los que ya conoces.</p>
+
+      <h3>Cómo está armado un tipo de contenido H5P</h3>
+      <div class="code-label">semantics.json (concepto simplificado — Drag and Drop)</div>
+      <div class="code-block">{
+  <span class="attr">"name"</span>: <span class="str">"question"</span>,
+  <span class="attr">"type"</span>: <span class="str">"group"</span>,
+  <span class="attr">"fields"</span>: [
+    { <span class="attr">"name"</span>: <span class="str">"dropZones"</span>, <span class="attr">"type"</span>: <span class="str">"list"</span> },
+    { <span class="attr">"name"</span>: <span class="str">"elements"</span>, <span class="attr">"type"</span>: <span class="str">"list"</span> },
+    { <span class="attr">"name"</span>: <span class="str">"behaviour"</span>, <span class="attr">"type"</span>: <span class="str">"group"</span>,
+      <span class="attr">"fields"</span>: [
+        { <span class="attr">"name"</span>: <span class="str">"enableRetry"</span>, <span class="attr">"type"</span>: <span class="str">"boolean"</span> },
+        { <span class="attr">"name"</span>: <span class="str">"showSolutionsButton"</span>, <span class="attr">"type"</span>: <span class="str">"boolean"</span> }
+      ]
+    }
+  ]
+}</div>
+      <p>Cuando en el editor visual de H5P activas o desactivas "permitir reintentos", en el fondo estás modificando el valor de <code>enableRetry</code> en esta estructura. No necesitas escribir JSON — pero saber que existe te da una ventaja real: cuando algo se comporta distinto a lo esperado, sabes que hay un campo de configuración específico detrás, no magia.</p>
+
+      <h3>El flujo de trabajo real</h3>
       <div class="flujo">
-        <div class="paso"><div class="paso-num">1</div><div class="paso-content"><h4>Elegir el tipo de contenido</h4><p>En Moodle o h5p.org: Crear contenido nuevo → "Drag the Words" o "Drag and Drop" según la interacción que definiste en el storyboard.</p></div></div>
-        <div class="paso"><div class="paso-num">2</div><div class="paso-content"><h4>Cargar los elementos</h4><p>Subir las imágenes/textos de las tarjetas y definir las zonas correctas directamente en el editor visual, sin código.</p></div></div>
-        <div class="paso"><div class="paso-num">3</div><div class="paso-content"><h4>Configurar retroalimentación</h4><p>H5P permite mensajes de éxito, reintentos y una barra de progreso — configurables sin programar.</p></div></div>
-        <div class="paso"><div class="paso-num">4</div><div class="paso-content"><h4>Insertar directo en Moodle</h4><p>Si ya está en Moodle, el contenido queda embebido en el curso automáticamente — no necesitas exportar/importar como en Storyline.</p></div></div>
-        <div class="paso"><div class="paso-num">5</div><div class="paso-content"><h4>Exportar si es necesario</h4><p>Si necesitas usarlo fuera de Moodle, H5P permite exportar como archivo .h5p reutilizable en otra instancia con H5P instalado.</p></div></div>
+        <div class="paso"><div class="paso-num">1</div><div class="paso-content"><h4>Elegir el tipo de contenido</h4><p>En Moodle o h5p.org: Crear contenido nuevo → "Drag the Words" o "Drag and Drop" según la interacción definida en el storyboard. Cada tipo tiene su propio conjunto de comportamientos configurables (behaviour settings).</p></div></div>
+        <div class="paso"><div class="paso-num">2</div><div class="paso-content"><h4>Cargar los elementos y definir zonas correctas</h4><p>Subir las imágenes/textos de las tarjetas y asignar cada una a su zona en el editor visual — internamente, se está poblando la lista <code>dropZones</code> del semantics.json.</p></div></div>
+        <div class="paso"><div class="paso-num">3</div><div class="paso-content"><h4>Configurar comportamiento (behaviour)</h4><p>Reintentos, mostrar solución, puntaje parcial vs. todo-o-nada — estas opciones son justo lo que un storyboard bien hecho (unidad 3.2) debió especificar de antemano.</p></div></div>
+        <div class="paso"><div class="paso-num">4</div><div class="paso-content"><h4>Insertar directo en Moodle</h4><p>Si ya está en Moodle, el contenido queda embebido automáticamente. H5P reporta el resultado vía <strong>xAPI internamente</strong> (unidad 4.1) — cada interacción genera un statement con verbo "answered" o "completed" que Moodle traduce a su propio sistema de calificaciones.</p></div></div>
+        <div class="paso"><div class="paso-num">5</div><div class="paso-content"><h4>Exportar si es necesario</h4><p>H5P permite exportar como archivo .h5p reutilizable en otra instancia con H5P instalado — o, si el LMS destino no soporta H5P nativo, empaquetar como SCORM mediante plugins específicos.</p></div></div>
       </div>
-      <div class="nota contexto"><span class="nota-tag">Diferencia clave con Storyline</span>H5P vive naturalmente dentro de Moodle — no necesitas el ciclo completo de "publicar como SCORM y subir el zip" que sí requiere Storyline. Para tu contexto de trabajo con Moodle, eso es una ventaja de velocidad real.</div>
+      <div class="nota contexto"><span class="nota-tag">Por qué H5P reporta mejor que un SCORM simple</span>Como internamente usa xAPI, H5P puede reportar no solo "completado/no completado" sino <em>qué respuesta específica</em> dio el estudiante en cada intento — dato mucho más rico para analítica que lo que SCORM 1.2 típicamente expone.</div>
     </div>
 
     <!-- S4 -->
@@ -322,6 +377,39 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
       <h2><span class="sec-num">06</span> Publicar y exportar — el paso final</h2>
       <p>Cierre técnico que conecta con lo ya visto en 4.1: al publicar, defines el estándar (SCORM 1.2/2004 o xAPI si la herramienta lo soporta), el LMS destino, y verificas que el paquete se abra y reporte correctamente antes de darlo por terminado.</p>
       <div class="nota alerta"><span class="nota-tag">Checklist antes de entregar</span>¿Probaste el paquete en el LMS real (no solo en la vista previa de la herramienta)? ¿El puntaje se reporta correctamente? ¿El estado "completado" se dispara con la condición correcta (no solo con abrir el curso)? Estos tres chequeos evitan el clásico "funciona en mi computador pero no en el LMS del cliente".</div>
+    </div>
+
+    <!-- S7 -->
+    <div class="content-section" id="s7">
+      <h2><span class="sec-num">07</span> Lo que casi nadie enseña: accesibilidad, versiones y localización</h2>
+
+      <h3>Accesibilidad técnica — no es solo "buena intención"</h3>
+      <p>Producir en Storyline o H5P sin pensar en accesibilidad genera cursos que literalmente algunas personas no pueden usar. Los criterios técnicos concretos, basados en WCAG (Web Content Accessibility Guidelines):</p>
+      <table class="compare-table">
+        <tr><th>Criterio WCAG</th><th>Qué significa en la práctica</th><th>Cómo se configura</th></tr>
+        <tr><td>Texto alternativo</td><td>Cada imagen necesita una descripción para lectores de pantalla</td><td>Storyline: panel de accesibilidad por objeto. H5P: campo "alt text" en cada elemento</td></tr>
+        <tr><td>Navegación por teclado</td><td>Todo elemento interactivo debe poder activarse sin mouse (Tab + Enter)</td><td>Storyline asigna orden de tabulación automáticamente, pero hay que verificarlo y ajustarlo manualmente</td></tr>
+        <tr><td>Contraste de color</td><td>Texto legible contra el fondo, mínimo 4.5:1 para texto normal</td><td>Verificar con herramientas de contraste — no confiar en que "se ve bien" a simple vista</td></tr>
+        <tr><td>Subtítulos y transcripciones</td><td>Todo audio/video necesita alternativa textual</td><td>Storyline soporta closed captions nativos; en video externo, archivo .srt o .vtt</td></tr>
+      </table>
+      <div class="nota alerta"><span class="nota-tag">Por qué esto no es opcional</span>Muchas instituciones públicas y algunas privadas en Chile tienen obligaciones legales de accesibilidad para contenido digital. Un curso que reprueba estos criterios puede ser motivo de rechazo formal en una licitación o auditoría — no es solo una "buena práctica", es un requisito de entrega en varios contextos institucionales.</div>
+
+      <h3>Control de versiones — el problema que nadie resuelve bien</h3>
+      <p>A diferencia del código de software, los archivos .story (Storyline) o los proyectos H5P no se llevan bien con Git tradicional — son archivos binarios grandes, no texto. Prácticas reales que sí funcionan:</p>
+      <ul>
+        <li><strong>Nomenclatura con versión y fecha</strong> — <code>m4-2_v3_2026-07-08.story</code>, no "final_final_v2.story"</li>
+        <li><strong>Carpeta de "publicados"</strong> separada de "en edición" — para no confundir el .zip que subiste al LMS con el archivo fuente que sigues editando</li>
+        <li><strong>Registro de cambios simple</strong> — un archivo de texto o hoja de cálculo que documente qué cambió en cada versión y por qué, aunque sea informal</li>
+      </ul>
+
+      <h3>Localización — más que traducir</h3>
+      <p>Si un curso debe adaptarse a otro idioma o región, localizar no es solo cambiar el texto:</p>
+      <ul>
+        <li><strong>Expansión de texto</strong> — el español suele ocupar 20-30% más espacio que el inglés; un botón que calzaba puede desbordar</li>
+        <li><strong>Formatos de fecha/número</strong> — 08/07/2026 significa cosas distintas según la región</li>
+        <li><strong>Audio y subtítulos</strong> — requieren regrabación o nueva síntesis de voz, no solo cambiar el archivo de texto (conecta con la unidad 4.3)</li>
+        <li><strong>Imágenes culturalmente específicas</strong> — un ejemplo o ícono que funciona en un contexto puede no traducirse bien a otro</li>
+      </ul>
     </div>
 
     <div class="activity">
@@ -493,16 +581,16 @@ function updateActProgress() { document.getElementById('actProgress').textConten
 renderActivity();
 
 const QUIZ = [
-  { q: '¿Cuál herramienta es gratuita y open source?', opts: ['Storyline','H5P','Captivate','Rise'], ans: 1 },
-  { q: '¿Qué ventaja tiene H5P sobre Storyline en un curso en Moodle?', opts: ['Más lógica compleja','Se integra nativamente sin exportar/importar SCORM','Es más caro pero mejor','No tiene ventajas'], ans: 1 },
-  { q: '¿Qué herramienta es más fuerte para ramificaciones y simulaciones complejas?', opts: ['Genially','Storyline','H5P','Rise'], ans: 1 },
-  { q: 'El primer paso del flujo de trabajo en Storyline para construir una interacción es…', opts: ['Publicar como SCORM','Crear la escena según el storyboard','Configurar el feedback','Subir al LMS'], ans: 1 },
-  { q: '¿Qué documento debe preceder la construcción en cualquier herramienta de autoría?', opts: ['El informe financiero','El storyboard','El certificado del curso','El manual del LMS'], ans: 1 },
-  { q: 'Antes de entregar un curso construido, ¿qué se debe verificar según el checklist de esta unidad?', opts: ['Solo que se vea bien','Que funcione en el LMS real, no solo en vista previa','Solo el precio de la herramienta','Nada, se entrega directo'], ans: 1 },
-  { q: '¿Qué herramienta es más adecuada para infografías interactivas vistosas?', opts: ['Captivate','Genially','H5P','Storyline'], ans: 1 },
-  { q: 'Si un storyboard no especifica qué pasa al fallar una interacción, ¿qué se debe hacer?', opts: ['Improvisar directamente en la herramienta','Volver al storyboard y definir la regla antes de seguir','Ignorar el problema','Cancelar el proyecto'], ans: 1 },
-  { q: '¿Qué formato de salida conecta esta unidad con la 4.1?', opts: ['PDF','Paquete SCORM o xAPI','Excel','Word'], ans: 1 },
-  { q: '¿Cuál es la respuesta más madura si no has usado Storyline pero sí H5P?', opts: ['Decir que no sabes nada de autoría','Explicar que el proceso es el mismo, cambia la herramienta','Inventar experiencia que no tienes','Evitar la pregunta'], ans: 1 },
+  { q: 'En Storyline, ¿qué son los "triggers"?', opts: ['Solo botones de navegación','Reglas del tipo "cuando X ocurre, hacer Y, si Z se cumple"','Un tipo de variable','Un formato de exportación'], ans: 1 },
+  { q: '¿Qué tipos de variables existen en Storyline?', opts: ['Solo numéricas','True/False, numéricas y de texto','Solo de texto','No existen variables en Storyline'], ans: 1 },
+  { q: '¿Qué archivo define los campos configurables de un tipo de contenido H5P?', opts: ['index.html','semantics.json','config.xml','manifest.json'], ans: 1 },
+  { q: '¿Cómo reporta H5P internamente los resultados de una interacción?', opts: ['No reporta nada','Vía xAPI, generando statements con detalle de la respuesta','Solo por email','Vía SCORM 2004 exclusivamente'], ans: 1 },
+  { q: 'Si el feedback de una interacción en Storyline aparece antes de sumar el punto, ¿qué deberías revisar primero?', opts: ['El diseño visual','El orden de los triggers en el panel','El precio de la licencia','El manifest SCORM'], ans: 1 },
+  { q: 'Según WCAG, ¿cuál es el contraste mínimo recomendado para texto normal?', opts: ['1:1','4.5:1','10:1','No existe un mínimo'], ans: 1 },
+  { q: '¿Por qué la accesibilidad no es "opcional" en varios contextos institucionales chilenos?', opts: ['Es solo estética','Puede ser un requisito legal/formal en licitaciones y auditorías','No tiene relación con instituciones públicas','Solo aplica a videojuegos'], ans: 1 },
+  { q: '¿Por qué Git tradicional no funciona bien con archivos .story de Storyline?', opts: ['Porque son archivos de texto plano','Porque son archivos binarios grandes, no texto','Porque Storyline no permite guardar archivos','Git funciona perfectamente con ellos'], ans: 1 },
+  { q: 'Al localizar un curso a otro idioma, ¿qué problema técnico es común además de traducir el texto?', opts: ['Ninguno, solo se traduce el texto','Expansión de texto que puede desbordar botones o cajas de diseño','El curso deja de funcionar completamente','No hay problemas técnicos asociados'], ans: 1 },
+  { q: '¿Qué ventaja tiene H5P sobre Storyline en cuanto a integración con Moodle?', opts: ['Ninguna, son iguales','Se integra nativamente sin el ciclo de exportar/importar SCORM','H5P no funciona con Moodle','Storyline es gratuito y H5P no'], ans: 1 },
 ];
 function renderQuiz() {
   document.getElementById('quizRoot').innerHTML = QUIZ.map((item, qi) => `
