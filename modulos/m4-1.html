@@ -3,862 +3,535 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>4.1 Herramientas de autoría e interactividad — Curso DI</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<title>4.1 LMS, SCORM, xAPI y SLA — Cuaderno de taller</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --cream: #f5f2ec;
-  --dark: #0f1117;
-  --terra: #c85c3a;
-  --blue: #3a6b8a;
-  --muted: #7a7570;
-  --border: #ddd8d0;
-  --success: #2d7a4f;
-  --terra-light: #f7ede8;
-  --blue-light: #e8f0f5;
+  --paper: #EDEAE3; --paper-alt: #E4DFD3; --card: #F8F6F1;
+  --ink: #1C1A17; --ink-muted: #6B665D; --border: #D8D1C0; --border-soft: #E2DCCC;
+  --mc: #B9862C; --msoft: #F1E5CC;
+  --ia: #2A5CAA; --ia-soft: #DCE5F2;
+  --done: #4A6B3E; --done-soft: #E9F0E5;
+  --warn: #B9862C; --warn-soft: #F1E5CC;
 }
-body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif; color: var(--dark); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--paper); color: var(--ink); font-family: 'IBM Plex Sans', sans-serif; line-height: 1.55; }
+a { color: inherit; }
+.topbar { background: var(--ink); color: #EDEAE3; padding: 0.7rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; position: sticky; top: 0; z-index: 50; }
+.topbar a.back { color: #C9C3B5; text-decoration: none; }
+.topbar a.back:hover { color: #fff; }
+.gami-chips { display: flex; gap: 0.9rem; color: #C9C3B5; flex-wrap: wrap; }
+.layout { display: grid; grid-template-columns: 250px 1fr; max-width: 1120px; margin: 0 auto; }
+@media (max-width: 880px) { .layout { grid-template-columns: 1fr; } .sidebar { order: 2; } }
+.sidebar { border-right: 1px solid var(--border); padding: 1.4rem 1.2rem; }
+@media (max-width: 880px) { .sidebar { border-right: none; border-top: 1px solid var(--border); } }
+.sidebar h6 { font-family: 'Fraunces', serif; font-size: 0.95rem; color: var(--mc); margin-bottom: 0.2rem; }
+.sidebar .sidebar-sub { font-size: 0.74rem; color: var(--ink-muted); margin-bottom: 1rem; }
+.side-item { display: flex; align-items: center; gap: 0.6rem; padding: 0.55rem 0.5rem; border-radius: 3px; text-decoration: none; color: var(--ink); font-size: 0.84rem; margin-bottom: 0.15rem; }
+.side-item.active { background: var(--msoft); font-weight: 600; color: var(--mc); }
+.side-mark { width: 22px; height: 22px; border-radius: 3px; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; flex-shrink: 0; }
+.side-item.active .side-mark { background: var(--mc); border-color: var(--mc); color: #fff; }
+.side-toc { margin-top: 1.4rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+.side-toc .toc-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.64rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); margin-bottom: 0.5rem; }
+.side-toc a { display: block; font-size: 0.78rem; color: var(--ink-muted); text-decoration: none; padding: 0.3rem 0; }
+.side-toc a:hover { color: var(--mc); }
+main { padding: 2.2rem 2rem 4rem; min-width: 0; }
+.unit-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--mc); margin-bottom: 0.5rem; }
+h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(1.5rem, 3.5vw, 2.1rem); margin-bottom: 0.6rem; max-width: 24ch; }
+.lesson-dek { color: #423E37; max-width: 64ch; margin-bottom: 1rem; }
+.lesson-badges { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.6rem; }
+.lbadge { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; border: 1px solid var(--border); background: var(--card); border-radius: 3px; padding: 0.25rem 0.6rem; color: var(--ink-muted); }
+.objetivo-box { background: var(--card); border: 1px solid var(--border); border-left: 4px solid var(--mc); border-radius: 4px; padding: 1.1rem 1.3rem; margin-bottom: 2rem; }
+.objetivo-box .label { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mc); margin-bottom: 0.4rem; }
+.objetivo-box p { font-size: 0.92rem; font-style: italic; color: #322E28; }
+.mapa-block { border: 1px solid var(--border); border-radius: 4px; background: var(--card); margin-bottom: 2rem; overflow: hidden; }
+.mapa-head { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); padding: 0.7rem 1rem; border-bottom: 1px solid var(--border-soft); }
+.mapa-body { padding: 1rem; background: #fff; }
+.mapa-note { font-size: 0.78rem; color: var(--ink-muted); padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
+.media-block { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin-bottom: 2.2rem; background: var(--card); }
+.media-tabs { display: flex; border-bottom: 1px solid var(--border); background: var(--paper-alt); flex-wrap: wrap; }
+.media-tab { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; padding: 0.7rem 1rem; cursor: pointer; border: none; background: none; color: var(--ink-muted); border-bottom: 2px solid transparent; }
+.media-tab.active { color: var(--mc); border-bottom-color: var(--mc); background: var(--card); }
+.media-pane { display: none; }
+.media-pane.active { display: block; }
+.media-note { font-size: 0.76rem; color: var(--ink-muted); padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
+.media-pending { padding: 2rem 1rem; text-align: center; color: var(--ink-muted); font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; }
+.pdf-frame { width: 100%; height: 480px; border: none; display: block; background: #fff; }
+.pdf-actions { display: flex; gap: 0.6rem; padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
+.pdf-actions a { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--mc); text-decoration: none; border: 1px solid var(--border); border-radius: 3px; padding: 0.3rem 0.7rem; }
+.audio-pane { padding: 1.2rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.audio-pane audio { flex: 1; min-width: 240px; }
+.audio-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: var(--ink-muted); }
+.video-wrap { position: relative; padding-top: 56.25%; background: #111; }
+.video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+.content-section { margin-bottom: 2.6rem; }
+.content-section h2 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.3rem; margin-bottom: 0.8rem; padding-bottom: 0.4rem; border-bottom: 2px solid var(--mc); display: flex; align-items: baseline; gap: 0.6rem; }
+.content-section h2 .sec-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--mc); }
+.content-section h3 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.05rem; margin: 1.2rem 0 0.5rem; }
+.content-section p { margin-bottom: 0.8rem; font-size: 0.94rem; color: #2B2823; }
+.content-section ul, .content-section ol { margin: 0.6rem 0 0.9rem 1.3rem; font-size: 0.92rem; }
+.content-section li { margin-bottom: 0.4rem; }
+.content-section strong { color: var(--mc); font-weight: 600; }
+.defbox { background: var(--msoft); border-radius: 4px; padding: 0.9rem 1.1rem; font-style: italic; font-size: 0.93rem; margin: 0.8rem 0 1.2rem; }
+.nota { border-radius: 4px; padding: 0.9rem 1.1rem; font-size: 0.88rem; margin: 1.1rem 0; border: 1px solid var(--border); }
+.nota .nota-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.07em; display: block; margin-bottom: 0.35rem; }
+.nota.clave { background: var(--done-soft); } .nota.clave .nota-tag { color: var(--done); }
+.nota.alerta { background: #F5E5E2; } .nota.alerta .nota-tag { color: #A83232; }
+.nota.contexto { background: var(--ia-soft); } .nota.contexto .nota-tag { color: var(--ia); }
+.compare-table { width: 100%; border-collapse: collapse; margin: 0.8rem 0 1.4rem; font-size: 0.86rem; }
+.compare-table th, .compare-table td { border: 1px solid var(--border); padding: 0.55rem 0.7rem; text-align: left; vertical-align: top; }
+.compare-table th { background: var(--card); font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-muted); }
+.compare-table td:first-child { font-weight: 600; }
 
-/* HEADER */
-.header-di {
-  background: linear-gradient(135deg, var(--dark) 0%, #1e2030 100%);
-  border-bottom: 3px solid var(--terra);
-  padding: 0.9rem 0;
-  position: sticky; top: 0; z-index: 1030;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-}
-.header-di .course-name { color: #fff; font-family: Georgia, serif; font-size: 1.1rem; font-weight: normal; }
-.header-di .unit-name { color: var(--terra); font-size: 0.82rem; }
-.btn-back { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; border-radius: 20px; padding: 0.4rem 1rem; font-size: 0.82rem; text-decoration: none; transition: all 0.2s; }
-.btn-back:hover { background: rgba(255,255,255,0.2); color: #fff; }
+/* xAPI statement demo */
+.xapi-statement { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; background: #1C1A17; color: #EDEAE3; border-radius: 4px; padding: 1rem; margin: 1rem 0; font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; }
+.xapi-part { padding: 0.3rem 0.7rem; border-radius: 3px; }
+.xapi-actor { background: #2A5CAA; }
+.xapi-verb { background: #B9862C; color: #1C1A17; }
+.xapi-object { background: #5B7052; }
+.xapi-arrow { color: #6B665D; }
 
-/* SIDEBAR */
-.sidebar-di {
-  background: #fff;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  overflow: hidden;
-}
-@media(min-width:992px){ .sidebar-di { position: sticky; top: 80px; max-height: calc(100vh - 100px); overflow-y: auto; } }
-.sidebar-header { background: var(--dark); color: #fff; padding: 1rem 1.2rem; }
-.sidebar-header h6 { font-family: Georgia, serif; font-weight: normal; font-size: 0.9rem; margin: 0; color: var(--terra); }
-.sidebar-header p { font-size: 0.75rem; color: #a09a94; margin: 0.2rem 0 0; }
-.lesson-item { display: flex; align-items: center; gap: 0.8rem; padding: 0.75rem 1.2rem; border-bottom: 1px solid var(--border); cursor: pointer; transition: all 0.2s; text-decoration: none; color: var(--dark); }
-.lesson-item:hover { background: var(--cream); }
-.lesson-item.active { background: var(--terra-light); border-left: 3px solid var(--terra); }
-.lesson-item.done { color: var(--muted); }
-.lesson-num { width: 30px; height: 30px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold; flex-shrink: 0; color: var(--muted); }
-.lesson-item.active .lesson-num { background: var(--terra); color: #fff; }
-.lesson-item.done .lesson-num { background: var(--success); color: #fff; }
-.lesson-info { flex: 1; }
-.lesson-info strong { font-size: 0.83rem; display: block; }
-.lesson-info span { font-size: 0.74rem; color: var(--muted); }
-.sidebar-progress { padding: 1rem 1.2rem; background: var(--cream); }
-.progress-di { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
-.progress-di-fill { height: 100%; background: linear-gradient(90deg, var(--terra), #e07a5a); border-radius: 99px; transition: width 0.5s ease; }
-.sidebar-footer { padding: 0.8rem 1.2rem; text-align: center; border-top: 1px solid var(--border); }
+/* SLA metrics grid */
+.sla-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; margin: 1rem 0; }
+@media (max-width: 760px) { .sla-grid { grid-template-columns: 1fr; } }
+.sla-metric { border: 1px solid var(--border); border-radius: 4px; background: var(--card); padding: 1rem; text-align: center; }
+.sla-metric .sla-num { font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 600; color: var(--mc); }
+.sla-metric .sla-label { font-size: 0.78rem; color: var(--ink-muted); margin-top: 0.2rem; }
 
-/* CONTENT */
-.content-di { background: #fff; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow: hidden; }
-.lesson-hero { background: linear-gradient(135deg, var(--dark) 0%, #1e2030 100%); color: #fff; padding: 2rem 2rem 1.5rem; }
-.lesson-hero .unit-tag { font-size: 0.72rem; color: var(--terra); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.4rem; }
-.lesson-hero h1 { font-family: Georgia, serif; font-size: 1.6rem; font-weight: normal; margin-bottom: 0.4rem; }
-.lesson-hero p { color: #a09a94; font-size: 0.88rem; margin: 0; }
-.lesson-badges { padding: 1rem 2rem; background: var(--terra-light); border-bottom: 1px solid var(--border); display: flex; gap: 0.6rem; flex-wrap: wrap; }
-.lbadge { font-size: 0.78rem; padding: 0.3rem 0.7rem; border-radius: 20px; border: 1px solid var(--border); background: #fff; color: var(--muted); }
-.lbadge i { color: var(--terra); }
-.lesson-body { padding: 1.8rem 2rem; }
+.vineta { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin: 1.2rem 0; }
+.vineta-head { background: var(--ink); color: #EDEAE3; font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.6rem 1rem; }
+.vineta-body { background: var(--card); padding: 1rem 1.2rem; font-size: 0.9rem; }
+.vineta-reveal-btn { display: block; width: 100%; text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; background: var(--msoft); border: none; border-top: 1px solid var(--border); padding: 0.7rem; cursor: pointer; color: var(--mc); }
+.vineta-solution { display: none; background: #fff; border-top: 1px dashed var(--border); padding: 1rem 1.2rem; font-size: 0.9rem; }
+.vineta.revealed .vineta-solution { display: block; }
+.vineta.revealed .vineta-reveal-btn { display: none; }
 
-/* PRESENTACIÓN placeholder */
-.presentacion { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
-.presentacion-head { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; flex-wrap: wrap; background: var(--dark); color: #fff; padding: 0.8rem 1.2rem; }
-.pres-title { font-size: 0.95rem; font-weight: bold; display: flex; align-items: center; gap: 0.6rem; }
-.pres-title i { color: var(--terra); font-size: 1.1rem; }
-.pres-tag { font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: #a09a94; border: 1px solid rgba(255,255,255,0.18); border-radius: 20px; padding: 0.12rem 0.55rem; }
-.presentacion-viewer { height: 220px; background: var(--cream); }
-.pres-placeholder { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: var(--muted); padding: 2rem; }
-.pres-placeholder i { font-size: 2.4rem; color: #c9c2b8; margin-bottom: 0.8rem; }
-.pres-placeholder p { font-size: 0.98rem; font-weight: bold; color: var(--dark); margin-bottom: 0.3rem; }
-.pres-placeholder small { font-size: 0.82rem; line-height: 1.6; max-width: 420px; }
+.activity { border: 1px solid var(--border); border-radius: 4px; background: var(--card); padding: 1.3rem; margin: 2rem 0; }
+.activity h2 { font-family: 'Fraunces', serif; font-size: 1.1rem; margin-bottom: 0.3rem; }
+.activity .act-sub { font-size: 0.8rem; color: var(--ink-muted); margin-bottom: 1rem; }
+.act-card { border: 1px solid var(--border); border-radius: 4px; background: var(--paper); padding: 0.9rem 1rem; margin-bottom: 0.8rem; }
+.act-statement { font-size: 0.9rem; margin-bottom: 0.7rem; }
+.act-buttons { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.act-btn { flex: 1; min-width: 90px; font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; padding: 0.5rem; border: 1px solid var(--border); border-radius: 3px; background: var(--card); cursor: pointer; transition: all 0.15s; }
+.act-btn:hover { border-color: var(--mc); }
+.act-card.ok { border-color: var(--done); background: var(--done-soft); }
+.act-card.ok .act-buttons { display: none; }
+.act-card.no { border-color: #A83232; }
+.act-verdict { font-size: 0.78rem; margin-top: 0.4rem; display: none; }
+.act-card.ok .act-verdict, .act-card.no .act-verdict { display: block; }
+.act-progress { font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; color: var(--ink-muted); margin-top: 0.4rem; }
 
-/* ACCORDION */
-.accordion-di { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1rem; }
-.accordion-di-btn { background: var(--cream); border: none; width: 100%; text-align: left; padding: 1rem 1.2rem; display: flex; align-items: center; gap: 0.8rem; cursor: pointer; transition: background 0.2s; font-size: 0.95rem; font-weight: bold; color: var(--dark); }
-.accordion-di-btn:hover { background: #ede9e2; }
-.accordion-di-btn.open { background: var(--dark); color: #fff; }
-.accordion-di-btn.open .acc-icon { color: var(--terra); }
-.accordion-di-btn .acc-chevron { margin-left: auto; transition: transform 0.25s; font-size: 0.8rem; }
-.accordion-di-btn.open .acc-chevron { transform: rotate(180deg); }
-.acc-icon { font-size: 1rem; color: var(--terra); }
-.accordion-di-body { display: none; padding: 1.2rem 1.4rem; border-top: 1px solid var(--border); background: #fff; font-size: 0.92rem; line-height: 1.7; }
-.accordion-di-body.show { display: block; }
-.accordion-di-body h5 { font-family: Georgia, serif; font-size: 1rem; font-weight: normal; color: var(--blue); margin: 1.2rem 0 0.5rem; }
-.accordion-di-body h5:first-child { margin-top: 0; }
+.callout { position: relative; border-radius: 4px; margin: 1.6rem 0; overflow: hidden; border: 1px solid var(--border); }
+.callout-header { display: flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.05em; color: #fff; }
+.callout.ia .callout-header { background: var(--ia); }
+.callout.entrevista .callout-header { background: var(--mc); }
+.callout-body { background: var(--card); padding: 1.1rem 1.3rem; font-size: 0.9rem; position: relative; }
+.callout-body p { margin-bottom: 0.7rem; }
+.callout-body p:last-child { margin-bottom: 0; }
+.capa { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 0.6rem; cursor: pointer; user-select: none; transition: transform 0.5s cubic-bezier(.65,0,.35,1), opacity 0.4s ease; font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--ink-muted); }
+.callout.ia .capa { background: var(--ia-soft); }
+.callout.entrevista .capa { background: var(--msoft); }
+.callout.revealed .capa { transform: translateX(105%); opacity: 0; pointer-events: none; }
 
-/* CARDS */
-.card-di { background: var(--cream); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; margin-bottom: 0.7rem; }
-.card-di h6 { font-size: 0.85rem; font-weight: bold; color: var(--blue); margin-bottom: 0.3rem; }
-.card-di p { font-size: 0.88rem; margin: 0; }
-.callout-terra { border-left: 4px solid var(--terra); background: var(--terra-light); padding: 0.9rem 1.1rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: 0.88rem; }
-.callout-terra strong { color: var(--terra); }
-.callout-blue { border-left: 4px solid var(--blue); background: var(--blue-light); padding: 0.9rem 1.1rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: 0.88rem; }
-.callout-blue strong { color: var(--blue); }
-.table-di { font-size: 0.85rem; }
-.table-di th { background: var(--dark); color: #fff; font-weight: normal; }
-.table-di td { vertical-align: top; }
+.practica { border: 1px solid var(--border); border-radius: 4px; background: var(--card); margin: 1.4rem 0; overflow: hidden; }
+.practica-head { padding: 0.9rem 1.1rem; border-bottom: 1px solid var(--border-soft); }
+.practica-head .p-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--mc); text-transform: uppercase; letter-spacing: 0.06em; }
+.practica-head .p-q { font-size: 0.94rem; font-weight: 500; margin-top: 0.25rem; }
+.practica-body { padding: 1rem 1.1rem; }
+.practica-body textarea { width: 100%; min-height: 80px; font-family: 'IBM Plex Sans', sans-serif; font-size: 0.88rem; border: 1px solid var(--border); border-radius: 3px; padding: 0.7rem; resize: vertical; background: var(--paper); margin-bottom: 0.7rem; }
+.rm-toggle { font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; color: var(--mc); cursor: pointer; text-decoration: underline; background: none; border: none; padding: 0; }
+.rm { display: none; margin-top: 0.7rem; padding: 0.8rem 1rem; background: var(--msoft); border-radius: 3px; font-size: 0.87rem; }
+.rm.show { display: block; }
+.checklist { margin-top: 0.8rem; border-top: 1px dashed var(--border); padding-top: 0.8rem; }
+.checklist .cl-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); margin-bottom: 0.5rem; }
+.cl-item { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.84rem; padding: 0.35rem 0; cursor: pointer; }
+.cl-item input { accent-color: var(--done); margin-top: 0.2rem; }
 
-/* HERRAMIENTA card (módulo 4) */
-.tool-di { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; margin-bottom: 0.8rem; }
-.tool-di-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; }
-.tool-di-head h6 { font-family: Georgia, serif; font-size: 1rem; font-weight: normal; color: var(--dark); margin: 0; }
-.tool-price { font-size: 0.72rem; padding: 0.2rem 0.6rem; border-radius: 20px; background: var(--terra-light); color: var(--terra); border: 1px solid var(--border); }
-.tool-di a.tool-link { font-size: 0.8rem; color: var(--blue); text-decoration: none; }
-.tool-di a.tool-link:hover { text-decoration: underline; }
-.tool-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; margin-top: 0.6rem; font-size: 0.82rem; }
-@media(max-width:640px) { .tool-grid { grid-template-columns: 1fr; } }
-.tool-grid div strong { display: block; color: var(--muted); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.15rem; }
-
-/* EVALUACIÓN */
-.eval-section { background: var(--cream); border-radius: 10px; border: 1px solid var(--border); padding: 1.5rem; margin-top: 2rem; }
-.eval-section h4 { font-family: Georgia, serif; font-weight: normal; color: var(--dark); font-size: 1.1rem; margin-bottom: 0.3rem; }
-.eval-progress-text { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.2rem; }
-.eval-question { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem 1.3rem; margin-bottom: 1rem; }
-.eval-question h6 { font-size: 0.9rem; font-weight: bold; color: var(--dark); margin-bottom: 0.8rem; line-height: 1.5; }
-.eval-option { display: flex; align-items: flex-start; gap: 0.7rem; padding: 0.6rem 0.8rem; border-radius: 7px; border: 1px solid var(--border); margin-bottom: 0.5rem; cursor: pointer; font-size: 0.88rem; transition: all 0.15s; background: var(--cream); }
-.eval-option:hover { border-color: var(--blue); background: var(--blue-light); }
-.eval-option.selected { border-color: var(--blue); background: var(--blue-light); }
-.eval-option.correct { border-color: var(--success); background: #edf7f2; pointer-events: none; }
-.eval-option.incorrect { border-color: var(--terra); background: var(--terra-light); pointer-events: none; }
-.eval-option.disabled { pointer-events: none; opacity: 0.7; }
-.eval-radio { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px; transition: all 0.15s; }
-.eval-option.selected .eval-radio { border-color: var(--blue); background: var(--blue); }
-.eval-option.correct .eval-radio { border-color: var(--success); background: var(--success); }
-.eval-option.incorrect .eval-radio { border-color: var(--terra); background: var(--terra); }
-.feedback-box { font-size: 0.84rem; padding: 0.7rem 1rem; border-radius: 7px; margin-top: 0.5rem; line-height: 1.6; }
-.feedback-ok { background: #edf7f2; color: var(--success); border: 1px solid #b0ddc5; }
-.feedback-fail { background: var(--terra-light); color: #8a3020; border: 1px solid #e0b0a0; }
-
-/* RESULT */
-.result-card { text-align: center; padding: 2rem; background: #fff; border-radius: 12px; border: 1px solid var(--border); margin-top: 1rem; }
-.result-score { font-family: Georgia, serif; font-size: 4rem; color: var(--terra); line-height: 1; }
-.result-label { font-size: 0.85rem; color: var(--muted); margin: 0.3rem 0 0.8rem; }
-.result-msg { font-size: 0.92rem; max-width: 400px; margin: 0 auto 1.5rem; line-height: 1.6; }
-
-/* BTN */
-.btn-terra { background: var(--terra); border-color: var(--terra); color: #fff; border-radius: 8px; padding: 0.6rem 1.4rem; }
-.btn-terra:hover { background: #a8492d; border-color: #a8492d; color: #fff; }
-.btn-blue { background: var(--blue); border-color: var(--blue); color: #fff; border-radius: 8px; }
-.btn-blue:hover { background: #2d5570; border-color: #2d5570; color: #fff; }
-.btn-outline-terra { border-color: var(--terra); color: var(--terra); border-radius: 8px; }
-.btn-outline-terra:hover { background: var(--terra); color: #fff; }
-
-/* TOAST */
-.toast-di { position: fixed; top: 80px; right: 20px; padding: 0.9rem 1.3rem; border-radius: 8px; color: #fff; z-index: 9999; font-size: 0.88rem; box-shadow: 0 4px 16px rgba(0,0,0,0.2); animation: slideIn 0.3s ease; }
-@keyframes slideIn { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:translateX(0); } }
+.eval-block { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 1.3rem; margin-top: 2.2rem; }
+.eval-block h2 { font-family: 'Fraunces', serif; font-size: 1.15rem; margin-bottom: 0.3rem; }
+.eval-sub { font-size: 0.8rem; color: var(--ink-muted); margin-bottom: 1.1rem; }
+.eval-q { font-size: 0.92rem; font-weight: 500; margin: 1.2rem 0 0.6rem; }
+.eval-option { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.6rem 0.8rem; border: 1px solid var(--border); border-radius: 3px; margin-bottom: 0.45rem; cursor: pointer; font-size: 0.87rem; background: var(--paper); transition: border-color 0.15s; }
+.eval-option:hover { border-color: var(--mc); }
+.eval-option input { accent-color: var(--mc); margin-top: 0.2rem; }
+.eval-option.correct { border-color: var(--done); background: var(--done-soft); }
+.eval-option.incorrect { border-color: #A83232; background: #F5E5E2; }
+.eval-submit { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; background: var(--mc); color: #fff; border: none; border-radius: 3px; padding: 0.7rem 1.4rem; cursor: pointer; margin-top: 1.2rem; }
+.eval-submit:disabled { opacity: 0.5; cursor: default; }
+.eval-counter { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: var(--ink-muted); margin-top: 0.5rem; }
+.result-card { display: none; margin-top: 1.2rem; padding: 1.1rem; border-radius: 4px; text-align: center; }
+.result-card.show { display: block; }
+.result-score { font-family: 'Fraunces', serif; font-size: 1.7rem; font-weight: 600; }
+.next-nav { display: flex; justify-content: space-between; margin-top: 2.5rem; padding-top: 1.2rem; border-top: 1px solid var(--border); font-size: 0.86rem; }
+.next-nav a { color: var(--mc); font-weight: 500; text-decoration: none; }
+.next-nav .disabled { color: var(--ink-muted); }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<div class="header-di">
-  <div class="container-fluid px-3">
-    <div class="d-flex align-items-center justify-content-between">
-      <div class="d-flex align-items-center gap-3">
-        <a href="../index.html" class="btn-back"><i class="bi bi-arrow-left me-1"></i>Inicio</a>
-        <div>
-          <div class="course-name">Diseño Instruccional</div>
-          <div class="unit-name">Módulo 4 · Unidad 4.1</div>
-        </div>
-      </div>
-      <div class="d-none d-md-flex align-items-center gap-2">
-        <span id="headerProgress" style="font-size:0.8rem;color:#a09a94"></span>
-      </div>
-    </div>
+<div class="topbar">
+  <a class="back" href="../index.html">← Ruta de aprendizaje</a>
+  <div class="gami-chips">
+    <span id="gamiNivel">Nivel 1 · Boceto</span>
+    <span id="gamiPoints">0 pts</span>
+    <span id="gamiStreak">0 días</span>
   </div>
 </div>
 
-<div class="container-fluid px-3 py-4" style="max-width:1200px;margin:0 auto">
-  <div class="row g-4">
+<div class="layout">
+  <aside class="sidebar">
+    <h6>Módulo 4</h6>
+    <div class="sidebar-sub">Implementación técnica</div>
+    <a class="side-item active" href="m4-1.html"><span class="side-mark">4.1</span> LMS, SCORM, xAPI, SLA</a>
+    <a class="side-item" href="m4-2.html"><span class="side-mark">4.2</span> Herramientas de autoría</a>
+    <a class="side-item" href="m4-3.html"><span class="side-mark">4.3</span> Multimedia con IA</a>
+    <div class="side-toc">
+      <div class="toc-label">En esta unidad</div>
+      <a href="#s1">1 · Qué es un LMS</a>
+      <a href="#s2">2 · SCORM</a>
+      <a href="#s3">3 · xAPI (Tin Can)</a>
+      <a href="#s4">4 · SCORM vs xAPI — cuál usar</a>
+      <a href="#s5">5 · SLA técnico</a>
+      <a href="#s6">6 · Todo junto en un proyecto</a>
+      <a href="#practica">Práctica de entrevista</a>
+      <a href="#evaluacion">Evaluación (10)</a>
+    </div>
+  </aside>
 
-    <!-- SIDEBAR -->
-    <div class="col-lg-3">
-      <div class="sidebar-di">
-        <div class="sidebar-header">
-          <h6>Módulo 4</h6>
-          <p>Herramientas para el DI</p>
-        </div>
-        <a class="lesson-item active" onclick="scrollToTop()">
-          <div class="lesson-num">1</div>
-          <div class="lesson-info"><strong>Herramientas de autoría</strong><span>Storyline · Rise · H5P · Genially</span></div>
-        </a>
-        <a class="lesson-item" href="m4-2.html">
-          <div class="lesson-num" id="num-m4-2">2</div>
-          <div class="lesson-info"><strong>Herramientas de análisis</strong><span>PowerBI · GA4 · reportes Moodle</span></div>
-        </a>
-        <a class="lesson-item" href="m4-3.html">
-          <div class="lesson-num" id="num-m4-3">3</div>
-          <div class="lesson-info"><strong>Producción multimedia</strong><span>Camtasia · OBS · Loom · Synthesia</span></div>
-        </a>
-        <a class="lesson-item" href="m4-4.html">
-          <div class="lesson-num" id="num-m4-4">4</div>
-          <div class="lesson-info"><strong>Colaboración y gestión</strong><span>Miro · Trello · Notion</span></div>
-        </a>
-        <div class="sidebar-progress">
-          <div class="d-flex justify-content-between mb-1">
-            <small style="color:var(--muted);font-size:0.75rem">Módulo 4</small>
-            <small id="sidebarPct" style="color:var(--terra);font-size:0.75rem;font-weight:bold">0/4</small>
+  <main>
+    <div class="unit-eyebrow">Módulo 4 · Unidad 4.1</div>
+    <h1 class="lesson-title">LMS, SCORM, xAPI y SLA</h1>
+    <p class="lesson-dek">El lenguaje técnico de cómo un curso "habla" con la plataforma que lo aloja. La brecha técnica que identificaste en tu propio CV — aquí se convierte en algo que puedes explicar con seguridad.</p>
+    <div class="lesson-badges">
+      <span class="lbadge">6 bloques de contenido</span>
+      <span class="lbadge">1 actividad interactiva</span>
+      <span class="lbadge">3 prácticas de entrevista</span>
+      <span class="lbadge">10 preguntas de evaluación</span>
+      <span class="lbadge">~40 min</span>
+    </div>
+
+    <div class="objetivo-box">
+      <div class="label">Objetivo de aprendizaje</div>
+      <p>Serás capaz de explicar cómo un LMS reporta y almacena datos de un paquete SCORM o xAPI, distinguir cuándo usar cada estándar, y describir qué implica un SLA técnico en un proyecto de e-learning.</p>
+    </div>
+
+    <div class="mapa-block">
+      <div class="mapa-head">Mapa de esta unidad · organizador previo</div>
+      <div class="mapa-body">
+        <svg width="100%" viewBox="0 0 680 210" style="display:block" role="img" aria-label="Mapa de LMS y estándares">
+          <rect x="255" y="10" width="170" height="44" rx="5" fill="#F1E5CC" stroke="#B9862C" stroke-width="1.4"/>
+          <text x="340" y="29" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1C1A17">LMS</text>
+          <text x="340" y="46" text-anchor="middle" font-family="monospace" font-size="9" fill="#B9862C">la plataforma que aloja y trackea</text>
+          <line x1="340" y1="54" x2="130" y2="115" stroke="#D8D1C0"/><line x1="340" y1="54" x2="340" y2="115" stroke="#D8D1C0"/><line x1="340" y1="54" x2="555" y2="115" stroke="#D8D1C0"/>
+          <rect x="45" y="115" width="170" height="50" rx="5" fill="#F8F6F1" stroke="#2A5CAA" stroke-width="1.2"/>
+          <text x="130" y="135" text-anchor="middle" font-family="Georgia,serif" font-size="12.5" fill="#1C1A17">SCORM</text>
+          <text x="130" y="152" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#2A5CAA">estándar clásico</text>
+          <rect x="255" y="115" width="170" height="50" rx="5" fill="#F8F6F1" stroke="#2A5CAA" stroke-width="1.2"/>
+          <text x="340" y="135" text-anchor="middle" font-family="Georgia,serif" font-size="12.5" fill="#1C1A17">xAPI</text>
+          <text x="340" y="152" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#2A5CAA">estándar flexible</text>
+          <rect x="480" y="115" width="170" height="50" rx="5" fill="#F8F6F1" stroke="#2A5CAA" stroke-width="1.2"/>
+          <text x="565" y="135" text-anchor="middle" font-family="Georgia,serif" font-size="12.5" fill="#1C1A17">SLA</text>
+          <text x="565" y="152" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#2A5CAA">acuerdo de servicio</text>
+        </svg>
+      </div>
+      <div class="mapa-note">Al terminar, deberías poder explicar en una entrevista técnica qué pasa "detrás de cámara" cuando alguien completa tu curso en Moodle o Brightspace.</div>
+    </div>
+
+    <div class="media-block">
+      <div class="media-tabs">
+        <button class="media-tab active" data-pane="pdf" onclick="switchMedia(this)">📑 Presentación</button>
+        <button class="media-tab" data-pane="audio" onclick="switchMedia(this)">🎧 Audio NotebookLM</button>
+        <button class="media-tab" data-pane="video" onclick="switchMedia(this)">▶ Video</button>
+      </div>
+      <div class="media-pane active" id="pane-pdf"><div id="pdfContainer"><div class="media-pending">Presentación en preparación — se activará al agregar <strong>m4-1.pdf</strong>.</div></div></div>
+      <div class="media-pane" id="pane-audio"><div id="audioContainer"><div class="media-pending">Audio en preparación — se activará al agregar <strong>m4-1-audio.mp3</strong>.</div></div></div>
+      <div class="media-pane" id="pane-video"><div id="videoContainer"><div class="media-pending">Video en preparación — pega el ID en <strong>YT_VIDEO_ID</strong> dentro del archivo.</div></div></div>
+      <div class="media-note">Misma unidad, varios formatos (DUA pauta 1). El texto completo está siempre visible abajo.</div>
+    </div>
+
+    <!-- S1 -->
+    <div class="content-section" id="s1">
+      <h2><span class="sec-num">01</span> Qué es un LMS y su rol técnico</h2>
+      <p>Un LMS (Learning Management System — Moodle, Brightspace, Canvas) es la plataforma que aloja el curso, matricula usuarios, y <strong>registra el progreso y los resultados</strong>. Para que el LMS entienda qué está pasando dentro de un curso (¿completó?, ¿qué puntaje sacó?, ¿cuánto tiempo estuvo?), el curso y el LMS necesitan "hablar el mismo idioma" — ahí entran los estándares SCORM y xAPI.</p>
+      <div class="defbox">Sin un estándar de comunicación, el LMS ve el curso como una caja negra: sabe que el estudiante lo abrió, pero no sabe si aprobó, en qué pantalla se quedó, o qué respondió. El estándar es lo que abre esa caja negra.</div>
+    </div>
+
+    <!-- S2 -->
+    <div class="content-section" id="s2">
+      <h2><span class="sec-num">02</span> SCORM — el estándar clásico</h2>
+      <p>SCORM (Sharable Content Object Reference Model) es el estándar más usado desde los 2000. Un paquete SCORM es un .zip con: el contenido (HTML/JS), un <strong>imsmanifest.xml</strong> que describe la estructura, y una capa de JavaScript (API wrapper) que se comunica con el LMS.</p>
+      <table class="compare-table">
+        <tr><th>Versión</th><th>Qué permite</th><th>Limitación</th></tr>
+        <tr><td>SCORM 1.2</td><td>Completitud, puntaje, estado (completado/incompleto), tiempo total</td><td>Un solo intento de seguimiento por sesión, datos básicos</td></tr>
+        <tr><td>SCORM 2004</td><td>Todo lo anterior + secuenciación entre módulos, objetivos múltiples, navegación condicionada</td><td>Más complejo de implementar y de que el LMS lo soporte bien</td></tr>
+      </table>
+      <div class="nota clave"><span class="nota-tag">Lo que reporta en la práctica</span>Datos típicos: <code>cmi.core.lesson_status</code> (completado/no), <code>cmi.core.score.raw</code> (puntaje), <code>cmi.core.total_time</code>. Esto es justo lo que armamos con el "action=saveScore" en tu propio curso-di — es una versión simplificada de lo mismo que hace SCORM.</div>
+    </div>
+
+    <!-- S3 -->
+    <div class="content-section" id="s3">
+      <h2><span class="sec-num">03</span> xAPI (Tin Can API) — el estándar flexible</h2>
+      <p>xAPI resuelve la principal limitación de SCORM: solo trackea lo que pasa <em>dentro del LMS</em>. xAPI puede registrar aprendizaje en <strong>cualquier contexto</strong> — una app móvil, una simulación, incluso una capacitación presencial — enviando registros a un almacén llamado <strong>LRS (Learning Record Store)</strong>, no necesariamente al LMS.</p>
+      <p>Cada registro de xAPI es un "statement" con estructura fija: <strong>Actor — Verbo — Objeto</strong> ("Joselyn completó el módulo 1.1"):</p>
+      <div class="xapi-statement">
+        <span class="xapi-part xapi-actor">Actor: Joselyn</span>
+        <span class="xapi-arrow">→</span>
+        <span class="xapi-part xapi-verb">Verbo: completó</span>
+        <span class="xapi-arrow">→</span>
+        <span class="xapi-part xapi-object">Objeto: unidad 1.1</span>
+      </div>
+      <div class="nota contexto"><span class="nota-tag">Por qué es más potente</span>Con xAPI podrías registrar "Joselyn practicó una pincelada en su tablet" o "Joselyn vio un video de YouTube sobre ADDIE" — actividades fuera del LMS. SCORM no puede ver nada de eso; solo ve lo que pasa dentro de su propio paquete.</div>
+    </div>
+
+    <!-- S4 -->
+    <div class="content-section" id="s4">
+      <h2><span class="sec-num">04</span> SCORM vs xAPI — cuál usar</h2>
+      <table class="compare-table">
+        <tr><th>Si tu proyecto…</th><th>Conviene</th><th>Por qué</th></tr>
+        <tr><td>Es un curso simple, en un solo LMS, con seguimiento básico</td><td>SCORM 1.2</td><td>Es el más soportado universalmente, simple de implementar</td></tr>
+        <tr><td>Necesita secuenciación compleja u objetivos múltiples dentro del LMS</td><td>SCORM 2004</td><td>Soporta esa lógica que 1.2 no tiene</td></tr>
+        <tr><td>Combina aprendizaje formal e informal, o varias plataformas</td><td>xAPI</td><td>Puede trackear fuera del LMS, en cualquier fuente</td></tr>
+        <tr><td>Requiere analítica avanzada de comportamiento de aprendizaje</td><td>xAPI + LRS</td><td>Los statements dan datos mucho más granulares que SCORM</td></tr>
+      </table>
+      <div class="nota alerta"><span class="nota-tag">La realidad del mercado en Chile</span>La mayoría de las instituciones educativas chilenas (Moodle, Brightspace básico) todavía trabajan sobre todo con SCORM 1.2 por compatibilidad y simplicidad. xAPI es más común en L&D corporativo con LRS propio. Saber ambos, pero mencionar que "SCORM 1.2 es lo más práctico en el contexto educativo local" muestra criterio real, no solo conocimiento de manual.</div>
+    </div>
+
+    <!-- S5 -->
+    <div class="content-section" id="s5">
+      <h2><span class="sec-num">05</span> SLA técnico — el acuerdo detrás del servicio</h2>
+      <p>Un SLA (Service Level Agreement) es el documento que define qué nivel de servicio garantiza un proveedor — por ejemplo, quien aloja tu LMS o LRS. No es exclusivo de e-learning, pero como DI que trabaja con plataformas, necesitas entender sus términos básicos:</p>
+      <div class="sla-grid">
+        <div class="sla-metric"><div class="sla-num">99.9%</div><div class="sla-label">Uptime garantizado — cuánto tiempo la plataforma debe estar disponible</div></div>
+        <div class="sla-metric"><div class="sla-num">&lt;4h</div><div class="sla-label">Tiempo de respuesta ante incidente crítico</div></div>
+        <div class="sla-metric"><div class="sla-num">24/7</div><div class="sla-label">Ventana de soporte técnico disponible</div></div>
+      </div>
+      <div class="defbox">Un SLA importa porque si tu curso vive en una plataforma con mal SLA, y falla justo el día del examen final de 200 personas, el problema no es tuyo pero el impacto sí — por eso un DI que entiende de SLA sabe hacer las preguntas correctas antes de comprometerse con un proyecto.</div>
+    </div>
+
+    <!-- S6 -->
+    <div class="content-section" id="s6">
+      <h2><span class="sec-num">06</span> Todo junto en un proyecto real</h2>
+      <div class="vineta">
+        <div class="vineta-head">Viñeta de taller · elige el estándar correcto</div>
+        <div class="vineta-body">Una empresa quiere trackear no solo si sus vendedores completan un curso en el LMS, sino también si practican en una app de simulación de ventas fuera del LMS, y quiere cruzar ambos datos en un dashboard. <strong>¿SCORM o xAPI? ¿Por qué?</strong></div>
+        <button class="vineta-reveal-btn" onclick="revealVineta(this,'v1')">Piénsalo primero → ver resolución</button>
+        <div class="vineta-solution">xAPI, sin duda. SCORM solo puede reportar lo que pasa dentro de su propio paquete en el LMS — no puede ver la app de simulación externa. xAPI envía statements desde cualquier fuente a un LRS común, permitiendo cruzar "completó el curso" con "practicó en la app" en un solo dashboard de analítica.</div>
+      </div>
+    </div>
+
+    <div class="activity">
+      <h2>Actividad — ¿Qué estándar usarías?</h2>
+      <div class="act-sub">Cada escenario describe una necesidad de tracking. Elige el estándar más apropiado.</div>
+      <div id="actRoot"></div>
+      <div class="act-progress" id="actProgress"></div>
+    </div>
+
+    <div class="callout ia">
+      <div class="callout-header">🖌 IA en esta fase</div>
+      <div class="callout-body">
+        <div class="capa">＋ Toca para levantar la capa</div>
+        <p>Esta unidad, la más técnica hasta ahora, es donde más rinde pedirle ayuda a la IA para producción:</p>
+        <p>• Pídele que te genere el código base de un wrapper SCORM 1.2 o el imsmanifest.xml de un paquete — que fue exactamente lo que hicimos juntos al construir curso-di.</p>
+        <p>• Pídele que te explique un statement xAPI real en lenguaje simple si te encuentras con uno en un LRS que no entiendes.</p>
+        <p>• Cuidado: pídele siempre que verifique la versión de SCORM que menciona — 1.2 y 2004 tienen APIs distintas y es un error común mezclarlas.</p>
+      </div>
+    </div>
+
+    <div class="callout entrevista">
+      <div class="callout-header">🎤 Nota de entrevista</div>
+      <div class="callout-body">
+        <div class="capa">＋ Toca para levantar la capa</div>
+        <p>Esta es justo la brecha técnica que identificaste en tu CV (junto a PowerBI). La buena noticia: puedes hablar de esto con seguridad ahora, aunque no lo hayas implementado en producción a gran escala — porque literalmente construiste tu propio sistema de tracking con lógica equivalente en curso-di. Cuenta esa experiencia como evidencia concreta.</p>
+        <p>Si te preguntan "¿conoces SCORM?", no respondas solo "sí" — explica qué reporta y por qué a veces xAPI es mejor opción. Eso distingue haber leído sobre SCORM de entenderlo.</p>
+      </div>
+    </div>
+
+    <div class="content-section" id="practica">
+      <h2><span class="sec-num">◆</span> Practica como en una entrevista</h2>
+      <p>Responde primero con tus propias palabras — <strong>en voz alta o por escrito</strong> — antes de revelar la respuesta modelo. Luego marca el checklist.</p>
+
+      <div class="practica">
+        <div class="practica-head"><div class="p-num">Práctica 1</div><div class="p-q">"¿Qué es SCORM y qué datos reporta al LMS?"</div></div>
+        <div class="practica-body">
+          <textarea placeholder="Tu respuesta…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p1','p1')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p1">"SCORM es un estándar que empaqueta un curso con un manifest y una capa de comunicación (API wrapper) que le permite hablar con el LMS. Reporta principalmente estado de completitud, puntaje y tiempo total. Yo lo he construido a nivel básico en un proyecto propio, armando el manifest y la lógica de reporte de puntaje hacia un backend simulado."</div>
+          <div class="checklist"><div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1a')"> ¿Mencionaste manifest y API wrapper?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1b')"> ¿Nombraste qué datos reporta (completitud/puntaje)?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1c')"> ¿Diste evidencia propia de haberlo trabajado?</label>
           </div>
-          <div class="progress-di"><div class="progress-di-fill" id="sidebarBar" style="width:0%"></div></div>
         </div>
-        <div class="sidebar-footer">
-          <a href="../index.html" style="font-size:0.8rem;color:var(--muted);text-decoration:none"><i class="bi bi-grid me-1"></i>Ver todos los módulos</a>
+      </div>
+
+      <div class="practica">
+        <div class="practica-head"><div class="p-num">Práctica 2</div><div class="p-q">"¿Cuándo elegirías xAPI en vez de SCORM?"</div></div>
+        <div class="practica-body">
+          <textarea placeholder="Tu respuesta…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p2','p2')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p2">"Cuando necesito trackear aprendizaje que ocurre fuera del LMS — una app, una simulación, práctica informal — porque xAPI envía statements a un LRS desde cualquier fuente, mientras SCORM solo ve lo que pasa dentro de su propio paquete. En el contexto chileno, sin embargo, la mayoría de proyectos siguen usando SCORM 1.2 por compatibilidad, así que la decisión también depende de qué soporta el LMS del cliente."</div>
+          <div class="checklist"><div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2a')"> ¿Explicaste la limitación de SCORM (solo dentro del LMS)?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2b')"> ¿Mencionaste el LRS?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2c')"> ¿Diste el matiz de contexto real (qué se usa más en Chile)?</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="practica">
+        <div class="practica-head"><div class="p-num">Práctica 3</div><div class="p-q">"¿Por qué le preguntarías a un cliente sobre el SLA de su LMS antes de aceptar un proyecto grande?"</div></div>
+        <div class="practica-body">
+          <textarea placeholder="Tu respuesta…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p3','p3')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p3">"Porque si la plataforma tiene mal uptime o soporte lento, el riesgo de que el curso falle en un momento crítico — como un examen masivo — recae en el proyecto aunque yo no controle la infraestructura. Preguntar por el SLA antes de comprometerme me permite anticipar ese riesgo y, si es necesario, plantear un plan de contingencia con el cliente."</div>
+          <div class="checklist"><div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3a')"> ¿Explicaste el riesgo de un mal SLA?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3b')"> ¿Diste un ejemplo concreto de impacto (examen masivo)?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3c')"> ¿Mostraste que preguntas antes de comprometerte?</label>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- CONTENT -->
-    <div class="col-lg-9">
-      <div class="content-di">
-        <div class="lesson-hero">
-          <div class="unit-tag">Módulo 4 · Unidad 4.1</div>
-          <h1>Herramientas de autoría e interactividad</h1>
-          <p>De cero: qué es una herramienta de autoría · niveles de interactividad y Bloom · cómo elegir la correcta · catálogo con precios y límites reales · flujo de producción</p>
-        </div>
-        <div class="lesson-badges">
-          <span class="lbadge"><i class="bi bi-book me-1"></i>9 bloques de contenido</span>
-          <span class="lbadge"><i class="bi bi-chat-square-text me-1"></i>3 preguntas de práctica oral</span>
-          <span class="lbadge"><i class="bi bi-clipboard-check me-1"></i>8 preguntas de certificación</span>
-          <span class="lbadge"><i class="bi bi-clock me-1"></i>~60 min</span>
-        </div>
+    <div class="eval-block" id="evaluacion">
+      <h2>Evaluación — Unidad 4.1</h2>
+      <div class="eval-sub">10 preguntas. El puntaje se guarda en tu ruta. Puedes reintentar sin límite.</div>
+      <div id="quizRoot"></div>
+      <div class="eval-counter" id="quizCounter">Respondidas: 0/10</div>
+      <button class="eval-submit" id="quizSubmit" onclick="submitQuiz()" disabled>Enviar evaluación</button>
+      <div class="result-card" id="resultCard"><div class="result-score" id="resultScore">0%</div><div id="resultMsg" style="font-size:0.85rem;color:var(--ink-muted);margin-top:0.3rem;"></div></div>
+    </div>
 
-        <div class="lesson-body">
+    <div class="next-nav">
+      <a href="m3-2.html">← 3.2 Storyboarding</a>
+      <a href="m4-2.html">4.2 Herramientas de autoría →</a>
+    </div>
+  </main>
+</div>
 
-          <!-- MAPA CONCEPTUAL (organizador previo) -->
-          <div class="presentacion mb-4">
-            <div class="presentacion-head">
-              <div class="pres-title"><i class="bi bi-diagram-3"></i> Mapa de esta unidad</div>
-              <span class="pres-tag">Organizador previo</span>
-            </div>
-            <div style="background:#fff;padding:1.2rem">
-              <svg width="100%" viewBox="0 0 680 460" style="display:block">
-                <line x1="340" y1="192" x2="220" y2="96" stroke="#ddd8d0" stroke-width="1"/>
-                <line x1="340" y1="192" x2="460" y2="96" stroke="#ddd8d0" stroke-width="1"/>
-                <line x1="260" y1="220" x2="210" y2="220" stroke="#ddd8d0" stroke-width="1"/>
-                <line x1="420" y1="220" x2="470" y2="220" stroke="#ddd8d0" stroke-width="1"/>
-                <line x1="340" y1="248" x2="340" y2="360" stroke="#ddd8d0" stroke-width="1"/>
-                <rect x="245" y="192" width="190" height="56" rx="8" fill="#f7ede8" stroke="#c85c3a" stroke-width="1"/>
-                <text x="340" y="212" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Herramientas de autoría</text>
-                <text x="340" y="230" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#c85c3a">unidad 4.1</text>
-                <rect x="40" y="40" width="190" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="135" y="60" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Fundamento y elección</text>
-                <text x="135" y="78" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">niveles de interactividad</text>
-                <rect x="450" y="40" width="190" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="545" y="60" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Storyline y Rise</text>
-                <text x="545" y="78" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">herramientas robustas</text>
-                <rect x="20" y="192" width="190" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="115" y="212" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">H5P y Genially</text>
-                <text x="115" y="230" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">interactividad ligera</text>
-                <rect x="470" y="192" width="190" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="565" y="212" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Nearpod y Canva</text>
-                <text x="565" y="230" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">presentación y diseño rápido</text>
-                <rect x="250" y="360" width="180" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="340" y="380" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Flujo de producción</text>
-                <text x="340" y="398" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">de la idea al SCORM</text>
-              </svg>
-              <p style="font-size:0.8rem;color:var(--muted);text-align:center;margin-top:0.5rem">No necesitas memorizar cada función de cada herramienta — necesitas saber cuál elegir según el caso. Vuelve aquí antes de una entrevista para repasar el criterio de selección.</p>
-            </div>
-          </div>
-
-          <div class="presentacion">
-            <div class="presentacion-head">
-              <div class="pres-title"><i class="bi bi-easel2"></i> Presentación del tema <span class="pres-tag">Próximamente</span></div>
-            </div>
-            <div class="presentacion-viewer">
-              <div class="pres-placeholder">
-                <i class="bi bi-file-earmark-slides"></i>
-                <p>Material audiovisual en preparación</p>
-                <small>Por ahora, revisa el contenido en los bloques de esta unidad.</small>
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-di">
-            <button class="accordion-di-btn open" onclick="toggleAcc(this)">
-              <i class="bi bi-info-circle acc-icon"></i> Fundamento: qué es una herramienta de autoría y los niveles de interactividad
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body show">
-              <p>Una <strong>herramienta de autoría</strong> (authoring tool) es el software con el que un diseñador instruccional <em>construye</em> el contenido interactivo del curso — sin programar. Es la diferencia entre <strong>crear</strong> el objeto de aprendizaje (aquí) y <strong>alojarlo y distribuirlo</strong> (el LMS, Módulo 3). El producto de una herramienta de autoría se empaqueta como SCORM o xAPI y se sube al LMS: los dos mundos se conectan exactamente ahí.</p>
-
-              <h5>La decisión que ordena todo: ¿cuánta interactividad necesita este contenido?</h5>
-              <p>La industria clasifica el e-learning en <strong>cuatro niveles de interactividad</strong>. No es una escala de calidad — es una escala de <em>costo, tiempo y herramienta apropiada</em>. Elegir el nivel correcto para cada contenido es una de las decisiones más rentables de un DI: sobre-producir un contenido simple desperdicia semanas; sub-producir uno complejo entrega un curso que no enseña.</p>
-              <table class="table table-di table-bordered mt-2">
-                <thead><tr><th>Nivel</th><th>Qué es</th><th>Herramienta típica</th><th>Ejemplo</th></tr></thead>
-                <tbody>
-                  <tr><td><strong>1 · Pasivo</strong></td><td>El estudiante solo lee/ve: pasa diapositivas, reproduce video. Sin decisiones.</td><td>PowerPoint, Rise, Canva</td><td>Una política de la empresa presentada como lectura navegable</td></tr>
-                  <tr><td><strong>2 · Interacción limitada</strong></td><td>Clics simples: acordeones, pestañas, quizzes de repaso, arrastrar y soltar básico.</td><td>Rise, H5P, Genially</td><td>Un módulo con tarjetas volteables y un quiz de autochequeo</td></tr>
-                  <tr><td><strong>3 · Interacción compleja</strong></td><td>El estudiante manipula, decide y ve consecuencias: escenarios ramificados, simulaciones guiadas.</td><td>Storyline, Captivate</td><td>Un cliente molesto simulado que reacciona según lo que el estudiante elige responder</td></tr>
-                  <tr><td><strong>4 · Inmersivo</strong></td><td>Simulación de alta fidelidad, serious games, realidad virtual, lógica avanzada por variables.</td><td>Storyline avanzado + código, motores de simulación, VR</td><td>Un simulador de procedimiento clínico con variables fisiológicas que cambian en tiempo real</td></tr>
-                </tbody>
-              </table>
-              <div class="callout-terra mt-2">
-                <strong>La regla de oro del nivel:</strong> el nivel de interactividad lo dicta el <em>verbo del objetivo de aprendizaje</em> (Unidad 3.1), no el gusto por lo vistoso. Si el objetivo es "recordar la política", nivel 1 basta. Si es "aplicar el protocolo ante un cliente difícil", exige nivel 3. Producir un escape room de nivel 4 para enseñar algo que un quiz de nivel 2 cubría es el error de sobre-ingeniería más caro en e-learning.
-              </div>
-              <div class="callout-blue">
-                <strong>Para entrevista:</strong> cuando expliques un proyecto, nombra el nivel de interactividad y justifícalo con el objetivo ("era nivel 3 porque el objetivo pedía tomar decisiones bajo presión, así que usé escenarios ramificados en Storyline"). Demuestra que eliges herramienta por criterio pedagógico, no por moda.
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-signpost-split acc-icon"></i> Cómo elegir la herramienta correcta (y no al revés)
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p>El error del principiante es elegir la herramienta primero ("quiero aprender Storyline") y forzar el contenido dentro de ella. El profesional elige al revés: define el objetivo y el nivel de interactividad, y <em>entonces</em> la herramienta cae por su propio peso. Cinco criterios de decisión, en orden:</p>
-              <div class="card-di"><h6><i class="bi bi-1-circle me-1"></i>Nivel de interactividad requerido</h6><p>El criterio dominante (bloque anterior). Nivel 1-2 → Rise/H5P/Genially. Nivel 3-4 → Storyline/Captivate. Todo lo demás se subordina a esto.</p></div>
-              <div class="card-di"><h6><i class="bi bi-phone me-1"></i>Dispositivo de consumo</h6><p>¿Se verá mayoritariamente en celular? Rise es responsive automático; Storyline exige diseñar el comportamiento móvil a mano. Si tu GA4 (Unidad 4.2) dice que el 70% entra desde móvil, esto pesa.</p></div>
-              <div class="card-di"><h6><i class="bi bi-clock-history me-1"></i>Tiempo y presupuesto</h6><p>Rise produce un curso en horas; Storyline en días o semanas. H5P es gratis; Articulate 360 cuesta ~US$1.399/año. Un plazo corto con presupuesto cero descarta soluciones por sí solo.</p></div>
-              <div class="card-di"><h6><i class="bi bi-arrow-repeat me-1"></i>Mantenimiento y actualización</h6><p>¿El contenido cambiará seguido? Rise y H5P se editan rápido; una simulación compleja de Storyline es cara de mantener. Contenido volátil pide herramienta ágil.</p></div>
-              <div class="card-di"><h6><i class="bi bi-people me-1"></i>Competencias del equipo y estándar de salida</h6><p>¿Quién lo mantendrá después de ti? Y siempre: que exporte SCORM/xAPI si va a un LMS. Una herramienta que nadie más del equipo sabe usar es deuda técnica.</p></div>
-              <div class="callout-terra mt-2">
-                <strong>Caso de decisión:</strong> "inducción de 20 min sobre normas de convivencia, se actualiza cada semestre, 80% la ven en el teléfono, presupuesto acotado". Análisis: objetivo nivel 1-2, alta rotación, móvil dominante, sin plata → <strong>Rise</strong> (o H5P si ya hay Moodle). Storyline aquí sería sobre-ingeniería costosa e imposible de mantener al ritmo del cambio.
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-1-circle acc-icon"></i> Catálogo · Articulate Storyline
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <div class="tool-di">
-                <div class="tool-di-head">
-                  <h6><i class="bi bi-easel3 me-2" style="color:var(--terra)"></i>Articulate Storyline 360</h6>
-                  <span class="tool-price">US$1.399/año (suscripción Articulate 360, incluye Rise, Storyline y otras apps)</span>
-                </div>
-                <a class="tool-link" href="https://articulate.com/360/storyline" target="_blank" rel="noopener"><i class="bi bi-box-arrow-up-right me-1"></i>https://articulate.com/360/storyline</a>
-                <div class="tool-grid">
-                  <div><strong>Versión gratuita</strong>No tiene versión gratuita permanente — solo trial de 30 días</div>
-                  <div><strong>Límites principales</strong>Requiere Windows (o Mac con Parallels/Bootcamp); curva de aprendizaje alta; el trial limita exportación completa</div>
-                  <div style="grid-column:1/-1"><strong>Uso típico en DI</strong>El estándar de la industria para e-learning altamente interactivo: simulaciones de software, ramificaciones complejas, escenarios de decisión. Exporta a SCORM 1.2/2004 y xAPI.</div>
-                </div>
-              </div>
-              <div class="tool-di">
-                <div class="tool-di-head">
-                  <h6><i class="bi bi-camera-reels me-2" style="color:var(--terra)"></i>Adobe Captivate</h6>
-                  <span class="tool-price">US$33,99/mes aprox. (suscripción individual)</span>
-                </div>
-                <a class="tool-link" href="https://www.adobe.com/products/captivate.html" target="_blank" rel="noopener"><i class="bi bi-box-arrow-up-right me-1"></i>https://www.adobe.com/products/captivate.html</a>
-                <div class="tool-grid">
-                  <div><strong>Versión gratuita</strong>Trial de 7 días</div>
-                  <div><strong>Límites principales</strong>Curva de aprendizaje similar o mayor a Storyline; interfaz menos intuitiva</div>
-                  <div style="grid-column:1/-1"><strong>Uso típico en DI</strong>Alternativa a Storyline, fuerte en simulaciones de software (captura de pantalla) y contenido responsive automático.</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-2-circle acc-icon"></i> Articulate Rise 360
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <div class="tool-di">
-                <div class="tool-di-head">
-                  <h6><i class="bi bi-phone me-2" style="color:var(--terra)"></i>Articulate Rise 360</h6>
-                  <span class="tool-price">Incluido en la suscripción Articulate 360 (US$1.399/año)</span>
-                </div>
-                <a class="tool-link" href="https://articulate.com/360/rise" target="_blank" rel="noopener"><i class="bi bi-box-arrow-up-right me-1"></i>https://articulate.com/360/rise</a>
-                <div class="tool-grid">
-                  <div><strong>Versión gratuita</strong>No tiene versión gratuita permanente — solo trial de 30 días</div>
-                  <div><strong>Límites principales</strong>Menos flexible visualmente que Storyline (plantillas predefinidas); no permite ramificaciones complejas</div>
-                  <div style="grid-column:1/-1"><strong>Uso típico en DI</strong>Ideal para cursos responsive rápidos de crear, 100% basados en navegador (sin instalar software). Muy usado para microlearning y cursos que se ven bien en móvil sin esfuerzo extra.</div>
-                </div>
-              </div>
-              <div class="callout-terra mt-2">
-                <strong>Storyline vs. Rise — cuándo usar cada uno:</strong> Rise para cursos de contenido informativo, rápidos de producir y que se consumen bien en celular. Storyline cuando se necesita interactividad compleja, ramificación de escenarios o simulación de software. Muchos equipos usan ambos según el módulo.
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-3-circle acc-icon"></i> H5P
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <div class="tool-di">
-                <div class="tool-di-head">
-                  <h6><i class="bi bi-puzzle me-2" style="color:var(--terra)"></i>H5P</h6>
-                  <span class="tool-price">Gratis (open source) si se autoaloja en WordPress/Moodle/Drupal; planes pagos de H5P.com desde US$9/mes para hosting propio</span>
-                </div>
-                <a class="tool-link" href="https://h5p.com" target="_blank" rel="noopener"><i class="bi bi-box-arrow-up-right me-1"></i>https://h5p.com</a>
-                <div class="tool-grid">
-                  <div><strong>Versión gratuita</strong>Completamente gratis si se integra en un CMS/LMS propio (como hiciste en tu MoodleCloud)</div>
-                  <div><strong>Límites principales</strong>El h5p.org gratuito requiere autoalojamiento técnico; H5P.com (hosting) tiene límites de contenidos según plan</div>
-                  <div style="grid-column:1/-1"><strong>Uso típico en DI</strong>Actividades interactivas ligeras y reutilizables: video interactivo, línea de tiempo, presentaciones, arrastrar y soltar, quiz. Se integra de forma nativa en Moodle vía plugin — exactamente tu flujo con 'Dibujo Anatómico'.</div>
-                </div>
-              </div>
-              <div class="callout-blue mt-2">
-                <strong>Tu ventaja diferencial:</strong> ya tienes contenido H5P público funcionando (joseynvizcarra.h5p.com) — es evidencia directa y verificable de dominio de esta herramienta, una de las más pedidas junto a Storyline y Genially.
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-4-circle acc-icon"></i> Genially
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <div class="tool-di">
-                <div class="tool-di-head">
-                  <h6><i class="bi bi-stars me-2" style="color:var(--terra)"></i>Genially</h6>
-                  <span class="tool-price">Plan gratuito disponible; planes Pro desde ~US$7,49/mes, Master desde ~US$14,99/mes (facturación anual)</span>
-                </div>
-                <a class="tool-link" href="https://genially.com" target="_blank" rel="noopener"><i class="bi bi-box-arrow-up-right me-1"></i>https://genially.com</a>
-                <div class="tool-grid">
-                  <div><strong>Versión gratuita</strong>Sí — plan gratuito permanente con marca de agua y contenidos limitados</div>
-                  <div><strong>Límites principales</strong>El plan gratuito limita descargas offline, plantillas premium y elimina la marca de agua solo en planes pagos</div>
-                  <div style="grid-column:1/-1"><strong>Uso típico en DI</strong>Presentaciones interactivas, infografías animadas, escape rooms educativos, mapas interactivos. Muy visual — encaja bien con tu perfil de artes visuales.</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-5-circle acc-icon"></i> Nearpod
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <div class="tool-di">
-                <div class="tool-di-head">
-                  <h6><i class="bi bi-broadcast me-2" style="color:var(--terra)"></i>Nearpod</h6>
-                  <span class="tool-price">Plan gratuito (Silver) disponible; planes desde ~US$120/año (Gold) hasta ~US$400+/año (Platinum) por educador</span>
-                </div>
-                <a class="tool-link" href="https://nearpod.com" target="_blank" rel="noopener"><i class="bi bi-box-arrow-up-right me-1"></i>https://nearpod.com</a>
-                <div class="tool-grid">
-                  <div><strong>Versión gratuita</strong>Sí — plan gratuito con límite de almacenamiento (memoria) y sesiones</div>
-                  <div><strong>Límites principales</strong>El plan gratuito limita el tamaño de las lecciones y la cantidad de participantes simultáneos según plan</div>
-                  <div style="grid-column:1/-1"><strong>Uso típico en DI</strong>Sesiones interactivas en vivo o autodirigidas con polls, quiz en tiempo real, realidad virtual (VR Field Trips) — más orientado a clase sincrónica que Genially o H5P.</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-6-circle acc-icon"></i> Canva
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <div class="tool-di">
-                <div class="tool-di-head">
-                  <h6><i class="bi bi-palette me-2" style="color:var(--terra)"></i>Canva</h6>
-                  <span class="tool-price">Plan gratuito robusto; Canva Pro desde ~US$120/año individual</span>
-                </div>
-                <a class="tool-link" href="https://canva.com" target="_blank" rel="noopener"><i class="bi bi-box-arrow-up-right me-1"></i>https://canva.com</a>
-                <div class="tool-grid">
-                  <div><strong>Versión gratuita</strong>Sí — plan gratuito con acceso a gran parte de plantillas y elementos</div>
-                  <div><strong>Límites principales</strong>El plan gratuito limita el Kit de Marca, algunas plantillas premium, fondo removedor y ciertas exportaciones</div>
-                  <div style="grid-column:1/-1"><strong>Uso típico en DI</strong>Diseño gráfico rápido para materiales de apoyo: portadas de curso, infografías simples, guías descargables, publicaciones para redes (coherente con tu producción de Reels de 'Sin División').</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-diagram-3 acc-icon"></i> Flujo de producción de un módulo interactivo (de la idea al SCORM)
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p>Saber usar la herramienta no basta; hay un flujo de producción que separa a quien improvisa de quien entrega a tiempo y sin retrabajo. Estas seis etapas aplican a cualquier herramienta de autoría:</p>
-              <div class="card-di"><h6><i class="bi bi-1-circle me-1"></i>Storyboard antes de abrir la herramienta</h6><p>El storyboard es el guion pantalla por pantalla: qué texto, qué imagen, qué interacción y qué feedback lleva cada slide. Se hace en un documento o plantilla, <strong>no</strong> dentro de Storyline. Construir directamente en la herramienta sin storyboard es la causa número uno de proyectos que se rehacen tres veces: cada cambio de estructura cuesta 10× más una vez montado.</p></div>
-              <div class="card-di"><h6><i class="bi bi-2-circle me-1"></i>Reunir y preparar los recursos (media assets)</h6><p>Imágenes, íconos, audio, video, logos — todo listo y en la resolución correcta antes de montar. Detenerse a buscar una imagen a mitad de producción rompe el ritmo y multiplica el tiempo.</p></div>
-              <div class="card-di"><h6><i class="bi bi-3-circle me-1"></i>Montar un prototipo de una pantalla (look &amp; feel)</h6><p>Antes de producir 40 slides, se arma <em>una</em> con la plantilla visual, tipografías y colores definitivos, y se valida con el cliente/SME. Corregir el estilo en una pantalla es trivial; corregirlo en 40 ya montadas es un día perdido.</p></div>
-              <div class="card-di"><h6><i class="bi bi-4-circle me-1"></i>Producir el grueso del contenido</h6><p>Recién aquí se montan todas las pantallas siguiendo el storyboard aprobado y el prototipo validado. El trabajo fluye porque las decisiones difíciles ya se tomaron.</p></div>
-              <div class="card-di"><h6><i class="bi bi-5-circle me-1"></i>Revisión de calidad (QA) como estudiante</h6><p>Recorrer el curso completo como aprendiz de prueba: ¿todos los botones funcionan?, ¿el quiz califica bien?, ¿los enlaces abren?, ¿el criterio de finalización marca "completado" (Unidad 3.2)? El error clásico es publicar sin este paso y descubrir en producción que la nota no se guardaba.</p></div>
-              <div class="card-di"><h6><i class="bi bi-6-circle me-1"></i>Publicar como SCORM/xAPI y probar en el LMS real</h6><p>Exportar el paquete, subirlo a Moodle y probarlo <em>en el LMS</em>, no solo en vista previa local. Muchos problemas (finalización, tamaño de <code>suspend_data</code>, media que no carga) solo aparecen dentro del LMS.</p></div>
-              <div class="callout-blue mt-2">
-                <strong>Cómo aplicarlo:</strong> si en una entrevista describes tu proceso como "hago el storyboard, valido un prototipo de una pantalla, produzco, hago QA como estudiante y pruebo el paquete en el LMS real", transmites método y previsibilidad — que es lo que un jefe de proyecto necesita oír, más que una lista de herramientas que sabes usar.
-              </div>
-            </div>
-          </div>
-
-          <!-- AUTOEVALUACIÓN AUTOINSTRUCCIONAL -->
-          <div class="accordion-di" style="border-color:var(--blue)">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)" style="background:var(--blue-light)">
-              <i class="bi bi-chat-square-text acc-icon" style="color:var(--blue)"></i> Practica como en una entrevista
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p style="color:var(--muted);font-size:0.85rem">Responde primero con tus propias palabras antes de revelar la respuesta modelo.</p>
-
-              <div class="card-di" style="border-left:3px solid var(--blue)">
-                <h6><i class="bi bi-question-circle me-1"></i>1. Un jefe te pregunta "¿por qué no usamos Canva para todo si es más simple?". ¿Qué le respondes?</h6>
-                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
-                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
-                  <p style="font-size:0.87rem"><em>"Canva es excelente para diseño rápido y piezas visuales, pero no exporta SCORM ni registra puntajes o finalización en un LMS. Si el objetivo es solo comunicar, Canva sirve. Si necesito trazabilidad de aprendizaje —evaluación, seguimiento, certificación— necesito una herramienta como Storyline o H5P que hable el lenguaje del LMS."</em></p>
-                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
-                  <ul style="font-size:0.83rem;color:var(--muted)">
-                    <li>¿Explicaste la limitación real de Canva (sin SCORM/seguimiento)?</li>
-                    <li>¿Diste el criterio de elección (trazabilidad vs. comunicación)?</li>
-                    <li>¿Evitaste decir simplemente "Canva es peor"?</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="card-di" style="border-left:3px solid var(--blue)">
-                <h6><i class="bi bi-question-circle me-1"></i>2. ¿Por qué el storyboard se hace antes de abrir la herramienta de autoría, y no directamente en Storyline?</h6>
-                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
-                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
-                  <p style="font-size:0.87rem"><em>"Porque un cambio de estructura cuesta diez veces más una vez que ya está montado en la herramienta. El storyboard permite validar la secuencia y el contenido con el SME cuando corregir todavía es barato — cambiar una fila en un documento, no rehacer 15 pantallas ya interactivas."</em></p>
-                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
-                  <ul style="font-size:0.83rem;color:var(--muted)">
-                    <li>¿Explicaste el costo multiplicado de corregir ya montado?</li>
-                    <li>¿Mencionaste la validación temprana con el SME?</li>
-                    <li>¿Evitaste decir simplemente "es la buena práctica" sin justificar por qué?</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="card-di" style="border-left:3px solid var(--blue)">
-                <h6><i class="bi bi-question-circle me-1"></i>3. Terminaste de producir un módulo interactivo completo. ¿Qué haces antes de darlo por publicado?</h6>
-                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
-                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
-                  <p style="font-size:0.87rem"><em>"Recorro el curso completo como si fuera estudiante: reviso que todos los botones funcionen, que el quiz califique correctamente y que el criterio de finalización marque 'completado'. Luego exporto el paquete SCORM y lo pruebo dentro del LMS real, no solo en vista previa local, porque varios problemas —como el tamaño del suspend_data— solo aparecen ahí."</em></p>
-                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
-                  <ul style="font-size:0.83rem;color:var(--muted)">
-                    <li>¿Mencionaste el QA como estudiante antes de publicar?</li>
-                    <li>¿Especificaste probar en el LMS real, no solo en vista previa?</li>
-                    <li>¿Diste un ejemplo de qué falla si te saltas este paso?</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- EVALUACIÓN -->
-          <div class="eval-section mt-4">
-            <h4><i class="bi bi-clipboard-check me-2" style="color:var(--terra)"></i>Evaluación — Unidad 4.1</h4>
-            <p class="eval-progress-text">Preguntas respondidas: <strong><span id="answeredCount">0</span>/8</strong> — puedes enviar en cualquier momento</p>
-
-            <div class="eval-question" data-question="q1">
-              <h6>1. Debes producir una inducción de 15 minutos sobre normas de convivencia que se actualiza cada semestre, la ve el 80% en celular y no hay presupuesto para licencias. ¿Qué herramienta y por qué?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q1',1)"><div class="eval-radio"></div><span>Storyline, porque es el estándar de la industria y siempre es la mejor opción</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',2)"><div class="eval-radio"></div><span>Rise (o H5P sobre Moodle): objetivo de baja interactividad, responsive automático para móvil, edición rápida para las actualizaciones y sin costo de licencia</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',3)"><div class="eval-radio"></div><span>Un escape room de nivel 4 en Genially para que sea más atractivo</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',4)"><div class="eval-radio"></div><span>Adobe Captivate, porque hace contenido responsive</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q2">
-              <h6>2. El objetivo de aprendizaje es "aplicar el protocolo de atención ante un cliente molesto, tomando decisiones bajo presión". ¿Qué nivel de interactividad corresponde y qué herramienta lo habilita?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q2',1)"><div class="eval-radio"></div><span>Nivel 1 (pasivo): basta un video explicativo en Canva</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',2)"><div class="eval-radio"></div><span>Nivel 3 (interacción compleja): un escenario ramificado con consecuencias en Storyline o Captivate</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',3)"><div class="eval-radio"></div><span>Nivel 1: una lectura navegable en Rise</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',4)"><div class="eval-radio"></div><span>El nivel da igual; lo importante es que se vea bonito</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q3">
-              <h6>3. Un colega arma directamente 40 pantallas en Storyline sin storyboard previo, y el cliente pide reordenar toda la estructura. ¿Cuál es la lección de flujo de producción?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q3',1)"><div class="eval-radio"></div><span>No hay problema: reestructurar 40 pantallas montadas cuesta lo mismo que planificarlas antes</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',2)"><div class="eval-radio"></div><span>El storyboard (guion pantalla por pantalla) se hace antes de abrir la herramienta: cambiar la estructura ya montada cuesta muchísimo más que cambiarla en el documento de diseño</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',3)"><div class="eval-radio"></div><span>La solución es cambiar de herramienta a Rise</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',4)"><div class="eval-radio"></div><span>Los storyboards solo sirven para video, no para e-learning interactivo</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q4">
-              <h6>4. Terminas un módulo en Storyline. ¿Qué formato de exportación usas para subirlo a Moodle y que registre la nota y la finalización?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q4',1)"><div class="eval-radio"></div><span>Solo PDF</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',2)"><div class="eval-radio"></div><span>SCORM (1.2 o 2004) o xAPI, que el LMS interpreta y con el que registra estado y puntaje</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',3)"><div class="eval-radio"></div><span>HTML suelto sin empaquetar, subido como archivo</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',4)"><div class="eval-radio"></div><span>Un video MP4 exportado del proyecto</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q5">
-              <h6>5. Tienes contenido interactivo ligero (video interactivo, arrastrar y soltar, línea de tiempo) que quieres integrar de forma nativa y gratuita dentro de tu Moodle. ¿Qué herramienta encaja mejor?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q5',1)"><div class="eval-radio"></div><span>Adobe Captivate, por su licencia mensual</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',2)"><div class="eval-radio"></div><span>H5P, open source y gratuito al autoalojarse vía plugin en Moodle, ideal para actividades interactivas ligeras y reutilizables</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',3)"><div class="eval-radio"></div><span>Canva, porque hace todo tipo de interactividad</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',4)"><div class="eval-radio"></div><span>Nearpod, porque es la única gratuita</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q6">
-              <h6>6. Para una clase sincrónica en vivo donde quieres lanzar polls y quizzes en tiempo real y ver las respuestas al instante, ¿qué herramienta está diseñada para eso?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q6',1)"><div class="eval-radio"></div><span>H5P, que es para contenido autónomo asincrónico</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',2)"><div class="eval-radio"></div><span>Nearpod, orientado a sesiones sincrónicas con interacción en tiempo real (polls, quiz en vivo, VR)</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',3)"><div class="eval-radio"></div><span>Storyline, porque exporta SCORM</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',4)"><div class="eval-radio"></div><span>Canva, por su modo presentación</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q7">
-              <h6>7. Antes de dar por terminado un curso y publicarlo, ¿cuál es el paso de QA imprescindible según el flujo de producción?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q7',1)"><div class="eval-radio"></div><span>Recorrer el curso completo como estudiante de prueba y luego probar el paquete en el LMS real, verificando que botones, quiz y criterio de finalización funcionen</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',2)"><div class="eval-radio"></div><span>Confiar en la vista previa local de la herramienta; si ahí se ve bien, está listo</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',3)"><div class="eval-radio"></div><span>Publicar y esperar a que los estudiantes reporten los errores</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',4)"><div class="eval-radio"></div><span>Revisar solo la primera y la última pantalla</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q8">
-              <h6>8. Sobre-producir es un error tan real como sub-producir. ¿Cuál de estas situaciones es un caso de sobre-ingeniería?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q8',1)"><div class="eval-radio"></div><span>Usar un escenario ramificado (nivel 3) para entrenar la toma de decisiones ante un cliente difícil</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',2)"><div class="eval-radio"></div><span>Construir un serious game inmersivo de nivel 4, con semanas de producción, para que el personal memorice una política que un quiz de repaso de nivel 2 cubría igual</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',3)"><div class="eval-radio"></div><span>Usar Rise para una inducción informativa que se ve mayormente en celular</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',4)"><div class="eval-radio"></div><span>Usar H5P para un video interactivo dentro de Moodle</span></div>
-            </div>
-
-            <div id="evalResult" class="mt-3"></div>
-
-            <div class="d-flex flex-wrap gap-2 mt-3">
-              <button class="btn btn-terra" id="submitBtn" onclick="submitEval()">
-                <i class="bi bi-check-circle me-2"></i>Enviar evaluación
-              </button>
-              <button class="btn btn-outline-terra" id="retryBtn" style="display:none" onclick="retryEval()">
-                <i class="bi bi-arrow-clockwise me-2"></i>Reintentar
-              </button>
-              <a href="m4-2.html" class="btn btn-blue" id="nextBtn" style="display:none">
-                Siguiente unidad <i class="bi bi-arrow-right ms-2"></i>
-              </a>
-            </div>
-          </div>
-
-        </div><!-- /lesson-body -->
-      </div><!-- /content-di -->
-    </div><!-- /col -->
-  </div><!-- /row -->
-</div><!-- /container -->
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../gami.js"></script>
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbylYML8h2BnNgi2AXtZ8bkGaXPNRhurswPr5dfyGRldbVoCRvmoT2cHN0r3I4qGynLb/exec';
-const UNIDAD_ID = 'm4-1';
-const UNIDAD_LABEL = '4.1 Herramientas de autoría';
+const UNIT_ID = 'm4-1';
+const YT_VIDEO_ID = '';
 
-const CORRECTAS = { q1:2, q2:2, q3:2, q4:2, q5:2, q6:2, q7:1, q8:2 };
-const FEEDBACK = {
-  q1: {ok:'Correcto. Los cuatro criterios apuntan a lo mismo: baja interactividad + móvil dominante + alta rotación de contenido + sin presupuesto. Rise (o H5P sobre Moodle) resuelve todo eso; Storyline sería sobre-ingeniería cara e imposible de mantener al ritmo semestral.',fail:'Storyline no es "siempre la mejor opción": aquí sería sobre-ingeniería. El contenido es de baja interactividad, se ve en móvil, cambia cada semestre y no hay presupuesto — eso apunta a Rise (o H5P), que es responsive automático, gratis/económico y rápido de editar.'},
-  q2: {ok:'Correcto. El verbo "aplicar tomando decisiones bajo presión" exige nivel 3: el estudiante debe decidir y ver consecuencias. Un escenario ramificado en Storyline o Captivate es lo que lo habilita — un video o una lectura (nivel 1) no practican la toma de decisiones.',fail:'El verbo del objetivo manda: "aplicar tomando decisiones bajo presión" no se practica leyendo ni viendo un video (nivel 1). Exige nivel 3 — un escenario ramificado con consecuencias, que se construye en Storyline o Captivate.'},
-  q3: {ok:'Correcto. El storyboard se hace antes de abrir la herramienta porque reordenar la estructura en el documento de diseño es trivial, mientras cambiarla en 40 pantallas ya montadas cuesta 10× más. Saltarse el storyboard es la causa número uno de proyectos que se rehacen.',fail:'La lección no es cambiar de herramienta ni que "cueste lo mismo". El storyboard (guion pantalla por pantalla) se hace antes de montar precisamente porque reestructurar el contenido ya construido es carísimo en tiempo; planificarlo en el documento de diseño evita ese retrabajo.'},
-  q4: {ok:'Correcto. SCORM (1.2 o 2004) o xAPI son los formatos que un LMS interpreta para registrar estado de finalización y puntaje. Un PDF, HTML suelto o un MP4 no reportan datos al LMS.',fail:'Para que Moodle registre nota y finalización, el módulo debe exportarse como SCORM (1.2/2004) o xAPI. PDF, HTML sin empaquetar o un MP4 no comunican datos de progreso al LMS.'},
-  q5: {ok:'Correcto. H5P es open source, gratuito al autoalojarse vía plugin en Moodle, y está pensado justamente para actividades interactivas ligeras y reutilizables (video interactivo, arrastrar y soltar, línea de tiempo) integradas de forma nativa.',fail:'Para contenido interactivo ligero integrado de forma nativa y gratuita en Moodle, la herramienta es H5P (open source). Captivate es una suite paga de nivel 3-4, Canva es diseño gráfico y Nearpod está orientado a sesiones en vivo.'},
-  q6: {ok:'Correcto. Nearpod está diseñado para sesiones sincrónicas: lanzar polls y quizzes en tiempo real y ver las respuestas al instante. H5P y Storyline son para contenido autónomo asincrónico.',fail:'Para interacción en vivo con polls y quiz en tiempo real, la herramienta es Nearpod. H5P y Storyline producen contenido autónomo asincrónico, y Canva no es una plataforma de interacción sincrónica.'},
-  q7: {ok:'Correcto. El QA imprescindible es recorrer el curso como estudiante de prueba y luego probar el paquete en el LMS real: muchos fallos (finalización, media, calificación) solo aparecen dentro del LMS, no en la vista previa local.',fail:'Confiar solo en la vista previa local, o publicar y esperar reportes, es exactamente lo que produce cursos rotos en producción. El QA correcto es recorrer todo como estudiante de prueba y probar el paquete en el LMS real, donde aparecen los fallos de finalización y media.'},
-  q8: {ok:'Correcto. Producir un serious game de nivel 4 durante semanas para lo que un quiz de repaso de nivel 2 cubría igual es sobre-ingeniería: gasto de tiempo y presupuesto desproporcionado al objetivo. El nivel debe ajustarse al verbo del objetivo, ni más ni menos.',fail:'Los otros casos ajustan bien la herramienta al objetivo. La sobre-ingeniería es construir un nivel 4 inmersivo, con semanas de producción, para un objetivo de memorización que un quiz de nivel 2 resolvía — desperdicia tiempo y presupuesto sin ganancia pedagógica.'}
-};
-
-let answers = {};
-let submitted = false;
-
-function toggleAcc(btn) {
-  const body = btn.nextElementSibling;
-  const isOpen = body.classList.contains('show');
-  body.classList.toggle('show', !isOpen);
-  btn.classList.toggle('open', !isOpen);
+function detectMedia() {
+  fetch('m4-1.pdf', { method: 'HEAD' }).then(r => {
+    if (r.ok) document.getElementById('pdfContainer').innerHTML =
+      '<iframe class="pdf-frame" src="m4-1.pdf#view=FitH" title="Presentación" loading="lazy" onload="Gami.award(\'m4-1_pdf\',5,\'Revisaste la presentación\');checkMultimodal();"></iframe><div class="pdf-actions"><a href="m4-1.pdf" target="_blank" rel="noopener">Pantalla completa</a><a href="m4-1.pdf" download>Descargar</a></div>';
+  }).catch(()=>{});
+  fetch('m4-1-audio.mp3', { method: 'HEAD' }).then(r => {
+    if (r.ok) document.getElementById('audioContainer').innerHTML =
+      '<div class="audio-pane"><span class="audio-label">Resumen en audio · NotebookLM</span><audio controls preload="metadata" src="m4-1-audio.mp3" onplay="Gami.award(\'m4-1_audio\',5,\'Escuchaste el audio\');checkMultimodal();"></audio></div>';
+  }).catch(()=>{});
+  if (YT_VIDEO_ID) document.getElementById('videoContainer').innerHTML =
+    '<div class="video-wrap"><iframe src="https://www.youtube-nocookie.com/embed/' + YT_VIDEO_ID + '" title="Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>';
 }
+detectMedia();
 
-function toggleModelo(btn) {
-  const box = btn.nextElementSibling;
-  const isOpen = box.style.display === 'block';
-  box.style.display = isOpen ? 'none' : 'block';
-  btn.textContent = isOpen ? 'Ver respuesta modelo' : 'Ocultar respuesta modelo';
+function switchMedia(btn) {
+  document.querySelectorAll('.media-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.media-pane').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('pane-' + btn.dataset.pane).classList.add('active');
+  if (btn.dataset.pane === 'video' && YT_VIDEO_ID) { Gami.award('m4-1_video',5,'Viste el video'); checkMultimodal(); }
 }
+function checkMultimodal() { if (Gami.hasSeen('m4-1_pdf') && Gami.hasSeen('m4-1_audio')) Gami.badge('multimodal'); }
 
-function selectOpt(el, question, optNum) {
-  if (submitted) return;
-  const container = el.closest('[data-question]');
-  container.querySelectorAll('.eval-option').forEach(o => o.classList.remove('selected'));
-  el.classList.add('selected');
-  answers[question] = optNum;
-  document.getElementById('answeredCount').textContent = Object.keys(answers).length;
+function revealVineta(btn, id) { btn.closest('.vineta').classList.add('revealed'); Gami.award('m4-1_vineta_' + id, 5, 'Resolviste una viñeta'); }
+
+let capasReveladas = 0;
+document.querySelectorAll('.capa').forEach((capa, i) => {
+  capa.addEventListener('click', () => {
+    capa.closest('.callout').classList.add('revealed');
+    Gami.award('m4-1_capa' + i, 5, 'Levantaste una capa');
+    capasReveladas++;
+    if (capasReveladas >= 2) Gami.badge('curiosa');
+  });
+});
+function toggleRM(id, pid) { document.getElementById(id).classList.toggle('show'); Gami.award('m4-1_rm_' + pid, 3, 'Contrastaste con la respuesta modelo'); }
+function clCheck(el, id) { if (el.checked) Gami.award('m4-1_cl_' + id, 2, 'Ítem de checklist verificado'); }
+
+const ACT_ITEMS = [
+  { text: 'Un curso simple de inducción, un solo LMS, seguimiento básico de completitud.', ans: 'scorm12', why: 'Simplicidad y máxima compatibilidad = SCORM 1.2.' },
+  { text: 'Trackear práctica de vendedores en una app móvil externa y cruzarla con el LMS.', ans: 'xapi', why: 'Aprendizaje fuera del LMS = xAPI + LRS.' },
+  { text: 'Un curso con varios módulos que deben desbloquearse en orden con objetivos múltiples.', ans: 'scorm2004', why: 'Secuenciación compleja dentro del LMS = SCORM 2004.' },
+  { text: 'Analítica avanzada de comportamiento de aprendizaje cruzando formal e informal.', ans: 'xapi', why: 'Granularidad y multiplataforma = xAPI.' },
+];
+let actDone = 0, actCorrect = 0;
+const LABELS = { scorm12: 'SCORM 1.2', scorm2004: 'SCORM 2004', xapi: 'xAPI' };
+function renderActivity() {
+  document.getElementById('actRoot').innerHTML = ACT_ITEMS.map((item, i) => `
+    <div class="act-card" id="act-${i}">
+      <div class="act-statement">${item.text}</div>
+      <div class="act-buttons">
+        <button class="act-btn" onclick="answerAct(${i},'scorm12')">SCORM 1.2</button>
+        <button class="act-btn" onclick="answerAct(${i},'scorm2004')">SCORM 2004</button>
+        <button class="act-btn" onclick="answerAct(${i},'xapi')">xAPI</button>
+      </div>
+      <div class="act-verdict" id="verdict-${i}"></div>
+    </div>`).join('');
+  updateActProgress();
 }
+function answerAct(i, choice) {
+  const item = ACT_ITEMS[i];
+  const card = document.getElementById('act-' + i);
+  const verdict = document.getElementById('verdict-' + i);
+  actDone++;
+  if (choice === item.ans) { actCorrect++; card.classList.add('ok'); verdict.style.color = '#315226'; verdict.textContent = '✓ ' + item.why; }
+  else { card.classList.add('no'); card.querySelector('.act-buttons').style.display = 'none'; verdict.style.color = '#6E2A2A'; verdict.textContent = '✗ Era ' + LABELS[item.ans] + '. ' + item.why; }
+  updateActProgress();
+  if (actDone === ACT_ITEMS.length) Gami.award('m4-1_actividad', Math.round(15 * actCorrect / ACT_ITEMS.length) + 5, 'Actividad de estándares — ' + actCorrect + '/' + ACT_ITEMS.length);
+}
+function updateActProgress() { document.getElementById('actProgress').textContent = actDone + '/' + ACT_ITEMS.length + ' resueltas' + (actDone === ACT_ITEMS.length ? ' · ' + actCorrect + ' correctas' : ''); }
+renderActivity();
 
-function submitEval() {
-  if (Object.keys(answers).length === 0) {
-    showToast('Responde al menos una pregunta para enviar', 'warning');
-    return;
-  }
-  submitted = true;
-  let score = 0;
-  const total = Object.keys(CORRECTAS).length;
-
-  Object.keys(CORRECTAS).forEach(q => {
-    const container = document.querySelector(`[data-question="${q}"]`);
-    if (!container) return;
-    const userAns = answers[q];
-    const correctAns = CORRECTAS[q];
-    const opts = container.querySelectorAll('.eval-option');
-
-    opts.forEach((opt, idx) => {
-      opt.style.pointerEvents = 'none';
-      if (idx + 1 === userAns) {
-        if (userAns === correctAns) { opt.classList.add('correct'); score++; }
-        else opt.classList.add('incorrect');
-      }
+const QUIZ = [
+  { q: '¿Qué es un LMS?', opts: ['Un tipo de video interactivo','La plataforma que aloja el curso, matricula y registra progreso','Un estándar de empaquetado','Una herramienta de autoría'], ans: 1 },
+  { q: '¿Qué contiene un paquete SCORM?', opts: ['Solo el video del curso','Contenido, imsmanifest.xml y una capa de comunicación (API wrapper)','Solo el certificado final','Solo la base de datos del LMS'], ans: 1 },
+  { q: '¿Cuál es la principal ventaja de SCORM 2004 sobre 1.2?', opts: ['Es más liviano','Permite secuenciación y objetivos múltiples','No requiere manifest','Funciona sin LMS'], ans: 1 },
+  { q: '¿Qué estructura tiene un statement de xAPI?', opts: ['Fecha-Hora-Usuario','Actor-Verbo-Objeto','Módulo-Puntaje-Tiempo','Curso-LMS-Servidor'], ans: 1 },
+  { q: '¿Dónde se almacenan los statements de xAPI?', opts: ['En el LMS únicamente','En un LRS (Learning Record Store)','En el navegador del usuario','No se almacenan'], ans: 1 },
+  { q: '¿Cuál es la principal ventaja de xAPI sobre SCORM?', opts: ['Es más antiguo','Puede trackear aprendizaje fuera del LMS','Es más simple de implementar','No necesita internet'], ans: 1 },
+  { q: 'En el contexto educativo chileno actual, ¿qué estándar es más común?', opts: ['xAPI exclusivamente','SCORM 1.2, por compatibilidad y simplicidad','Ninguno, no se usan estándares','SCORM 2004 exclusivamente'], ans: 1 },
+  { q: '¿Qué es un SLA?', opts: ['Un tipo de objetivo de aprendizaje','Un acuerdo que define el nivel de servicio garantizado por un proveedor','Un estándar de tracking','Un tipo de LMS'], ans: 1 },
+  { q: '¿Por qué le importa el SLA a un DI?', opts: ['No le importa, es solo tema de TI','Porque una falla de la plataforma en un momento crítico impacta el proyecto aunque no lo controle','Porque define el diseño pedagógico','Porque reemplaza la evaluación'], ans: 1 },
+  { q: 'Un proyecto necesita cruzar datos de un curso LMS con práctica en una app externa. ¿Qué eliges?', opts: ['SCORM 1.2, porque es más simple','xAPI con un LRS, porque puede trackear ambas fuentes','No es posible trackear eso','Un examen en papel'], ans: 1 },
+];
+function renderQuiz() {
+  document.getElementById('quizRoot').innerHTML = QUIZ.map((item, qi) => `
+    <div class="eval-q">${qi + 1}. ${item.q}</div>
+    <div class="quiz-opts" data-q="${qi}">${item.opts.map((opt, oi) => `<label class="eval-option"><input type="radio" name="q${qi}" value="${oi}" onchange="updateQuizCounter()"> ${opt}</label>`).join('')}</div>`).join('');
+}
+function answered() { let n = 0; for (let i = 0; i < QUIZ.length; i++) if (document.querySelector('input[name=q' + i + ']:checked')) n++; return n; }
+function updateQuizCounter() { const n = answered(); document.getElementById('quizCounter').textContent = 'Respondidas: ' + n + '/' + QUIZ.length; document.getElementById('quizSubmit').disabled = n < QUIZ.length; }
+function submitQuiz() {
+  let correct = 0;
+  QUIZ.forEach((item, qi) => {
+    const sel = document.querySelector('input[name=q' + qi + ']:checked');
+    const val = sel ? parseInt(sel.value) : -1;
+    document.querySelectorAll('[data-q="' + qi + '"] .eval-option').forEach((opt, oi) => {
+      opt.classList.remove('correct','incorrect');
+      if (oi === item.ans) opt.classList.add('correct'); else if (oi === val) opt.classList.add('incorrect');
     });
-
-    if (userAns !== undefined) {
-      const fb = FEEDBACK[q];
-      const isOk = userAns === correctAns;
-      const fbEl = document.createElement('div');
-      fbEl.className = 'feedback-box ' + (isOk ? 'feedback-ok' : 'feedback-fail');
-      fbEl.innerHTML = (isOk ? '<i class="bi bi-check-circle me-1"></i>' : '<i class="bi bi-x-circle me-1"></i>') + (isOk ? fb.ok : fb.fail);
-      container.appendChild(fbEl);
-    }
+    if (val === item.ans) correct++;
   });
-
-  const answered = Object.keys(answers).length;
-  const pct = Math.round(score / total * 100);
-  const msg = pct >= 90 ? 'Excelente dominio de esta unidad.' : pct >= 70 ? 'Buen resultado. Repasa lo que fallaste antes de avanzar.' : 'Hay conceptos que requieren repaso. Revisa las secciones donde cometiste errores.';
-
-  document.getElementById('evalResult').innerHTML = `
-    <div class="result-card">
-      <div class="result-score">${score}/${total}</div>
-      <div class="result-label">${pct}% de respuestas correctas (${answered} respondidas)</div>
-      <div class="result-msg">${msg}</div>
-    </div>`;
-
-  document.getElementById('submitBtn').style.display = 'none';
-  document.getElementById('retryBtn').style.display = 'inline-block';
-  document.getElementById('nextBtn').style.display = 'inline-block';
-  guardarPuntaje(score / total);
+  saveScore(correct / QUIZ.length, correct);
 }
-
-function retryEval() {
-  submitted = false;
-  answers = {};
-  document.querySelectorAll('.eval-option').forEach(o => {
-    o.classList.remove('selected','correct','incorrect');
-    o.style.pointerEvents = '';
-  });
-  document.querySelectorAll('.feedback-box').forEach(f => f.remove());
-  document.getElementById('evalResult').innerHTML = '';
-  document.getElementById('answeredCount').textContent = '0';
-  document.getElementById('submitBtn').style.display = 'inline-block';
-  document.getElementById('retryBtn').style.display = 'none';
-  document.getElementById('nextBtn').style.display = 'none';
-  showToast('Inténtalo de nuevo — repasa el contenido antes de responder', 'info');
-  document.querySelector('.eval-section').scrollIntoView({ behavior:'smooth' });
+function saveScore(pct, correct) {
+  try { const scores = JSON.parse(localStorage.getItem('di_scores_v2') || '{}'); scores[UNIT_ID] = pct; localStorage.setItem('di_scores_v2', JSON.stringify(scores)); } catch(e) {}
+  const card = document.getElementById('resultCard');
+  card.className = 'result-card show';
+  card.style.background = pct >= 0.7 ? 'var(--done-soft)' : 'var(--msoft)';
+  document.getElementById('resultScore').textContent = Math.round(pct * 100) + '%';
+  document.getElementById('resultMsg').textContent = correct + '/' + QUIZ.length + ' correctas · ' + (pct >= 0.7 ? 'Unidad completada en tu ruta.' : 'Puedes repasar y reintentar — sin límite.');
+  if (pct >= 0.7) { Gami.award('m4-1_eval', 30, 'Evaluación 4.1 aprobada — ' + correct + '/' + QUIZ.length); Gami.badge('primeraCapa'); }
+  try { const img = new Image(); img.src = SCRIPT_URL + '?action=saveScore&id=' + UNIT_ID + '&score=' + pct + '&t=' + Date.now(); } catch(e) {}
 }
-
-function getScores() { try { return JSON.parse(localStorage.getItem('di_scores')||'{}'); } catch(e) { return {}; } }
-
-function jsonp(params) {
-  return new Promise(function(resolve, reject) {
-    var cb = 'cb_' + Date.now() + '_' + Math.floor(Math.random()*1e6);
-    var script = document.createElement('script');
-    function cleanup(){ try { delete window[cb]; } catch(e) { window[cb] = undefined; } if (script.parentNode) script.parentNode.removeChild(script); }
-    window[cb] = function(data){ cleanup(); resolve(data); };
-    var qp = new URLSearchParams(Object.assign({}, params, { callback: cb }));
-    script.src = SCRIPT_URL + '?' + qp.toString();
-    script.onerror = function(){ cleanup(); reject(new Error('conexion')); };
-    setTimeout(function(){ if (window[cb]) { cleanup(); reject(new Error('timeout')); } }, 20000);
-    document.head.appendChild(script);
-  });
-}
-
-async function guardarPuntaje(ratio) {
-  const s = getScores(); s[UNIDAD_ID] = ratio; localStorage.setItem('di_scores', JSON.stringify(s));
-  updateSidebar();
-  try {
-    await jsonp({ action: 'saveScore', id: UNIDAD_ID, score: ratio, label: UNIDAD_LABEL, date: new Date().toLocaleDateString('es-CL') });
-  } catch(e) {}
-}
-
-function updateSidebar() {
-  const s = getScores();
-  const ids = ['m4-1','m4-2','m4-3','m4-4'];
-  const done = ids.filter(id => s[id] !== undefined && s[id] > 0).length;
-  document.getElementById('sidebarPct').textContent = done + '/' + ids.length;
-  document.getElementById('sidebarBar').style.width = Math.round(done/ids.length*100) + '%';
-  ids.forEach(id => {
-    const el = document.getElementById('num-' + id);
-    if (el && s[id] !== undefined && s[id] > 0) { el.style.background = 'var(--success)'; el.style.color = '#fff'; }
-  });
-  document.getElementById('headerProgress').textContent = done + '/' + ids.length + ' completadas';
-}
-
-function showToast(msg, type) {
-  const colors = { warning:'#c85c3a', info:'#3a6b8a', success:'#2d7a4f' };
-  const t = document.createElement('div');
-  t.className = 'toast-di';
-  t.style.background = colors[type] || colors.info;
-  t.innerHTML = msg;
-  document.body.appendChild(t);
-  setTimeout(() => { t.style.opacity='0'; t.style.transition='opacity 0.3s'; setTimeout(()=>t.remove(),300); }, 3000);
-}
-
-function scrollToTop() { window.scrollTo({top:0,behavior:'smooth'}); }
-
-updateSidebar();
-
-async function syncSheet() {
-  try {
-    const data = await jsonp({ action: 'getAll' });
-    if (data && data.ok) {
-      const s = getScores();
-      (data.scores || []).forEach(function(row){
-        if (row.id && row.score !== undefined) s[row.id] = parseFloat(row.score);
-      });
-      localStorage.setItem('di_scores', JSON.stringify(s));
-      updateSidebar();
-      showCompletedState();
-    }
-  } catch(e) {}
-}
-
-function showCompletedState() {
-  const ratio = getScores()[UNIDAD_ID];
-  if (ratio === undefined || ratio <= 0) return;
-  const pct = Math.round(ratio * 100);
-  const ok = pct >= 70;
-  const sec = document.querySelector('.eval-section');
-  if (!sec) return;
-  let banner = document.getElementById('completedBanner');
-  if (!banner) {
-    banner = document.createElement('div');
-    banner.id = 'completedBanner';
-    sec.insertBefore(banner, sec.firstChild);
-  }
-  banner.innerHTML =
-    '<div style="display:flex;align-items:center;gap:0.9rem;background:' + (ok ? '#edf7f2' : 'var(--terra-light)') +
-    ';border:1px solid ' + (ok ? '#b0ddc5' : '#e0b0a0') + ';border-left:4px solid ' + (ok ? 'var(--success)' : 'var(--terra)') +
-    ';border-radius:8px;padding:0.9rem 1.1rem;margin-bottom:1.2rem">' +
-      '<i class="bi bi-' + (ok ? 'check-circle-fill' : 'arrow-repeat') + '" style="color:' + (ok ? 'var(--success)' : 'var(--terra)') + ';font-size:1.5rem"></i>' +
-      '<div style="flex:1">' +
-        '<div style="font-weight:bold;font-size:0.9rem;color:var(--dark)">Ya completaste esta unidad</div>' +
-        '<div style="font-size:0.82rem;color:var(--muted)">Puntaje guardado: <strong>' + pct + '%</strong>. Puedes repasar el contenido o volver a responder más abajo.</div>' +
-      '</div>' +
-    '</div>';
-}
-
-function trackVisit() {
-  try {
-    let vid = localStorage.getItem('di_vid');
-    if (!vid) { vid = 'v' + Date.now().toString(36) + Math.random().toString(36).slice(2,8); localStorage.setItem('di_vid', vid); }
-    let sid = sessionStorage.getItem('di_sid');
-    if (!sid) { sid = 's' + Date.now().toString(36) + Math.random().toString(36).slice(2,8); sessionStorage.setItem('di_sid', sid); }
-    const qs = new URLSearchParams(location.search);
-    if (qs.get('owner') === '1') localStorage.setItem('di_owner', '1');
-    if (qs.get('owner') === '0') localStorage.removeItem('di_owner');
-    const owner = localStorage.getItem('di_owner') === '1' ? '1' : '0';
-    const device = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'movil' : 'escritorio';
-    const params = new URLSearchParams({ action: 'logVisit', page: UNIDAD_ID, vid: vid, sid: sid, owner: owner, device: device, t: String(Date.now()) });
-    const img = new Image();
-    img.referrerPolicy = 'no-referrer';
-    img.src = SCRIPT_URL + '?' + params.toString();
-  } catch(e) {}
-}
-
-trackVisit();
-syncSheet();
+renderQuiz();
+updateQuizCounter();
 </script>
 </body>
 </html>

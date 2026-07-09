@@ -3,878 +3,574 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>4.3 Producción multimedia y video con IA — Curso DI</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<title>4.3 Producción multimedia y video con IA — Cuaderno de taller</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --cream: #f5f2ec;
-  --dark: #0f1117;
-  --terra: #c85c3a;
-  --blue: #3a6b8a;
-  --muted: #7a7570;
-  --border: #ddd8d0;
-  --success: #2d7a4f;
-  --terra-light: #f7ede8;
-  --blue-light: #e8f0f5;
+  --paper: #EDEAE3; --paper-alt: #E4DFD3; --card: #F8F6F1;
+  --ink: #1C1A17; --ink-muted: #6B665D; --border: #D8D1C0; --border-soft: #E2DCCC;
+  --mc: #B9862C; --msoft: #F1E5CC;
+  --ia: #2A5CAA; --ia-soft: #DCE5F2;
+  --done: #4A6B3E; --done-soft: #E9F0E5;
+  --warn: #B9862C; --warn-soft: #F1E5CC;
 }
-body { background: var(--cream); font-family: 'Calibri', 'Segoe UI', sans-serif; color: var(--dark); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--paper); color: var(--ink); font-family: 'IBM Plex Sans', sans-serif; line-height: 1.55; }
+a { color: inherit; }
+.topbar { background: var(--ink); color: #EDEAE3; padding: 0.7rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; position: sticky; top: 0; z-index: 50; }
+.topbar a.back { color: #C9C3B5; text-decoration: none; }
+.topbar a.back:hover { color: #fff; }
+.gami-chips { display: flex; gap: 0.9rem; color: #C9C3B5; flex-wrap: wrap; }
+.layout { display: grid; grid-template-columns: 250px 1fr; max-width: 1120px; margin: 0 auto; }
+@media (max-width: 880px) { .layout { grid-template-columns: 1fr; } .sidebar { order: 2; } }
+.sidebar { border-right: 1px solid var(--border); padding: 1.4rem 1.2rem; }
+@media (max-width: 880px) { .sidebar { border-right: none; border-top: 1px solid var(--border); } }
+.sidebar h6 { font-family: 'Fraunces', serif; font-size: 0.95rem; color: var(--mc); margin-bottom: 0.2rem; }
+.sidebar .sidebar-sub { font-size: 0.74rem; color: var(--ink-muted); margin-bottom: 1rem; }
+.side-item { display: flex; align-items: center; gap: 0.6rem; padding: 0.55rem 0.5rem; border-radius: 3px; text-decoration: none; color: var(--ink); font-size: 0.84rem; margin-bottom: 0.15rem; }
+.side-item.active { background: var(--msoft); font-weight: 600; color: var(--mc); }
+.side-mark { width: 22px; height: 22px; border-radius: 3px; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; flex-shrink: 0; }
+.side-item.active .side-mark { background: var(--mc); border-color: var(--mc); color: #fff; }
+.side-toc { margin-top: 1.4rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+.side-toc .toc-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.64rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); margin-bottom: 0.5rem; }
+.side-toc a { display: block; font-size: 0.78rem; color: var(--ink-muted); text-decoration: none; padding: 0.3rem 0; }
+.side-toc a:hover { color: var(--mc); }
+main { padding: 2.2rem 2rem 4rem; min-width: 0; }
+.unit-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--mc); margin-bottom: 0.5rem; }
+h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(1.5rem, 3.5vw, 2.1rem); margin-bottom: 0.6rem; max-width: 24ch; }
+.lesson-dek { color: #423E37; max-width: 64ch; margin-bottom: 1rem; }
+.lesson-badges { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.6rem; }
+.lbadge { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; border: 1px solid var(--border); background: var(--card); border-radius: 3px; padding: 0.25rem 0.6rem; color: var(--ink-muted); }
+.objetivo-box { background: var(--card); border: 1px solid var(--border); border-left: 4px solid var(--mc); border-radius: 4px; padding: 1.1rem 1.3rem; margin-bottom: 2rem; }
+.objetivo-box .label { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mc); margin-bottom: 0.4rem; }
+.objetivo-box p { font-size: 0.92rem; font-style: italic; color: #322E28; }
+.mapa-block { border: 1px solid var(--border); border-radius: 4px; background: var(--card); margin-bottom: 2rem; overflow: hidden; }
+.mapa-head { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); padding: 0.7rem 1rem; border-bottom: 1px solid var(--border-soft); }
+.mapa-body { padding: 1rem; background: #fff; }
+.mapa-note { font-size: 0.78rem; color: var(--ink-muted); padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
+.media-block { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin-bottom: 2.2rem; background: var(--card); }
+.media-tabs { display: flex; border-bottom: 1px solid var(--border); background: var(--paper-alt); flex-wrap: wrap; }
+.media-tab { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; padding: 0.7rem 1rem; cursor: pointer; border: none; background: none; color: var(--ink-muted); border-bottom: 2px solid transparent; }
+.media-tab.active { color: var(--mc); border-bottom-color: var(--mc); background: var(--card); }
+.media-pane { display: none; }
+.media-pane.active { display: block; }
+.media-note { font-size: 0.76rem; color: var(--ink-muted); padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
+.media-pending { padding: 2rem 1rem; text-align: center; color: var(--ink-muted); font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; }
+.pdf-frame { width: 100%; height: 480px; border: none; display: block; background: #fff; }
+.pdf-actions { display: flex; gap: 0.6rem; padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
+.pdf-actions a { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--mc); text-decoration: none; border: 1px solid var(--border); border-radius: 3px; padding: 0.3rem 0.7rem; }
+.audio-pane { padding: 1.2rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.audio-pane audio { flex: 1; min-width: 240px; }
+.audio-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: var(--ink-muted); }
+.video-wrap { position: relative; padding-top: 56.25%; background: #111; }
+.video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+.content-section { margin-bottom: 2.6rem; }
+.content-section h2 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.3rem; margin-bottom: 0.8rem; padding-bottom: 0.4rem; border-bottom: 2px solid var(--mc); display: flex; align-items: baseline; gap: 0.6rem; }
+.content-section h2 .sec-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--mc); }
+.content-section h3 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.05rem; margin: 1.2rem 0 0.5rem; }
+.content-section p { margin-bottom: 0.8rem; font-size: 0.94rem; color: #2B2823; }
+.content-section ul, .content-section ol { margin: 0.6rem 0 0.9rem 1.3rem; font-size: 0.92rem; }
+.content-section li { margin-bottom: 0.4rem; }
+.content-section strong { color: var(--mc); font-weight: 600; }
+.defbox { background: var(--msoft); border-radius: 4px; padding: 0.9rem 1.1rem; font-style: italic; font-size: 0.93rem; margin: 0.8rem 0 1.2rem; }
+.nota { border-radius: 4px; padding: 0.9rem 1.1rem; font-size: 0.88rem; margin: 1.1rem 0; border: 1px solid var(--border); }
+.nota .nota-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.07em; display: block; margin-bottom: 0.35rem; }
+.nota.clave { background: var(--done-soft); } .nota.clave .nota-tag { color: var(--done); }
+.nota.alerta { background: #F5E5E2; } .nota.alerta .nota-tag { color: #A83232; }
+.nota.contexto { background: var(--ia-soft); } .nota.contexto .nota-tag { color: var(--ia); }
+.compare-table { width: 100%; border-collapse: collapse; margin: 0.8rem 0 1.4rem; font-size: 0.86rem; }
+.compare-table th, .compare-table td { border: 1px solid var(--border); padding: 0.55rem 0.7rem; text-align: left; vertical-align: top; }
+.compare-table th { background: var(--card); font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-muted); }
+.compare-table td:first-child { font-weight: 600; }
 
-/* HEADER */
-.header-di {
-  background: linear-gradient(135deg, var(--dark) 0%, #1e2030 100%);
-  border-bottom: 3px solid var(--terra);
-  padding: 0.9rem 0;
-  position: sticky; top: 0; z-index: 1030;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-}
-.header-di .course-name { color: #fff; font-family: Georgia, serif; font-size: 1.1rem; font-weight: normal; }
-.header-di .unit-name { color: var(--terra); font-size: 0.82rem; }
-.btn-back { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; border-radius: 20px; padding: 0.4rem 1rem; font-size: 0.82rem; text-decoration: none; transition: all 0.2s; }
-.btn-back:hover { background: rgba(255,255,255,0.2); color: #fff; }
+/* categorías de herramientas IA */
+.ia-tools { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8rem; margin: 1rem 0 1.4rem; }
+@media (max-width: 700px) { .ia-tools { grid-template-columns: 1fr; } }
+.ia-tool { border: 1px solid var(--border); border-radius: 4px; background: var(--card); padding: 1rem; border-top: 3px solid var(--ia); }
+.ia-tool h4 { font-family: 'Fraunces', serif; font-size: 0.98rem; font-weight: 600; margin-bottom: 0.3rem; color: var(--ia); }
+.ia-tool p { font-size: 0.83rem; margin: 0; }
 
-/* SIDEBAR */
-.sidebar-di {
-  background: #fff;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  overflow: hidden;
-}
-@media(min-width:992px){ .sidebar-di { position: sticky; top: 80px; max-height: calc(100vh - 100px); overflow-y: auto; } }
-.sidebar-header { background: var(--dark); color: #fff; padding: 1rem 1.2rem; }
-.sidebar-header h6 { font-family: Georgia, serif; font-weight: normal; font-size: 0.9rem; margin: 0; color: var(--terra); }
-.sidebar-header p { font-size: 0.75rem; color: #a09a94; margin: 0.2rem 0 0; }
-.lesson-item { display: flex; align-items: center; gap: 0.8rem; padding: 0.75rem 1.2rem; border-bottom: 1px solid var(--border); cursor: pointer; transition: all 0.2s; text-decoration: none; color: var(--dark); }
-.lesson-item:hover { background: var(--cream); }
-.lesson-item.active { background: var(--terra-light); border-left: 3px solid var(--terra); }
-.lesson-item.done { color: var(--muted); }
-.lesson-num { width: 30px; height: 30px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold; flex-shrink: 0; color: var(--muted); }
-.lesson-item.active .lesson-num { background: var(--terra); color: #fff; }
-.lesson-item.done .lesson-num { background: var(--success); color: #fff; }
-.lesson-info { flex: 1; }
-.lesson-info strong { font-size: 0.83rem; display: block; }
-.lesson-info span { font-size: 0.74rem; color: var(--muted); }
-.sidebar-progress { padding: 1rem 1.2rem; background: var(--cream); }
-.progress-di { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
-.progress-di-fill { height: 100%; background: linear-gradient(90deg, var(--terra), #e07a5a); border-radius: 99px; transition: width 0.5s ease; }
-.sidebar-footer { padding: 0.8rem 1.2rem; text-align: center; border-top: 1px solid var(--border); }
+/* checklist de calidad final */
+.qa-checklist { display: flex; flex-direction: column; gap: 0.5rem; margin: 1rem 0; }
+.qa-item { display: flex; align-items: flex-start; gap: 0.7rem; border: 1px solid var(--border); border-radius: 4px; background: var(--card); padding: 0.7rem 1rem; cursor: pointer; }
+.qa-item input { margin-top: 0.2rem; accent-color: var(--done); }
+.qa-item span { font-size: 0.86rem; }
+.qa-item.checked { background: var(--done-soft); border-color: var(--done); }
 
-/* CONTENT */
-.content-di { background: #fff; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow: hidden; }
-.lesson-hero { background: linear-gradient(135deg, var(--dark) 0%, #1e2030 100%); color: #fff; padding: 2rem 2rem 1.5rem; }
-.lesson-hero .unit-tag { font-size: 0.72rem; color: var(--terra); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.4rem; }
-.lesson-hero h1 { font-family: Georgia, serif; font-size: 1.6rem; font-weight: normal; margin-bottom: 0.4rem; }
-.lesson-hero p { color: #a09a94; font-size: 0.88rem; margin: 0; }
-.lesson-badges { padding: 1rem 2rem; background: var(--terra-light); border-bottom: 1px solid var(--border); display: flex; gap: 0.6rem; flex-wrap: wrap; }
-.lbadge { font-size: 0.78rem; padding: 0.3rem 0.7rem; border-radius: 20px; border: 1px solid var(--border); background: #fff; color: var(--muted); }
-.lbadge i { color: var(--terra); }
-.lesson-body { padding: 1.8rem 2rem; }
+.vineta { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin: 1.2rem 0; }
+.vineta-head { background: var(--ink); color: #EDEAE3; font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.6rem 1rem; }
+.vineta-body { background: var(--card); padding: 1rem 1.2rem; font-size: 0.9rem; }
+.vineta-reveal-btn { display: block; width: 100%; text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; background: var(--msoft); border: none; border-top: 1px solid var(--border); padding: 0.7rem; cursor: pointer; color: var(--mc); }
+.vineta-solution { display: none; background: #fff; border-top: 1px dashed var(--border); padding: 1rem 1.2rem; font-size: 0.9rem; }
+.vineta.revealed .vineta-solution { display: block; }
+.vineta.revealed .vineta-reveal-btn { display: none; }
 
-/* PRESENTACIÓN placeholder */
-.presentacion { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
-.presentacion-head { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; flex-wrap: wrap; background: var(--dark); color: #fff; padding: 0.8rem 1.2rem; }
-.pres-title { font-size: 0.95rem; font-weight: bold; display: flex; align-items: center; gap: 0.6rem; }
-.pres-title i { color: var(--terra); font-size: 1.1rem; }
-.pres-tag { font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: #a09a94; border: 1px solid rgba(255,255,255,0.18); border-radius: 20px; padding: 0.12rem 0.55rem; }
-.presentacion-viewer { height: 220px; background: var(--cream); }
-.pres-placeholder { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: var(--muted); padding: 2rem; }
-.pres-placeholder i { font-size: 2.4rem; color: #c9c2b8; margin-bottom: 0.8rem; }
-.pres-placeholder p { font-size: 0.98rem; font-weight: bold; color: var(--dark); margin-bottom: 0.3rem; }
-.pres-placeholder small { font-size: 0.82rem; line-height: 1.6; max-width: 420px; }
+.activity { border: 1px solid var(--border); border-radius: 4px; background: var(--card); padding: 1.3rem; margin: 2rem 0; }
+.activity h2 { font-family: 'Fraunces', serif; font-size: 1.1rem; margin-bottom: 0.3rem; }
+.activity .act-sub { font-size: 0.8rem; color: var(--ink-muted); margin-bottom: 1rem; }
+.act-card { border: 1px solid var(--border); border-radius: 4px; background: var(--paper); padding: 0.9rem 1rem; margin-bottom: 0.8rem; }
+.act-statement { font-size: 0.9rem; margin-bottom: 0.7rem; }
+.act-buttons { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.act-btn { flex: 1; min-width: 90px; font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; padding: 0.5rem; border: 1px solid var(--border); border-radius: 3px; background: var(--card); cursor: pointer; transition: all 0.15s; }
+.act-btn:hover { border-color: var(--mc); }
+.act-card.ok { border-color: var(--done); background: var(--done-soft); }
+.act-card.ok .act-buttons { display: none; }
+.act-card.no { border-color: #A83232; }
+.act-verdict { font-size: 0.78rem; margin-top: 0.4rem; display: none; }
+.act-card.ok .act-verdict, .act-card.no .act-verdict { display: block; }
+.act-progress { font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; color: var(--ink-muted); margin-top: 0.4rem; }
 
-/* ACCORDION */
-.accordion-di { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1rem; }
-.accordion-di-btn { background: var(--cream); border: none; width: 100%; text-align: left; padding: 1rem 1.2rem; display: flex; align-items: center; gap: 0.8rem; cursor: pointer; transition: background 0.2s; font-size: 0.95rem; font-weight: bold; color: var(--dark); }
-.accordion-di-btn:hover { background: #ede9e2; }
-.accordion-di-btn.open { background: var(--dark); color: #fff; }
-.accordion-di-btn.open .acc-icon { color: var(--terra); }
-.accordion-di-btn .acc-chevron { margin-left: auto; transition: transform 0.25s; font-size: 0.8rem; }
-.accordion-di-btn.open .acc-chevron { transform: rotate(180deg); }
-.acc-icon { font-size: 1rem; color: var(--terra); }
-.accordion-di-body { display: none; padding: 1.2rem 1.4rem; border-top: 1px solid var(--border); background: #fff; font-size: 0.92rem; line-height: 1.7; }
-.accordion-di-body.show { display: block; }
-.accordion-di-body h5 { font-family: Georgia, serif; font-size: 1rem; font-weight: normal; color: var(--blue); margin: 1.2rem 0 0.5rem; }
-.accordion-di-body h5:first-child { margin-top: 0; }
+.callout { position: relative; border-radius: 4px; margin: 1.6rem 0; overflow: hidden; border: 1px solid var(--border); }
+.callout-header { display: flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.05em; color: #fff; }
+.callout.ia .callout-header { background: var(--ia); }
+.callout.entrevista .callout-header { background: var(--mc); }
+.callout-body { background: var(--card); padding: 1.1rem 1.3rem; font-size: 0.9rem; position: relative; }
+.callout-body p { margin-bottom: 0.7rem; }
+.callout-body p:last-child { margin-bottom: 0; }
+.capa { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 0.6rem; cursor: pointer; user-select: none; transition: transform 0.5s cubic-bezier(.65,0,.35,1), opacity 0.4s ease; font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--ink-muted); }
+.callout.ia .capa { background: var(--ia-soft); }
+.callout.entrevista .capa { background: var(--msoft); }
+.callout.revealed .capa { transform: translateX(105%); opacity: 0; pointer-events: none; }
 
-/* CARDS */
-.card-di { background: var(--cream); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; margin-bottom: 0.7rem; }
-.card-di h6 { font-size: 0.85rem; font-weight: bold; color: var(--blue); margin-bottom: 0.3rem; }
-.card-di p { font-size: 0.88rem; margin: 0; }
-.callout-terra { border-left: 4px solid var(--terra); background: var(--terra-light); padding: 0.9rem 1.1rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: 0.88rem; }
-.callout-terra strong { color: var(--terra); }
-.callout-blue { border-left: 4px solid var(--blue); background: var(--blue-light); padding: 0.9rem 1.1rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: 0.88rem; }
-.callout-blue strong { color: var(--blue); }
-.table-di { font-size: 0.85rem; }
-.table-di th { background: var(--dark); color: #fff; font-weight: normal; }
-.table-di td { vertical-align: top; }
+.practica { border: 1px solid var(--border); border-radius: 4px; background: var(--card); margin: 1.4rem 0; overflow: hidden; }
+.practica-head { padding: 0.9rem 1.1rem; border-bottom: 1px solid var(--border-soft); }
+.practica-head .p-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--mc); text-transform: uppercase; letter-spacing: 0.06em; }
+.practica-head .p-q { font-size: 0.94rem; font-weight: 500; margin-top: 0.25rem; }
+.practica-body { padding: 1rem 1.1rem; }
+.practica-body textarea { width: 100%; min-height: 80px; font-family: 'IBM Plex Sans', sans-serif; font-size: 0.88rem; border: 1px solid var(--border); border-radius: 3px; padding: 0.7rem; resize: vertical; background: var(--paper); margin-bottom: 0.7rem; }
+.rm-toggle { font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; color: var(--mc); cursor: pointer; text-decoration: underline; background: none; border: none; padding: 0; }
+.rm { display: none; margin-top: 0.7rem; padding: 0.8rem 1rem; background: var(--msoft); border-radius: 3px; font-size: 0.87rem; }
+.rm.show { display: block; }
+.checklist { margin-top: 0.8rem; border-top: 1px dashed var(--border); padding-top: 0.8rem; }
+.checklist .cl-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); margin-bottom: 0.5rem; }
+.cl-item { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.84rem; padding: 0.35rem 0; cursor: pointer; }
+.cl-item input { accent-color: var(--done); margin-top: 0.2rem; }
 
-/* HERRAMIENTA card (módulo 4) */
-.tool-di { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; margin-bottom: 0.8rem; }
-.tool-di-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; }
-.tool-di-head h6 { font-family: Georgia, serif; font-size: 1rem; font-weight: normal; color: var(--dark); margin: 0; }
-.tool-price { font-size: 0.72rem; padding: 0.2rem 0.6rem; border-radius: 20px; background: var(--terra-light); color: var(--terra); border: 1px solid var(--border); }
-.tool-di a.tool-link { font-size: 0.8rem; color: var(--blue); text-decoration: none; }
-.tool-di a.tool-link:hover { text-decoration: underline; }
-.tool-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; margin-top: 0.6rem; font-size: 0.82rem; }
-@media(max-width:640px) { .tool-grid { grid-template-columns: 1fr; } }
-.tool-grid div strong { display: block; color: var(--muted); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.15rem; }
-
-/* EVALUACIÓN */
-.eval-section { background: var(--cream); border-radius: 10px; border: 1px solid var(--border); padding: 1.5rem; margin-top: 2rem; }
-.eval-section h4 { font-family: Georgia, serif; font-weight: normal; color: var(--dark); font-size: 1.1rem; margin-bottom: 0.3rem; }
-.eval-progress-text { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.2rem; }
-.eval-question { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem 1.3rem; margin-bottom: 1rem; }
-.eval-question h6 { font-size: 0.9rem; font-weight: bold; color: var(--dark); margin-bottom: 0.8rem; line-height: 1.5; }
-.eval-option { display: flex; align-items: flex-start; gap: 0.7rem; padding: 0.6rem 0.8rem; border-radius: 7px; border: 1px solid var(--border); margin-bottom: 0.5rem; cursor: pointer; font-size: 0.88rem; transition: all 0.15s; background: var(--cream); }
-.eval-option:hover { border-color: var(--blue); background: var(--blue-light); }
-.eval-option.selected { border-color: var(--blue); background: var(--blue-light); }
-.eval-option.correct { border-color: var(--success); background: #edf7f2; pointer-events: none; }
-.eval-option.incorrect { border-color: var(--terra); background: var(--terra-light); pointer-events: none; }
-.eval-option.disabled { pointer-events: none; opacity: 0.7; }
-.eval-radio { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px; transition: all 0.15s; }
-.eval-option.selected .eval-radio { border-color: var(--blue); background: var(--blue); }
-.eval-option.correct .eval-radio { border-color: var(--success); background: var(--success); }
-.eval-option.incorrect .eval-radio { border-color: var(--terra); background: var(--terra); }
-.feedback-box { font-size: 0.84rem; padding: 0.7rem 1rem; border-radius: 7px; margin-top: 0.5rem; line-height: 1.6; }
-.feedback-ok { background: #edf7f2; color: var(--success); border: 1px solid #b0ddc5; }
-.feedback-fail { background: var(--terra-light); color: #8a3020; border: 1px solid #e0b0a0; }
-
-/* RESULT */
-.result-card { text-align: center; padding: 2rem; background: #fff; border-radius: 12px; border: 1px solid var(--border); margin-top: 1rem; }
-.result-score { font-family: Georgia, serif; font-size: 4rem; color: var(--terra); line-height: 1; }
-.result-label { font-size: 0.85rem; color: var(--muted); margin: 0.3rem 0 0.8rem; }
-.result-msg { font-size: 0.92rem; max-width: 400px; margin: 0 auto 1.5rem; line-height: 1.6; }
-
-/* BTN */
-.btn-terra { background: var(--terra); border-color: var(--terra); color: #fff; border-radius: 8px; padding: 0.6rem 1.4rem; }
-.btn-terra:hover { background: #a8492d; border-color: #a8492d; color: #fff; }
-.btn-blue { background: var(--blue); border-color: var(--blue); color: #fff; border-radius: 8px; }
-.btn-blue:hover { background: #2d5570; border-color: #2d5570; color: #fff; }
-.btn-outline-terra { border-color: var(--terra); color: var(--terra); border-radius: 8px; }
-.btn-outline-terra:hover { background: var(--terra); color: #fff; }
-
-/* TOAST */
-.toast-di { position: fixed; top: 80px; right: 20px; padding: 0.9rem 1.3rem; border-radius: 8px; color: #fff; z-index: 9999; font-size: 0.88rem; box-shadow: 0 4px 16px rgba(0,0,0,0.2); animation: slideIn 0.3s ease; }
-@keyframes slideIn { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:translateX(0); } }
+.eval-block { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 1.3rem; margin-top: 2.2rem; }
+.eval-block h2 { font-family: 'Fraunces', serif; font-size: 1.15rem; margin-bottom: 0.3rem; }
+.eval-sub { font-size: 0.8rem; color: var(--ink-muted); margin-bottom: 1.1rem; }
+.eval-q { font-size: 0.92rem; font-weight: 500; margin: 1.2rem 0 0.6rem; }
+.eval-option { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.6rem 0.8rem; border: 1px solid var(--border); border-radius: 3px; margin-bottom: 0.45rem; cursor: pointer; font-size: 0.87rem; background: var(--paper); transition: border-color 0.15s; }
+.eval-option:hover { border-color: var(--mc); }
+.eval-option input { accent-color: var(--mc); margin-top: 0.2rem; }
+.eval-option.correct { border-color: var(--done); background: var(--done-soft); }
+.eval-option.incorrect { border-color: #A83232; background: #F5E5E2; }
+.eval-submit { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; background: var(--mc); color: #fff; border: none; border-radius: 3px; padding: 0.7rem 1.4rem; cursor: pointer; margin-top: 1.2rem; }
+.eval-submit:disabled { opacity: 0.5; cursor: default; }
+.eval-counter { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: var(--ink-muted); margin-top: 0.5rem; }
+.result-card { display: none; margin-top: 1.2rem; padding: 1.1rem; border-radius: 4px; text-align: center; }
+.result-card.show { display: block; }
+.result-score { font-family: 'Fraunces', serif; font-size: 1.7rem; font-weight: 600; }
+.next-nav { display: flex; justify-content: space-between; margin-top: 2.5rem; padding-top: 1.2rem; border-top: 1px solid var(--border); font-size: 0.86rem; }
+.next-nav a { color: var(--mc); font-weight: 500; text-decoration: none; }
+.next-nav .disabled { color: var(--ink-muted); }
+.modulo-fin { background: linear-gradient(135deg, var(--mc), #8A6318); color: #fff; border-radius: 6px; padding: 1.4rem; margin-top: 2rem; text-align: center; }
+.modulo-fin h3 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.15rem; margin-bottom: 0.4rem; }
+.modulo-fin p { font-size: 0.88rem; opacity: 0.95; margin: 0; }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<div class="header-di">
-  <div class="container-fluid px-3">
-    <div class="d-flex align-items-center justify-content-between">
-      <div class="d-flex align-items-center gap-3">
-        <a href="../index.html" class="btn-back"><i class="bi bi-arrow-left me-1"></i>Inicio</a>
-        <div>
-          <div class="course-name">Diseño Instruccional</div>
-          <div class="unit-name">Módulo 4 · Unidad 4.3</div>
-        </div>
-      </div>
-      <div class="d-none d-md-flex align-items-center gap-2">
-        <span id="headerProgress" style="font-size:0.8rem;color:#a09a94"></span>
-      </div>
-    </div>
+<div class="topbar">
+  <a class="back" href="../index.html">← Ruta de aprendizaje</a>
+  <div class="gami-chips">
+    <span id="gamiNivel">Nivel 1 · Boceto</span>
+    <span id="gamiPoints">0 pts</span>
+    <span id="gamiStreak">0 días</span>
   </div>
 </div>
 
-<div class="container-fluid px-3 py-4" style="max-width:1200px;margin:0 auto">
-  <div class="row g-4">
+<div class="layout">
+  <aside class="sidebar">
+    <h6>Módulo 4</h6>
+    <div class="sidebar-sub">Implementación técnica</div>
+    <a class="side-item" href="m4-1.html"><span class="side-mark">4.1</span> LMS, SCORM, xAPI, SLA</a>
+    <a class="side-item" href="m4-2.html"><span class="side-mark">4.2</span> Herramientas de autoría</a>
+    <a class="side-item active" href="m4-3.html"><span class="side-mark">4.3</span> Multimedia con IA</a>
+    <div class="side-toc">
+      <div class="toc-label">En esta unidad</div>
+      <a href="#s1">1 · Tipos de recursos multimedia</a>
+      <a href="#s2">2 · Herramientas de IA para producción</a>
+      <a href="#s3">3 · Aplicar Mayer en la práctica</a>
+      <a href="#s4">4 · Guion y producción de video</a>
+      <a href="#s5">5 · Edición y post-producción</a>
+      <a href="#s6">6 · Checklist de calidad final</a>
+      <a href="#practica">Práctica de entrevista</a>
+      <a href="#evaluacion">Evaluación (10)</a>
+    </div>
+  </aside>
 
-    <!-- SIDEBAR -->
-    <div class="col-lg-3">
-      <div class="sidebar-di">
-        <div class="sidebar-header">
-          <h6>Módulo 4</h6>
-          <p>Herramientas para el DI</p>
-        </div>
-        <a class="lesson-item" href="m4-1.html">
-          <div class="lesson-num" id="num-m4-1">1</div>
-          <div class="lesson-info"><strong>Herramientas de autoría</strong><span>Storyline · Rise · H5P · Genially</span></div>
-        </a>
-        <a class="lesson-item" href="m4-2.html">
-          <div class="lesson-num" id="num-m4-2">2</div>
-          <div class="lesson-info"><strong>Herramientas de análisis</strong><span>PowerBI · GA4 · reportes Moodle</span></div>
-        </a>
-        <a class="lesson-item active" onclick="scrollToTop()">
-          <div class="lesson-num">3</div>
-          <div class="lesson-info"><strong>Producción multimedia</strong><span>Camtasia · OBS · Loom · Synthesia · HeyGen</span></div>
-        </a>
-        <a class="lesson-item" href="m4-4.html">
-          <div class="lesson-num" id="num-m4-4">4</div>
-          <div class="lesson-info"><strong>Colaboración y gestión</strong><span>Miro · Trello · Notion</span></div>
-        </a>
-        <div class="sidebar-progress">
-          <div class="d-flex justify-content-between mb-1">
-            <small style="color:var(--muted);font-size:0.75rem">Módulo 4</small>
-            <small id="sidebarPct" style="color:var(--terra);font-size:0.75rem;font-weight:bold">0/4</small>
+  <main>
+    <div class="unit-eyebrow">Módulo 4 · Unidad 4.3</div>
+    <h1 class="lesson-title">Producción multimedia y video con IA</h1>
+    <p class="lesson-dek">Cierre del módulo técnico: cómo producir recursos reales — video, voz, imagen — aplicando los principios de Mayer (1.4) y usando IA generativa para acelerar sin sacrificar calidad pedagógica.</p>
+    <div class="lesson-badges">
+      <span class="lbadge">6 bloques de contenido</span>
+      <span class="lbadge">1 actividad interactiva</span>
+      <span class="lbadge">3 prácticas de entrevista</span>
+      <span class="lbadge">10 preguntas de evaluación</span>
+      <span class="lbadge">~40 min</span>
+    </div>
+
+    <div class="objetivo-box">
+      <div class="label">Objetivo de aprendizaje</div>
+      <p>Serás capaz de producir un recurso multimedia (video narrado o presentación animada) aplicando los principios de Mayer, seleccionando herramientas de IA generativa apropiadas para cada etapa de producción, y verificando su calidad con un checklist antes de publicar.</p>
+    </div>
+
+    <div class="mapa-block">
+      <div class="mapa-head">Mapa de esta unidad · organizador previo</div>
+      <div class="mapa-body">
+        <svg width="100%" viewBox="0 0 680 200" style="display:block" role="img" aria-label="Mapa de producción multimedia con IA">
+          <rect x="255" y="10" width="170" height="44" rx="5" fill="#F1E5CC" stroke="#B9862C" stroke-width="1.4"/>
+          <text x="340" y="29" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1C1A17">Producción multimedia</text>
+          <text x="340" y="46" text-anchor="middle" font-family="monospace" font-size="9" fill="#B9862C">guion → producción → QA</text>
+          <line x1="340" y1="54" x2="115" y2="115" stroke="#D8D1C0"/><line x1="340" y1="54" x2="340" y2="115" stroke="#D8D1C0"/><line x1="340" y1="54" x2="565" y2="115" stroke="#D8D1C0"/>
+          <rect x="30" y="115" width="170" height="50" rx="5" fill="#F8F6F1" stroke="#2A5CAA" stroke-width="1.2"/>
+          <text x="115" y="135" text-anchor="middle" font-family="Georgia,serif" font-size="12.5" fill="#1C1A17">Herramientas IA</text>
+          <text x="115" y="152" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#2A5CAA">voz · avatar · video</text>
+          <rect x="255" y="115" width="170" height="50" rx="5" fill="#F8F6F1" stroke="#2A5CAA" stroke-width="1.2"/>
+          <text x="340" y="135" text-anchor="middle" font-family="Georgia,serif" font-size="12.5" fill="#1C1A17">Principios de Mayer</text>
+          <text x="340" y="152" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#2A5CAA">unidad 1.4</text>
+          <rect x="480" y="115" width="170" height="50" rx="5" fill="#F8F6F1" stroke="#2A5CAA" stroke-width="1.2"/>
+          <text x="565" y="135" text-anchor="middle" font-family="Georgia,serif" font-size="12.5" fill="#1C1A17">Checklist de calidad</text>
+          <text x="565" y="152" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#2A5CAA">antes de publicar</text>
+        </svg>
+      </div>
+      <div class="mapa-note">Esta unidad cierra el círculo del Módulo 4: storyboard (3.2) → herramienta de autoría (4.2) → recursos multimedia (aquí) → publicación SCORM (4.1).</div>
+    </div>
+
+    <div class="media-block">
+      <div class="media-tabs">
+        <button class="media-tab active" data-pane="pdf" onclick="switchMedia(this)">📑 Presentación</button>
+        <button class="media-tab" data-pane="audio" onclick="switchMedia(this)">🎧 Audio NotebookLM</button>
+        <button class="media-tab" data-pane="video" onclick="switchMedia(this)">▶ Video</button>
+      </div>
+      <div class="media-pane active" id="pane-pdf"><div id="pdfContainer"><div class="media-pending">Presentación en preparación — se activará al agregar <strong>m4-3.pdf</strong>.</div></div></div>
+      <div class="media-pane" id="pane-audio"><div id="audioContainer"><div class="media-pending">Audio en preparación — se activará al agregar <strong>m4-3-audio.mp3</strong>.</div></div></div>
+      <div class="media-pane" id="pane-video"><div id="videoContainer"><div class="media-pending">Video en preparación — pega el ID en <strong>YT_VIDEO_ID</strong> dentro del archivo.</div></div></div>
+      <div class="media-note">Misma unidad, varios formatos (DUA pauta 1). El texto completo está siempre visible abajo.</div>
+    </div>
+
+    <!-- S1 -->
+    <div class="content-section" id="s1">
+      <h2><span class="sec-num">01</span> Tipos de recursos multimedia en e-learning</h2>
+      <p>No todo recurso multimedia es un "video". Los formatos más comunes que un DI produce o encarga:</p>
+      <ul>
+        <li><strong>Video narrado</strong> — explicación con voz sobre imágenes, animación o grabación de pantalla</li>
+        <li><strong>Video con avatar/presentador IA</strong> — una figura que "habla" el guion, sin grabar cámara real</li>
+        <li><strong>Infografía animada</strong> — datos o procesos que se revelan progresivamente</li>
+        <li><strong>Simulación interactiva</strong> — el estudiante actúa, no solo observa (conecta con 4.2)</li>
+        <li><strong>Podcast/audio educativo</strong> — como tus resúmenes de NotebookLM, formato de bajo costo y alto valor auditivo</li>
+      </ul>
+    </div>
+
+    <!-- S2 -->
+    <div class="content-section" id="s2">
+      <h2><span class="sec-num">02</span> Herramientas de IA para producción</h2>
+      <p>El panorama de IA aplicada a producción multimedia creció rápido. Categorías principales, sin listar marcas específicas que cambian constantemente:</p>
+      <div class="ia-tools">
+        <div class="ia-tool"><h4>Voz sintética (text-to-speech)</h4><p>Convierte guion escrito en narración con voz natural, en varios idiomas y acentos. Reemplaza la necesidad de grabar audio profesional para cada actualización de contenido.</p></div>
+        <div class="ia-tool"><h4>Avatares presentadores</h4><p>Generan un "presentador" digital que narra el guion con movimiento labial sincronizado. Útil para dar cara humana sin grabar cámara real cada vez.</p></div>
+        <div class="ia-tool"><h4>Generación/edición de video</h4><p>Desde texto a video corto, o edición automática (cortes, subtítulos, resúmenes) que acelera la post-producción.</p></div>
+        <div class="ia-tool"><h4>Generación de imágenes</h4><p>Ilustraciones o diagramas a partir de descripción textual — útil para recursos visuales cuando no hay banco de imágenes adecuado.</p></div>
+      </div>
+      <div class="nota alerta"><span class="nota-tag">Criterio, no solo herramienta</span>Estas herramientas aceleran producción, pero no reemplazan el criterio pedagógico: un avatar con voz perfecta que viola el principio de redundancia (leyendo texto idéntico en pantalla) sigue siendo un mal diseño. La IA produce más rápido; tú sigues siendo responsable de que sea efectivo.</div>
+    </div>
+
+    <!-- S3 -->
+    <div class="content-section" id="s3">
+      <h2><span class="sec-num">03</span> Aplicar los principios de Mayer en la práctica</h2>
+      <p>Retomando la unidad 1.4: al producir con estas herramientas, cada principio se vuelve una instrucción concreta que le das a la herramienta o revisas en el resultado:</p>
+      <table class="compare-table">
+        <tr><th>Principio (unidad 1.4)</th><th>Instrucción práctica al producir</th></tr>
+        <tr><td>Coherencia</td><td>Al generar imágenes con IA, pide composiciones simples — rechaza las que añaden elementos decorativos innecesarios</td></tr>
+        <tr><td>Modalidad</td><td>Usa voz sintética narrando sobre la imagen, en vez de generar video con texto grande en pantalla</td></tr>
+        <tr><td>Redundancia</td><td>Si generas subtítulos automáticos, verifica que sean opcionales (accesibilidad) y no dupliquen literalmente lo narrado en pantalla central</td></tr>
+        <tr><td>Segmentación</td><td>Pide a la herramienta de edición cortar el video en segmentos de 2-3 minutos, no un bloque largo continuo</td></tr>
+        <tr><td>Personalización</td><td>Ajusta el prompt del guion o de la voz sintética a un tono conversacional, no un locutor formal y distante</td></tr>
+      </table>
+    </div>
+
+    <!-- S4 -->
+    <div class="content-section" id="s4">
+      <h2><span class="sec-num">04</span> Guion y producción de video — paso a paso</h2>
+      <ol>
+        <li><strong>Parte del storyboard</strong> (3.2) — el guion no se improvisa, ya está definido ahí</li>
+        <li><strong>Redacta el guion narrado final</strong>, en tono conversacional (principio de personalización)</li>
+        <li><strong>Genera la narración</strong> con voz sintética, o graba tú misma si el proyecto lo amerita</li>
+        <li><strong>Produce o selecciona el material visual</strong> — animación, imágenes generadas, capturas reales — siguiendo coherencia y contigüidad</li>
+        <li><strong>Sincroniza audio e imagen</strong> respetando contigüidad temporal — que lo que se dice y lo que se ve coincidan en el tiempo</li>
+        <li><strong>Exporta en segmentos</strong> si el video es largo, aplicando segmentación</li>
+      </ol>
+      <div class="vineta">
+        <div class="vineta-head">Viñeta de taller · corrige el video generado por IA</div>
+        <div class="vineta-body">Generas un video con avatar IA a partir de tu guion. El resultado tiene: subtítulos automáticos idénticos a la narración, un fondo con animación decorativa constante, y dura 12 minutos sin cortes. <strong>¿Qué tres principios de Mayer corriges antes de publicar?</strong></div>
+        <button class="vineta-reveal-btn" onclick="revealVineta(this,'v1')">Piénsalo primero → ver resolución</button>
+        <div class="vineta-solution">1) <strong>Redundancia</strong>: subtítulos idénticos a la narración saturan — los dejaría opcionales o resumidos, no forzados. 2) <strong>Coherencia</strong>: el fondo animado constante es decoración que roba atención — lo elimino o lo dejo estático. 3) <strong>Segmentación</strong>: 12 minutos sin cortes es demasiado — lo divido en 3-4 segmentos de video controlables por el estudiante.</div>
+      </div>
+    </div>
+
+    <!-- S5 -->
+    <div class="content-section" id="s5">
+      <h2><span class="sec-num">05</span> Edición y post-producción básica</h2>
+      <p>No necesitas ser editora de video profesional, pero sí saber qué pedir o ajustar:</p>
+      <ul>
+        <li><strong>Cortes limpios</strong> — sin silencios largos ni muletillas si grabaste voz real</li>
+        <li><strong>Subtítulos accesibles</strong> — activables/desactivables, no siempre visibles por defecto (evita redundancia forzada)</li>
+        <li><strong>Marcadores de capítulo</strong> — si el video es largo, permite saltar a secciones (apoya segmentación)</li>
+        <li><strong>Verificación de audio</strong> — volumen parejo, sin ruido de fondo residual de herramientas de IA mal configuradas</li>
+      </ul>
+    </div>
+
+    <!-- S6 -->
+    <div class="content-section" id="s6">
+      <h2><span class="sec-num">06</span> Checklist de calidad antes de publicar</h2>
+      <p>Marca cada ítem al revisar tu propio recurso — cada uno conecta con un principio ya visto:</p>
+      <div class="qa-checklist" id="qaChecklist"></div>
+    </div>
+
+    <div class="activity">
+      <h2>Actividad — Detecta la violación de Mayer</h2>
+      <div class="act-sub">Cada video generado con IA tiene un problema. Identifica qué principio de Mayer viola.</div>
+      <div id="actRoot"></div>
+      <div class="act-progress" id="actProgress"></div>
+    </div>
+
+    <div class="callout ia">
+      <div class="callout-header">🖌 IA en esta fase</div>
+      <div class="callout-body">
+        <div class="capa">＋ Toca para levantar la capa</div>
+        <p>Esta unidad completa es sobre usar IA en producción, así que el consejo aquí es de uso crítico:</p>
+        <p>• Genera un primer borrador rápido con voz sintética o avatar, pero siempre revísalo contra el checklist de Mayer antes de publicar — la velocidad de generación no exime la revisión pedagógica.</p>
+        <p>• Pide variantes de tono (formal/conversacional) y elige según tu audiencia, no automáticamente la primera opción.</p>
+        <p>• Para imágenes generadas, verifica que no introduzcan sesgos o representaciones poco cuidadosas — revisa antes de usar en un curso real.</p>
+      </div>
+    </div>
+
+    <div class="callout entrevista">
+      <div class="callout-header">🎤 Nota de entrevista</div>
+      <div class="callout-body">
+        <div class="capa">＋ Toca para levantar la capa</div>
+        <p>Pregunta probable: "¿usas IA para producir video?" Responde mostrando criterio, no solo entusiasmo: "sí, para acelerar voz y primer borrador visual, pero siempre reviso el resultado contra los principios de Mayer — coherencia, redundancia, segmentación — antes de publicar. La IA produce rápido, pero la calidad pedagógica sigue siendo mi responsabilidad."</p>
+        <p>Esta respuesta te posiciona como alguien que usa IA con criterio profesional, justo el eje de la unidad 5.3 que cierra este curso.</p>
+      </div>
+    </div>
+
+    <div class="content-section" id="practica">
+      <h2><span class="sec-num">◆</span> Practica como en una entrevista</h2>
+      <p>Responde primero con tus propias palabras — <strong>en voz alta o por escrito</strong> — antes de revelar la respuesta modelo. Luego marca el checklist.</p>
+
+      <div class="practica">
+        <div class="practica-head"><div class="p-num">Práctica 1</div><div class="p-q">"¿Cómo produces un video educativo con IA sin perder calidad pedagógica?"</div></div>
+        <div class="practica-body">
+          <textarea placeholder="Tu respuesta…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p1','p1')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p1">"Parto del storyboard con el guion ya definido. Uso voz sintética o avatar para acelerar la narración, pero reviso el resultado contra los principios de Mayer: que no haya redundancia entre subtítulos y narración, que el video esté segmentado, que el fondo no distraiga. La IA me da velocidad de producción, pero el criterio de calidad sigue siendo mío."</div>
+          <div class="checklist"><div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1a')"> ¿Mencionaste que partes del storyboard?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1b')"> ¿Nombraste al menos dos principios de Mayer?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1c')"> ¿Distinguiste velocidad (IA) de criterio (tuyo)?</label>
           </div>
-          <div class="progress-di"><div class="progress-di-fill" id="sidebarBar" style="width:0%"></div></div>
         </div>
-        <div class="sidebar-footer">
-          <a href="../index.html" style="font-size:0.8rem;color:var(--muted);text-decoration:none"><i class="bi bi-grid me-1"></i>Ver todos los módulos</a>
+      </div>
+
+      <div class="practica">
+        <div class="practica-head"><div class="p-num">Práctica 2</div><div class="p-q">"Un video generado con IA tiene subtítulos idénticos a la narración. ¿Cuál es el problema y cómo lo arreglas?"</div></div>
+        <div class="practica-body">
+          <textarea placeholder="Tu respuesta…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p2','p2')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p2">"Viola el principio de redundancia de Mayer — leer y escuchar exactamente lo mismo satura la memoria de trabajo en vez de reforzar. Lo arreglaría dejando los subtítulos opcionales (importante para accesibilidad) pero no forzados por defecto, o resumiéndolos a palabras clave en vez de transcripción completa."</div>
+          <div class="checklist"><div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2a')"> ¿Nombraste redundancia específicamente?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2b')"> ¿Mencionaste la accesibilidad como matiz?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2c')"> ¿Diste una solución concreta?</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="practica">
+        <div class="practica-head"><div class="p-num">Práctica 3</div><div class="p-q">"¿Qué riesgos ves en usar avatares IA para todos tus videos de curso?"</div></div>
+        <div class="practica-body">
+          <textarea placeholder="Tu respuesta…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p3','p3')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p3">"El riesgo principal es homogeneidad — si todos los cursos usan el mismo tipo de avatar y voz, se pierde identidad y el estudiante puede desconectarse por monotonía. También hay que revisar que la voz y el ritmo mantengan el principio de personalización, no sonar robótico o distante. Los uso para contenido de actualización rápida, pero para piezas clave del curso prefiero mantener un toque más humano o personalizado."</div>
+          <div class="checklist"><div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3a')"> ¿Identificaste un riesgo real, no solo ventajas?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3b')"> ¿Conectaste con personalización (Mayer)?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3c')"> ¿Diste un criterio de cuándo sí/no usarlo?</label>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- CONTENT -->
-    <div class="col-lg-9">
-      <div class="content-di">
-        <div class="lesson-hero">
-          <div class="unit-tag">Módulo 4 · Unidad 4.3</div>
-          <h1>Producción multimedia y video con IA</h1>
-          <p>Principios multimedia de Mayer · captura y edición de pantalla · avatares de IA generativa · síntesis de contenido con NotebookLM · del guion a la exportación</p>
-        </div>
-        <div class="lesson-badges">
-          <span class="lbadge"><i class="bi bi-book me-1"></i>7 bloques de contenido</span>
-          <span class="lbadge"><i class="bi bi-chat-square-text me-1"></i>3 preguntas de práctica oral</span>
-          <span class="lbadge"><i class="bi bi-clipboard-check me-1"></i>8 preguntas de certificación</span>
-          <span class="lbadge"><i class="bi bi-clock me-1"></i>~60 min</span>
-        </div>
+    <div class="eval-block" id="evaluacion">
+      <h2>Evaluación — Unidad 4.3</h2>
+      <div class="eval-sub">10 preguntas. El puntaje se guarda en tu ruta. Puedes reintentar sin límite.</div>
+      <div id="quizRoot"></div>
+      <div class="eval-counter" id="quizCounter">Respondidas: 0/10</div>
+      <button class="eval-submit" id="quizSubmit" onclick="submitQuiz()" disabled>Enviar evaluación</button>
+      <div class="result-card" id="resultCard"><div class="result-score" id="resultScore">0%</div><div id="resultMsg" style="font-size:0.85rem;color:var(--ink-muted);margin-top:0.3rem;"></div></div>
+    </div>
 
-        <div class="lesson-body">
+    <div class="modulo-fin" id="moduloFin" style="display:none">
+      <h3>🎨 Módulo 4 completo</h3>
+      <p>Terminaste Implementación técnica. Ya sabes empaquetar, construir y producir — sigue con el Módulo 5: Gestión, impacto e IA crítica.</p>
+    </div>
 
-          <!-- MAPA CONCEPTUAL (organizador previo) -->
-          <div class="presentacion mb-4">
-            <div class="presentacion-head">
-              <div class="pres-title"><i class="bi bi-diagram-3"></i> Mapa de esta unidad</div>
-              <span class="pres-tag">Organizador previo</span>
-            </div>
-            <div style="background:#fff;padding:1.2rem">
-              <svg width="100%" viewBox="0 0 680 460" style="display:block">
-                <line x1="340" y1="192" x2="220" y2="96" stroke="#ddd8d0" stroke-width="1"/>
-                <line x1="340" y1="192" x2="460" y2="96" stroke="#ddd8d0" stroke-width="1"/>
-                <line x1="260" y1="220" x2="210" y2="220" stroke="#ddd8d0" stroke-width="1"/>
-                <line x1="420" y1="220" x2="470" y2="220" stroke="#ddd8d0" stroke-width="1"/>
-                <line x1="340" y1="248" x2="340" y2="360" stroke="#ddd8d0" stroke-width="1"/>
-                <rect x="245" y="192" width="190" height="56" rx="8" fill="#f7ede8" stroke="#c85c3a" stroke-width="1"/>
-                <text x="340" y="212" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Producción multimedia</text>
-                <text x="340" y="230" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#c85c3a">unidad 4.3</text>
-                <rect x="40" y="40" width="190" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="135" y="60" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Fundamento (Mayer)</text>
-                <text x="135" y="78" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">por qué importa el video</text>
-                <rect x="450" y="40" width="190" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="545" y="60" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Flujo de producción</text>
-                <text x="545" y="78" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">del guion a la exportación</text>
-                <rect x="20" y="192" width="190" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="115" y="212" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Catálogo de herramientas</text>
-                <text x="115" y="230" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">Camtasia, Loom, Synthesia, NotebookLM</text>
-                <rect x="470" y="192" width="190" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="565" y="212" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Ética con avatares IA</text>
-                <text x="565" y="230" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">transparencia</text>
-                <rect x="250" y="360" width="180" height="56" rx="8" fill="#e8f0f5" stroke="#3a6b8a" stroke-width="1"/>
-                <text x="340" y="380" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#0f1117">Checklist de calidad</text>
-                <text x="340" y="398" text-anchor="middle" font-family="Calibri,sans-serif" font-size="11" fill="#3a6b8a">antes de publicar</text>
-              </svg>
-              <p style="font-size:0.8rem;color:var(--muted);text-align:center;margin-top:0.5rem">La IA generativa (Synthesia, HeyGen) hace más accesible producir video, pero no reemplaza el criterio pedagógico de Mayer ni la responsabilidad ética de declarar su uso.</p>
-            </div>
-          </div>
+    <div class="next-nav">
+      <a href="m4-2.html">← 4.2 Herramientas de autoría</a>
+      <a href="m5-1.html">5.1 Herramientas de análisis →</a>
+    </div>
+  </main>
+</div>
 
-          <div class="presentacion">
-            <div class="presentacion-head">
-              <div class="pres-title"><i class="bi bi-easel2"></i> Presentación del tema <span class="pres-tag">Próximamente</span></div>
-            </div>
-            <div class="presentacion-viewer">
-              <div class="pres-placeholder">
-                <i class="bi bi-file-earmark-slides"></i>
-                <p>Material audiovisual en preparación</p>
-                <small>Por ahora, revisa el contenido en los bloques de esta unidad.</small>
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-di">
-            <button class="accordion-di-btn open" onclick="toggleAcc(this)">
-              <i class="bi bi-info-circle acc-icon"></i> Fundamento: por qué el video importa en e-learning (y los principios de Mayer)
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body show">
-              <p>Producir multimedia no es "grabar la pantalla" — es aplicar principios de diseño que determinan si el video ayuda a aprender o solo entretiene. El marco de referencia más citado en la industria es la <strong>teoría cognitiva del aprendizaje multimedia de Richard Mayer</strong>, construida sobre la misma carga cognitiva de Sweller que viste en la Unidad 1.3: la memoria de trabajo es limitada, así que el diseño multimedia tiene que evitar saturarla con información irrelevante o mal organizada.</p>
-
-              <h5>Los principios de Mayer que un DI aplica todos los días</h5>
-              <table class="table table-di table-bordered mt-2">
-                <thead><tr><th>Principio</th><th>Qué dice</th><th>Cómo se aplica al producir</th></tr></thead>
-                <tbody>
-                  <tr><td><strong>Coherencia</strong></td><td>Eliminar palabras, imágenes y sonidos que no aportan al objetivo</td><td>Sin música de fondo decorativa, sin clip art irrelevante, sin datos "interesantes" que distraen</td></tr>
-                  <tr><td><strong>Señalización</strong></td><td>Resaltar la información clave con pistas visuales</td><td>Flechas, recuadros, zoom en la parte de la pantalla que importa al grabar un software</td></tr>
-                  <tr><td><strong>Redundancia</strong></td><td>No repetir en texto exactamente lo mismo que se narra en audio</td><td>Evitar diapositivas con párrafos completos leídos palabra por palabra por la voz</td></tr>
-                  <tr><td><strong>Contigüidad espacial/temporal</strong></td><td>Texto e imagen relacionados van juntos, en el mismo momento</td><td>El rótulo de un botón aparece junto al botón cuando se menciona, no antes ni en otra pantalla</td></tr>
-                  <tr><td><strong>Modalidad</strong></td><td>Narración en audio + imagen es mejor que texto en pantalla + imagen</td><td>Preferir voz en off explicando una animación en vez de subtítulos largos simultáneos</td></tr>
-                  <tr><td><strong>Segmentación</strong></td><td>Dividir en segmentos cortos que el usuario controla, no un flujo continuo forzado</td><td>Videos de 3-6 min con pausas naturales, no un tutorial de 40 minutos sin cortes</td></tr>
-                </tbody>
-              </table>
-              <div class="callout-terra mt-2">
-                <strong>Para entrevistas:</strong> si te preguntan "¿por qué tus videos son cortos?", la respuesta con peso técnico es citar segmentación y carga cognitiva, no "porque a la gente le da paja". Nombrar el principio es lo que distingue a alguien que diseña de alguien que solo usa el software.
-              </div>
-              <div class="callout-blue">
-                <strong>Conexión con el resto del curso:</strong> esto es la misma lógica de carga cognitiva de la Unidad 1.3, aplicada específicamente al canal audiovisual. Las herramientas de este bloque (Camtasia, OBS, Synthesia, HeyGen) son solo el medio para ejecutar estos principios — el criterio pedagógico va primero.
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-bullseye acc-icon"></i> El flujo de producción: del guion a la exportación
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p>Grabar sin guion es la causa número uno de videos malos y de horas de reedición. Un DI que produce multimedia profesionalmente sigue un flujo con etapas claras, sea cual sea la herramienta final:</p>
-              <div class="card-di"><h6><i class="bi bi-1-circle me-1"></i>Guion o storyboard</h6><p>Se escribe qué se dice, qué se muestra en pantalla en simultáneo y cuánto dura cada segmento. Sin esto, la grabación se alarga y el video queda sin foco (ver Unidad 4.1 para el storyboard como artefacto formal).</p></div>
-              <div class="card-di"><h6><i class="bi bi-2-circle me-1"></i>Captura o generación</h6><p>Grabación de pantalla/cámara (OBS, Camtasia, Loom) o generación por IA a partir del guion (Synthesia, HeyGen) — la decisión depende de si se necesita un presentador humano real o basta un avatar.</p></div>
-              <div class="card-di"><h6><i class="bi bi-3-circle me-1"></i>Edición</h6><p>Cortes, señalización visual (flechas, zoom, resaltados), subtítulos, eliminación de silencios y muletillas. Aquí se aplican los principios de coherencia y señalización de Mayer.</p></div>
-              <div class="card-di"><h6><i class="bi bi-4-circle me-1"></i>Exportación e integración</h6><p>Formato y resolución según destino (LMS, YouTube no listado, H5P Interactive Video), y verificación de que cargue bien en el ancho de banda típico de la audiencia.</p></div>
-              <h5>Criterios para elegir la herramienta correcta en cada etapa</h5>
-              <table class="table table-di table-bordered mt-2">
-                <thead><tr><th>Necesidad</th><th>Herramienta recomendada</th></tr></thead>
-                <tbody>
-                  <tr><td>Tutorial de software con edición prolija (llamadas, transiciones, zoom automático)</td><td>Camtasia</td></tr>
-                  <tr><td>Grabación de pantalla o webinar sin costo, con más control técnico (escenas, múltiples fuentes)</td><td>OBS Studio</td></tr>
-                  <tr><td>Video rápido y asíncrono para feedback o explicación puntual, sin edición</td><td>Loom</td></tr>
-                  <tr><td>Video con presentador "en cámara" sin grabar a una persona real, o para actualizar contenido sin re-grabar</td><td>Synthesia o HeyGen (avatar de IA)</td></tr>
-                  <tr><td>Sintetizar documentación extensa de un SME antes de escribir el guion</td><td>NotebookLM</td></tr>
-                </tbody>
-              </table>
-              <div class="callout-blue mt-2">
-                <strong>Mensaje clave para entrevista:</strong> nombrar el flujo completo (guion → captura → edición → exportación) y explicar el criterio de elección de herramienta pesa más que decir "sé usar Camtasia". Demuestra proceso, no solo manejo de software.
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-1-circle acc-icon"></i> Catálogo · Camtasia y OBS Studio: captura y edición de pantalla
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <div class="tool-di">
-                <div class="tool-di-head">
-                  <h6><i class="bi bi-camera-video me-2" style="color:var(--terra)"></i>Camtasia (TechSmith)</h6>
-                  <span class="tool-price">Licencia perpetua ~US$299 (individual) o suscripción ~US$179/año</span>
-                </div>
-                <a class="tool-link" href="https://www.techsmith.com/video-editor.html" target="_blank" rel="noopener"><i class="bi bi-box-arrow-up-right me-1"></i>techsmith.com/video-editor.html</a>
-                <div class="tool-grid">
-                  <div><strong>Versión gratuita</strong>Trial de 30 días, sin versión gratuita permanente</div>
-                  <div><strong>Límites principales</strong>De pago; más simple que un editor de video profesional (Premiere), pero eso es justamente su ventaja para DI</div>
-                  <div style="grid-column:1/-1"><strong>Uso típico en DI</strong>El estándar para tutoriales de software: graba pantalla + cámara + audio a la vez, y su editor está pensado para señalización pedagógica (zoom automático a la zona de clic, resaltados, transiciones simples, subtítulos automáticos editables).</div>
-                </div>
-              </div>
-              <div class="tool-di">
-                <div class="tool-di-head">
-                  <h6><i class="bi bi-record-circle me-2" style="color:var(--terra)"></i>OBS Studio</h6>
-                  <span class="tool-price">Gratis (open source)</span>
-                </div>
-                <a class="tool-link" href="https://obsproject.com" target="_blank" rel="noopener"><i class="bi bi-box-arrow-up-right me-1"></i>obsproject.com</a>
-                <div class="tool-grid">
-                  <div><strong>Versión gratuita</strong>Completamente gratis, sin límites de funcionalidad</div>
-                  <div><strong>Límites principales</strong>No tiene editor de video integrado — solo graba/transmite; la edición se hace en otra herramienta después</div>
-                  <div style="grid-column:1/-1"><strong>Uso típico en DI</strong>Grabación de webinars o clases en vivo, múltiples fuentes simultáneas (pantalla + cámara + diapositivas) mediante "escenas". Es la opción cuando no hay presupuesto pero se necesita más control técnico que Loom.</div>
-                </div>
-              </div>
-              <div class="callout-terra mt-2">
-                <strong>Cuándo usar cuál:</strong> Camtasia cuando el video necesita edición prolija (señalización, cortes, subtítulos) y hay presupuesto; OBS cuando la prioridad es grabar con múltiples fuentes sin costo y la edición se resuelve después con otra herramienta o no es crítica (p. ej. una clase grabada para consulta, no un tutorial pulido).
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-2-circle acc-icon"></i> Catálogo · Loom: video asíncrono rápido
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <div class="tool-di">
-                <div class="tool-di-head">
-                  <h6><i class="bi bi-cursor me-2" style="color:var(--terra)"></i>Loom</h6>
-                  <span class="tool-price">Plan gratuito limitado; Business desde ~US$12,50/usuario/mes</span>
-                </div>
-                <a class="tool-link" href="https://www.loom.com" target="_blank" rel="noopener"><i class="bi bi-box-arrow-up-right me-1"></i>loom.com</a>
-                <div class="tool-grid">
-                  <div><strong>Versión gratuita</strong>Límite de videos y de duración por grabación (varía según plan vigente)</div>
-                  <div><strong>Límites principales</strong>Edición muy básica; no reemplaza a Camtasia para producción pulida</div>
-                  <div style="grid-column:1/-1"><strong>Uso típico en DI</strong>Explicaciones rápidas sin guion elaborado: feedback en video a un SME, una aclaración puntual, una demo corta para el equipo. Genera un link inmediato, sin exportar ni subir a otra plataforma — velocidad por sobre pulido.</div>
-                </div>
-              </div>
-              <div class="callout-blue mt-2">
-                <strong>Distinción clave para entrevistas:</strong> Loom no compite con Camtasia — resuelve un problema distinto. Camtasia produce el <em>entregable final</em> del curso; Loom resuelve comunicación interna rápida durante el proceso de producción (por ejemplo, explicarle a un SME por qué su guion necesita ajustes, con capturas de pantalla en tiempo real).
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-3-circle acc-icon"></i> Catálogo · Synthesia y HeyGen: avatares de IA generativa
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p>Estas herramientas generan video con un presentador sintético a partir de un guion de texto: se escribe el texto, se elige un avatar y una voz, y el sistema genera el video con sincronización labial. No requieren cámara, actor ni estudio de grabación.</p>
-              <div class="tool-di">
-                <div class="tool-di-head">
-                  <h6><i class="bi bi-person-video2 me-2" style="color:var(--terra)"></i>Synthesia</h6>
-                  <span class="tool-price">Desde ~US$18-29/mes (plan Starter); planes empresariales más altos</span>
-                </div>
-                <a class="tool-link" href="https://www.synthesia.io" target="_blank" rel="noopener"><i class="bi bi-box-arrow-up-right me-1"></i>synthesia.io</a>
-                <div class="tool-grid">
-                  <div><strong>Versión gratuita</strong>Trial muy limitado; no hay plan gratuito robusto para uso continuo</div>
-                  <div><strong>Límites principales</strong>Minutos de video limitados por plan; el avatar aún puede notarse artificial en gestos complejos</div>
-                  <div style="grid-column:1/-1"><strong>Uso típico en DI</strong>Cursos de compliance o inducción que necesitan traducirse a muchos idiomas rápido, o contenido que se actualiza con frecuencia sin tener que re-contratar talento ni re-grabar.</div>
-                </div>
-              </div>
-              <div class="tool-di">
-                <div class="tool-di-head">
-                  <h6><i class="bi bi-person-bounding-box me-2" style="color:var(--terra)"></i>HeyGen</h6>
-                  <span class="tool-price">Plan gratuito limitado; planes pagos desde ~US$24-29/mes</span>
-                </div>
-                <a class="tool-link" href="https://www.heygen.com" target="_blank" rel="noopener"><i class="bi bi-box-arrow-up-right me-1"></i>heygen.com</a>
-                <div class="tool-grid">
-                  <div><strong>Versión gratuita</strong>Permite probar con minutos y marca de agua limitados</div>
-                  <div><strong>Límites principales</strong>Similar a Synthesia: calidad muy buena pero no indistinguible de un humano real en todos los casos</div>
-                  <div style="grid-column:1/-1"><strong>Uso típico en DI</strong>Alternativa directa a Synthesia, con clonación de voz y avatar personalizado (con consentimiento) como diferenciador — útil si una institución quiere "su propia cara" recurrente sin re-grabar cada vez.</div>
-                </div>
-              </div>
-              <h5>Cuándo SÍ y cuándo NO usar un avatar de IA</h5>
-              <table class="table table-di table-bordered mt-2">
-                <thead><tr><th>Usar avatar de IA</th><th>Grabar a una persona real</th></tr></thead>
-                <tbody>
-                  <tr><td>Contenido que cambia seguido (políticas, precios, normativa)</td><td>Contenido emocional o de alto involucramiento (bienvenida institucional, testimonios)</td></tr>
-                  <tr><td>Multi-idioma sin recontratar talento por versión</td><td>Casos donde la autenticidad del rostro real es parte del mensaje</td></tr>
-                  <tr><td>Presupuesto o tiempo insuficiente para producción en cámara</td><td>Instituciones con políticas explícitas contra IA generativa en su imagen institucional</td></tr>
-                </tbody>
-              </table>
-              <div class="callout-terra mt-2">
-                <strong>Para entrevista:</strong> mostrar que conoces la distinción "cuándo sí / cuándo no" —no solo que sabes usar la herramienta— es lo que separa a alguien que aplica IA con criterio de alguien que la usa porque está de moda.
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-4-circle acc-icon"></i> Catálogo · NotebookLM: de la documentación del SME al guion
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <div class="tool-di">
-                <div class="tool-di-head">
-                  <h6><i class="bi bi-journal-text me-2" style="color:var(--terra)"></i>NotebookLM (Google)</h6>
-                  <span class="tool-price">Gratis; NotebookLM Plus (más capacidad) incluido en algunos planes Google One/Workspace</span>
-                </div>
-                <a class="tool-link" href="https://notebooklm.google.com" target="_blank" rel="noopener"><i class="bi bi-box-arrow-up-right me-1"></i>notebooklm.google.com</a>
-                <div class="tool-grid">
-                  <div><strong>Versión gratuita</strong>Funcional para la mayoría de casos de un DI independiente</div>
-                  <div><strong>Límites principales</strong>Solo trabaja sobre las fuentes que se le cargan — no sabe nada fuera de esos documentos, lo cual es una ventaja para evitar alucinaciones</div>
-                  <div style="grid-column:1/-1"><strong>Uso típico en DI</strong>Se cargan los documentos del SME (manuales, políticas, PDFs, transcripciones) y NotebookLM permite hacer preguntas ancladas solo a esas fuentes, generar resúmenes, y crear un "audio overview" tipo podcast que sintetiza el contenido — un insumo excelente para escribir el guion del video.</div>
-                </div>
-              </div>
-              <h5>Dónde encaja en el flujo de producción</h5>
-              <p>NotebookLM no reemplaza el guion — lo acelera en la etapa de análisis (Unidad 3.3): en vez de leer 80 páginas de un manual técnico completo, se cargan al notebook y se le pide una síntesis de los puntos que un principiante necesita para la tarea X. El DI valida esa síntesis con el SME antes de convertirla en guion.</p>
-              <div class="callout-blue mt-2">
-                <strong>Ventaja frente a un chatbot genérico:</strong> al anclarse solo a las fuentes cargadas, el riesgo de alucinación baja significativamente frente a preguntarle a un chat general sin contexto — relevante para el punto de exactitud que viste en la Unidad 3.3.
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-shield-check acc-icon"></i> Ética y transparencia al usar avatares de IA
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p>Usar avatares generados por IA sin criterio es un riesgo institucional, no solo una decisión estética. Los puntos que un DI debe manejar explícitamente, en línea con lo visto en la Unidad 3.3:</p>
-              <div class="card-di"><h6><i class="bi bi-eye me-1"></i>Transparencia con la audiencia</h6><p>Es buena práctica —y en algunos contextos institucionales, obligatorio— declarar cuando un presentador es un avatar de IA, especialmente si el contenido es de compliance o normativo.</p></div>
-              <div class="card-di"><h6><i class="bi bi-person-check me-1"></i>Consentimiento para clonación de voz o rostro</h6><p>Si se usa la imagen o voz real de una persona de la institución (por ejemplo, un docente) para generar un avatar personalizado, se necesita su consentimiento explícito y documentado — no basta con que "sea empleado de la empresa".</p></div>
-              <div class="card-di"><h6><i class="bi bi-emoji-neutral me-1"></i>El riesgo del "valle inquietante"</h6><p>Un avatar casi-pero-no-del-todo natural puede generar rechazo o distraer del contenido en vez de ayudar. Antes de escalar un curso completo a avatares, conviene testear con la audiencia real si el formato funciona.</p></div>
-              <div class="card-di"><h6><i class="bi bi-file-earmark-text me-1"></i>Verificación del guion sigue siendo humana</h6><p>El avatar solo interpreta el texto que se le da — no valida su exactitud. El mismo control de calidad de contenido de la Unidad 3.3 (validación por el SME) aplica igual, o más, porque el error se multiplica en video.</p></div>
-              <div class="callout-terra mt-2">
-                <strong>Para entrevista:</strong> nombrar estos cuatro puntos sin que te los pregunten directamente es una señal fuerte de madurez profesional — demuestra que evalúas riesgos institucionales, no solo que sabes generar un video bonito.
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-di">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)">
-              <i class="bi bi-check2-square acc-icon"></i> Checklist de calidad antes de publicar un video
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p>Antes de subir un video al curso, un DI revisa sistemáticamente estos puntos — es la diferencia entre "producir contenido" y "producir contenido de calidad instruccional":</p>
-              <div class="row g-2 mt-2">
-                <div class="col-md-6"><div class="card-di"><h6>Duración y segmentación</h6><p>¿Está en el rango de 3-6 minutos o dividido en segmentos manejables? (principio de segmentación)</p></div></div>
-                <div class="col-md-6"><div class="card-di"><h6>Subtítulos y accesibilidad</h6><p>¿Tiene subtítulos precisos (no solo automáticos sin revisar) y contraste suficiente en el texto en pantalla?</p></div></div>
-                <div class="col-md-6"><div class="card-di"><h6>Alineamiento</h6><p>¿El contenido del video corresponde exactamente al resultado de aprendizaje que dice apoyar? (mismo test de alineamiento de la Unidad 3.1)</p></div></div>
-                <div class="col-md-6"><div class="card-di"><h6>Calidad técnica</h6><p>¿Audio limpio sin eco ni ruido de fondo, resolución adecuada, sin silencios largos sin editar?</p></div></div>
-              </div>
-              <div class="callout-blue mt-2">
-                <strong>Conexión con tu portafolio:</strong> aplicar este checklist a un video corto que produzcas tú misma (aunque sea con OBS y edición simple) y documentarlo como parte de tu proceso es más valioso en una entrevista que mencionar herramientas que no has usado todavía.
-              </div>
-            </div>
-          </div>
-
-          <!-- AUTOEVALUACIÓN AUTOINSTRUCCIONAL -->
-          <div class="accordion-di" style="border-color:var(--blue)">
-            <button class="accordion-di-btn" onclick="toggleAcc(this)" style="background:var(--blue-light)">
-              <i class="bi bi-chat-square-text acc-icon" style="color:var(--blue)"></i> Practica como en una entrevista
-              <i class="bi bi-chevron-down acc-chevron"></i>
-            </button>
-            <div class="accordion-di-body">
-              <p style="color:var(--muted);font-size:0.85rem">Responde primero con tus propias palabras antes de revelar la respuesta modelo.</p>
-
-              <div class="card-di" style="border-left:3px solid var(--blue)">
-                <h6><i class="bi bi-question-circle me-1"></i>1. Un cliente pide usar un avatar de IA generativa (Synthesia/HeyGen) para todos los videos del curso, sin mencionarlo a los estudiantes. ¿Qué le señalas?</h6>
-                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
-                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
-                  <p style="font-size:0.87rem"><em>"Le señalaría que la transparencia no es opcional: los estudiantes deberían saber que el 'instructor' en pantalla es un avatar generado por IA. No declararlo es un riesgo ético e institucional, no solo una decisión estética. Recomendaría declarar explícitamente su uso en la introducción del curso."</em></p>
-                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
-                  <ul style="font-size:0.83rem;color:var(--muted)">
-                    <li>¿Identificaste la falta de transparencia como el problema central?</li>
-                    <li>¿Explicaste que es un riesgo institucional, no solo estético?</li>
-                    <li>¿Propusiste una acción concreta (declarar el uso)?</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="card-di" style="border-left:3px solid var(--blue)">
-                <h6><i class="bi bi-question-circle me-1"></i>2. ¿Por qué un video de e-learning debería durar 3-6 minutos y no 20, aunque el contenido "lo justifique"?</h6>
-                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
-                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
-                  <p style="font-size:0.87rem"><em>"Por el principio de segmentación de Mayer: la memoria de trabajo tiene límites, y un video largo sin cortes sobrecarga la carga cognitiva sin importar cuánto lo 'justifique' el contenido. Si el tema requiere 20 minutos, lo dividiría en 3-4 segmentos de 5-6 minutos cada uno, con una pausa o actividad entre ellos."</em></p>
-                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
-                  <ul style="font-size:0.83rem;color:var(--muted)">
-                    <li>¿Nombraste el principio de segmentación de Mayer?</li>
-                    <li>¿Propusiste dividir en vez de simplemente acortar el contenido?</li>
-                    <li>¿Conectaste con la carga cognitiva de la Unidad 1.3?</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="card-di" style="border-left:3px solid var(--blue)">
-                <h6><i class="bi bi-question-circle me-1"></i>3. Terminaste de producir un video para tu curso. ¿Qué revisas antes de subirlo, más allá de que "se vea bien"?</h6>
-                <button class="btn btn-sm btn-outline-terra mt-2" onclick="toggleModelo(this)">Ver respuesta modelo</button>
-                <div class="respuesta-modelo" style="display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px dashed var(--border)">
-                  <p style="font-size:0.87rem"><em>"Reviso duración y segmentación, subtítulos revisados (no solo automáticos sin corregir), que el contenido del video corresponda exactamente al objetivo de aprendizaje que dice apoyar, y calidad técnica de audio sin ruido de fondo. 'Se ve bien' no es un criterio — necesito un checklist que verifique alineamiento pedagógico, no solo estética."</em></p>
-                  <p style="font-size:0.83rem;color:var(--muted)"><strong>Checklist de tu respuesta:</strong></p>
-                  <ul style="font-size:0.83rem;color:var(--muted)">
-                    <li>¿Mencionaste el alineamiento con el objetivo de aprendizaje?</li>
-                    <li>¿Nombraste subtítulos revisados, no solo automáticos?</li>
-                    <li>¿Distinguiste "se ve bien" de "calidad instruccional"?</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- EVALUACIÓN -->
-          <div class="eval-section mt-4">
-            <h4><i class="bi bi-clipboard-check me-2" style="color:var(--terra)"></i>Evaluación — Unidad 4.3</h4>
-            <p class="eval-progress-text">Preguntas respondidas: <strong><span id="answeredCount">0</span>/8</strong> — puedes enviar en cualquier momento</p>
-
-            <div class="eval-question" data-question="q1">
-              <h6>1. Un video tiene una diapositiva con un párrafo completo en pantalla, leído palabra por palabra por la narración en off. ¿Qué principio de Mayer se está violando?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q1',1)"><div class="eval-radio"></div><span>Segmentación: el video debería durar más</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',2)"><div class="eval-radio"></div><span>Redundancia: repetir en texto exactamente lo mismo que se narra en audio sobrecarga la memoria de trabajo en vez de ayudarla</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',3)"><div class="eval-radio"></div><span>Ninguno; leer el texto en voz alta siempre refuerza el aprendizaje</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q1',4)"><div class="eval-radio"></div><span>Contigüidad espacial, porque el texto está mal ubicado en la pantalla</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q2">
-              <h6>2. Debes producir un tutorial de software con zoom automático a la zona de clic, resaltados y subtítulos editables, y tienes presupuesto. ¿Qué herramienta calza mejor?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q2',1)"><div class="eval-radio"></div><span>Loom, porque genera un link inmediato</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',2)"><div class="eval-radio"></div><span>Camtasia, porque su editor está pensado específicamente para señalización pedagógica de este tipo</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',3)"><div class="eval-radio"></div><span>NotebookLM, porque sintetiza documentación</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q2',4)"><div class="eval-radio"></div><span>Ninguna herramienta permite zoom automático</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q3">
-              <h6>3. Necesitas grabar sin costo un webinar combinando pantalla, cámara y diapositivas al mismo tiempo, con control técnico de múltiples fuentes. ¿Qué herramienta es la más adecuada y qué limitación clave tiene?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q3',1)"><div class="eval-radio"></div><span>Camtasia, sin ninguna limitación</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',2)"><div class="eval-radio"></div><span>OBS Studio; es gratis y maneja escenas con múltiples fuentes, pero no incluye editor de video integrado</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',3)"><div class="eval-radio"></div><span>Synthesia, porque genera avatares automáticamente</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q3',4)"><div class="eval-radio"></div><span>Loom, porque no tiene límite de duración en ningún plan</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q4">
-              <h6>4. Un colega quiere reemplazar todos los videos del curso por avatares de Synthesia, incluido el video de bienvenida institucional. ¿Cuál es la observación de criterio más importante que deberías hacer?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q4',1)"><div class="eval-radio"></div><span>Ninguna; los avatares de IA siempre son superiores a grabar a una persona real</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',2)"><div class="eval-radio"></div><span>Los avatares rinden mejor en contenido que cambia seguido o multi-idioma; en contenido emocional o de alto involucramiento como una bienvenida institucional, la autenticidad de una persona real suele pesar más</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',3)"><div class="eval-radio"></div><span>Los avatares de IA son ilegales en contexto educativo</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q4',4)"><div class="eval-radio"></div><span>No hay diferencia entre ambos formatos para ningún tipo de contenido</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q5">
-              <h6>5. Un SME te entrega 80 páginas de manual técnico para producir un video de 5 minutos. ¿Cómo usarías NotebookLM correctamente en este flujo?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q5',1)"><div class="eval-radio"></div><span>Cargando el manual como fuente para sintetizar los puntos clave para el guion, y validando esa síntesis con el SME antes de grabar</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',2)"><div class="eval-radio"></div><span>Pidiéndole a un chatbot general (sin cargar el documento) que invente un resumen del tema</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',3)"><div class="eval-radio"></div><span>NotebookLM reemplaza directamente al SME, sin necesidad de validación posterior</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q5',4)"><div class="eval-radio"></div><span>NotebookLM no sirve para documentos técnicos extensos</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q6">
-              <h6>6. Estás por generar un avatar de HeyGen clonando la voz de un docente real de la institución para varios cursos. ¿Qué es obligatorio antes de hacerlo?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q6',1)"><div class="eval-radio"></div><span>Nada; si el docente trabaja para la institución, su voz puede usarse libremente</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',2)"><div class="eval-radio"></div><span>Obtener y documentar el consentimiento explícito del docente para clonar su voz/rostro, más allá de que sea empleado de la institución</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',3)"><div class="eval-radio"></div><span>Solo se necesita el visto bueno del área de TI</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q6',4)"><div class="eval-radio"></div><span>Comprar la licencia de HeyGen es suficiente autorización</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q7">
-              <h6>7. Un video de 25 minutos sin cortes, con contenido variado, muestra baja finalización. Según el flujo de producción y los principios de Mayer, ¿qué es lo primero que revisarías?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q7',1)"><div class="eval-radio"></div><span>Cambiar de inmediato a un avatar de IA sin analizar nada más</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',2)"><div class="eval-radio"></div><span>Si el video debería estar segmentado en piezas más cortas (3-6 min) que el usuario controle, en vez de un bloque continuo de 25 minutos</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',3)"><div class="eval-radio"></div><span>Subir la resolución del video a 4K</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q7',4)"><div class="eval-radio"></div><span>No hay nada que revisar si el audio se escucha bien</span></div>
-            </div>
-
-            <div class="eval-question" data-question="q8">
-              <h6>8. Antes de publicar un video en el curso, ¿cuál de estas verificaciones corresponde específicamente al checklist de calidad instruccional (y no solo técnica)?</h6>
-              <div class="eval-option" onclick="selectOpt(this,'q8',1)"><div class="eval-radio"></div><span>Que el archivo pese menos de 500 MB</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',2)"><div class="eval-radio"></div><span>Que el contenido del video corresponda exactamente al resultado de aprendizaje que dice apoyar, aplicando el mismo test de alineamiento de la Unidad 3.1</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',3)"><div class="eval-radio"></div><span>Que el nombre del archivo no tenga espacios</span></div>
-              <div class="eval-option" onclick="selectOpt(this,'q8',4)"><div class="eval-radio"></div><span>Que el video tenga música de fondo para que no se sienta plano</span></div>
-            </div>
-
-            <div id="evalResult" class="mt-3"></div>
-
-            <div class="d-flex flex-wrap gap-2 mt-3">
-              <button class="btn btn-terra" id="submitBtn" onclick="submitEval()">
-                <i class="bi bi-check-circle me-2"></i>Enviar evaluación
-              </button>
-              <button class="btn btn-outline-terra" id="retryBtn" style="display:none" onclick="retryEval()">
-                <i class="bi bi-arrow-clockwise me-2"></i>Reintentar
-              </button>
-              <a href="../index.html" class="btn btn-blue" id="nextBtn" style="display:none">
-                Volver al inicio <i class="bi bi-arrow-right ms-2"></i>
-              </a>
-            </div>
-          </div>
-
-        </div><!-- /lesson-body -->
-      </div><!-- /content-di -->
-    </div><!-- /col -->
-  </div><!-- /row -->
-</div><!-- /container -->
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../gami.js"></script>
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbylYML8h2BnNgi2AXtZ8bkGaXPNRhurswPr5dfyGRldbVoCRvmoT2cHN0r3I4qGynLb/exec';
-const UNIDAD_ID = 'm4-3';
-const UNIDAD_LABEL = '4.3 Producción multimedia';
+const UNIT_ID = 'm4-3';
+const YT_VIDEO_ID = '';
 
-const CORRECTAS = { q1:2, q2:2, q3:2, q4:2, q5:1, q6:2, q7:2, q8:2 };
-const FEEDBACK = {
-  q1: {ok:'Correcto. Repetir en texto exactamente lo mismo que narra el audio sobrecarga la memoria de trabajo en vez de aliviarla — eso es el principio de redundancia, uno de los más incumplidos en diapositivas de e-learning.',fail:'No es un problema de duración ni de ubicación en pantalla: el principio violado es la redundancia. Leer palabra por palabra un texto que también aparece completo en pantalla obliga al cerebro a procesar dos canales con la misma información, lo que sobrecarga la memoria de trabajo en vez de ayudarla.'},
-  q2: {ok:'Correcto. Camtasia está pensado específicamente para este tipo de edición pedagógica: zoom automático a la zona de clic, resaltados y subtítulos editables como parte central de su flujo.',fail:'Loom tiene edición muy básica y NotebookLM no produce video. Para un tutorial de software con señalización pedagógica (zoom a la zona de clic, resaltados, subtítulos editables) y con presupuesto disponible, Camtasia es la herramienta pensada exactamente para eso.'},
-  q3: {ok:'Correcto. OBS Studio es gratuito y maneja múltiples fuentes simultáneas mediante escenas, pero no incluye editor de video integrado — la edición se resuelve después con otra herramienta.',fail:'Camtasia sí tiene limitaciones (es de pago) y Synthesia no graba multi-fuente en vivo, genera avatares desde texto. La respuesta correcta es OBS Studio: gratis, con manejo de múltiples fuentes por escenas, pero sin editor de video propio.'},
-  q4: {ok:'Correcto. Los avatares de IA rinden mejor en contenido que cambia seguido o que necesita multi-idioma; en contenido de alto involucramiento emocional como una bienvenida institucional, la autenticidad de una persona real suele pesar más en la percepción de la audiencia.',fail:'Los avatares de IA no son universalmente superiores ni están prohibidos en educación — dependen del contexto. La observación de criterio correcta es distinguir: contenido que cambia seguido o multi-idioma favorece al avatar; contenido emocional o de alto involucramiento como una bienvenida institucional suele favorecer a una persona real.'},
-  q5: {ok:'Correcto. El uso adecuado es cargar el documento como fuente para que NotebookLM sintetice los puntos clave, y luego validar esa síntesis con el SME antes de convertirla en guion — la IA acelera el análisis, no reemplaza la validación experta.',fail:'Pedirle a un chatbot general que "invente" un resumen sin cargar el documento real aumenta el riesgo de alucinación, y NotebookLM no reemplaza al SME. El flujo correcto es cargar el manual como fuente, obtener la síntesis y validarla con el SME antes de escribir el guion final.'},
-  q6: {ok:'Correcto. Ser empleado de la institución no autoriza automáticamente clonar su voz o rostro; se necesita consentimiento explícito y documentado de esa persona, independiente de su relación laboral.',fail:'Ni la relación laboral, ni el visto bueno de TI, ni comprar la licencia de la herramienta reemplazan el consentimiento explícito y documentado de la persona cuya voz o rostro se va a clonar. Es un punto ético no negociable antes de generar el avatar.'},
-  q7: {ok:'Correcto. Un video largo y continuo con baja finalización es la señal clásica de un problema de segmentación: dividirlo en piezas de 3-6 minutos que el usuario controle suele resolver el abandono antes que cualquier cambio de formato o resolución.',fail:'Cambiar de formato sin diagnóstico o subir la resolución no ataca la causa más probable. Frente a un video largo y continuo con baja finalización, lo primero a revisar es si falta segmentación: dividirlo en piezas cortas que el usuario controle.'},
-  q8: {ok:'Correcto. Verificar que el contenido del video corresponda al resultado de aprendizaje que dice apoyar es una verificación de calidad instruccional (usa el mismo test de alineamiento de la Unidad 3.1), a diferencia del peso del archivo o el nombre, que son solo técnicas.',fail:'El peso del archivo, el nombre sin espacios o agregar música de fondo son detalles técnicos o incluso contrarios al principio de coherencia. La verificación de calidad instruccional es comprobar el alineamiento entre el video y el resultado de aprendizaje que dice apoyar.'}
-};
-
-let answers = {};
-let submitted = false;
-
-function toggleAcc(btn) {
-  const body = btn.nextElementSibling;
-  const isOpen = body.classList.contains('show');
-  body.classList.toggle('show', !isOpen);
-  btn.classList.toggle('open', !isOpen);
+function detectMedia() {
+  fetch('m4-3.pdf', { method: 'HEAD' }).then(r => {
+    if (r.ok) document.getElementById('pdfContainer').innerHTML =
+      '<iframe class="pdf-frame" src="m4-3.pdf#view=FitH" title="Presentación" loading="lazy" onload="Gami.award(\'m4-3_pdf\',5,\'Revisaste la presentación\');checkMultimodal();"></iframe><div class="pdf-actions"><a href="m4-3.pdf" target="_blank" rel="noopener">Pantalla completa</a><a href="m4-3.pdf" download>Descargar</a></div>';
+  }).catch(()=>{});
+  fetch('m4-3-audio.mp3', { method: 'HEAD' }).then(r => {
+    if (r.ok) document.getElementById('audioContainer').innerHTML =
+      '<div class="audio-pane"><span class="audio-label">Resumen en audio · NotebookLM</span><audio controls preload="metadata" src="m4-3-audio.mp3" onplay="Gami.award(\'m4-3_audio\',5,\'Escuchaste el audio\');checkMultimodal();"></audio></div>';
+  }).catch(()=>{});
+  if (YT_VIDEO_ID) document.getElementById('videoContainer').innerHTML =
+    '<div class="video-wrap"><iframe src="https://www.youtube-nocookie.com/embed/' + YT_VIDEO_ID + '" title="Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>';
 }
+detectMedia();
 
-function toggleModelo(btn) {
-  const box = btn.nextElementSibling;
-  const isOpen = box.style.display === 'block';
-  box.style.display = isOpen ? 'none' : 'block';
-  btn.textContent = isOpen ? 'Ver respuesta modelo' : 'Ocultar respuesta modelo';
+function switchMedia(btn) {
+  document.querySelectorAll('.media-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.media-pane').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('pane-' + btn.dataset.pane).classList.add('active');
+  if (btn.dataset.pane === 'video' && YT_VIDEO_ID) { Gami.award('m4-3_video',5,'Viste el video'); checkMultimodal(); }
 }
+function checkMultimodal() { if (Gami.hasSeen('m4-3_pdf') && Gami.hasSeen('m4-3_audio')) Gami.badge('multimodal'); }
 
-function selectOpt(el, question, optNum) {
-  if (submitted) return;
-  const container = el.closest('[data-question]');
-  container.querySelectorAll('.eval-option').forEach(o => o.classList.remove('selected'));
-  el.classList.add('selected');
-  answers[question] = optNum;
-  document.getElementById('answeredCount').textContent = Object.keys(answers).length;
+function revealVineta(btn, id) { btn.closest('.vineta').classList.add('revealed'); Gami.award('m4-3_vineta_' + id, 5, 'Resolviste una viñeta'); }
+
+// Checklist de calidad
+const QA_ITEMS = [
+  'El video/recurso está segmentado en bloques de 2-4 minutos, no es un flujo largo continuo',
+  'La narración no repite palabra por palabra el texto en pantalla (sin redundancia)',
+  'No hay elementos decorativos que no aporten al contenido (coherencia)',
+  'El texto y la imagen relacionada están juntos, no separados en la pantalla',
+  'El tono es conversacional, no un locutor formal y distante',
+  'Se probó el recurso en el LMS real antes de darlo por terminado',
+];
+function renderQA() {
+  document.getElementById('qaChecklist').innerHTML = QA_ITEMS.map((t, i) => `
+    <label class="qa-item" id="qa-${i}">
+      <input type="checkbox" onchange="qaCheck(${i}, this)">
+      <span>${t}</span>
+    </label>`).join('');
 }
+let qaChecked = 0;
+function qaCheck(i, el) {
+  document.getElementById('qa-' + i).classList.toggle('checked', el.checked);
+  if (el.checked) { Gami.award('m4-3_qa_' + i, 2, 'Verificaste un criterio de calidad'); qaChecked++; if (qaChecked >= QA_ITEMS.length) Gami.badge('curiosa'); }
+}
+renderQA();
 
-function submitEval() {
-  if (Object.keys(answers).length === 0) {
-    showToast('Responde al menos una pregunta para enviar', 'warning');
-    return;
-  }
-  submitted = true;
-  let score = 0;
-  const total = Object.keys(CORRECTAS).length;
+let capasReveladas = 0;
+document.querySelectorAll('.capa').forEach((capa, i) => {
+  capa.addEventListener('click', () => {
+    capa.closest('.callout').classList.add('revealed');
+    Gami.award('m4-3_capa' + i, 5, 'Levantaste una capa');
+    capasReveladas++;
+    if (capasReveladas >= 2) Gami.badge('curiosa');
+  });
+});
+function toggleRM(id, pid) { document.getElementById(id).classList.toggle('show'); Gami.award('m4-3_rm_' + pid, 3, 'Contrastaste con la respuesta modelo'); }
+function clCheck(el, id) { if (el.checked) Gami.award('m4-3_cl_' + id, 2, 'Ítem de checklist verificado'); }
 
-  Object.keys(CORRECTAS).forEach(q => {
-    const container = document.querySelector(`[data-question="${q}"]`);
-    if (!container) return;
-    const userAns = answers[q];
-    const correctAns = CORRECTAS[q];
-    const opts = container.querySelectorAll('.eval-option');
+const ACT_ITEMS = [
+  { text: 'Un video con subtítulos que repiten exactamente la narración.', ans: 'red', why: 'Redundancia — leer y escuchar lo mismo satura.' },
+  { text: 'Un fondo animado constante que no aporta información.', ans: 'coh', why: 'Coherencia — elemento decorativo que distrae.' },
+  { text: 'Un video de 15 minutos sin ninguna división ni control del usuario.', ans: 'seg', why: 'Segmentación — debería dividirse en bloques controlables.' },
+  { text: 'Un avatar con voz robótica, formal y distante, para un curso de bienvenida.', ans: 'per', why: 'Personalización — un tono conversacional sería más efectivo.' },
+];
+let actDone = 0, actCorrect = 0;
+const LABELS = { red: 'Redundancia', coh: 'Coherencia', seg: 'Segmentación', per: 'Personalización' };
+function renderActivity() {
+  document.getElementById('actRoot').innerHTML = ACT_ITEMS.map((item, i) => `
+    <div class="act-card" id="act-${i}">
+      <div class="act-statement">${item.text}</div>
+      <div class="act-buttons">
+        <button class="act-btn" onclick="answerAct(${i},'red')">Redundancia</button>
+        <button class="act-btn" onclick="answerAct(${i},'coh')">Coherencia</button>
+        <button class="act-btn" onclick="answerAct(${i},'seg')">Segmentación</button>
+        <button class="act-btn" onclick="answerAct(${i},'per')">Personalización</button>
+      </div>
+      <div class="act-verdict" id="verdict-${i}"></div>
+    </div>`).join('');
+  updateActProgress();
+}
+function answerAct(i, choice) {
+  const item = ACT_ITEMS[i];
+  const card = document.getElementById('act-' + i);
+  const verdict = document.getElementById('verdict-' + i);
+  actDone++;
+  if (choice === item.ans) { actCorrect++; card.classList.add('ok'); verdict.style.color = '#315226'; verdict.textContent = '✓ ' + item.why; }
+  else { card.classList.add('no'); card.querySelector('.act-buttons').style.display = 'none'; verdict.style.color = '#6E2A2A'; verdict.textContent = '✗ Era ' + LABELS[item.ans] + '. ' + item.why; }
+  updateActProgress();
+  if (actDone === ACT_ITEMS.length) Gami.award('m4-3_actividad', Math.round(15 * actCorrect / ACT_ITEMS.length) + 5, 'Actividad de Mayer — ' + actCorrect + '/' + ACT_ITEMS.length);
+}
+function updateActProgress() { document.getElementById('actProgress').textContent = actDone + '/' + ACT_ITEMS.length + ' resueltas' + (actDone === ACT_ITEMS.length ? ' · ' + actCorrect + ' correctas' : ''); }
+renderActivity();
 
-    opts.forEach((opt, idx) => {
-      opt.style.pointerEvents = 'none';
-      if (idx + 1 === userAns) {
-        if (userAns === correctAns) { opt.classList.add('correct'); score++; }
-        else opt.classList.add('incorrect');
-      }
+const QUIZ = [
+  { q: '¿Cuál NO es un tipo de recurso multimedia mencionado en esta unidad?', opts: ['Video narrado','Podcast educativo','Simulación interactiva','Examen escrito en papel'], ans: 3 },
+  { q: '¿Qué hace la voz sintética (text-to-speech)?', opts: ['Genera imágenes','Convierte guion escrito en narración con voz natural','Edita video automáticamente','Publica en SCORM'], ans: 1 },
+  { q: 'Un video con subtítulos idénticos a la narración viola el principio de…', opts: ['Segmentación','Redundancia','Modalidad','Coherencia'], ans: 1 },
+  { q: '¿Qué NO reemplaza la IA generativa al producir multimedia?', opts: ['La velocidad de producción','El criterio pedagógico de quien diseña','La generación de voz','La edición automática'], ans: 1 },
+  { q: 'Un video largo sin ninguna división viola el principio de…', opts: ['Coherencia','Segmentación','Redundancia','Personalización'], ans: 1 },
+  { q: '¿Qué documento debe preceder la producción de un video, según esta unidad?', opts: ['El informe financiero','El storyboard con el guion definido','El certificado del LMS','El manual del avatar IA'], ans: 1 },
+  { q: 'Un avatar con voz formal y distante en un curso de bienvenida podría mejorar aplicando…', opts: ['Redundancia','Personalización (tono conversacional)','Más elementos decorativos','Menos segmentación'], ans: 1 },
+  { q: '¿Qué se debe verificar según el checklist de calidad antes de publicar?', opts: ['Solo que el video se vea bonito','Que se haya probado en el LMS real y cumpla los principios de Mayer','Solo la duración','Nada, se publica directo'], ans: 1 },
+  { q: '¿Cuál es un riesgo de usar el mismo tipo de avatar IA en todos los cursos?', opts: ['Ninguno, siempre es mejor','Homogeneidad y pérdida de identidad, generando desconexión','Que sea más barato','Que sea más rápido'], ans: 1 },
+  { q: '¿Cuál es la respuesta más madura a "¿usas IA para producir video?"?', opts: ['"No, prefiero hacer todo manual siempre"','"Sí, para acelerar, pero reviso el resultado contra principios pedagógicos antes de publicar"','"Sí, publico todo sin revisar, la IA no se equivoca"','"No sé qué es eso"'], ans: 1 },
+];
+function renderQuiz() {
+  document.getElementById('quizRoot').innerHTML = QUIZ.map((item, qi) => `
+    <div class="eval-q">${qi + 1}. ${item.q}</div>
+    <div class="quiz-opts" data-q="${qi}">${item.opts.map((opt, oi) => `<label class="eval-option"><input type="radio" name="q${qi}" value="${oi}" onchange="updateQuizCounter()"> ${opt}</label>`).join('')}</div>`).join('');
+}
+function answered() { let n = 0; for (let i = 0; i < QUIZ.length; i++) if (document.querySelector('input[name=q' + i + ']:checked')) n++; return n; }
+function updateQuizCounter() { const n = answered(); document.getElementById('quizCounter').textContent = 'Respondidas: ' + n + '/' + QUIZ.length; document.getElementById('quizSubmit').disabled = n < QUIZ.length; }
+function submitQuiz() {
+  let correct = 0;
+  QUIZ.forEach((item, qi) => {
+    const sel = document.querySelector('input[name=q' + qi + ']:checked');
+    const val = sel ? parseInt(sel.value) : -1;
+    document.querySelectorAll('[data-q="' + qi + '"] .eval-option').forEach((opt, oi) => {
+      opt.classList.remove('correct','incorrect');
+      if (oi === item.ans) opt.classList.add('correct'); else if (oi === val) opt.classList.add('incorrect');
     });
-
-    if (userAns !== undefined) {
-      const fb = FEEDBACK[q];
-      const isOk = userAns === correctAns;
-      const fbEl = document.createElement('div');
-      fbEl.className = 'feedback-box ' + (isOk ? 'feedback-ok' : 'feedback-fail');
-      fbEl.innerHTML = (isOk ? '<i class="bi bi-check-circle me-1"></i>' : '<i class="bi bi-x-circle me-1"></i>') + (isOk ? fb.ok : fb.fail);
-      container.appendChild(fbEl);
-    }
+    if (val === item.ans) correct++;
   });
-
-  const answered = Object.keys(answers).length;
-  const pct = Math.round(score / total * 100);
-  const msg = pct >= 90 ? 'Excelente dominio de esta unidad.' : pct >= 70 ? 'Buen resultado. Repasa lo que fallaste antes de avanzar.' : 'Hay conceptos que requieren repaso. Revisa las secciones donde cometiste errores.';
-
-  document.getElementById('evalResult').innerHTML = `
-    <div class="result-card">
-      <div class="result-score">${score}/${total}</div>
-      <div class="result-label">${pct}% de respuestas correctas (${answered} respondidas)</div>
-      <div class="result-msg">${msg}</div>
-    </div>`;
-
-  document.getElementById('submitBtn').style.display = 'none';
-  document.getElementById('retryBtn').style.display = 'inline-block';
-  document.getElementById('nextBtn').style.display = 'inline-block';
-  guardarPuntaje(score / total);
+  saveScore(correct / QUIZ.length, correct);
 }
-
-function retryEval() {
-  submitted = false;
-  answers = {};
-  document.querySelectorAll('.eval-option').forEach(o => {
-    o.classList.remove('selected','correct','incorrect');
-    o.style.pointerEvents = '';
-  });
-  document.querySelectorAll('.feedback-box').forEach(f => f.remove());
-  document.getElementById('evalResult').innerHTML = '';
-  document.getElementById('answeredCount').textContent = '0';
-  document.getElementById('submitBtn').style.display = 'inline-block';
-  document.getElementById('retryBtn').style.display = 'none';
-  document.getElementById('nextBtn').style.display = 'none';
-  showToast('Inténtalo de nuevo — repasa el contenido antes de responder', 'info');
-  document.querySelector('.eval-section').scrollIntoView({ behavior:'smooth' });
+function saveScore(pct, correct) {
+  try { const scores = JSON.parse(localStorage.getItem('di_scores_v2') || '{}'); scores[UNIT_ID] = pct; localStorage.setItem('di_scores_v2', JSON.stringify(scores)); } catch(e) {}
+  const card = document.getElementById('resultCard');
+  card.className = 'result-card show';
+  card.style.background = pct >= 0.7 ? 'var(--done-soft)' : 'var(--msoft)';
+  document.getElementById('resultScore').textContent = Math.round(pct * 100) + '%';
+  document.getElementById('resultMsg').textContent = correct + '/' + QUIZ.length + ' correctas · ' + (pct >= 0.7 ? 'Unidad completada en tu ruta.' : 'Puedes repasar y reintentar — sin límite.');
+  if (pct >= 0.7) { Gami.award('m4-3_eval', 30, 'Evaluación 4.3 aprobada — ' + correct + '/' + QUIZ.length); Gami.badge('primeraCapa'); document.getElementById('moduloFin').style.display = 'block'; }
+  try { const img = new Image(); img.src = SCRIPT_URL + '?action=saveScore&id=' + UNIT_ID + '&score=' + pct + '&t=' + Date.now(); } catch(e) {}
 }
-
-function getScores() { try { return JSON.parse(localStorage.getItem('di_scores')||'{}'); } catch(e) { return {}; } }
-
-function jsonp(params) {
-  return new Promise(function(resolve, reject) {
-    var cb = 'cb_' + Date.now() + '_' + Math.floor(Math.random()*1e6);
-    var script = document.createElement('script');
-    function cleanup(){ try { delete window[cb]; } catch(e) { window[cb] = undefined; } if (script.parentNode) script.parentNode.removeChild(script); }
-    window[cb] = function(data){ cleanup(); resolve(data); };
-    var qp = new URLSearchParams(Object.assign({}, params, { callback: cb }));
-    script.src = SCRIPT_URL + '?' + qp.toString();
-    script.onerror = function(){ cleanup(); reject(new Error('conexion')); };
-    setTimeout(function(){ if (window[cb]) { cleanup(); reject(new Error('timeout')); } }, 20000);
-    document.head.appendChild(script);
-  });
-}
-
-async function guardarPuntaje(ratio) {
-  const s = getScores(); s[UNIDAD_ID] = ratio; localStorage.setItem('di_scores', JSON.stringify(s));
-  updateSidebar();
-  try {
-    await jsonp({ action: 'saveScore', id: UNIDAD_ID, score: ratio, label: UNIDAD_LABEL, date: new Date().toLocaleDateString('es-CL') });
-  } catch(e) {}
-}
-
-function updateSidebar() {
-  const s = getScores();
-  const ids = ['m4-1','m4-2','m4-3','m4-4'];
-  const done = ids.filter(id => s[id] !== undefined && s[id] > 0).length;
-  document.getElementById('sidebarPct').textContent = done + '/' + ids.length;
-  document.getElementById('sidebarBar').style.width = Math.round(done/ids.length*100) + '%';
-  ids.forEach(id => {
-    const el = document.getElementById('num-' + id);
-    if (el && s[id] !== undefined && s[id] > 0) { el.style.background = 'var(--success)'; el.style.color = '#fff'; }
-  });
-  document.getElementById('headerProgress').textContent = done + '/' + ids.length + ' completadas';
-}
-
-function showToast(msg, type) {
-  const colors = { warning:'#c85c3a', info:'#3a6b8a', success:'#2d7a4f' };
-  const t = document.createElement('div');
-  t.className = 'toast-di';
-  t.style.background = colors[type] || colors.info;
-  t.innerHTML = msg;
-  document.body.appendChild(t);
-  setTimeout(() => { t.style.opacity='0'; t.style.transition='opacity 0.3s'; setTimeout(()=>t.remove(),300); }, 3000);
-}
-
-function scrollToTop() { window.scrollTo({top:0,behavior:'smooth'}); }
-
-updateSidebar();
-
-async function syncSheet() {
-  try {
-    const data = await jsonp({ action: 'getAll' });
-    if (data && data.ok) {
-      const s = getScores();
-      (data.scores || []).forEach(function(row){
-        if (row.id && row.score !== undefined) s[row.id] = parseFloat(row.score);
-      });
-      localStorage.setItem('di_scores', JSON.stringify(s));
-      updateSidebar();
-      showCompletedState();
-    }
-  } catch(e) {}
-}
-
-function showCompletedState() {
-  const ratio = getScores()[UNIDAD_ID];
-  if (ratio === undefined || ratio <= 0) return;
-  const pct = Math.round(ratio * 100);
-  const ok = pct >= 70;
-  const sec = document.querySelector('.eval-section');
-  if (!sec) return;
-  let banner = document.getElementById('completedBanner');
-  if (!banner) {
-    banner = document.createElement('div');
-    banner.id = 'completedBanner';
-    sec.insertBefore(banner, sec.firstChild);
-  }
-  banner.innerHTML =
-    '<div style="display:flex;align-items:center;gap:0.9rem;background:' + (ok ? '#edf7f2' : 'var(--terra-light)') +
-    ';border:1px solid ' + (ok ? '#b0ddc5' : '#e0b0a0') + ';border-left:4px solid ' + (ok ? 'var(--success)' : 'var(--terra)') +
-    ';border-radius:8px;padding:0.9rem 1.1rem;margin-bottom:1.2rem">' +
-      '<i class="bi bi-' + (ok ? 'check-circle-fill' : 'arrow-repeat') + '" style="color:' + (ok ? 'var(--success)' : 'var(--terra)') + ';font-size:1.5rem"></i>' +
-      '<div style="flex:1">' +
-        '<div style="font-weight:bold;font-size:0.9rem;color:var(--dark)">Ya completaste esta unidad</div>' +
-        '<div style="font-size:0.82rem;color:var(--muted)">Puntaje guardado: <strong>' + pct + '%</strong>. Puedes repasar el contenido o volver a responder más abajo.</div>' +
-      '</div>' +
-    '</div>';
-}
-
-function trackVisit() {
-  try {
-    let vid = localStorage.getItem('di_vid');
-    if (!vid) { vid = 'v' + Date.now().toString(36) + Math.random().toString(36).slice(2,8); localStorage.setItem('di_vid', vid); }
-    let sid = sessionStorage.getItem('di_sid');
-    if (!sid) { sid = 's' + Date.now().toString(36) + Math.random().toString(36).slice(2,8); sessionStorage.setItem('di_sid', sid); }
-    const qs = new URLSearchParams(location.search);
-    if (qs.get('owner') === '1') localStorage.setItem('di_owner', '1');
-    if (qs.get('owner') === '0') localStorage.removeItem('di_owner');
-    const owner = localStorage.getItem('di_owner') === '1' ? '1' : '0';
-    const device = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'movil' : 'escritorio';
-    const params = new URLSearchParams({ action: 'logVisit', page: UNIDAD_ID, vid: vid, sid: sid, owner: owner, device: device, t: String(Date.now()) });
-    const img = new Image();
-    img.referrerPolicy = 'no-referrer';
-    img.src = SCRIPT_URL + '?' + params.toString();
-  } catch(e) {}
-}
-
-trackVisit();
-syncSheet();
+renderQuiz();
+updateQuizCounter();
 </script>
 </body>
 </html>
