@@ -143,3 +143,11 @@ MENTOR_KB.push(
   { id:'responsabilidad-contenido-ia', kw:['responsabilidad error ia','quien responde si la ia se equivoca'], a:'Si publicas un curso con un error de contenido generado por IA, la responsabilidad profesional es tuya, no de la herramienta — igual que con cualquier otro insumo externo.', u:'m5-3', ul:'5.3 · IA aplicada al DI' },
   { id:'como-actualizarse-ia', kw:['como mantenerse actualizada ia','el campo cambia rapido'], a:'No memorices nombres de herramientas específicas — memoriza categorías y criterios de evaluación. Prueba antes de recomendar, y sigue el criterio pedagógico, no la moda técnica.', u:'m5-3', ul:'5.3 · IA aplicada al DI' }
 );
+
+// ===== EXPANSIÓN 2 — Administración de Moodle y lenguajes de programación (INACAP) =====
+MENTOR_KB.push(
+  { id:'roles-moodle', kw:['roles moodle','permisos moodle','capacidades moodle'], a:'Moodle organiza el acceso con roles (Administrador, Gestor, Profesor, Estudiante) asignados en distintos contextos (sistema, categoría, curso). Cada rol se define por capacidades — permisos atómicos como "puede calificar" o "puede matricular".', u:'m4-1', ul:'4.1 · LMS, SCORM, xAPI, SLA' },
+  { id:'backup-moodle', kw:['backup moodle','copia de seguridad curso','restaurar curso moodle'], a:'Moodle permite hacer backup de un curso completo (contenido, actividades, calificaciones) y restaurarlo en la misma instancia o en otra — tarea recurrente al iniciar cada período académico con cursos plantilla.', u:'m4-1', ul:'4.1 · LMS, SCORM, xAPI, SLA' },
+  { id:'plugins-moodle', kw:['plugins moodle','extender moodle'], a:'Casi toda funcionalidad adicional de Moodle (H5P, reportes, integraciones LTI) se instala como plugin. Un Coordinador LMS evalúa qué instalar, lo prueba en ambiente de prueba antes de producción, y gestiona sus actualizaciones.', u:'m4-1', ul:'4.1 · LMS, SCORM, xAPI, SLA' },
+  { id:'php-moodle', kw:['php moodle','lenguaje de programacion moodle','en que esta hecho moodle'], a:'Moodle está construido en PHP, con base de datos MySQL o PostgreSQL. Una vacante que pide "lenguajes de programación" para LMS suele esperar que puedas leer y razonar sobre código, no que programes el núcleo de la plataforma.', u:'m4-1', ul:'4.1 · LMS, SCORM, xAPI, SLA' },
+);
