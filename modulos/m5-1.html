@@ -207,6 +207,7 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
     <div class="side-toc">
       <div class="toc-label">En esta unidad</div>
       <a href="#s1">1 · Por qué importan los datos</a>
+      <a href="#s1b">1b · Modelo de Kirkpatrick</a>
       <a href="#s2">2 · Reportes nativos de Moodle</a>
       <a href="#s3">3 · Google Analytics 4</a>
       <a href="#s4">4 · Power BI — modelo y DAX</a>
@@ -225,7 +226,7 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
       <span class="lbadge">6 bloques de contenido</span>
       <span class="lbadge">1 actividad interactiva</span>
       <span class="lbadge">3 prácticas de entrevista</span>
-      <span class="lbadge">10 preguntas de evaluación</span>
+      <span class="lbadge">13 preguntas de evaluación</span>
       <span class="lbadge">~45 min</span>
     </div>
 
@@ -279,6 +280,42 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
         <li><strong>Datos de impacto</strong> — si el aprendizaje se transfirió al desempeño real, fuera del curso (encuestas de seguimiento, KPIs de negocio — el más difícil de conseguir y el más valioso)</li>
       </ul>
       <div class="defbox">La mayoría de los DI se quedan en el primer nivel (datos de uso) porque es el más fácil de obtener. La diferencia entre un perfil junior y uno senior está en moverse hacia el tercer nivel — conectar el dato del curso con un resultado de negocio o desempeño real.</div>
+    </div>
+
+    <!-- S1b -->
+    <div class="content-section" id="s1b">
+      <h2><span class="sec-num">01b</span> El Modelo de Kirkpatrick — el marco formal detrás de esos tres niveles</h2>
+      <p>Los "tres niveles de datos" que acabas de ver son, en esencia, una versión simplificada de un marco mucho más establecido en la industria: el <strong>Modelo de Kirkpatrick</strong> (Donald Kirkpatrick, 1959), el estándar más citado en el mundo para evaluar el impacto real de una capacitación — especialmente en contextos corporativos y OTEC. Nombrar este marco explícitamente, con su terminología exacta, es lo que distingue a alguien que "mide resultados" de alguien que puede sostener esa conversación con un cliente o gerencia que ya lo conoce.</p>
+
+      <h3>Los cuatro niveles, en profundidad</h3>
+      <table class="compare-table">
+        <tr><th>Nivel</th><th>Qué mide</th><th>Pregunta que responde</th><th>Instrumento típico</th></tr>
+        <tr><td><strong>1 · Reacción</strong></td><td>Satisfacción del participante con la experiencia formativa</td><td>¿Les gustó, se sintieron cómodos, lo consideran relevante?</td><td>Encuesta de satisfacción al finalizar</td></tr>
+        <tr><td><strong>2 · Aprendizaje</strong></td><td>Si efectivamente adquirieron el conocimiento o habilidad</td><td>¿Saben o pueden hacer algo que no sabían/podían antes?</td><td>Evaluación pre/post, quiz, rúbrica de desempeño</td></tr>
+        <tr><td><strong>3 · Comportamiento</strong></td><td>Si aplican lo aprendido en su trabajo real, después de la capacitación</td><td>¿Cambió su forma de trabajar en el día a día?</td><td>Observación en terreno, evaluación del supervisor a 30-90 días</td></tr>
+        <tr><td><strong>4 · Resultados</strong></td><td>Impacto en indicadores de negocio o institucionales</td><td>¿Bajaron los errores, subieron las ventas, mejoró la retención de estudiantes?</td><td>KPIs organizacionales — antes/después de la capacitación</td></tr>
+      </table>
+
+      <h3>Por qué la mayoría se queda en el Nivel 1 — y por qué eso es un problema real</h3>
+      <p>La encuesta de satisfacción al final de un curso ("¿le gustó la capacitación? del 1 al 7") es, con enorme diferencia, lo más fácil de medir — y por eso es lo único que la mayoría de las organizaciones mide. El problema es que <strong>Nivel 1 y Nivel 2 casi no correlacionan con Nivel 3 y 4</strong>: un curso puede encantar a los participantes (Nivel 1 alto) y no cambiar absolutamente nada de cómo trabajan después (Nivel 3 bajo). Medir solo Nivel 1 es medir la parte que menos le importa al negocio.</p>
+
+      <div class="nota alerta"><span class="nota-tag">La extensión que el mercado espera hoy: Nivel 5 (ROI de Phillips)</span>Jack Phillips agregó un quinto nivel no incluido originalmente por Kirkpatrick: <strong>Retorno de la Inversión (ROI)</strong> — traducir el resultado de Nivel 4 a términos monetarios y compararlo contra el costo de la capacitación. Es el nivel que más le importa a quien aprueba presupuestos, y el que casi nunca se mide porque requiere aislar el efecto de la capacitación de otras variables del negocio — es metodológicamente exigente, pero saber nombrarlo te distingue en una conversación con dirección o gerencia.</div>
+
+      <h3>Cómo conecta con los "tres niveles de datos" de esta misma unidad</h3>
+      <table class="compare-table">
+        <tr><th>Tu marco (arriba)</th><th>Nivel de Kirkpatrick equivalente</th></tr>
+        <tr><td>Datos de uso</td><td>No tiene equivalente directo en Kirkpatrick — es un dato operativo previo, ni siquiera llega a Nivel 1</td></tr>
+        <tr><td>Datos de desempeño</td><td>Nivel 2 (Aprendizaje) — y parcialmente Nivel 1 si incluyes encuestas de satisfacción</td></tr>
+        <tr><td>Datos de impacto</td><td>Nivel 3 (Comportamiento) y Nivel 4 (Resultados) — Kirkpatrick separa lo que tu marco combina en una sola categoría</td></tr>
+      </table>
+      <div class="nota clave"><span class="nota-tag">Por qué usar ambos marcos, no solo uno</span>Tu marco de "3 niveles de datos" es más simple y útil para decisiones operativas del día a día (qué dashboard construir). Kirkpatrick es el lenguaje que reconoce la industria y con el que vas a comunicarte hacia arriba, con dirección o clientes — dominar ambos te permite pensar con uno y comunicar con el otro.</div>
+
+      <div class="vineta">
+        <div class="vineta-head">Viñeta de taller · diseña la medición completa</div>
+        <div class="vineta-body">Una empresa te pide evaluar el impacto de un curso de atención al cliente que ya se dictó a 200 vendedores. Solo tienen una encuesta de satisfacción aplicada al final (promedio 6.2/7). <strong>¿Qué le dirías al cliente sobre qué tan completa es esa medición, y qué agregarías?</strong></div>
+        <button class="vineta-reveal-btn" onclick="revealVineta(this,'v6')">Piénsalo primero → ver resolución</button>
+        <div class="vineta-solution">Le explicaría que un 6.2/7 de satisfacción es solo Nivel 1 — mide que la experiencia fue agradable, no que cambió algo real. Propondría agregar Nivel 2 (una evaluación de conocimiento antes/después, si no se hizo), Nivel 3 (observación o evaluación de supervisores a 30-60 días sobre si efectivamente aplican el protocolo aprendido en el trabajo real), y si el negocio lo permite, Nivel 4 (¿bajaron los reclamos de clientes o subió la satisfacción del cliente final, comparando el trimestre antes y después?). Sin esos niveles, la organización no sabe si el curso realmente sirvió — solo sabe que no les molestó tomarlo.</div>
+      </div>
     </div>
 
     <!-- S2 -->
@@ -491,9 +528,9 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
 
     <div class="eval-block" id="evaluacion">
       <h2>Evaluación — Unidad 5.1</h2>
-      <div class="eval-sub">10 preguntas. El puntaje se guarda en tu ruta. Puedes reintentar sin límite.</div>
+      <div class="eval-sub">13 preguntas. El puntaje se guarda en tu ruta. Puedes reintentar sin límite.</div>
       <div id="quizRoot"></div>
-      <div class="eval-counter" id="quizCounter">Respondidas: 0/10</div>
+      <div class="eval-counter" id="quizCounter">Respondidas: 0/13</div>
       <button class="eval-submit" id="quizSubmit" onclick="submitQuiz()" disabled>Enviar evaluación</button>
       <div class="result-card" id="resultCard"><div class="result-score" id="resultScore">0%</div><div id="resultMsg" style="font-size:0.85rem;color:var(--ink-muted);margin-top:0.3rem;"></div></div>
     </div>
@@ -594,6 +631,9 @@ const QUIZ = [
   { q: '¿Qué indica un índice de discriminación NEGATIVO en una pregunta de evaluación?', opts: ['La pregunta es perfecta','Estudiantes de mejor desempeño general tienden a fallarla más — probablemente está mal redactada','El estudiante no estudió','Nada relevante'], ans: 1 },
   { q: '¿Cuál es el rango de índice de dificultad considerado saludable?', opts: ['0.9 a 1.0','0.3 a 0.7','0.0 a 0.1','No existe un rango de referencia'], ans: 1 },
   { q: '¿Cuál es el paso que distingue a un DI senior en el uso de datos?', opts: ['Solo mirar el dashboard','Traducir la anomalía detectada en una decisión de rediseño verificable','Exportar reportes sin analizarlos','Ignorar los datos y confiar en la intuición'], ans: 1 },
+  { q: 'En el Modelo de Kirkpatrick, ¿qué mide el Nivel 3 (Comportamiento)?', opts: ['La satisfacción del participante','Si aplica lo aprendido en su trabajo real, después de la capacitación','El costo del curso','Cuántas personas se inscribieron'], ans: 1 },
+  { q: '¿Por qué medir solo el Nivel 1 (Reacción) de Kirkpatrick es insuficiente?', opts: ['Porque no existe el Nivel 1','Porque Nivel 1 y 2 casi no correlacionan con Nivel 3 y 4 — un curso puede gustar sin cambiar nada real','Porque el Nivel 1 es el más difícil de medir','No es insuficiente, es suficiente'], ans: 1 },
+  { q: '¿Qué agrega el Nivel 5 de Phillips (ROI) que Kirkpatrick no incluía originalmente?', opts: ['Una encuesta adicional de satisfacción','Traducir el resultado de Nivel 4 a términos monetarios, comparado contra el costo de la capacitación','Un quinto examen de conocimiento','Nada, es idéntico al Nivel 4'], ans: 1 },
 ];
 function renderQuiz() {
   document.getElementById('quizRoot').innerHTML = QUIZ.map((item, qi) => `
