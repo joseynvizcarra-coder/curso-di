@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6.2 Acompañamiento pedagógico a docentes — Cuaderno de taller</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #EDEAE3; --paper-alt: #E4DFD3; --card: #F8F6F1;
+  --ink: #1C1A17; --ink-muted: #6B665D; --border: #D8D1C0; --border-soft: #E2DCCC;
+  --mc: #2E6B62; --msoft: #DCEAE7;
+  --ia: #2A5CAA; --ia-soft: #DCE5F2;
+  --done: #4A6B3E; --done-soft: #E9F0E5;
+  --warn: #B9862C; --warn-soft: #F1E5CC;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--paper); color: var(--ink); font-family: 'IBM Plex Sans', sans-serif; line-height: 1.55; }
+a { color: inherit; }
+.topbar { background: var(--ink); color: #EDEAE3; padding: 0.7rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; position: sticky; top: 0; z-index: 50; }
+.topbar a.back { color: #C9C3B5; text-decoration: none; }
+.topbar a.back:hover { color: #fff; }
+.gami-chips { display: flex; gap: 0.9rem; color: #C9C3B5; flex-wrap: wrap; }
+.layout { display: grid; grid-template-columns: 250px 1fr; max-width: 1120px; margin: 0 auto; }
+@media (max-width: 880px) { .layout { grid-template-columns: 1fr; } .sidebar { order: 2; } }
+.sidebar { border-right: 1px solid var(--border); padding: 1.4rem 1.2rem; }
+@media (max-width: 880px) { .sidebar { border-right: none; border-top: 1px solid var(--border); } }
+.sidebar h6 { font-family: 'Fraunces', serif; font-size: 0.95rem; color: var(--mc); margin-bottom: 0.2rem; }
+.sidebar .sidebar-sub { font-size: 0.74rem; color: var(--ink-muted); margin-bottom: 1rem; }
+.side-item { display: flex; align-items: center; gap: 0.6rem; padding: 0.55rem 0.5rem; border-radius: 3px; text-decoration: none; color: var(--ink); font-size: 0.84rem; margin-bottom: 0.15rem; }
+.side-item.active { background: var(--msoft); font-weight: 600; color: var(--mc); }
+.side-mark { width: 22px; height: 22px; border-radius: 3px; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; flex-shrink: 0; }
+.side-item.active .side-mark { background: var(--mc); border-color: var(--mc); color: #fff; }
+.side-toc { margin-top: 1.4rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+.side-toc .toc-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.64rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); margin-bottom: 0.5rem; }
+.side-toc a { display: block; font-size: 0.78rem; color: var(--ink-muted); text-decoration: none; padding: 0.3rem 0; }
+.side-toc a:hover { color: var(--mc); }
+main { padding: 2.2rem 2rem 4rem; min-width: 0; }
+.unit-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--mc); margin-bottom: 0.5rem; }
+h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(1.5rem, 3.5vw, 2.1rem); margin-bottom: 0.6rem; max-width: 24ch; }
+.lesson-dek { color: #423E37; max-width: 64ch; margin-bottom: 1rem; }
+.lesson-badges { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.6rem; }
+.lbadge { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; border: 1px solid var(--border); background: var(--card); border-radius: 3px; padding: 0.25rem 0.6rem; color: var(--ink-muted); }
+.objetivo-box { background: var(--card); border: 1px solid var(--border); border-left: 4px solid var(--mc); border-radius: 4px; padding: 1.1rem 1.3rem; margin-bottom: 2rem; }
+.objetivo-box .label { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mc); margin-bottom: 0.4rem; }
+.objetivo-box p { font-size: 0.92rem; font-style: italic; color: #322E28; }
+.mapa-block { border: 1px solid var(--border); border-radius: 4px; background: var(--card); margin-bottom: 2rem; overflow: hidden; }
+.mapa-head { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); padding: 0.7rem 1rem; border-bottom: 1px solid var(--border-soft); }
+.mapa-body { padding: 1rem; background: #fff; }
+.mapa-note { font-size: 0.78rem; color: var(--ink-muted); padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
+.media-block { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin-bottom: 2.2rem; background: var(--card); }
+.media-tabs { display: flex; border-bottom: 1px solid var(--border); background: var(--paper-alt); flex-wrap: wrap; }
+.media-tab { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; padding: 0.7rem 1rem; cursor: pointer; border: none; background: none; color: var(--ink-muted); border-bottom: 2px solid transparent; }
+.media-tab.active { color: var(--mc); border-bottom-color: var(--mc); background: var(--card); }
+.media-pane { display: none; }
+.media-pane.active { display: block; }
+.media-note { font-size: 0.76rem; color: var(--ink-muted); padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
+.media-pending { padding: 2rem 1rem; text-align: center; color: var(--ink-muted); font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; }
+.pdf-frame { width: 100%; height: 480px; border: none; display: block; background: #fff; }
+.pdf-actions { display: flex; gap: 0.6rem; padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
+.pdf-actions a { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--mc); text-decoration: none; border: 1px solid var(--border); border-radius: 3px; padding: 0.3rem 0.7rem; }
+.audio-pane { padding: 1.2rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.audio-pane audio { flex: 1; min-width: 240px; }
+.audio-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: var(--ink-muted); }
+.video-wrap { position: relative; padding-top: 56.25%; background: #111; }
+.video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+.content-section { margin-bottom: 2.6rem; }
+.content-section h2 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.3rem; margin-bottom: 0.8rem; padding-bottom: 0.4rem; border-bottom: 2px solid var(--mc); display: flex; align-items: baseline; gap: 0.6rem; }
+.content-section h2 .sec-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--mc); }
+.content-section h3 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.05rem; margin: 1.2rem 0 0.5rem; }
+.content-section p { margin-bottom: 0.8rem; font-size: 0.94rem; color: #2B2823; }
+.content-section ul, .content-section ol { margin: 0.6rem 0 0.9rem 1.3rem; font-size: 0.92rem; }
+.content-section li { margin-bottom: 0.4rem; }
+.content-section strong { color: var(--mc); font-weight: 600; }
+.defbox { background: var(--msoft); border-radius: 4px; padding: 0.9rem 1.1rem; font-style: italic; font-size: 0.93rem; margin: 0.8rem 0 1.2rem; }
+.nota { border-radius: 4px; padding: 0.9rem 1.1rem; font-size: 0.88rem; margin: 1.1rem 0; border: 1px solid var(--border); }
+.nota .nota-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.07em; display: block; margin-bottom: 0.35rem; }
+.nota.clave { background: var(--done-soft); } .nota.clave .nota-tag { color: var(--done); }
+.nota.alerta { background: #F5E5E2; } .nota.alerta .nota-tag { color: #A83232; }
+.nota.contexto { background: var(--ia-soft); } .nota.contexto .nota-tag { color: var(--ia); }
+.compare-table { width: 100%; border-collapse: collapse; margin: 0.8rem 0 1.4rem; font-size: 0.86rem; }
+.compare-table th, .compare-table td { border: 1px solid var(--border); padding: 0.55rem 0.7rem; text-align: left; vertical-align: top; }
+.compare-table th { background: var(--card); font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-muted); }
+.compare-table td:first-child { font-weight: 600; }
+
+.flujo { display: flex; flex-direction: column; gap: 0.5rem; margin: 1rem 0 1.4rem; }
+.paso { display: flex; gap: 0.9rem; border: 1px solid var(--border); border-radius: 4px; background: var(--card); padding: 0.8rem 1rem; align-items: flex-start; }
+.paso-num { width: 28px; height: 28px; border-radius: 50%; background: var(--mc); color: #fff; font-family: 'Fraunces', serif; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.9rem; }
+.paso-content h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.2rem; }
+.paso-content p { font-size: 0.83rem; margin: 0; color: #3A362F; }
+
+/* comparación de feedback: débil vs SBI */
+.feedback-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin: 1rem 0 1.4rem; }
+@media (max-width: 700px) { .feedback-compare { grid-template-columns: 1fr; } }
+.fb-card { border-radius: 4px; padding: 1rem; font-size: 0.85rem; }
+.fb-debil { background: #F5E5E2; border: 1px solid #A83232; }
+.fb-sbi { background: var(--done-soft); border: 1px solid var(--done); }
+.fb-card .fb-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.66rem; text-transform: uppercase; display: block; margin-bottom: 0.5rem; }
+.fb-debil .fb-tag { color: #A83232; }
+.fb-sbi .fb-tag { color: var(--done); }
+
+/* cuestionario de preselección */
+.form-mock { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin: 1rem 0 1.4rem; background: #fff; }
+.form-mock-head { background: var(--ink); color: #EDEAE3; padding: 0.6rem 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; }
+.form-field { padding: 0.8rem 1rem; border-bottom: 1px solid var(--border-soft); }
+.form-field:last-child { border-bottom: none; }
+.form-field label { display: block; font-size: 0.84rem; font-weight: 600; margin-bottom: 0.3rem; }
+.form-field .form-hint { font-size: 0.76rem; color: var(--ink-muted); font-style: italic; }
+
+.vineta { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin: 1.2rem 0; }
+.vineta-head { background: var(--ink); color: #EDEAE3; font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.6rem 1rem; }
+.vineta-body { background: var(--card); padding: 1rem 1.2rem; font-size: 0.9rem; }
+.vineta-reveal-btn { display: block; width: 100%; text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; background: var(--msoft); border: none; border-top: 1px solid var(--border); padding: 0.7rem; cursor: pointer; color: var(--mc); }
+.vineta-solution { display: none; background: #fff; border-top: 1px dashed var(--border); padding: 1rem 1.2rem; font-size: 0.9rem; }
+.vineta.revealed .vineta-solution { display: block; }
+.vineta.revealed .vineta-reveal-btn { display: none; }
+
+.activity { border: 1px solid var(--border); border-radius: 4px; background: var(--card); padding: 1.3rem; margin: 2rem 0; }
+.activity h2 { font-family: 'Fraunces', serif; font-size: 1.1rem; margin-bottom: 0.3rem; }
+.activity .act-sub { font-size: 0.8rem; color: var(--ink-muted); margin-bottom: 1rem; }
+.act-card { border: 1px solid var(--border); border-radius: 4px; background: var(--paper); padding: 0.9rem 1rem; margin-bottom: 0.8rem; }
+.act-statement { font-size: 0.9rem; margin-bottom: 0.7rem; }
+.act-buttons { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.act-btn { flex: 1; min-width: 90px; font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; padding: 0.5rem; border: 1px solid var(--border); border-radius: 3px; background: var(--card); cursor: pointer; transition: all 0.15s; }
+.act-btn:hover { border-color: var(--mc); }
+.act-card.ok { border-color: var(--done); background: var(--done-soft); }
+.act-card.ok .act-buttons { display: none; }
+.act-card.no { border-color: #A83232; }
+.act-verdict { font-size: 0.78rem; margin-top: 0.4rem; display: none; }
+.act-card.ok .act-verdict, .act-card.no .act-verdict { display: block; }
+.act-progress { font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; color: var(--ink-muted); margin-top: 0.4rem; }
+
+.callout { position: relative; border-radius: 4px; margin: 1.6rem 0; overflow: hidden; border: 1px solid var(--border); }
+.callout-header { display: flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.05em; color: #fff; }
+.callout.ia .callout-header { background: var(--ia); }
+.callout.entrevista .callout-header { background: var(--mc); }
+.callout-body { background: var(--card); padding: 1.1rem 1.3rem; font-size: 0.9rem; position: relative; }
+.callout-body p { margin-bottom: 0.7rem; }
+.callout-body p:last-child { margin-bottom: 0; }
+.capa { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 0.6rem; cursor: pointer; user-select: none; transition: transform 0.5s cubic-bezier(.65,0,.35,1), opacity 0.4s ease; font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--ink-muted); }
+.callout.ia .capa { background: var(--ia-soft); }
+.callout.entrevista .capa { background: var(--msoft); }
+.callout.revealed .capa { transform: translateX(105%); opacity: 0; pointer-events: none; }
+
+.practica { border: 1px solid var(--border); border-radius: 4px; background: var(--card); margin: 1.4rem 0; overflow: hidden; }
+.practica-head { padding: 0.9rem 1.1rem; border-bottom: 1px solid var(--border-soft); }
+.practica-head .p-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--mc); text-transform: uppercase; letter-spacing: 0.06em; }
+.practica-head .p-q { font-size: 0.94rem; font-weight: 500; margin-top: 0.25rem; }
+.practica-body { padding: 1rem 1.1rem; }
+.practica-body textarea { width: 100%; min-height: 80px; font-family: 'IBM Plex Sans', sans-serif; font-size: 0.88rem; border: 1px solid var(--border); border-radius: 3px; padding: 0.7rem; resize: vertical; background: var(--paper); margin-bottom: 0.7rem; }
+.rm-toggle { font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; color: var(--mc); cursor: pointer; text-decoration: underline; background: none; border: none; padding: 0; }
+.rm { display: none; margin-top: 0.7rem; padding: 0.8rem 1rem; background: var(--msoft); border-radius: 3px; font-size: 0.87rem; }
+.rm.show { display: block; }
+.checklist { margin-top: 0.8rem; border-top: 1px dashed var(--border); padding-top: 0.8rem; }
+.checklist .cl-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); margin-bottom: 0.5rem; }
+.cl-item { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.84rem; padding: 0.35rem 0; cursor: pointer; }
+.cl-item input { accent-color: var(--done); margin-top: 0.2rem; }
+
+.eval-block { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 1.3rem; margin-top: 2.2rem; }
+.eval-block h2 { font-family: 'Fraunces', serif; font-size: 1.15rem; margin-bottom: 0.3rem; }
+.eval-sub { font-size: 0.8rem; color: var(--ink-muted); margin-bottom: 1.1rem; }
+.eval-q { font-size: 0.92rem; font-weight: 500; margin: 1.2rem 0 0.6rem; }
+.eval-option { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.6rem 0.8rem; border: 1px solid var(--border); border-radius: 3px; margin-bottom: 0.45rem; cursor: pointer; font-size: 0.87rem; background: var(--paper); transition: border-color 0.15s; }
+.eval-option:hover { border-color: var(--mc); }
+.eval-option input { accent-color: var(--mc); margin-top: 0.2rem; }
+.eval-option.correct { border-color: var(--done); background: var(--done-soft); }
+.eval-option.incorrect { border-color: #A83232; background: #F5E5E2; }
+.eval-submit { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; background: var(--mc); color: #fff; border: none; border-radius: 3px; padding: 0.7rem 1.4rem; cursor: pointer; margin-top: 1.2rem; }
+.eval-submit:disabled { opacity: 0.5; cursor: default; }
+.eval-counter { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: var(--ink-muted); margin-top: 0.5rem; }
+.result-card { display: none; margin-top: 1.2rem; padding: 1.1rem; border-radius: 4px; text-align: center; }
+.result-card.show { display: block; }
+.result-score { font-family: 'Fraunces', serif; font-size: 1.7rem; font-weight: 600; }
+.next-nav { display: flex; justify-content: space-between; margin-top: 2.5rem; padding-top: 1.2rem; border-top: 1px solid var(--border); font-size: 0.86rem; }
+.next-nav a { color: var(--mc); font-weight: 500; text-decoration: none; }
+.next-nav .disabled { color: var(--ink-muted); }
+.curso-fin { background: linear-gradient(135deg, var(--mc), #1E4A43); color: #fff; border-radius: 6px; padding: 1.6rem; margin-top: 2rem; text-align: center; }
+.curso-fin h3 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.3rem; margin-bottom: 0.5rem; }
+.curso-fin p { font-size: 0.9rem; opacity: 0.95; margin: 0; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../index.html">← Ruta de aprendizaje</a>
+  <div class="gami-chips">
+    <span id="gamiNivel">Nivel 1 · Boceto</span>
+    <span id="gamiPoints">0 pts</span>
+    <span id="gamiStreak">0 días</span>
+  </div>
+</div>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h6>Módulo 6</h6>
+    <div class="sidebar-sub">Educación técnico-profesional</div>
+    <a class="side-item" href="m6-1.html"><span class="side-mark">6.1</span> Diseño curricular TP</a>
+    <a class="side-item active" href="m6-2.html"><span class="side-mark">6.2</span> Acompañamiento a docentes</a>
+    <div class="side-toc">
+      <div class="toc-label">En esta unidad</div>
+      <a href="#s1">1 · Elicitación vs. acompañamiento</a>
+      <a href="#s2">2 · El ciclo de supervisión clínica</a>
+      <a href="#s3">3 · Retroalimentación SBI</a>
+      <a href="#s4">4 · Cuestionario de preselección</a>
+      <a href="#s5">5 · Introducir metodologías activas gradualmente</a>
+      <a href="#s6">6 · Manejo de resistencia al cambio</a>
+      <a href="#practica">Práctica de entrevista</a>
+      <a href="#evaluacion">Evaluación</a>
+    </div>
+  </aside>
+
+  <main>
+    <div class="unit-eyebrow">Módulo 6 · Unidad 6.2</div>
+    <h1 class="lesson-title">Acompañamiento pedagógico a docentes</h1>
+    <p class="lesson-dek">De extraer información del SME (unidad 5.2) a acompañarlo para que él mismo construya contenido bien estructurado — coaching pedagógico, no elicitación. La función explícita que piden cargos como el de ENAC.</p>
+    <div class="lesson-badges">
+      <span class="lbadge">6 bloques de contenido</span>
+      <span class="lbadge">1 actividad interactiva</span>
+      <span class="lbadge">3 prácticas de entrevista</span>
+      <span class="lbadge">12 preguntas de evaluación</span>
+      <span class="lbadge">~50 min</span>
+    </div>
+
+    <div class="objetivo-box">
+      <div class="label">Objetivo de aprendizaje</div>
+      <p>Dado un docente experto en su materia sin experiencia en diseño instruccional, serás capaz de aplicar un ciclo estructurado de acompañamiento pedagógico, entregar retroalimentación específica sin invalidar su expertise técnica, y proponer la introducción gradual de metodologías activas, manejando resistencia al cambio con criterio.</p>
+    </div>
+
+    <div class="mapa-block">
+      <div class="mapa-head">Mapa de esta unidad · organizador previo</div>
+      <div class="mapa-body">
+        <svg width="100%" viewBox="0 0 680 210" style="display:block" role="img" aria-label="Mapa de acompañamiento pedagógico">
+          <rect x="255" y="10" width="170" height="44" rx="5" fill="#DCEAE7" stroke="#2E6B62" stroke-width="1.4"/>
+          <text x="340" y="29" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1C1A17">Acompañamiento docente</text>
+          <text x="340" y="46" text-anchor="middle" font-family="monospace" font-size="9" fill="#2E6B62">el docente construye, tú guías</text>
+          <line x1="340" y1="54" x2="115" y2="115" stroke="#D8D1C0"/><line x1="340" y1="54" x2="340" y2="115" stroke="#D8D1C0"/><line x1="340" y1="54" x2="565" y2="115" stroke="#D8D1C0"/>
+          <rect x="30" y="115" width="170" height="50" rx="5" fill="#F8F6F1" stroke="#2A5CAA" stroke-width="1.2"/>
+          <text x="115" y="135" text-anchor="middle" font-family="Georgia,serif" font-size="12.5" fill="#1C1A17">Ciclo de supervisión</text>
+          <text x="115" y="152" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#2A5CAA">pre · observación · post</text>
+          <rect x="255" y="115" width="170" height="50" rx="5" fill="#F8F6F1" stroke="#2A5CAA" stroke-width="1.2"/>
+          <text x="340" y="135" text-anchor="middle" font-family="Georgia,serif" font-size="12.5" fill="#1C1A17">Feedback SBI</text>
+          <text x="340" y="152" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#2A5CAA">específico, no genérico</text>
+          <rect x="480" y="115" width="170" height="50" rx="5" fill="#F8F6F1" stroke="#2A5CAA" stroke-width="1.2"/>
+          <text x="565" y="135" text-anchor="middle" font-family="Georgia,serif" font-size="12.5" fill="#1C1A17">Resistencia al cambio</text>
+          <text x="565" y="152" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#2A5CAA">cómo introducir sin imponer</text>
+        </svg>
+      </div>
+      <div class="mapa-note">Esta unidad es coaching, no elicitación — el docente pasa de fuente de información (5.2) a constructor activo, contigo como guía.</div>
+    </div>
+
+    <div class="media-block">
+      <div class="media-tabs">
+        <button class="media-tab active" data-pane="pdf" onclick="switchMedia(this)">📑 Presentación</button>
+        <button class="media-tab" data-pane="audio" onclick="switchMedia(this)">🎧 Audio NotebookLM</button>
+        <button class="media-tab" data-pane="video" onclick="switchMedia(this)">▶ Video</button>
+      </div>
+      <div class="media-pane active" id="pane-pdf"><div id="pdfContainer"><div class="media-pending">Presentación en preparación — se activará al agregar <strong>m6-2.pdf</strong>.</div></div></div>
+      <div class="media-pane" id="pane-audio"><div id="audioContainer"><div class="media-pending">Audio en preparación — se activará al agregar <strong>m6-2-audio.mp3</strong>.</div></div></div>
+      <div class="media-pane" id="pane-video"><div id="videoContainer"><div class="media-pending">Video en preparación — pega el ID en <strong>YT_VIDEO_ID</strong> dentro del archivo.</div></div></div>
+      <div class="media-note">Misma unidad, varios formatos (DUA pauta 1). El texto completo está siempre visible abajo.</div>
+    </div>
+
+    <!-- S1 -->
+    <div class="content-section" id="s1">
+      <h2><span class="sec-num">01</span> Elicitación vs. acompañamiento — el cambio de rol</h2>
+      <p>En la unidad 5.2 aprendiste técnicas de <strong>elicitación de conocimiento</strong> (análisis de tareas, incidente crítico, card sorting) — el SME como fuente pasiva de información que tú extraes para diseñar tú misma. El <strong>acompañamiento pedagógico</strong> es otra cosa: el docente deja de ser fuente y pasa a ser <strong>constructor activo</strong> de su propio material, contigo como guía metodológica, no como autora final.</p>
+      <table class="compare-table">
+        <tr><th></th><th>Elicitación (5.2)</th><th>Acompañamiento (esta unidad)</th></tr>
+        <tr><td>Rol del docente</td><td>Fuente de información</td><td>Constructor activo del material</td></tr>
+        <tr><td>Quién diseña</td><td>Tú, con la información extraída</td><td>El docente, con tu guía metodológica</td></tr>
+        <tr><td>Resultado esperado</td><td>Un curso diseñado por ti</td><td>Un docente capaz de diseñar mejor por sí mismo la próxima vez</td></tr>
+        <tr><td>Duración de la relación</td><td>Puntual — dura el proyecto</td><td>Sostenida — desarrollo de capacidad a largo plazo</td></tr>
+      </table>
+      <div class="defbox">Un cargo que pide explícitamente "asesorar y acompañar pedagógicamente a docentes" (como ENAC) está pidiendo el segundo modelo, no el primero — tu éxito no se mide solo en cuántos cursos diseñaste, sino en cuánto mejoró la capacidad de diseño de los docentes con los que trabajaste.</div>
+    </div>
+
+    <!-- S2 -->
+    <div class="content-section" id="s2">
+      <h2><span class="sec-num">02</span> El ciclo de supervisión clínica — estructura, no improvisación</h2>
+      <p>Adaptado de modelos de supervisión clínica docente (usados originalmente en formación de profesores), este ciclo de tres momentos estructura el acompañamiento para que no dependa de la intuición del momento:</p>
+      <div class="flujo">
+        <div class="paso"><div class="paso-num">1</div><div class="paso-content"><h4>Pre-conferencia (antes de observar)</h4><p>Conversación breve donde el docente explica qué planea hacer y por qué — tú entiendes su intención antes de observar, para no juzgar fuera de contexto. Aquí también acuerdan en qué se va a enfocar la observación (no en todo a la vez).</p></div></div>
+        <div class="paso"><div class="paso-num">2</div><div class="paso-content"><h4>Observación</h4><p>Observas la clase o revisas el material centrándote específicamente en lo acordado en la pre-conferencia — con notas descriptivas (qué pasó), no evaluativas (qué tan bien o mal) todavía.</p></div></div>
+        <div class="paso"><div class="paso-num">3</div><div class="paso-content"><h4>Post-conferencia</h4><p>Conversación de retroalimentación usando el modelo SBI (sección 3) — el docente reflexiona primero, tú aportas tu observación después, y juntos definen un próximo paso concreto.</p></div></div>
+      </div>
+      <div class="nota alerta"><span class="nota-tag">El error más común — saltarse la pre-conferencia</span>Observar sin pre-conferencia previa te hace evaluar contra tus propias expectativas, no contra la intención real del docente. Puedes marcar como "débil" algo que el docente hizo deliberadamente por una razón válida que nunca te explicó, porque nunca le preguntaste antes de observar.</div>
+    </div>
+
+    <!-- S3 -->
+    <div class="content-section" id="s3">
+      <h2><span class="sec-num">03</span> Retroalimentación SBI — específica, no genérica ni evaluativa</h2>
+      <p>SBI (Situación-Comportamiento-Impacto) es un modelo de feedback que evita las dos fallas más comunes al dar retroalimentación a un experto en su materia: sonar genérico, o sonar como un juicio de valor sobre su capacidad.</p>
+      <div class="feedback-compare">
+        <div class="fb-card fb-debil"><span class="fb-tag">Feedback débil / genérico</span>"Tu clase estuvo bien, pero podrías ser más dinámico y usar más metodologías activas."</div>
+        <div class="fb-card fb-sbi"><span class="fb-tag">Feedback con SBI</span><strong>Situación:</strong> "En los primeros 20 minutos, mientras explicabas el procedimiento de instalación…" <strong>Comportamiento:</strong> "…hablaste tú solo sin pausas para preguntas, y ningún estudiante intervino." <strong>Impacto:</strong> "Cuando revisé sus rostros, tres estudiantes parecían perdidos hacia el minuto 12, pero no lo notamos porque no hubo espacio para que lo dijeran."</div>
+      </div>
+      <p>El feedback débil es una opinión general que el docente puede rechazar sin más ("a mí me pareció que sí funcionó"). El feedback SBI describe un momento específico, observable, con un impacto concreto — mucho más difícil de descartar, y mucho menos amenazante porque no juzga su capacidad general, solo describe un momento puntual.</p>
+      <div class="nota clave"><span class="nota-tag">La secuencia que hace funcionar SBI en la práctica</span>Primero pregúntale al docente cómo sintió ese momento él mismo — a menudo ya identifica el problema solo. Si no lo menciona, entonces aportas tu observación SBI. Terminar preguntando "¿qué harías distinto la próxima vez?" en vez de decírselo tú, hace que la solución sea suya, no impuesta — mucho más probable que la sostenga en el tiempo.</div>
+    </div>
+
+    <!-- S4 -->
+    <div class="content-section" id="s4">
+      <h2><span class="sec-num">04</span> Cuestionario de preselección de conocimiento — la herramienta antes de la primera conversación</h2>
+      <p>Antes de la primera reunión con un docente nuevo, un formulario breve ahorra tiempo real de entrevista, capturando lo factual para reservar la conversación en vivo para lo que realmente requiere diálogo (conectando con las técnicas de elicitación de 5.2).</p>
+      <div class="form-mock">
+        <div class="form-mock-head">Formulario de preselección — antes de la primera reunión</div>
+        <div class="form-field"><label>Nombre de la asignatura y semestre</label><div class="form-hint">Dato factual — no requiere conversación</div></div>
+        <div class="form-field"><label>¿Existe syllabus o material previo? Adjuntar si aplica</label><div class="form-hint">Evita reconstruir desde cero lo que ya existe</div></div>
+        <div class="form-field"><label>Describa una actividad reciente que haya usado en su clase</label><div class="form-hint">Pregunta conductual, no "¿usa metodologías activas?" — evita respuesta por deseabilidad social</div></div>
+        <div class="form-field"><label>¿Qué parte de la asignatura genera más dudas o dificultad en los estudiantes, según su experiencia?</label><div class="form-hint">Diagnóstico inicial de posibles brechas — se profundiza en la reunión</div></div>
+        <div class="form-field"><label>¿Cómo evalúa actualmente el logro de los estudiantes?</label><div class="form-hint">Punto de partida para revisar alineamiento (unidad 2.3)</div></div>
+      </div>
+      <div class="nota contexto"><span class="nota-tag">Qué NO va en el formulario</span>Nada que requiera que el docente narre o muestre cómo hace algo en la práctica — eso es conocimiento tácito (unidad 5.2) que casi nunca se puede poner en palabras por escrito. "Describa una actividad reciente" funciona porque pide un hecho concreto y pasado, no una autoevaluación abstracta como "¿es usted un buen comunicador?".</div>
+    </div>
+
+    <!-- S5 -->
+    <div class="content-section" id="s5">
+      <h2><span class="sec-num">05</span> Introducir metodologías activas gradualmente — no todo de una vez</h2>
+      <p>Pedirle a un docente que nunca ha usado ABP o aula invertida (unidad 1.3) que rediseñe toda su asignatura de golpe genera resistencia y probablemente fracaso. La introducción gradual funciona mejor:</p>
+      <div class="flujo">
+        <div class="paso"><div class="paso-num">1</div><div class="paso-content"><h4>Una sola sesión piloto</h4><p>Eligen juntos una sesión de bajo riesgo (no un examen ni contenido crítico) para probar una metodología activa puntual.</p></div></div>
+        <div class="paso"><div class="paso-num">2</div><div class="paso-content"><h4>Observación y SBI</h4><p>Aplicas el ciclo de supervisión clínica completo sobre esa única sesión — feedback específico, no juicio general de "cómo le está yendo con las metodologías activas".</p></div></div>
+        <div class="paso"><div class="paso-num">3</div><div class="paso-content"><h4>Ajuste y segunda sesión</h4><p>Con el aprendizaje de la primera, prueban una segunda sesión — ya con más confianza del docente porque tiene evidencia propia de que funcionó.</p></div></div>
+        <div class="paso"><div class="paso-num">4</div><div class="paso-content"><h4>Expansión progresiva</h4><p>Recién cuando el docente ya tiene 2-3 experiencias positivas propias, se plantea extenderlo a más partes de la asignatura — nunca antes.</p></div></div>
+      </div>
+    </div>
+
+    <!-- S6 -->
+    <div class="content-section" id="s6">
+      <h2><span class="sec-num">06</span> Manejo de resistencia al cambio</h2>
+      <p>La resistencia de un docente experto a cambiar su forma de enseñar casi nunca es "flojera" — suele tener una razón real detrás, y tu primera tarea es distinguir cuál:</p>
+      <table class="compare-table">
+        <tr><th>Tipo de resistencia</th><th>Señal típica</th><th>Cómo responder</th></tr>
+        <tr><td>Falta de tiempo real</td><td>"No tengo cómo preparar algo nuevo esta semana"</td><td>Reducir el alcance del piloto, no insistir en todo o nada</td></tr>
+        <tr><td>Experiencia previa negativa</td><td>"Ya intenté algo así y no funcionó"</td><td>Preguntar qué pasó específicamente — a menudo el problema fue de implementación, no del enfoque en sí</td></tr>
+        <tr><td>Desconfianza en la evaluación del cambio</td><td>"¿Y si sale peor la nota del curso?"</td><td>Aclarar que el piloto es de bajo riesgo (sección 5) y no afecta su evaluación docente</td></tr>
+        <tr><td>Identidad profesional</td><td>"Así he enseñado siempre y me ha funcionado"</td><td>No invalidar su trayectoria — enmarcar el cambio como suma, no como corrección de algo que estaba mal</td></tr>
+      </table>
+      <div class="nota alerta"><span class="nota-tag">El error que rompe la relación de acompañamiento</span>Tratar toda resistencia como "el docente no quiere cambiar" es exactamente el desalineamiento inverso al que ya viste en RACI y stakeholders (5.2): ignorar la causa real y responder genéricamente. Diagnosticar el tipo de resistencia antes de responder es la misma disciplina que aplicas a un dato anómalo en un dashboard (5.1) — no reaccionas al síntoma, investigas la causa.</div>
+
+      <div class="vineta">
+        <div class="vineta-head">Viñeta de taller · el docente que se resiste</div>
+        <div class="vineta-body">Un docente técnico con 15 años de experiencia te dice: "yo enseño así desde siempre y a mis estudiantes les va bien en el trabajo después, no veo por qué cambiar." <strong>¿Qué tipo de resistencia es esta, y cómo responderías sin invalidar su trayectoria?</strong></div>
+        <button class="vineta-reveal-btn" onclick="revealVineta(this,'v1')">Piénsalo primero → ver resolución</button>
+        <div class="vineta-solution">Es resistencia de identidad profesional, con un argumento legítimo detrás (resultados reales de sus egresados). No lo invalidaría — reconocería explícitamente que su método funciona, y enmarcaría el cambio como una herramienta adicional para casos específicos, no un reemplazo de lo que ya hace bien: "no te pido que cambies todo — probemos una sola sesión con un caso real al inicio de una clase, y si no suma, seguimos como hasta ahora." Eso convierte el cambio en experimento de bajo riesgo, no en juicio sobre 15 años de trabajo.</div>
+      </div>
+    </div>
+
+    <div class="activity">
+      <h2>Actividad — Diagnostica el tipo de resistencia</h2>
+      <div class="act-sub">Cada frase de un docente revela un tipo distinto de resistencia. Identifícalo.</div>
+      <div id="actRoot"></div>
+      <div class="act-progress" id="actProgress"></div>
+    </div>
+
+    <div class="callout ia">
+      <div class="callout-header">🖌 IA en esta fase</div>
+      <div class="callout-body">
+        <div class="capa">＋ Toca para levantar la capa</div>
+        <p>El acompañamiento a docentes es un terreno donde la IA ayuda en preparación, nunca en la relación misma:</p>
+        <p>• Pídele que te ayude a redactar preguntas de pre-conferencia adaptadas a la asignatura específica del docente, antes de una observación.</p>
+        <p>• Pídele que revise un borrador de feedback que escribiste y te diga si suena genérico o si aplica bien la estructura SBI — un chequeo de calidad antes de la conversación real.</p>
+        <p>• Nunca le delegues la conversación de retroalimentación en sí, ni la lectura de la reacción emocional del docente — eso requiere presencia humana real, es exactamente el tipo de tarea que el marco de la unidad 5.3 clasifica como "no delegable".</p>
+      </div>
+    </div>
+
+    <div class="callout entrevista">
+      <div class="callout-header">🎤 Nota de entrevista</div>
+      <div class="callout-body">
+        <div class="capa">＋ Toca para levantar la capa</div>
+        <p>Si te preguntan "¿cómo acompañarías a un docente resistente a cambiar su metodología?", la respuesta madura no es genérica ("con paciencia y buena comunicación") — nombra el proceso: diagnosticar el tipo de resistencia, proponer un piloto de bajo riesgo en una sola sesión, dar feedback específico con SBI, y expandir gradualmente solo con evidencia propia del docente de que funciona. Eso muestra método, no solo buena disposición.</p>
+      </div>
+    </div>
+
+    <div class="content-section" id="practica">
+      <h2><span class="sec-num">◆</span> Practica como en una entrevista</h2>
+      <p>Responde primero con tus propias palabras — <strong>en voz alta o por escrito</strong> — antes de revelar la respuesta modelo. Luego marca el checklist.</p>
+
+      <div class="practica">
+        <div class="practica-head"><div class="p-num">Práctica 1</div><div class="p-q">"¿Cómo estructuras una sesión de acompañamiento pedagógico a un docente?"</div></div>
+        <div class="practica-body">
+          <textarea placeholder="Tu respuesta…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p1','p1')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p1">"Uso un ciclo de tres momentos: una pre-conferencia breve donde el docente me explica qué planea hacer y en qué enfocar la observación; la observación misma, con notas descriptivas no evaluativas; y una post-conferencia donde primero le pregunto cómo sintió él ese momento, y recién después aporto mi observación usando el modelo SBI — situación, comportamiento, impacto — en vez de una opinión general."</div>
+          <div class="checklist"><div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1a')"> ¿Nombraste los tres momentos del ciclo?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1b')"> ¿Mencionaste SBI específicamente?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1c')"> ¿Priorizaste que el docente reflexione primero?</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="practica">
+        <div class="practica-head"><div class="p-num">Práctica 2</div><div class="p-q">"Un docente técnico con años de experiencia se resiste a incorporar metodologías activas. ¿Qué haces?"</div></div>
+        <div class="practica-body">
+          <textarea placeholder="Tu respuesta…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p2','p2')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p2">"Primero diagnostico qué tipo de resistencia es — falta de tiempo, experiencia previa negativa, o defensa de su identidad profesional — porque cada una necesita una respuesta distinta. No lo invalido ni le exijo cambiar todo de golpe: propongo un piloto de bajo riesgo, una sola sesión, y recién si funciona y él mismo lo nota, expandimos gradualmente. El cambio tiene que sentirse como suma a lo que ya funciona, no como corrección de algo que estaba mal."</div>
+          <div class="checklist"><div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2a')"> ¿Diagnosticaste el tipo de resistencia antes de actuar?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2b')"> ¿Propusiste un piloto de bajo riesgo, no un cambio total?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2c')"> ¿Evitaste invalidar su experiencia previa?</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="practica">
+        <div class="practica-head"><div class="p-num">Práctica 3</div><div class="p-q">"¿Cuál es la diferencia entre lo que haces cuando entrevistas a un SME (5.2) y cuando acompañas pedagógicamente a un docente?"</div></div>
+        <div class="practica-body">
+          <textarea placeholder="Tu respuesta…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p3','p3')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p3">"En la elicitación, el docente es fuente de información y yo diseño con lo que extraigo — es una relación puntual, centrada en un proyecto. En el acompañamiento pedagógico, el docente es quien construye su propio material, y mi rol es guiarlo metodológicamente con retroalimentación estructurada — es una relación sostenida, donde el objetivo es que desarrolle capacidad propia de diseño, no solo que yo entregue un curso terminado."</div>
+          <div class="checklist"><div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3a')"> ¿Distinguiste quién diseña en cada caso?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3b')"> ¿Mencionaste la diferencia de duración de la relación?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3c')"> ¿Conectaste con el objetivo de desarrollar capacidad, no solo entregar un producto?</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="eval-block" id="evaluacion">
+      <h2>Evaluación — Unidad 6.2</h2>
+      <div class="eval-sub">12 preguntas. El puntaje se guarda en tu ruta. Puedes reintentar sin límite.</div>
+      <div id="quizRoot"></div>
+      <div class="eval-counter" id="quizCounter">Respondidas: 0/12</div>
+      <button class="eval-submit" id="quizSubmit" onclick="submitQuiz()" disabled>Enviar evaluación</button>
+      <div class="result-card" id="resultCard"><div class="result-score" id="resultScore">0%</div><div id="resultMsg" style="font-size:0.85rem;color:var(--ink-muted);margin-top:0.3rem;"></div></div>
+    </div>
+
+    <div class="curso-fin" id="cursoFin" style="display:none">
+      <h3>🎨 Curso completo — 18 de 18 unidades</h3>
+      <p>Terminaste el cuaderno de taller completo. Tienes el proceso de DI de principio a fin, con backward design, evidencia propia de trabajo, criterio explícito sobre IA aplicada a tu campo, y ahora también el marco completo de educación técnico-profesional. Vuelve cuando quieras repasar — nada de esto tiene fecha de vencimiento.</p>
+    </div>
+
+    <div class="next-nav">
+      <a href="m6-1.html">← 6.1 Diseño curricular en educación TP</a>
+      <a href="../index.html">Volver a la ruta de aprendizaje →</a>
+    </div>
+  </main>
+</div>
+
+<script src="../gami.js"></script>
+<script src="../mentor-knowledge.js"></script>
+<script src="../mentor.js"></script>
+<script>
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbylYML8h2BnNgi2AXtZ8bkGaXPNRhurswPr5dfyGRldbVoCRvmoT2cHN0r3I4qGynLb/exec';
+const UNIT_ID = 'm6-2';
+const YT_VIDEO_ID = '';
+
+function detectMedia() {
+  fetch('m6-2.pdf', { method: 'HEAD' }).then(r => {
+    if (r.ok) document.getElementById('pdfContainer').innerHTML =
+      '<iframe class="pdf-frame" src="m6-2.pdf#view=FitH" title="Presentación" loading="lazy" onload="Gami.award(\'m6-2_pdf\',5,\'Revisaste la presentación\');checkMultimodal();"></iframe><div class="pdf-actions"><a href="m6-2.pdf" target="_blank" rel="noopener">Pantalla completa</a><a href="m6-2.pdf" download>Descargar</a></div>';
+  }).catch(()=>{});
+  fetch('m6-2-audio.mp3', { method: 'HEAD' }).then(r => {
+    if (r.ok) document.getElementById('audioContainer').innerHTML =
+      '<div class="audio-pane"><span class="audio-label">Resumen en audio · NotebookLM</span><audio controls preload="metadata" src="m6-2-audio.mp3" onplay="Gami.award(\'m6-2_audio\',5,\'Escuchaste el audio\');checkMultimodal();"></audio></div>';
+  }).catch(()=>{});
+  if (YT_VIDEO_ID) document.getElementById('videoContainer').innerHTML =
+    '<div class="video-wrap"><iframe src="https://www.youtube-nocookie.com/embed/' + YT_VIDEO_ID + '" title="Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>';
+}
+detectMedia();
+
+function switchMedia(btn) {
+  document.querySelectorAll('.media-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.media-pane').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('pane-' + btn.dataset.pane).classList.add('active');
+  if (btn.dataset.pane === 'video' && YT_VIDEO_ID) { Gami.award('m6-2_video',5,'Viste el video'); checkMultimodal(); }
+}
+function checkMultimodal() { if (Gami.hasSeen('m6-2_pdf') && Gami.hasSeen('m6-2_audio')) Gami.badge('multimodal'); }
+
+function revealVineta(btn, id) { btn.closest('.vineta').classList.add('revealed'); Gami.award('m6-2_vineta_' + id, 5, 'Resolviste una viñeta'); }
+
+let capasReveladas = 0;
+document.querySelectorAll('.capa').forEach((capa, i) => {
+  capa.addEventListener('click', () => {
+    capa.closest('.callout').classList.add('revealed');
+    Gami.award('m6-2_capa' + i, 5, 'Levantaste una capa');
+    capasReveladas++;
+    if (capasReveladas >= 2) Gami.badge('curiosa');
+  });
+});
+function toggleRM(id, pid) { document.getElementById(id).classList.toggle('show'); Gami.award('m6-2_rm_' + pid, 3, 'Contrastaste con la respuesta modelo'); }
+function clCheck(el, id) { if (el.checked) Gami.award('m6-2_cl_' + id, 2, 'Ítem de checklist verificado'); }
+
+const ACT_ITEMS = [
+  { text: '"No tengo cómo preparar algo nuevo esta semana, ando con demasiadas evaluaciones que corregir."', ans: 'tiempo', why: 'Falta de tiempo real — se resuelve reduciendo el alcance del piloto.' },
+  { text: '"Ya probé algo parecido hace dos años y fue un desastre."', ans: 'previa', why: 'Experiencia previa negativa — hay que indagar qué falló específicamente.' },
+  { text: '"¿Y si a los estudiantes les va peor en la evaluación con este cambio?"', ans: 'evaluacion', why: 'Desconfianza en cómo se evaluará el cambio mismo — aclarar que es bajo riesgo.' },
+  { text: '"Llevo 15 años enseñando así y siempre me ha resultado."', ans: 'identidad', why: 'Resistencia de identidad profesional — no invalidar la trayectoria, enmarcar como suma.' },
+];
+let actDone = 0, actCorrect = 0;
+const LABELS = { tiempo: 'Falta de tiempo', previa: 'Experiencia previa negativa', evaluacion: 'Desconfianza en la evaluación', identidad: 'Identidad profesional' };
+function renderActivity() {
+  document.getElementById('actRoot').innerHTML = ACT_ITEMS.map((item, i) => `
+    <div class="act-card" id="act-${i}">
+      <div class="act-statement">${item.text}</div>
+      <div class="act-buttons">
+        <button class="act-btn" onclick="answerAct(${i},'tiempo')">Falta de tiempo</button>
+        <button class="act-btn" onclick="answerAct(${i},'previa')">Experiencia previa</button>
+        <button class="act-btn" onclick="answerAct(${i},'evaluacion')">Desconfianza evaluación</button>
+        <button class="act-btn" onclick="answerAct(${i},'identidad')">Identidad profesional</button>
+      </div>
+      <div class="act-verdict" id="verdict-${i}"></div>
+    </div>`).join('');
+  updateActProgress();
+}
+function answerAct(i, choice) {
+  const item = ACT_ITEMS[i];
+  const card = document.getElementById('act-' + i);
+  const verdict = document.getElementById('verdict-' + i);
+  actDone++;
+  if (choice === item.ans) { actCorrect++; card.classList.add('ok'); verdict.style.color = '#315226'; verdict.textContent = '✓ ' + item.why; }
+  else { card.classList.add('no'); card.querySelector('.act-buttons').style.display = 'none'; verdict.style.color = '#6E2A2A'; verdict.textContent = '✗ Era ' + LABELS[item.ans] + '. ' + item.why; }
+  updateActProgress();
+  if (actDone === ACT_ITEMS.length) Gami.award('m6-2_actividad', Math.round(15 * actCorrect / ACT_ITEMS.length) + 5, 'Actividad de resistencia — ' + actCorrect + '/' + ACT_ITEMS.length);
+}
+function updateActProgress() { document.getElementById('actProgress').textContent = actDone + '/' + ACT_ITEMS.length + ' resueltas' + (actDone === ACT_ITEMS.length ? ' · ' + actCorrect + ' correctas' : ''); }
+renderActivity();
+
+const QUIZ = [
+  { q: '¿Cuál es la diferencia central entre elicitación y acompañamiento pedagógico?', opts: ['No hay diferencia real','En elicitación el docente es fuente de información; en acompañamiento es constructor activo del material','El acompañamiento es más rápido siempre','La elicitación no requiere conversación'], ans: 1 },
+  { q: '¿Cuáles son los tres momentos del ciclo de supervisión clínica?', opts: ['Inicio, desarrollo, cierre','Pre-conferencia, observación, post-conferencia','Diagnóstico, diseño, evaluación','Planificar, ejecutar, revisar'], ans: 1 },
+  { q: '¿Por qué es un error saltarse la pre-conferencia antes de observar una clase?', opts: ['No es un error, ahorra tiempo','Se evalúa contra expectativas propias, no contra la intención real del docente','La pre-conferencia es obligatoria por ley','Solo aplica a docentes nuevos'], ans: 1 },
+  { q: '¿Qué significa la "S" en el modelo de feedback SBI?', opts: ['Solución','Situación','Sugerencia','Síntesis'], ans: 1 },
+  { q: '¿Por qué el feedback SBI es más difícil de rechazar que uno genérico?', opts: ['Porque es más largo','Porque describe un momento específico y observable, no una opinión general','Porque siempre es positivo','Porque lo dicta un superior jerárquico'], ans: 1 },
+  { q: 'En el cuestionario de preselección, ¿por qué se prefiere "describa una actividad reciente" sobre "¿usa metodologías activas?"?', opts: ['Es más corta de responder','Pide un hecho concreto, evitando la respuesta por deseabilidad social','No hay diferencia real','Porque metodologías activas es un término prohibido'], ans: 1 },
+  { q: '¿Cuál es el primer paso recomendado al introducir metodologías activas con un docente sin experiencia en ellas?', opts: ['Rediseñar toda la asignatura de inmediato','Una sola sesión piloto de bajo riesgo','Enviarle un manual y esperar que lo aplique solo','Evaluarlo sin previo aviso'], ans: 1 },
+  { q: 'Un docente dice "ya intenté algo así y no funcionó". ¿Qué tipo de resistencia es?', opts: ['Falta de tiempo','Experiencia previa negativa','Identidad profesional','Desconfianza en la evaluación'], ans: 1 },
+  { q: '¿Cómo se debe responder a la resistencia de tipo "identidad profesional"?', opts: ['Ignorarla y avanzar igual','Invalidar su experiencia previa','No invalidar la trayectoria; enmarcar el cambio como suma, no como corrección','Exigir el cambio de inmediato'], ans: 2 },
+  { q: '¿Qué tienen en común el diagnóstico de resistencia (esta unidad) y el análisis de un dato anómalo en un dashboard (5.1)?', opts: ['Nada, son procesos completamente distintos','Ambos requieren investigar la causa real antes de reaccionar al síntoma','Ambos usan Power BI','Ambos son evaluaciones sumativas'], ans: 1 },
+  { q: '¿Qué se le debe delegar a la IA en el proceso de acompañamiento docente, según el marco de la unidad 5.3?', opts: ['La conversación de retroalimentación completa','Tareas de preparación como redactar preguntas de pre-conferencia, nunca la relación humana en sí','Todo el proceso, sin excepción','Nada, la IA no tiene ningún rol aquí'], ans: 1 },
+  { q: '¿Qué distingue el éxito de un acompañamiento pedagógico sostenido, a diferencia de una elicitación puntual?', opts: ['Cuántos cursos diseñó el DI','Cuánto mejoró la capacidad de diseño propia del docente en el tiempo','El costo total del proyecto','La cantidad de reuniones realizadas'], ans: 1 },
+];
+function renderQuiz() {
+  document.getElementById('quizRoot').innerHTML = QUIZ.map((item, qi) => `
+    <div class="eval-q">${qi + 1}. ${item.q}</div>
+    <div class="quiz-opts" data-q="${qi}">${item.opts.map((opt, oi) => `<label class="eval-option"><input type="radio" name="q${qi}" value="${oi}" onchange="updateQuizCounter()"> ${opt}</label>`).join('')}</div>`).join('');
+}
+function answered() { let n = 0; for (let i = 0; i < QUIZ.length; i++) if (document.querySelector('input[name=q' + i + ']:checked')) n++; return n; }
+function updateQuizCounter() { const n = answered(); document.getElementById('quizCounter').textContent = 'Respondidas: ' + n + '/' + QUIZ.length; document.getElementById('quizSubmit').disabled = n < QUIZ.length; }
+function submitQuiz() {
+  let correct = 0;
+  QUIZ.forEach((item, qi) => {
+    const sel = document.querySelector('input[name=q' + qi + ']:checked');
+    const val = sel ? parseInt(sel.value) : -1;
+    document.querySelectorAll('[data-q="' + qi + '"] .eval-option').forEach((opt, oi) => {
+      opt.classList.remove('correct','incorrect');
+      if (oi === item.ans) opt.classList.add('correct'); else if (oi === val) opt.classList.add('incorrect');
+    });
+    if (val === item.ans) correct++;
+  });
+  saveScore(correct / QUIZ.length, correct);
+}
+function saveScore(pct, correct) {
+  try { const scores = JSON.parse(localStorage.getItem('di_scores_v2') || '{}'); scores[UNIT_ID] = pct; localStorage.setItem('di_scores_v2', JSON.stringify(scores)); } catch(e) {}
+  const card = document.getElementById('resultCard');
+  card.className = 'result-card show';
+  card.style.background = pct >= 0.7 ? 'var(--done-soft)' : 'var(--msoft)';
+  document.getElementById('resultScore').textContent = Math.round(pct * 100) + '%';
+  document.getElementById('resultMsg').textContent = correct + '/' + QUIZ.length + ' correctas · ' + (pct >= 0.7 ? 'Unidad completada en tu ruta.' : 'Puedes repasar y reintentar — sin límite.');
+  if (pct >= 0.7) { Gami.award('m6-2_eval', 30, 'Evaluación 6.2 aprobada — ' + correct + '/' + QUIZ.length); Gami.badge('primeraCapa'); document.getElementById('cursoFin').style.display = 'block'; }
+  try { const img = new Image(); img.src = SCRIPT_URL + '?action=saveScore&id=' + UNIT_ID + '&score=' + pct + '&t=' + Date.now(); } catch(e) {}
+}
+renderQuiz();
+updateQuizCounter();
+</script>
+</body>
+</html>

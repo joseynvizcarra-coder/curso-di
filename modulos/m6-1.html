@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6.1 Diseño curricular en educación TP — Cuaderno de taller</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #EDEAE3; --paper-alt: #E4DFD3; --card: #F8F6F1;
+  --ink: #1C1A17; --ink-muted: #6B665D; --border: #D8D1C0; --border-soft: #E2DCCC;
+  --mc: #2E6B62; --msoft: #DCEAE7;
+  --ia: #2A5CAA; --ia-soft: #DCE5F2;
+  --done: #4A6B3E; --done-soft: #E9F0E5;
+  --warn: #B9862C; --warn-soft: #F1E5CC;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--paper); color: var(--ink); font-family: 'IBM Plex Sans', sans-serif; line-height: 1.55; }
+a { color: inherit; }
+.topbar { background: var(--ink); color: #EDEAE3; padding: 0.7rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; position: sticky; top: 0; z-index: 50; }
+.topbar a.back { color: #C9C3B5; text-decoration: none; }
+.topbar a.back:hover { color: #fff; }
+.gami-chips { display: flex; gap: 0.9rem; color: #C9C3B5; flex-wrap: wrap; }
+.layout { display: grid; grid-template-columns: 250px 1fr; max-width: 1120px; margin: 0 auto; }
+@media (max-width: 880px) { .layout { grid-template-columns: 1fr; } .sidebar { order: 2; } }
+.sidebar { border-right: 1px solid var(--border); padding: 1.4rem 1.2rem; }
+@media (max-width: 880px) { .sidebar { border-right: none; border-top: 1px solid var(--border); } }
+.sidebar h6 { font-family: 'Fraunces', serif; font-size: 0.95rem; color: var(--mc); margin-bottom: 0.2rem; }
+.sidebar .sidebar-sub { font-size: 0.74rem; color: var(--ink-muted); margin-bottom: 1rem; }
+.side-item { display: flex; align-items: center; gap: 0.6rem; padding: 0.55rem 0.5rem; border-radius: 3px; text-decoration: none; color: var(--ink); font-size: 0.84rem; margin-bottom: 0.15rem; }
+.side-item.active { background: var(--msoft); font-weight: 600; color: var(--mc); }
+.side-mark { width: 22px; height: 22px; border-radius: 3px; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; flex-shrink: 0; }
+.side-item.active .side-mark { background: var(--mc); border-color: var(--mc); color: #fff; }
+.side-toc { margin-top: 1.4rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+.side-toc .toc-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.64rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); margin-bottom: 0.5rem; }
+.side-toc a { display: block; font-size: 0.78rem; color: var(--ink-muted); text-decoration: none; padding: 0.3rem 0; }
+.side-toc a:hover { color: var(--mc); }
+main { padding: 2.2rem 2rem 4rem; min-width: 0; }
+.unit-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--mc); margin-bottom: 0.5rem; }
+h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(1.5rem, 3.5vw, 2.1rem); margin-bottom: 0.6rem; max-width: 24ch; }
+.lesson-dek { color: #423E37; max-width: 64ch; margin-bottom: 1rem; }
+.lesson-badges { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.6rem; }
+.lbadge { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; border: 1px solid var(--border); background: var(--card); border-radius: 3px; padding: 0.25rem 0.6rem; color: var(--ink-muted); }
+.objetivo-box { background: var(--card); border: 1px solid var(--border); border-left: 4px solid var(--mc); border-radius: 4px; padding: 1.1rem 1.3rem; margin-bottom: 2rem; }
+.objetivo-box .label { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mc); margin-bottom: 0.4rem; }
+.objetivo-box p { font-size: 0.92rem; font-style: italic; color: #322E28; }
+.mapa-block { border: 1px solid var(--border); border-radius: 4px; background: var(--card); margin-bottom: 2rem; overflow: hidden; }
+.mapa-head { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); padding: 0.7rem 1rem; border-bottom: 1px solid var(--border-soft); }
+.mapa-body { padding: 1rem; background: #fff; }
+.mapa-note { font-size: 0.78rem; color: var(--ink-muted); padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
+.media-block { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin-bottom: 2.2rem; background: var(--card); }
+.media-tabs { display: flex; border-bottom: 1px solid var(--border); background: var(--paper-alt); flex-wrap: wrap; }
+.media-tab { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; padding: 0.7rem 1rem; cursor: pointer; border: none; background: none; color: var(--ink-muted); border-bottom: 2px solid transparent; }
+.media-tab.active { color: var(--mc); border-bottom-color: var(--mc); background: var(--card); }
+.media-pane { display: none; }
+.media-pane.active { display: block; }
+.media-note { font-size: 0.76rem; color: var(--ink-muted); padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
+.media-pending { padding: 2rem 1rem; text-align: center; color: var(--ink-muted); font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; }
+.pdf-frame { width: 100%; height: 480px; border: none; display: block; background: #fff; }
+.pdf-actions { display: flex; gap: 0.6rem; padding: 0.6rem 1rem; border-top: 1px solid var(--border-soft); }
+.pdf-actions a { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--mc); text-decoration: none; border: 1px solid var(--border); border-radius: 3px; padding: 0.3rem 0.7rem; }
+.audio-pane { padding: 1.2rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.audio-pane audio { flex: 1; min-width: 240px; }
+.audio-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: var(--ink-muted); }
+.video-wrap { position: relative; padding-top: 56.25%; background: #111; }
+.video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+.content-section { margin-bottom: 2.6rem; }
+.content-section h2 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.3rem; margin-bottom: 0.8rem; padding-bottom: 0.4rem; border-bottom: 2px solid var(--mc); display: flex; align-items: baseline; gap: 0.6rem; }
+.content-section h2 .sec-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; color: var(--mc); }
+.content-section h3 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.05rem; margin: 1.2rem 0 0.5rem; }
+.content-section p { margin-bottom: 0.8rem; font-size: 0.94rem; color: #2B2823; }
+.content-section ul, .content-section ol { margin: 0.6rem 0 0.9rem 1.3rem; font-size: 0.92rem; }
+.content-section li { margin-bottom: 0.4rem; }
+.content-section strong { color: var(--mc); font-weight: 600; }
+.defbox { background: var(--msoft); border-radius: 4px; padding: 0.9rem 1.1rem; font-style: italic; font-size: 0.93rem; margin: 0.8rem 0 1.2rem; }
+.nota { border-radius: 4px; padding: 0.9rem 1.1rem; font-size: 0.88rem; margin: 1.1rem 0; border: 1px solid var(--border); }
+.nota .nota-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.07em; display: block; margin-bottom: 0.35rem; }
+.nota.clave { background: var(--done-soft); } .nota.clave .nota-tag { color: var(--done); }
+.nota.alerta { background: #F5E5E2; } .nota.alerta .nota-tag { color: #A83232; }
+.nota.contexto { background: var(--ia-soft); } .nota.contexto .nota-tag { color: var(--ia); }
+.compare-table { width: 100%; border-collapse: collapse; margin: 0.8rem 0 1.4rem; font-size: 0.86rem; }
+.compare-table th, .compare-table td { border: 1px solid var(--border); padding: 0.55rem 0.7rem; text-align: left; vertical-align: top; }
+.compare-table th { background: var(--card); font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-muted); }
+.compare-table td:first-child { font-weight: 600; }
+
+/* pirámide curricular */
+.piramide { display: flex; flex-direction: column; align-items: center; gap: 2px; margin: 1rem 0 1.4rem; }
+.piramide-nivel { border: 1px solid var(--mc); background: var(--card); padding: 0.7rem 1rem; text-align: center; border-radius: 3px; }
+.piramide-nivel .pn-titulo { font-family: 'Fraunces', serif; font-weight: 600; font-size: 0.92rem; }
+.piramide-nivel .pn-sub { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--ink-muted); margin-top: 0.15rem; }
+.piramide-nivel.n1 { width: 45%; background: var(--mc); color: #fff; }
+.piramide-nivel.n1 .pn-sub { color: #D5E8E4; }
+.piramide-nivel.n2 { width: 65%; background: var(--msoft); }
+.piramide-nivel.n3 { width: 85%; background: var(--card); }
+.piramide-nivel.n4 { width: 100%; background: var(--paper-alt); }
+
+/* proceso de aseguramiento de calidad */
+.flujo { display: flex; flex-direction: column; gap: 0.5rem; margin: 1rem 0 1.4rem; }
+.paso { display: flex; gap: 0.9rem; border: 1px solid var(--border); border-radius: 4px; background: var(--card); padding: 0.8rem 1rem; align-items: flex-start; }
+.paso-num { width: 28px; height: 28px; border-radius: 50%; background: var(--mc); color: #fff; font-family: 'Fraunces', serif; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.9rem; }
+.paso-content h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.2rem; }
+.paso-content p { font-size: 0.83rem; margin: 0; color: #3A362F; }
+
+.vineta { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin: 1.2rem 0; }
+.vineta-head { background: var(--ink); color: #EDEAE3; font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.6rem 1rem; }
+.vineta-body { background: var(--card); padding: 1rem 1.2rem; font-size: 0.9rem; }
+.vineta-reveal-btn { display: block; width: 100%; text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; background: var(--msoft); border: none; border-top: 1px solid var(--border); padding: 0.7rem; cursor: pointer; color: var(--mc); }
+.vineta-solution { display: none; background: #fff; border-top: 1px dashed var(--border); padding: 1rem 1.2rem; font-size: 0.9rem; }
+.vineta.revealed .vineta-solution { display: block; }
+.vineta.revealed .vineta-reveal-btn { display: none; }
+
+.activity { border: 1px solid var(--border); border-radius: 4px; background: var(--card); padding: 1.3rem; margin: 2rem 0; }
+.activity h2 { font-family: 'Fraunces', serif; font-size: 1.1rem; margin-bottom: 0.3rem; }
+.activity .act-sub { font-size: 0.8rem; color: var(--ink-muted); margin-bottom: 1rem; }
+.act-card { border: 1px solid var(--border); border-radius: 4px; background: var(--paper); padding: 0.9rem 1rem; margin-bottom: 0.8rem; }
+.act-statement { font-size: 0.9rem; margin-bottom: 0.7rem; }
+.act-buttons { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.act-btn { flex: 1; min-width: 90px; font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; padding: 0.5rem; border: 1px solid var(--border); border-radius: 3px; background: var(--card); cursor: pointer; transition: all 0.15s; }
+.act-btn:hover { border-color: var(--mc); }
+.act-card.ok { border-color: var(--done); background: var(--done-soft); }
+.act-card.ok .act-buttons { display: none; }
+.act-card.no { border-color: #A83232; }
+.act-verdict { font-size: 0.78rem; margin-top: 0.4rem; display: none; }
+.act-card.ok .act-verdict, .act-card.no .act-verdict { display: block; }
+.act-progress { font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; color: var(--ink-muted); margin-top: 0.4rem; }
+
+.callout { position: relative; border-radius: 4px; margin: 1.6rem 0; overflow: hidden; border: 1px solid var(--border); }
+.callout-header { display: flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.05em; color: #fff; }
+.callout.ia .callout-header { background: var(--ia); }
+.callout.entrevista .callout-header { background: var(--mc); }
+.callout-body { background: var(--card); padding: 1.1rem 1.3rem; font-size: 0.9rem; position: relative; }
+.callout-body p { margin-bottom: 0.7rem; }
+.callout-body p:last-child { margin-bottom: 0; }
+.capa { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 0.6rem; cursor: pointer; user-select: none; transition: transform 0.5s cubic-bezier(.65,0,.35,1), opacity 0.4s ease; font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--ink-muted); }
+.callout.ia .capa { background: var(--ia-soft); }
+.callout.entrevista .capa { background: var(--msoft); }
+.callout.revealed .capa { transform: translateX(105%); opacity: 0; pointer-events: none; }
+
+.practica { border: 1px solid var(--border); border-radius: 4px; background: var(--card); margin: 1.4rem 0; overflow: hidden; }
+.practica-head { padding: 0.9rem 1.1rem; border-bottom: 1px solid var(--border-soft); }
+.practica-head .p-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--mc); text-transform: uppercase; letter-spacing: 0.06em; }
+.practica-head .p-q { font-size: 0.94rem; font-weight: 500; margin-top: 0.25rem; }
+.practica-body { padding: 1rem 1.1rem; }
+.practica-body textarea { width: 100%; min-height: 80px; font-family: 'IBM Plex Sans', sans-serif; font-size: 0.88rem; border: 1px solid var(--border); border-radius: 3px; padding: 0.7rem; resize: vertical; background: var(--paper); margin-bottom: 0.7rem; }
+.rm-toggle { font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; color: var(--mc); cursor: pointer; text-decoration: underline; background: none; border: none; padding: 0; }
+.rm { display: none; margin-top: 0.7rem; padding: 0.8rem 1rem; background: var(--msoft); border-radius: 3px; font-size: 0.87rem; }
+.rm.show { display: block; }
+.checklist { margin-top: 0.8rem; border-top: 1px dashed var(--border); padding-top: 0.8rem; }
+.checklist .cl-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); margin-bottom: 0.5rem; }
+.cl-item { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.84rem; padding: 0.35rem 0; cursor: pointer; }
+.cl-item input { accent-color: var(--done); margin-top: 0.2rem; }
+
+.eval-block { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 1.3rem; margin-top: 2.2rem; }
+.eval-block h2 { font-family: 'Fraunces', serif; font-size: 1.15rem; margin-bottom: 0.3rem; }
+.eval-sub { font-size: 0.8rem; color: var(--ink-muted); margin-bottom: 1.1rem; }
+.eval-q { font-size: 0.92rem; font-weight: 500; margin: 1.2rem 0 0.6rem; }
+.eval-option { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.6rem 0.8rem; border: 1px solid var(--border); border-radius: 3px; margin-bottom: 0.45rem; cursor: pointer; font-size: 0.87rem; background: var(--paper); transition: border-color 0.15s; }
+.eval-option:hover { border-color: var(--mc); }
+.eval-option input { accent-color: var(--mc); margin-top: 0.2rem; }
+.eval-option.correct { border-color: var(--done); background: var(--done-soft); }
+.eval-option.incorrect { border-color: #A83232; background: #F5E5E2; }
+.eval-submit { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; background: var(--mc); color: #fff; border: none; border-radius: 3px; padding: 0.7rem 1.4rem; cursor: pointer; margin-top: 1.2rem; }
+.eval-submit:disabled { opacity: 0.5; cursor: default; }
+.eval-counter { font-family: 'IBM Plex Mono', monospace; font-size: 0.74rem; color: var(--ink-muted); margin-top: 0.5rem; }
+.result-card { display: none; margin-top: 1.2rem; padding: 1.1rem; border-radius: 4px; text-align: center; }
+.result-card.show { display: block; }
+.result-score { font-family: 'Fraunces', serif; font-size: 1.7rem; font-weight: 600; }
+.next-nav { display: flex; justify-content: space-between; margin-top: 2.5rem; padding-top: 1.2rem; border-top: 1px solid var(--border); font-size: 0.86rem; }
+.next-nav a { color: var(--mc); font-weight: 500; text-decoration: none; }
+.next-nav .disabled { color: var(--ink-muted); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../index.html">← Ruta de aprendizaje</a>
+  <div class="gami-chips">
+    <span id="gamiNivel">Nivel 1 · Boceto</span>
+    <span id="gamiPoints">0 pts</span>
+    <span id="gamiStreak">0 días</span>
+  </div>
+</div>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h6>Módulo 6</h6>
+    <div class="sidebar-sub">Educación técnico-profesional</div>
+    <a class="side-item active" href="m6-1.html"><span class="side-mark">6.1</span> Diseño curricular TP</a>
+    <a class="side-item" href="m6-2.html"><span class="side-mark">6.2</span> Acompañamiento a docentes</a>
+    <div class="side-toc">
+      <div class="toc-label">En esta unidad</div>
+      <a href="#s1">1 · La pirámide curricular completa</a>
+      <a href="#s2">2 · Marco de Cualificaciones TP</a>
+      <a href="#s3">3 · Malla curricular y mapa de tributación</a>
+      <a href="#s4">4 · Aseguramiento de calidad</a>
+      <a href="#s5">5 · Rediseñar sin romper el sistema</a>
+      <a href="#s6">6 · Diseño curricular vs. diseño instruccional</a>
+      <a href="#practica">Práctica de entrevista</a>
+      <a href="#evaluacion">Evaluación</a>
+    </div>
+  </aside>
+
+  <main>
+    <div class="unit-eyebrow">Módulo 6 · Unidad 6.1</div>
+    <h1 class="lesson-title">Diseño curricular en educación técnico-profesional</h1>
+    <p class="lesson-dek">El proceso completo, de la escala de carrera a la escala de unidad — integrando perfil de egreso, RA y matriz de tributación (2.2), evaluación por competencias (3.1) y metodologías activas (1.3) en un solo sistema coherente.</p>
+    <div class="lesson-badges">
+      <span class="lbadge">6 bloques de contenido</span>
+      <span class="lbadge">1 actividad interactiva</span>
+      <span class="lbadge">3 prácticas de entrevista</span>
+      <span class="lbadge">12 preguntas de evaluación</span>
+      <span class="lbadge">~50 min</span>
+    </div>
+
+    <div class="objetivo-box">
+      <div class="label">Objetivo de aprendizaje</div>
+      <p>Dada una carrera técnico-profesional con su perfil de egreso definido, serás capaz de ubicar dónde interviene el diseño curricular (nivel malla/carrera) versus el diseño instruccional (nivel asignatura/unidad), aplicar el proceso de aseguramiento de calidad correspondiente, y proponer un rediseño de asignatura que preserve la coherencia con el resto del sistema curricular.</p>
+    </div>
+
+    <div class="mapa-block">
+      <div class="mapa-head">Mapa de esta unidad · organizador previo</div>
+      <div class="mapa-body">
+        <svg width="100%" viewBox="0 0 680 210" style="display:block" role="img" aria-label="Mapa de diseño curricular TP">
+          <rect x="255" y="10" width="170" height="44" rx="5" fill="#DCEAE7" stroke="#2E6B62" stroke-width="1.4"/>
+          <text x="340" y="29" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1C1A17">Diseño curricular TP</text>
+          <text x="340" y="46" text-anchor="middle" font-family="monospace" font-size="9" fill="#2E6B62">de la carrera a la unidad</text>
+          <line x1="340" y1="54" x2="115" y2="115" stroke="#D8D1C0"/><line x1="340" y1="54" x2="340" y2="115" stroke="#D8D1C0"/><line x1="340" y1="54" x2="565" y2="115" stroke="#D8D1C0"/>
+          <rect x="30" y="115" width="170" height="50" rx="5" fill="#F8F6F1" stroke="#2A5CAA" stroke-width="1.2"/>
+          <text x="115" y="135" text-anchor="middle" font-family="Georgia,serif" font-size="12.5" fill="#1C1A17">Marco de Cualificaciones</text>
+          <text x="115" y="152" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#2A5CAA">el nivel más alto</text>
+          <rect x="255" y="115" width="170" height="50" rx="5" fill="#F8F6F1" stroke="#2A5CAA" stroke-width="1.2"/>
+          <text x="340" y="135" text-anchor="middle" font-family="Georgia,serif" font-size="12.5" fill="#1C1A17">Matriz de tributación</text>
+          <text x="340" y="152" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#2A5CAA">la herramienta central</text>
+          <rect x="480" y="115" width="170" height="50" rx="5" fill="#F8F6F1" stroke="#2A5CAA" stroke-width="1.2"/>
+          <text x="565" y="135" text-anchor="middle" font-family="Georgia,serif" font-size="12.5" fill="#1C1A17">Aseguramiento de calidad</text>
+          <text x="565" y="152" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#2A5CAA">cómo se verifica todo</text>
+        </svg>
+      </div>
+      <div class="mapa-note">Esta unidad conecta piezas que ya construiste por separado (2.2, 3.1, 1.3) en un solo proceso — es la integración, no contenido aislado.</div>
+    </div>
+
+    <div class="media-block">
+      <div class="media-tabs">
+        <button class="media-tab active" data-pane="pdf" onclick="switchMedia(this)">📑 Presentación</button>
+        <button class="media-tab" data-pane="audio" onclick="switchMedia(this)">🎧 Audio NotebookLM</button>
+        <button class="media-tab" data-pane="video" onclick="switchMedia(this)">▶ Video</button>
+      </div>
+      <div class="media-pane active" id="pane-pdf"><div id="pdfContainer"><div class="media-pending">Presentación en preparación — se activará al agregar <strong>m6-1.pdf</strong>.</div></div></div>
+      <div class="media-pane" id="pane-audio"><div id="audioContainer"><div class="media-pending">Audio en preparación — se activará al agregar <strong>m6-1-audio.mp3</strong>.</div></div></div>
+      <div class="media-pane" id="pane-video"><div id="videoContainer"><div class="media-pending">Video en preparación — pega el ID en <strong>YT_VIDEO_ID</strong> dentro del archivo.</div></div></div>
+      <div class="media-note">Misma unidad, varios formatos (DUA pauta 1). El texto completo está siempre visible abajo.</div>
+    </div>
+
+    <!-- S1 -->
+    <div class="content-section" id="s1">
+      <h2><span class="sec-num">01</span> La pirámide curricular completa</h2>
+      <p>Hasta ahora trabajaste con tres piezas de este sistema por separado. Vistas juntas, forman una pirámide de cuatro niveles, cada uno anidado dentro del anterior:</p>
+      <div class="piramide">
+        <div class="piramide-nivel n1"><div class="pn-titulo">Marco de Cualificaciones</div><div class="pn-sub">nivel sectorial/nacional</div></div>
+        <div class="piramide-nivel n2"><div class="pn-titulo">Perfil de egreso</div><div class="pn-sub">nivel carrera</div></div>
+        <div class="piramide-nivel n3"><div class="pn-titulo">RA general de asignatura</div><div class="pn-sub">nivel asignatura</div></div>
+        <div class="piramide-nivel n4"><div class="pn-titulo">RA específico / objetivo de aprendizaje</div><div class="pn-sub">nivel unidad — tu unidad 2.2</div></div>
+      </div>
+      <div class="defbox">Cada nivel de esta pirámide responde una pregunta de alcance distinto: el Marco de Cualificaciones pregunta <em>"¿qué debe saber hacer cualquier técnico de este sector, en cualquier institución del país?"</em>; el perfil de egreso pregunta lo mismo pero para <em>esta carrera específica</em>; y los RA lo bajan a la escala de una asignatura y luego una unidad. Diseñar sin tener clara esta cadena completa es la causa más común de incoherencia curricular.</div>
+    </div>
+
+    <!-- S2 -->
+    <div class="content-section" id="s2">
+      <h2><span class="sec-num">02</span> Marco de Cualificaciones Técnico Profesional — el nivel que está sobre la carrera</h2>
+      <p>En Chile, el <strong>Marco de Cualificaciones Técnico Profesional (MCTP)</strong> es el instrumento nacional que ordena y da equivalencia a las cualificaciones técnicas por nivel de complejidad y sector productivo — es la referencia que estandariza qué significa, por ejemplo, un "Técnico de Nivel Superior en Administración" en cualquier institución del país, no solo en la tuya.</p>
+      <div class="nota contexto"><span class="nota-tag">Por qué le importa a un DI, no solo a un área de aseguramiento de calidad</span>Cuando diseñas o rediseñas un perfil de egreso, ese perfil idealmente debe poder situarse dentro de un nivel del Marco de Cualificaciones — eso es lo que le da a un título peso comparable frente a otras instituciones y facilita la movilidad de un estudiante entre instituciones o hacia educación superior. No necesitas ser experta en la normativa completa, pero sí saber que este nivel existe y nombrarlo con seguridad si te preguntan en una entrevista de una institución TP.</div>
+      <div class="nota alerta"><span class="nota-tag">Honestidad sobre este contenido</span>Los detalles normativos exactos del MCTP (niveles específicos, sectores cubiertos) cambian con el tiempo y varían en cómo cada institución los implementa — lo que necesitas dominar con seguridad es el concepto y su función dentro de la pirámide, no memorizar artículos. Si un cargo específico lo requiere en detalle, es información que se aprende en el puesto con los documentos institucionales reales.</div>
+    </div>
+
+    <!-- S3 -->
+    <div class="content-section" id="s3">
+      <h2><span class="sec-num">03</span> Malla curricular y matriz de tributación — el mapa completo, no una fila suelta</h2>
+      <p>En la unidad 2.2 viste una fila de ejemplo de la matriz de tributación. Aquí la ves como lo que realmente es: <strong>el mapa completo de una carrera</strong>, que muestra cómo cada asignatura de la malla curricular contribuye a cada competencia del perfil de egreso — y en qué semestre.</p>
+      <table class="compare-table">
+        <tr><th>Asignatura</th><th>Semestre</th><th>Competencia(s) del perfil que tributa</th><th>Nivel de dominio</th></tr>
+        <tr><td>Fundamentos de DI</td><td>1</td><td>Diseña experiencias formativas alineadas a estándares</td><td>Introductorio</td></tr>
+        <tr><td>Teorías del Aprendizaje Aplicadas</td><td>2</td><td>Diseña experiencias formativas alineadas a estándares</td><td>Intermedio</td></tr>
+        <tr><td>Gestión de Proyectos Educativos</td><td>3</td><td>Gestiona proyectos educativos con criterios de SLA y calidad</td><td>Intermedio</td></tr>
+        <tr><td>Taller de Diseño Curricular</td><td>4</td><td>Diseña experiencias formativas alineadas a estándares</td><td>Avanzado (evaluación de titulación)</td></tr>
+      </table>
+      <p>Fíjate en un patrón clave: la misma competencia puede aparecer en varias asignaturas, con <strong>nivel de dominio creciente</strong> — de introductorio en primer semestre a avanzado en el taller de cierre. Esto se llama <strong>progresión curricular</strong>, y es lo que evita que una competencia compleja se intente enseñar de golpe en una sola asignatura.</p>
+      <div class="nota clave"><span class="nota-tag">El error que un mapa completo revela y una fila suelta no</span>Mirando solo una asignatura, no puedes ver si hay <strong>saltos de nivel</strong> — por ejemplo, que una competencia pase de "introductorio" directo a "avanzado" sin ninguna asignatura intermedia que la desarrolle progresivamente. Ese salto es un problema de diseño curricular real, y solo se detecta mirando el mapa completo, no asignatura por asignatura.</div>
+    </div>
+
+    <!-- S4 -->
+    <div class="content-section" id="s4">
+      <h2><span class="sec-num">04</span> Aseguramiento de calidad — el proceso que verifica todo esto</h2>
+      <p>El <strong>aseguramiento de calidad</strong> en educación superior chilena está vinculado al proceso de <strong>acreditación institucional y de carreras</strong>, supervisado por la Comisión Nacional de Acreditación (CNA-Chile). Un DI en TP participa directamente en este proceso, aportando justo los artefactos que ya sabes construir:</p>
+      <div class="flujo">
+        <div class="paso"><div class="paso-num">1</div><div class="paso-content"><h4>Autoevaluación institucional</h4><p>La institución revisa sus propios procesos contra criterios de calidad — la matriz de tributación es evidencia directa que se presenta acá.</p></div></div>
+        <div class="paso"><div class="paso-num">2</div><div class="paso-content"><h4>Recolección de evidencia</h4><p>Sílabos, RA, instrumentos de evaluación por competencias, portafolios de estudiantes — todo lo que construiste en 2.2, 2.4 y 3.1 es evidencia formal en este paso.</p></div></div>
+        <div class="paso"><div class="paso-num">3</div><div class="paso-content"><h4>Visita de pares evaluadores</h4><p>Evaluadores externos revisan la evidencia y pueden solicitar evidencia adicional o entrevistar a docentes y estudiantes.</p></div></div>
+        <div class="paso"><div class="paso-num">4</div><div class="paso-content"><h4>Resolución de acreditación</h4><p>Se otorga (o no) la acreditación, con un período de vigencia — y generalmente con recomendaciones de mejora que alimentan el siguiente ciclo de rediseño curricular.</p></div></div>
+      </div>
+      <div class="nota alerta"><span class="nota-tag">Por qué esto conecta directo con tu trabajo diario</span>Un rediseño de asignatura mal documentado —sin trazabilidad clara a un RA y una competencia del perfil de egreso— no solo es un problema pedagógico: es evidencia débil frente a un proceso de acreditación. La disciplina de documentar bien (que quizás sienta "burocrática") es literalmente lo que sostiene la acreditación de toda la institución.</div>
+    </div>
+
+    <!-- S5 -->
+    <div class="content-section" id="s5">
+      <h2><span class="sec-num">05</span> Rediseñar una asignatura sin romper el sistema completo</h2>
+      <p>Cuando rediseñas una asignatura (tu función central en un cargo como el de ENAC), no partes de una hoja en blanco — partes verificando el sistema completo, en este orden:</p>
+      <ol>
+        <li>Revisa la matriz de tributación: ¿a qué competencia(s) del perfil de egreso tributa esta asignatura, y en qué nivel de dominio?</li>
+        <li>Revisa si otras asignaturas dependen de que esta entregue cierto nivel de dominio antes de continuar la progresión</li>
+        <li>Rediseña el RA general y los RA específicos, verificando que sigan trazando hacia la misma competencia (o documentando explícitamente el cambio si ya no aplica)</li>
+        <li>Rediseña actividades y evaluación con backward design (2.3), aplicando evaluación por competencias (3.1) si el nivel de dominio lo exige</li>
+        <li>Actualiza la matriz de tributación con el cambio — nunca lo dejes solo en el syllabus de la asignatura</li>
+      </ol>
+
+      <div class="vineta">
+        <div class="vineta-head">Viñeta de taller · el rediseño que rompió la progresión</div>
+        <div class="vineta-body">Rediseñas "Fundamentos de DI" (1er semestre) elevando su nivel de dominio de Introductorio a Intermedio, porque sientes que los estudiantes pueden más. Nadie se opone en la reunión de rediseño. <strong>¿Qué revisarías antes de aprobar este cambio, y por qué podría ser un problema aunque suene positivo?</strong></div>
+        <button class="vineta-reveal-btn" onclick="revealVineta(this,'v1')">Piénsalo primero → ver resolución</button>
+        <div class="vineta-solution">Revisaría la matriz de tributación completa: si "Teorías del Aprendizaje Aplicadas" (2do semestre) fue diseñada asumiendo que sus estudiantes llegan con nivel Introductorio de esta competencia, y ahora reciben estudiantes ya en Intermedio, esa asignatura podría quedar redundante o mal calibrada — enseñando de nuevo algo que ya se domina, desperdiciando tiempo real de estudiantes trabajadores (unidad 1.3). Un cambio que suena positivo en aislado puede desalinear la progresión completa si no se revisa el mapa entero, no solo la asignatura que se está tocando.</div>
+      </div>
+    </div>
+
+    <!-- S6 -->
+    <div class="content-section" id="s6">
+      <h2><span class="sec-num">06</span> Diseño curricular vs. diseño instruccional — la distinción de escala</h2>
+      <p>Estos dos términos se usan a veces como sinónimos, y no lo son — la diferencia es de escala, y vale la pena tenerla clara para una entrevista:</p>
+      <table class="compare-table">
+        <tr><th></th><th>Diseño curricular</th><th>Diseño instruccional</th></tr>
+        <tr><td>Escala</td><td>Carrera completa o malla — macro-currículo</td><td>Asignatura o unidad específica — meso/micro-currículo</td></tr>
+        <tr><td>Pregunta central</td><td>¿Qué conjunto de asignaturas produce el perfil de egreso completo?</td><td>¿Cómo se enseña y evalúa esta asignatura o unidad específica?</td></tr>
+        <tr><td>Artefacto principal</td><td>Malla curricular, matriz de tributación</td><td>DDI, storyboard, objetivos de aprendizaje (RA específicos)</td></tr>
+        <tr><td>Quién suele decidir</td><td>Comité curricular o dirección académica, con participación del DI</td><td>El DI, junto al docente/SME de la asignatura</td></tr>
+      </table>
+      <div class="nota clave"><span class="nota-tag">Para la entrevista</span>Un cargo de "Asesor/a Instruccional" o "Coordinador LMS" suele operar principalmente en diseño instruccional (nivel asignatura/unidad), pero necesita entender diseño curricular para no proponer cambios que rompan la coherencia del sistema completo — exactamente la distinción de esta unidad.</div>
+    </div>
+
+    <div class="activity">
+      <h2>Actividad — ¿Diseño curricular o diseño instruccional?</h2>
+      <div class="act-sub">Cada tarea real de un DI en TP. Clasifica según la escala a la que pertenece.</div>
+      <div id="actRoot"></div>
+      <div class="act-progress" id="actProgress"></div>
+    </div>
+
+    <div class="callout ia">
+      <div class="callout-header">🖌 IA en esta fase</div>
+      <div class="callout-body">
+        <div class="capa">＋ Toca para levantar la capa</div>
+        <p>El diseño curricular a escala de malla completa es un buen terreno para usar IA con criterio, con límites claros:</p>
+        <p>• Pídele que revise una matriz de tributación completa y señale competencias sin ninguna asignatura asociada, o saltos de nivel de dominio sospechosos — un chequeo de consistencia rápido antes de que tú lo valides en profundidad.</p>
+        <p>• No le delegues la decisión de qué competencias debe tener un perfil de egreso — eso requiere conocimiento del sector productivo real y consulta con la industria, algo que la IA no tiene acceso directo ni autoridad para decidir.</p>
+      </div>
+    </div>
+
+    <div class="callout entrevista">
+      <div class="callout-header">🎤 Nota de entrevista</div>
+      <div class="callout-body">
+        <div class="capa">＋ Toca para levantar la capa</div>
+        <p>Si te preguntan "¿cómo asegurarías que el rediseño de una asignatura no afecte al resto de la carrera?", responde con el proceso completo: revisar la matriz de tributación, verificar dependencias con otras asignaturas, y documentar el cambio en el mapa curricular, no solo en el syllabus local. Esa respuesta muestra que piensas en sistema, no solo en la pieza que tienes enfrente — justo lo que distingue a un DI que puede trabajar a nivel institucional.</p>
+      </div>
+    </div>
+
+    <div class="content-section" id="practica">
+      <h2><span class="sec-num">◆</span> Practica como en una entrevista</h2>
+      <p>Responde primero con tus propias palabras — <strong>en voz alta o por escrito</strong> — antes de revelar la respuesta modelo. Luego marca el checklist.</p>
+
+      <div class="practica">
+        <div class="practica-head"><div class="p-num">Práctica 1</div><div class="p-q">"¿Cuál es la diferencia entre diseño curricular y diseño instruccional?"</div></div>
+        <div class="practica-body">
+          <textarea placeholder="Tu respuesta…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p1','p1')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p1">"El diseño curricular opera a escala de carrera completa — decide qué conjunto de asignaturas produce el perfil de egreso, documentado en la malla y la matriz de tributación. El diseño instruccional opera a escala de una asignatura o unidad específica — cómo se enseña y evalúa ese contenido puntual. Trabajo principalmente en el segundo, pero necesito entender el primero para no proponer cambios que desalineen el sistema completo."</div>
+          <div class="checklist"><div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1a')"> ¿Distinguiste la escala (carrera vs. asignatura/unidad)?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1b')"> ¿Nombraste artefactos concretos de cada uno?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p1c')"> ¿Explicaste por qué necesitas entender ambos aunque trabajes en uno?</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="practica">
+        <div class="practica-head"><div class="p-num">Práctica 2</div><div class="p-q">"¿Qué es una matriz de tributación y para qué sirve en un proceso de acreditación?"</div></div>
+        <div class="practica-body">
+          <textarea placeholder="Tu respuesta…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p2','p2')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p2">"Es la tabla que documenta qué asignaturas contribuyen a cada competencia del perfil de egreso, y en qué nivel de dominio. En acreditación, es evidencia directa de que el diseño curricular es coherente — permite verificar que ninguna competencia del perfil quede sin cobertura, y que exista progresión real entre asignaturas, no saltos de nivel injustificados."</div>
+          <div class="checklist"><div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2a')"> ¿Definiste correctamente qué documenta la matriz?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2b')"> ¿Conectaste con acreditación/aseguramiento de calidad?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p2c')"> ¿Mencionaste progresión o cobertura como lo que verifica?</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="practica">
+        <div class="practica-head"><div class="p-num">Práctica 3</div><div class="p-q">"Vas a rediseñar una asignatura de segundo semestre. ¿Cuál es tu primer paso, antes de tocar el contenido?"</div></div>
+        <div class="practica-body">
+          <textarea placeholder="Tu respuesta…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p3','p3')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p3">"Reviso la matriz de tributación: a qué competencia del perfil de egreso tributa esta asignatura, en qué nivel de dominio, y qué otras asignaturas dependen de que esta entregue ese nivel antes de continuar. Recién después de eso empiezo a rediseñar contenido, objetivos y evaluación — cambiar el contenido sin verificar esto primero puede desalinear toda la progresión curricular sin que nadie lo note hasta mucho después."</div>
+          <div class="checklist"><div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3a')"> ¿Empezaste por la matriz de tributación, no por el contenido?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3b')"> ¿Mencionaste dependencias con otras asignaturas?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p3c')"> ¿Mostraste pensamiento de sistema, no solo de la pieza aislada?</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="eval-block" id="evaluacion">
+      <h2>Evaluación — Unidad 6.1</h2>
+      <div class="eval-sub">12 preguntas. El puntaje se guarda en tu ruta. Puedes reintentar sin límite.</div>
+      <div id="quizRoot"></div>
+      <div class="eval-counter" id="quizCounter">Respondidas: 0/12</div>
+      <button class="eval-submit" id="quizSubmit" onclick="submitQuiz()" disabled>Enviar evaluación</button>
+      <div class="result-card" id="resultCard"><div class="result-score" id="resultScore">0%</div><div id="resultMsg" style="font-size:0.85rem;color:var(--ink-muted);margin-top:0.3rem;"></div></div>
+    </div>
+
+    <div class="next-nav">
+      <a href="m5-3.html">← 5.3 IA aplicada al DI</a>
+      <a href="m6-2.html">6.2 Acompañamiento pedagógico a docentes →</a>
+    </div>
+  </main>
+</div>
+
+<script src="../gami.js"></script>
+<script src="../mentor-knowledge.js"></script>
+<script src="../mentor.js"></script>
+<script>
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbylYML8h2BnNgi2AXtZ8bkGaXPNRhurswPr5dfyGRldbVoCRvmoT2cHN0r3I4qGynLb/exec';
+const UNIT_ID = 'm6-1';
+const YT_VIDEO_ID = '';
+
+function detectMedia() {
+  fetch('m6-1.pdf', { method: 'HEAD' }).then(r => {
+    if (r.ok) document.getElementById('pdfContainer').innerHTML =
+      '<iframe class="pdf-frame" src="m6-1.pdf#view=FitH" title="Presentación" loading="lazy" onload="Gami.award(\'m6-1_pdf\',5,\'Revisaste la presentación\');checkMultimodal();"></iframe><div class="pdf-actions"><a href="m6-1.pdf" target="_blank" rel="noopener">Pantalla completa</a><a href="m6-1.pdf" download>Descargar</a></div>';
+  }).catch(()=>{});
+  fetch('m6-1-audio.mp3', { method: 'HEAD' }).then(r => {
+    if (r.ok) document.getElementById('audioContainer').innerHTML =
+      '<div class="audio-pane"><span class="audio-label">Resumen en audio · NotebookLM</span><audio controls preload="metadata" src="m6-1-audio.mp3" onplay="Gami.award(\'m6-1_audio\',5,\'Escuchaste el audio\');checkMultimodal();"></audio></div>';
+  }).catch(()=>{});
+  if (YT_VIDEO_ID) document.getElementById('videoContainer').innerHTML =
+    '<div class="video-wrap"><iframe src="https://www.youtube-nocookie.com/embed/' + YT_VIDEO_ID + '" title="Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>';
+}
+detectMedia();
+
+function switchMedia(btn) {
+  document.querySelectorAll('.media-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.media-pane').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('pane-' + btn.dataset.pane).classList.add('active');
+  if (btn.dataset.pane === 'video' && YT_VIDEO_ID) { Gami.award('m6-1_video',5,'Viste el video'); checkMultimodal(); }
+}
+function checkMultimodal() { if (Gami.hasSeen('m6-1_pdf') && Gami.hasSeen('m6-1_audio')) Gami.badge('multimodal'); }
+
+function revealVineta(btn, id) { btn.closest('.vineta').classList.add('revealed'); Gami.award('m6-1_vineta_' + id, 5, 'Resolviste una viñeta'); }
+
+let capasReveladas = 0;
+document.querySelectorAll('.capa').forEach((capa, i) => {
+  capa.addEventListener('click', () => {
+    capa.closest('.callout').classList.add('revealed');
+    Gami.award('m6-1_capa' + i, 5, 'Levantaste una capa');
+    capasReveladas++;
+    if (capasReveladas >= 2) Gami.badge('curiosa');
+  });
+});
+function toggleRM(id, pid) { document.getElementById(id).classList.toggle('show'); Gami.award('m6-1_rm_' + pid, 3, 'Contrastaste con la respuesta modelo'); }
+function clCheck(el, id) { if (el.checked) Gami.award('m6-1_cl_' + id, 2, 'Ítem de checklist verificado'); }
+
+const ACT_ITEMS = [
+  { text: 'Definir cuántos semestres tendrá una nueva carrera y qué asignaturas incluirá.', ans: 'curricular', why: 'Escala de carrera completa = diseño curricular.' },
+  { text: 'Diseñar el storyboard de una unidad específica de "Fundamentos de DI".', ans: 'instruccional', why: 'Escala de unidad específica = diseño instruccional.' },
+  { text: 'Actualizar la matriz de tributación tras modificar una asignatura.', ans: 'curricular', why: 'Afecta el mapa completo de la carrera = diseño curricular.' },
+  { text: 'Redactar los objetivos de aprendizaje (RA específicos) de una unidad.', ans: 'instruccional', why: 'Nivel unidad = diseño instruccional (unidad 2.2).' },
+  { text: 'Decidir qué competencias del perfil de egreso necesita una carrera nueva, consultando al sector productivo.', ans: 'curricular', why: 'Define el perfil de egreso completo = diseño curricular.' },
+];
+let actDone = 0, actCorrect = 0;
+const LABELS = { curricular: 'Diseño curricular', instruccional: 'Diseño instruccional' };
+function renderActivity() {
+  document.getElementById('actRoot').innerHTML = ACT_ITEMS.map((item, i) => `
+    <div class="act-card" id="act-${i}">
+      <div class="act-statement">${item.text}</div>
+      <div class="act-buttons">
+        <button class="act-btn" onclick="answerAct(${i},'curricular')">Diseño curricular</button>
+        <button class="act-btn" onclick="answerAct(${i},'instruccional')">Diseño instruccional</button>
+      </div>
+      <div class="act-verdict" id="verdict-${i}"></div>
+    </div>`).join('');
+  updateActProgress();
+}
+function answerAct(i, choice) {
+  const item = ACT_ITEMS[i];
+  const card = document.getElementById('act-' + i);
+  const verdict = document.getElementById('verdict-' + i);
+  actDone++;
+  if (choice === item.ans) { actCorrect++; card.classList.add('ok'); verdict.style.color = '#315226'; verdict.textContent = '✓ ' + item.why; }
+  else { card.classList.add('no'); card.querySelector('.act-buttons').style.display = 'none'; verdict.style.color = '#6E2A2A'; verdict.textContent = '✗ Era ' + LABELS[item.ans] + '. ' + item.why; }
+  updateActProgress();
+  if (actDone === ACT_ITEMS.length) Gami.award('m6-1_actividad', Math.round(15 * actCorrect / ACT_ITEMS.length) + 5, 'Actividad curricular vs instruccional — ' + actCorrect + '/' + ACT_ITEMS.length);
+}
+function updateActProgress() { document.getElementById('actProgress').textContent = actDone + '/' + ACT_ITEMS.length + ' resueltas' + (actDone === ACT_ITEMS.length ? ' · ' + actCorrect + ' correctas' : ''); }
+renderActivity();
+
+const QUIZ = [
+  { q: '¿Cuál es el orden correcto de la pirámide curricular, de mayor a menor escala?', opts: ['RA específico → RA general → perfil de egreso → Marco de Cualificaciones','Marco de Cualificaciones → perfil de egreso → RA general → RA específico','Perfil de egreso → Marco de Cualificaciones → RA específico → RA general','No existe un orden jerárquico'], ans: 1 },
+  { q: '¿Qué ordena y da equivalencia el Marco de Cualificaciones Técnico Profesional en Chile?', opts: ['El presupuesto de las instituciones','Las cualificaciones técnicas por nivel de complejidad y sector productivo','El número de estudiantes por carrera','El precio de la matrícula'], ans: 1 },
+  { q: '¿Qué documenta una matriz de tributación completa, a diferencia de una fila aislada?', opts: ['Solo el precio de cada asignatura','El mapa completo de qué asignaturas cubren cada competencia, con progresión de nivel de dominio','El horario de clases','Los nombres de los docentes'], ans: 1 },
+  { q: '¿Qué es un "salto de nivel" en progresión curricular y por qué es un problema?', opts: ['Un beneficio, mientras más rápido mejor','Que una competencia pase de nivel bajo a alto sin asignaturas intermedias que la desarrollen progresivamente','Un tipo de evaluación','No es un problema real'], ans: 1 },
+  { q: '¿Qué organismo supervisa la acreditación institucional y de carreras en Chile?', opts: ['El Ministerio de Hacienda','La Comisión Nacional de Acreditación (CNA-Chile)','La Superintendencia de Educación','No existe supervisión'], ans: 1 },
+  { q: 'En el proceso de acreditación, ¿qué rol cumple la matriz de tributación?', opts: ['Ninguno, no se usa','Es evidencia directa de coherencia curricular que se presenta en la autoevaluación','Solo sirve para calcular sueldos','Es un documento confidencial que nunca se muestra'], ans: 1 },
+  { q: '¿Cuál es la diferencia de escala entre diseño curricular y diseño instruccional?', opts: ['No hay diferencia, son sinónimos','Diseño curricular opera a nivel de carrera completa; diseño instruccional a nivel de asignatura o unidad','Diseño instruccional es más amplio que diseño curricular','Diseño curricular solo aplica a colegios'], ans: 1 },
+  { q: 'Antes de rediseñar una asignatura, ¿cuál debe ser el primer paso según esta unidad?', opts: ['Cambiar el contenido directamente','Revisar la matriz de tributación y las dependencias con otras asignaturas','Publicar el cambio sin revisión','Consultar solo al estudiante'], ans: 1 },
+  { q: 'Elevar el nivel de dominio de una asignatura de primer semestre sin revisar el resto de la malla puede causar…', opts: ['Ningún efecto en otras asignaturas','Desalineación de la progresión — asignaturas posteriores mal calibradas para el nuevo nivel de entrada','Solo beneficios, sin riesgos','Un aumento automático de matrícula'], ans: 1 },
+  { q: '¿Qué artefacto pertenece al diseño instruccional (no al curricular)?', opts: ['La malla curricular completa','El storyboard de una unidad específica','El Marco de Cualificaciones','La matriz de tributación completa'], ans: 1 },
+  { q: '¿Por qué un DI en TP necesita entender diseño curricular aunque trabaje principalmente en diseño instruccional?', opts: ['No es necesario, son áreas totalmente separadas','Para no proponer cambios que desalineen la coherencia del sistema curricular completo','Solo por curiosidad académica','Porque el diseño curricular reemplaza al instruccional'], ans: 1 },
+  { q: '¿Qué es la "progresión curricular"?', opts: ['El aumento de matrícula año a año','El crecimiento del nivel de dominio de una competencia a través de varias asignaturas secuenciales','Un tipo de evaluación diagnóstica','El presupuesto asignado a una carrera'], ans: 1 },
+];
+function renderQuiz() {
+  document.getElementById('quizRoot').innerHTML = QUIZ.map((item, qi) => `
+    <div class="eval-q">${qi + 1}. ${item.q}</div>
+    <div class="quiz-opts" data-q="${qi}">${item.opts.map((opt, oi) => `<label class="eval-option"><input type="radio" name="q${qi}" value="${oi}" onchange="updateQuizCounter()"> ${opt}</label>`).join('')}</div>`).join('');
+}
+function answered() { let n = 0; for (let i = 0; i < QUIZ.length; i++) if (document.querySelector('input[name=q' + i + ']:checked')) n++; return n; }
+function updateQuizCounter() { const n = answered(); document.getElementById('quizCounter').textContent = 'Respondidas: ' + n + '/' + QUIZ.length; document.getElementById('quizSubmit').disabled = n < QUIZ.length; }
+function submitQuiz() {
+  let correct = 0;
+  QUIZ.forEach((item, qi) => {
+    const sel = document.querySelector('input[name=q' + qi + ']:checked');
+    const val = sel ? parseInt(sel.value) : -1;
+    document.querySelectorAll('[data-q="' + qi + '"] .eval-option').forEach((opt, oi) => {
+      opt.classList.remove('correct','incorrect');
+      if (oi === item.ans) opt.classList.add('correct'); else if (oi === val) opt.classList.add('incorrect');
+    });
+    if (val === item.ans) correct++;
+  });
+  saveScore(correct / QUIZ.length, correct);
+}
+function saveScore(pct, correct) {
+  try { const scores = JSON.parse(localStorage.getItem('di_scores_v2') || '{}'); scores[UNIT_ID] = pct; localStorage.setItem('di_scores_v2', JSON.stringify(scores)); } catch(e) {}
+  const card = document.getElementById('resultCard');
+  card.className = 'result-card show';
+  card.style.background = pct >= 0.7 ? 'var(--done-soft)' : 'var(--msoft)';
+  document.getElementById('resultScore').textContent = Math.round(pct * 100) + '%';
+  document.getElementById('resultMsg').textContent = correct + '/' + QUIZ.length + ' correctas · ' + (pct >= 0.7 ? 'Unidad completada en tu ruta.' : 'Puedes repasar y reintentar — sin límite.');
+  if (pct >= 0.7) { Gami.award('m6-1_eval', 30, 'Evaluación 6.1 aprobada — ' + correct + '/' + QUIZ.length); Gami.badge('primeraCapa'); }
+  try { const img = new Image(); img.src = SCRIPT_URL + '?action=saveScore&id=' + UNIT_ID + '&score=' + pct + '&t=' + Date.now(); } catch(e) {}
+}
+renderQuiz();
+updateQuizCounter();
+</script>
+</body>
+</html>
