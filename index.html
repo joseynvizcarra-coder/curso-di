@@ -27,6 +27,8 @@
   --m4-soft: #F1E5CC;
   --m5: #6B4C7A; /* violeta manganeso */
   --m5-soft: #E9E0EC;
+  --m6: #2E6B62; /* verde petróleo */
+  --m6-soft: #DCEAE7;
 
   --done: #4A6B3E;
 }
@@ -198,6 +200,7 @@ body {
 .m3 { --mc: var(--m3); --msoft: var(--m3-soft); }
 .m4 { --mc: var(--m4); --msoft: var(--m4-soft); }
 .m5 { --mc: var(--m5); --msoft: var(--m5-soft); }
+.m6 { --mc: var(--m6); --msoft: var(--m6-soft); }
 
 /* ============ CROSS-CUTTING LEGEND ============ */
 .legend {
@@ -224,8 +227,8 @@ footer strong { color: var(--ink); font-weight: 500; }
     <h1>Diseñar, producir y defender una instancia formativa completa</h1>
     <p class="thesis">Ruta de estudio personal construida con backward design: cada módulo parte de lo que necesito ser capaz de hacer al final, no de una lista de temas sueltos.</p>
     <div class="hero-meta">
-      <span><strong>16</strong> unidades</span>
-      <span><strong>5</strong> módulos</span>
+      <span><strong>18</strong> unidades</span>
+      <span><strong>6</strong> módulos</span>
       <span id="headerSync" class="sync-pill"><span class="sync-dot loading" id="syncDot"></span><span id="syncMsg">Sincronizando…</span></span>
     </div>
   </div>
@@ -319,6 +322,13 @@ const MODULOS = [
       { id: 'm5-1', titulo: 'Herramientas de análisis: PowerBI, GA4, reportes' },
       { id: 'm5-2', titulo: 'Colaboración y gestión de proyectos' },
       { id: 'm5-3', titulo: 'IA aplicada al DI — panorama crítico' },
+    ]
+  },
+  {
+    id: 'm6', color: 'm6', titulo: 'Educación técnico-profesional', sub: 'Diseño curricular y acompañamiento docente',
+    unidades: [
+      { id: 'm6-1', titulo: 'Diseño curricular en educación TP' },
+      { id: 'm6-2', titulo: 'Acompañamiento pedagógico a docentes' },
     ]
   },
 ];
