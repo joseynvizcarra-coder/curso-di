@@ -88,14 +88,51 @@
   }
 
   // ============================================
-  // SMALL TALK
+  // SMALL TALK — conversación casual, con variedad de respuestas
   // ============================================
+  function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
   const SMALLTALK = [
-    { kw: ['hola', 'buenas', 'hey', 'buen dia'], fn: () => ({ text: greeting(), actions: chipsIniciales() }) },
-    { kw: ['como estas', 'que tal', 'como andas'], fn: () => ({ text: 'Aquí, lista para lo que necesites del curso. ¿Y tú, cómo vas con el estudio?', actions: [] }) },
-    { kw: ['gracias', 'muchas gracias', 'te pasaste'], fn: () => ({ text: 'De nada — para eso estoy. ¿Alguna otra duda?', actions: [] }) },
-    { kw: ['chao', 'adios', 'nos vemos', 'hasta luego', 'me voy'], fn: () => ({ text: '¡Que rinda el estudio! Vuelve cuando quieras, aquí quedo.', actions: [] }) },
-    { kw: ['quien eres', 'que eres', 'eres un bot'], fn: () => ({ text: 'Soy el mentor de este curso — respondo dudas de terminología y conceptos de las 18 unidades, disponible a cualquier hora, incluida la madrugada.', actions: [] }) },
+    { kw: ['hola', 'buenas', 'hey', 'buen dia', 'holi'], fn: () => ({ text: greeting(), actions: chipsIniciales() }) },
+    { kw: ['como estas', 'que tal', 'como andas', 'como te va', 'todo bien'], fn: () => ({ text: pick([
+      'Aquí, lista para lo que necesites del curso. ¿Y tú, cómo vas con el estudio?',
+      'Bien, gracias por preguntar. ¿Cómo va tu día de estudio?',
+      'Todo tranquilo por acá. ¿Tú cómo la llevas hoy?'
+    ]), actions: [] }) },
+    { kw: ['gracias', 'muchas gracias', 'te pasaste', 'muy amable', 'excelente gracias'], fn: () => ({ text: pick([
+      'De nada — para eso estoy. ¿Alguna otra duda?',
+      'Un gusto poder ayudar. ¿Seguimos con algo más?',
+      'Cuando quieras. ¿Te sirvo con algo más del curso?'
+    ]), actions: [] }) },
+    { kw: ['chao', 'adios', 'nos vemos', 'hasta luego', 'me voy', 'bye'], fn: () => ({ text: pick([
+      '¡Que rinda el estudio! Vuelve cuando quieras, aquí quedo.',
+      'Nos vemos — mucho éxito con lo que sigue.',
+      'Listo, aquí quedo para la próxima. ¡Suerte!'
+    ]), actions: [] }) },
+    { kw: ['quien eres', 'que eres', 'eres un bot', 'eres una ia', 'eres real'], fn: () => ({ text: 'Soy el mentor de este curso — respondo dudas de terminología y conceptos de las 18 unidades, disponible a cualquier hora, incluida la madrugada. No soy una IA conversacional completa, funciono con un banco de respuestas y reconocimiento de patrones.', actions: [] }) },
+    { kw: ['que haces', 'en que andas', 'todo tranquilo'], fn: () => ({ text: pick([
+      'Por acá, esperando dudas de diseño instruccional. ¿Y tú, en qué unidad vas?',
+      'Nada nuevo de mi lado — soy bastante predecible. ¿Cómo va tu estudio?'
+    ]), actions: [] }) },
+    { kw: ['hace frio', 'que frio', 'esta helado'], fn: () => ({ text: pick([
+      'Buen clima para quedarse estudiando adentro, entonces. ¿En qué te ayudo?',
+      'Justo lo que se necesita para concentrarse sin distraerse afuera. ¿Seguimos?'
+    ]), actions: [] }) },
+    { kw: ['que calor', 'hace calor', 'esta caluroso'], fn: () => ({ text: 'Con este calor, un descanso corto entre unidades no viene mal. ¿Seguimos cuando quieras.', actions: [] }) },
+    { kw: ['esta lloviendo', 'llueve', 'esta nublado'], fn: () => ({ text: 'Buen día para quedarse con el curso abierto entonces. ¿En qué te ayudo?', actions: [] }) },
+    { kw: ['que dia es hoy', 'que fecha es'], fn: () => ({ text: 'Hoy es ' + new Date().toLocaleDateString('es-CL', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) + '.', actions: [] }) },
+    { kw: ['que hora es'], fn: () => ({ text: 'Son las ' + new Date().toLocaleTimeString('es-CL', { hour: '2-digit', minute: '2-digit' }) + '.', actions: [] }) },
+    { kw: ['estoy aburrida', 'estoy aburrido', 'que aburrido'], fn: () => ({ text: 'Un buen término de DI puede arreglar eso — pregúntame por algo que no tengas claro y lo vemos.', actions: chipsIniciales() }) },
+    { kw: ['cuentame un chiste', 'dime un chiste', 'hazme reir'], fn: () => ({ text: 'No tengo humor propio, pero sí muchas definiciones de DI que a veces son igual de secas que un chiste malo. ¿Probamos con una?', actions: chipsIniciales() }) },
+    { kw: ['eres genial', 'me caes bien', 'eres util', 'me ayudaste mucho'], fn: () => ({ text: pick([
+      'Gracias, se agradece. Sigamos si tienes más dudas.',
+      'Qué bueno que sirvió. Aquí sigo si necesitas algo más.'
+    ]), actions: [] }) },
+    { kw: ['eres tonto', 'no sirves', 'eres malo', 'no me ayudas'], fn: () => ({ text: 'Puede que no tenga la respuesta que buscas todavía — cuéntame de nuevo qué necesitas y probamos otra forma de encontrarla.', actions: [] }) },
+    { kw: ['cuantos años tienes', 'tienes novio', 'tienes novia', 'donde vives'], fn: () => ({ text: 'Esa la voy a dejar pasar — no tengo vida fuera de este curso. ¿En qué te ayudo del contenido?', actions: [] }) },
+    { kw: ['cuantas unidades tiene el curso', 'cuantas unidades hay'], fn: () => ({ text: 'El curso tiene 18 unidades en 6 módulos — desde fundamentos de DI hasta educación técnico-profesional e IA aplicada.', actions: [] }) },
+    { kw: ['cuanto dura el curso', 'cuanto tiempo toma'], fn: () => ({ text: 'Cada unidad toma entre 40 y 50 minutos aproximadamente, así que el curso completo son unas 14-15 horas de estudio activo, sin contar repasos.', actions: [] }) },
+    { kw: ['ok', 'dale', 'listo', 'perfecto', 'genial', 'bacan', 'joya'], fn: () => ({ text: pick(['Dale.', 'Perfecto.', 'Listo, aquí quedo.', '👍']), actions: [] }) },
   ];
 
   function timeGreeting() {
