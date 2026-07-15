@@ -100,6 +100,13 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
 .t-const { --tc: #4A6B3E; --tc-soft: #E9F0E5; }
 .t-conect { --tc: #6B4C7A; --tc-soft: #E9E0EC; }
 
+/* flujo de trabajo — pasos numerados */
+.flujo { display: flex; flex-direction: column; gap: 0.5rem; margin: 1rem 0 1.4rem; }
+.paso { display: flex; gap: 0.9rem; border: 1px solid var(--border); border-radius: 4px; background: var(--card); padding: 0.8rem 1rem; align-items: flex-start; }
+.paso-num { width: 28px; height: 28px; border-radius: 50%; background: var(--mc); color: #fff; font-family: 'Fraunces', serif; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.9rem; }
+.paso-content h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.2rem; }
+.paso-content p { font-size: 0.83rem; margin: 0; color: #3A362F; }
+
 .vineta { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin: 1.2rem 0; }
 .vineta-head { background: var(--ink); color: #EDEAE3; font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.6rem 1rem; }
 .vineta-body { background: var(--card); padding: 1rem 1.2rem; font-size: 0.9rem; }
@@ -194,6 +201,7 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
       <a href="#s2">2 · Conductismo</a>
       <a href="#s3">3 · Cognitivismo</a>
       <a href="#s4">4 · Constructivismo</a>
+      <a href="#s4b">4b · Metodologías activas y andragogía</a>
       <a href="#s5">5 · Conectivismo</a>
       <a href="#s6">6 · Cuál usar cuándo</a>
       <a href="#practica">Práctica de entrevista</a>
@@ -209,7 +217,7 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
       <span class="lbadge">6 bloques de contenido</span>
       <span class="lbadge">1 actividad interactiva</span>
       <span class="lbadge">3 prácticas de entrevista</span>
-      <span class="lbadge">10 preguntas de evaluación</span>
+      <span class="lbadge">12 preguntas de evaluación</span>
       <span class="lbadge">~40 min</span>
     </div>
 
@@ -341,9 +349,51 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
             </ul>
           </div>
           <div class="nota clave" style="margin-top:0.8rem"><span class="nota-tag">Cuándo brilla</span>Habilidades complejas, pensamiento crítico, competencias transferibles, contenido donde no hay una sola respuesta correcta. Ej.: diseñar, argumentar, resolver casos abiertos — justo el tipo de aprendizaje de tu propio campo artístico.</div>
-          <div class="nota contexto" style="margin-top:0.8rem"><span class="nota-tag">Metodologías activas — el nombre que recibe esto en la práctica</span>Cuando una institución (especialmente en educación técnico-profesional) pide "metodologías activas", se refiere exactamente a aplicaciones concretas del constructivismo: <strong>ABP</strong> (aprendizaje basado en problemas — parte de un caso real, no de la teoría), <strong>aula invertida</strong> (el estudiante revisa contenido antes de la sesión presencial, para usar ese tiempo en práctica guiada, no en exposición), y <strong>aprendizaje colaborativo</strong>. No son técnicas nuevas que aprender desde cero — son este mismo marco teórico, con nombre operativo.</div>
-          <div class="nota alerta" style="margin-top:0.8rem"><span class="nota-tag">Andragogía — el matiz para audiencia adulta</span>La <strong>andragogía</strong> (cómo aprenden específicamente los adultos, a diferencia de niños) se apoya en principios constructivistas pero agrega algo propio: los adultos necesitan ver relevancia práctica inmediata, traen experiencia previa que hay que aprovechar (no ignorar), y suelen tener tiempo limitado. Esto importa especialmente con <strong>estudiantes trabajadores</strong> — el perfil típico de la educación técnico-profesional chilena — donde el contenido debe fragmentarse pensando en que estudian entre turnos de trabajo, y cada ejemplo debe conectar con su práctica laboral real, no quedarse en teoría abstracta.</div>
         </div>
+      </div>
+    </div>
+
+    <!-- S4b -->
+    <div class="content-section" id="s4b">
+      <h2><span class="sec-num">04b</span> Metodologías activas y andragogía — el constructivismo con nombre operativo</h2>
+      <p>Cuando una institución —especialmente en educación técnico-profesional— pide "metodologías activas", no está pidiendo algo nuevo que aprender desde cero: son aplicaciones concretas y estructuradas del constructivismo que acabas de ver, cada una con su propio flujo de trabajo.</p>
+
+      <h3>ABP (Aprendizaje Basado en Problemas) — la estructura de 5 pasos</h3>
+      <div class="flujo">
+        <div class="paso"><div class="paso-num">1</div><div class="paso-content"><h4>Presentar el problema real</h4><p>Se parte de un caso auténtico y complejo del oficio — no de teoría previa. El estudiante no tiene todavía el conocimiento completo para resolverlo, y eso es intencional.</p></div></div>
+        <div class="paso"><div class="paso-num">2</div><div class="paso-content"><h4>Identificar lo que se sabe y lo que falta saber</h4><p>El grupo mapea qué conocimiento ya tiene y qué necesita investigar — esto genera la motivación real para el contenido que viene después.</p></div></div>
+        <div class="paso"><div class="paso-num">3</div><div class="paso-content"><h4>Investigar de forma autónoma o guiada</h4><p>Aquí es donde entra el contenido "teórico" — pero motivado por una necesidad concreta del caso, no como bloque aislado.</p></div></div>
+        <div class="paso"><div class="paso-num">4</div><div class="paso-content"><h4>Proponer y aplicar una solución</h4><p>El grupo construye su respuesta al caso original, aplicando lo investigado.</p></div></div>
+        <div class="paso"><div class="paso-num">5</div><div class="paso-content"><h4>Reflexionar sobre el proceso</h4><p>No solo si la solución fue correcta, sino qué aprendieron sobre cómo abordar problemas similares — la transferencia real ocurre en este paso, no antes.</p></div></div>
+      </div>
+
+      <h3>Aula invertida — el flujo, no solo la definición</h3>
+      <table class="compare-table">
+        <tr><th>Momento</th><th>Qué ocurre</th><th>Por qué se invierte el orden tradicional</th></tr>
+        <tr><td>Antes de la sesión</td><td>El estudiante revisa contenido básico solo — video, lectura, cápsula corta</td><td>La exposición pasiva no necesita al docente presente; el estudiante controla su propio ritmo</td></tr>
+        <tr><td>Durante la sesión presencial</td><td>Se dedica a práctica guiada, resolución de dudas, casos aplicados</td><td>El tiempo con el docente es el recurso más escaso — se reserva para lo que realmente requiere su presencia</td></tr>
+        <tr><td>Después</td><td>Evaluación formativa o práctica adicional independiente</td><td>Consolida lo trabajado en la sesión presencial</td></tr>
+      </table>
+      <div class="nota alerta"><span class="nota-tag">El error más común al implementar aula invertida</span>Asumir que "invertir" significa simplemente mandar un video de tarea y seguir la clase presencial igual que siempre. Si el tiempo presencial no cambia —sigue siendo exposición del docente— no hay inversión real, solo contenido duplicado.</div>
+
+      <h3>Andragogía — los principios de Knowles, no solo la idea general</h3>
+      <p>Malcolm Knowles formalizó cómo aprenden los adultos de forma distinta a los niños, con seis principios que debes poder nombrar, no solo intuir:</p>
+      <table class="compare-table">
+        <tr><th>Principio</th><th>Qué implica para el diseño</th></tr>
+        <tr><td>Autoconcepto</td><td>El adulto se percibe autónomo y responsable de su aprendizaje — el diseño debe darle control real, no solo la ilusión de elegir</td></tr>
+        <tr><td>Experiencia previa</td><td>Trae un bagaje que es recurso, no obstáculo — las actividades deben conectar con esa experiencia, no ignorarla</td></tr>
+        <tr><td>Disposición para aprender</td><td>Está listo para aprender lo que necesita para su rol o problema actual — no contenido "por si acaso"</td></tr>
+        <tr><td>Orientación al aprendizaje</td><td>Centrado en problemas y tareas reales, no en materias abstractas organizadas por disciplina</td></tr>
+        <tr><td>Motivación interna</td><td>Responde más a motivación propia (crecimiento, dominio) que a premios o castigos externos</td></tr>
+        <tr><td>Necesidad de saber por qué</td><td>Antes de aprender algo, el adulto necesita entender para qué le sirve — explicar el "por qué" no es opcional, es condición de entrada</td></tr>
+      </table>
+      <div class="nota clave"><span class="nota-tag">Aplicado a estudiantes trabajadores — el perfil típico de TP en Chile</span>Estos seis principios explican por qué el diseño para TP se ve distinto al diseño para un colegio: fragmentas contenido porque el tiempo es escaso (disposición para aprender solo lo necesario ahora), conectas cada ejemplo a su trabajo real (experiencia previa + necesidad de saber por qué), y das opciones de ritmo o formato porque valoran su autonomía (autoconcepto).</div>
+
+      <div class="vineta">
+        <div class="vineta-head">Viñeta de taller · elige la metodología correcta</div>
+        <div class="vineta-body">Diseñas una asignatura técnica para estudiantes que trabajan de día y estudian de noche. El contenido incluye un procedimiento complejo de diagnóstico de fallas que requiere integrar varios conceptos previos. <strong>¿Usarías ABP, aula invertida, o ambas combinadas? Justifica con los principios de Knowles.</strong></div>
+        <button class="vineta-reveal-btn" onclick="revealVineta(this,'v5')">Piénsalo primero → ver resolución</button>
+        <div class="vineta-solution">Ambas combinadas, en secuencia: aula invertida para los conceptos previos (el estudiante los revisa a su ritmo, antes de la sesión — respeta su tiempo limitado y autonomía), y ABP para el procedimiento de diagnóstico complejo en la sesión presencial (presentas un caso real de falla, y el grupo aplica los conceptos ya revisados para resolverlo con tu guía disponible). Esto respeta directamente el principio de "necesidad de saber por qué" — llegan a la sesión ya sabiendo para qué sirve cada concepto, porque lo van a necesitar en el caso que resolverán ese mismo día.</div>
       </div>
     </div>
 
@@ -463,9 +513,9 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
 
     <div class="eval-block" id="evaluacion">
       <h2>Evaluación — Unidad 1.3</h2>
-      <div class="eval-sub">10 preguntas. El puntaje se guarda en tu ruta. Puedes reintentar sin límite.</div>
+      <div class="eval-sub">12 preguntas. El puntaje se guarda en tu ruta. Puedes reintentar sin límite.</div>
       <div id="quizRoot"></div>
-      <div class="eval-counter" id="quizCounter">Respondidas: 0/10</div>
+      <div class="eval-counter" id="quizCounter">Respondidas: 0/12</div>
       <button class="eval-submit" id="quizSubmit" onclick="submitQuiz()" disabled>Enviar evaluación</button>
       <div class="result-card" id="resultCard"><div class="result-score" id="resultScore">0%</div><div id="resultMsg" style="font-size:0.85rem;color:var(--ink-muted);margin-top:0.3rem;"></div></div>
     </div>
@@ -505,6 +555,8 @@ function switchMedia(btn) {
   if (btn.dataset.pane === 'video' && YT_VIDEO_ID) { Gami.award('m1-3_video',5,'Viste el video'); checkMultimodal(); }
 }
 function checkMultimodal() { if (Gami.hasSeen('m1-3_pdf') && Gami.hasSeen('m1-3_audio')) Gami.badge('multimodal'); }
+
+function revealVineta(btn, id) { btn.closest('.vineta').classList.add('revealed'); Gami.award('m1-3_vineta_' + id, 5, 'Resolviste una viñeta'); }
 
 let capasReveladas = 0;
 document.querySelectorAll('.capa').forEach((capa, i) => {
@@ -566,6 +618,8 @@ const QUIZ = [
   { q: '¿Cuál es la afirmación correcta sobre las teorías del aprendizaje?', opts: ['La más nueva reemplaza y anula a las anteriores','Coexisten y cada una explica mejor cierto tipo de aprendizaje','Solo una es científicamente válida','Son intercambiables y dan igual'], ans: 1 },
   { q: 'El conectivismo fue propuesto por…', opts: ['Piaget y Vygotsky','Skinner y Thorndike','Siemens y Downes','Gagné y Ausubel'], ans: 2 },
   { q: '¿Cuál es la respuesta más madura a "¿qué teoría del aprendizaje prefieres?"?', opts: ['"El constructivismo, siempre es superior"','"Depende del contenido: combino varias según el objetivo de cada parte del curso"','"El conductismo, es el más científico"','"Ninguna, son todas obsoletas"'], ans: 1 },
+  { q: 'En el ABP de 5 pasos, ¿qué ocurre en el paso 2, "identificar lo que se sabe y lo que falta saber"?', opts: ['Se evalúa la solución final','El grupo mapea su conocimiento actual y genera la motivación para investigar','Se presenta el problema por primera vez','Se reflexiona sobre el proceso completo'], ans: 1 },
+  { q: 'Según los principios de Knowles, ¿por qué un adulto necesita entender el "por qué" antes de aprender algo?', opts: ['Por capricho','Porque responde a motivación interna y necesita justificar el esfuerzo antes de invertir tiempo limitado','No es un principio real de la andragogía','Solo aplica a niños'], ans: 1 },
 ];
 function renderQuiz() {
   document.getElementById('quizRoot').innerHTML = QUIZ.map((item, qi) => `

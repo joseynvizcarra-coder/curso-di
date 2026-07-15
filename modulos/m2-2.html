@@ -268,6 +268,7 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
     <div class="side-toc">
       <div class="toc-label">En esta unidad</div>
       <a href="#s1">1 · Objetivo bien formado</a>
+      <a href="#s1b">1b · Perfil de egreso y RA (nivel TP)</a>
       <a href="#s2">2 · El modelo ABCD</a>
       <a href="#s3">3 · Taxonomía de Bloom revisada</a>
       <a href="#s4">4 · Verbos observables vs. ambiguos</a>
@@ -286,7 +287,7 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
       <span class="lbadge">6 bloques de contenido</span>
       <span class="lbadge">1 actividad interactiva</span>
       <span class="lbadge">3 prácticas de entrevista</span>
-      <span class="lbadge">10 preguntas de evaluación</span>
+      <span class="lbadge">12 preguntas de evaluación</span>
       <span class="lbadge">~40 min</span>
     </div>
 
@@ -369,7 +370,38 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
         <button class="vineta-reveal-btn" onclick="revealVineta(this, 'v2')">Piénsalo primero → ver resolución</button>
         <div class="vineta-solution">El sujeto de la oración es "se revisarán" — la acción del instructor, no del estudiante. No dice qué podrá hacer la persona que aprende ni cómo se verificará. La versión corregida: <em>"Dado un sitio web, el estudiante identificará al menos tres incumplimientos de las pautas WCAG 2.1 nivel AA."</em> Mismo tema, sujeto y verbo distintos.</div>
       </div>
-      <div class="nota contexto"><span class="nota-tag">Aplicación en educación técnico-profesional (TP)</span>En instituciones TP chilenas (CFT, Institutos Profesionales como INACAP o ENAC), este mismo concepto se llama <strong>Resultado de Aprendizaje (RA)</strong> — es exactamente un objetivo de aprendizaje bien formado, redactado a nivel de asignatura. Y hay un nivel superior que no existe en cursos aislados: el <strong>perfil de egreso</strong>, el conjunto de competencias que un estudiante debe tener al titularse de una carrera completa. Si un objetivo de aprendizaje es la meta de una unidad, el perfil de egreso es la meta de toda la carrera — la misma lógica de backward design (unidad 2.3), aplicada a una escala mucho mayor: cada RA de cada asignatura debe poder trazarse hasta una competencia específica del perfil de egreso.</div>
+    </div>
+
+    <!-- S1b -->
+    <div class="content-section" id="s1b">
+      <h2><span class="sec-num">01b</span> Perfil de egreso y Resultados de Aprendizaje — la escala institucional</h2>
+      <p>Todo lo anterior describe el objetivo a nivel de una unidad o asignatura. En educación técnico-profesional chilena (CFT, Institutos Profesionales como INACAP o ENAC), este mismo concepto tiene nombre propio y opera en tres niveles anidados, no solo uno.</p>
+
+      <h3>Los tres niveles, de mayor a menor escala</h3>
+      <table class="compare-table">
+        <tr><th>Nivel</th><th>Qué define</th><th>Ejemplo</th></tr>
+        <tr><td><strong>Perfil de egreso</strong></td><td>Competencias que el titulado debe tener al finalizar toda la carrera</td><td>"El titulado diseña experiencias formativas alineadas a estándares de calidad institucional"</td></tr>
+        <tr><td><strong>Resultado de Aprendizaje (RA) general</strong></td><td>Lo que el estudiante logra al completar una asignatura completa</td><td>"El estudiante diseña un curso completo aplicando un modelo de DI pertinente al contexto"</td></tr>
+        <tr><td><strong>Resultado de Aprendizaje (RA) específico</strong></td><td>Lo que logra al completar una unidad dentro de esa asignatura — es, literalmente, tu objetivo de aprendizaje del modelo ABCD</td><td>"Dado un caso de análisis de necesidades, el estudiante seleccionará un modelo de DI justificando su elección"</td></tr>
+      </table>
+      <div class="defbox">El nombre cambia según la escala, pero la lógica de backward design (unidad 2.3) es idéntica en los tres niveles: <strong>se define primero el nivel más alto (perfil de egreso), y cada nivel inferior debe poder trazarse hacia arriba</strong> — ningún RA específico debería existir si no aporta a un RA general, y ningún RA general debería existir si no aporta a una competencia del perfil de egreso.</div>
+
+      <h3>La matriz de tributación — la herramienta que hace esa trazabilidad verificable</h3>
+      <p>Una <strong>matriz de tributación</strong> es la tabla que documenta, de forma explícita, qué asignaturas contribuyen ("tributan") a cada competencia del perfil de egreso. Es el instrumento que un equipo de aseguramiento de calidad revisa para verificar que el diseño curricular es coherente de punta a punta — no solo que "suena bien" asignatura por asignatura.</p>
+      <table class="compare-table">
+        <tr><th>Competencia del perfil de egreso</th><th>Asignaturas que tributan</th><th>Nivel de dominio esperado por asignatura</th></tr>
+        <tr><td rowspan="2">Diseña experiencias formativas alineadas a estándares de calidad</td><td>Fundamentos de DI (1er semestre)</td><td>Introductorio — reconoce y aplica modelos básicos</td></tr>
+        <tr><td>Taller de Diseño Curricular (4to semestre)</td><td>Avanzado — diseña de forma autónoma un curso completo evaluado por un panel</td></tr>
+        <tr><td>Gestiona proyectos educativos con criterios de SLA y calidad</td><td>Gestión de Proyectos Educativos (3er semestre)</td><td>Intermedio — aplica RACI y metodologías ágiles en un caso simulado</td></tr>
+      </table>
+      <div class="nota alerta"><span class="nota-tag">Por qué esto le importa a un DI, no solo a un equipo de calidad</span>Cuando rediseñas una asignatura (tu función principal en cargos como el de ENAC), <strong>no puedes cambiar el RA general libremente</strong> sin verificar primero qué competencia del perfil de egreso tributa — cambiarlo sin esa verificación puede dejar una competencia completa del perfil sin ninguna asignatura que la cubra. Por eso el rediseño de una asignatura empieza revisando la matriz de tributación, no el syllabus de la asignatura en aislado.</div>
+
+      <div class="vineta">
+        <div class="vineta-head">Viñeta de taller · diagnostica el problema de trazabilidad</div>
+        <div class="vineta-body">Revisas la matriz de tributación de una carrera y descubres que la competencia "Evalúa el impacto de sus diseños instruccionales con datos" del perfil de egreso <strong>no tiene ninguna asignatura asociada</strong> — ningún RA general la menciona. <strong>¿Qué implica esto y qué harías al respecto?</strong></div>
+        <button class="vineta-reveal-btn" onclick="revealVineta(this,'v3')">Piénsalo primero → ver resolución</button>
+        <div class="vineta-solution">Implica que un estudiante puede titularse sin haber sido evaluado nunca en esa competencia específica — un vacío curricular real, no cosmético, que además pondría en riesgo un proceso de acreditación institucional. La acción correcta no es forzar contenido nuevo en cualquier asignatura existente, sino identificar cuál asignatura tiene mayor afinidad temática (por ejemplo, una de análisis de datos o evaluación) y rediseñar uno de sus RA específicos para que trace explícitamente hacia esa competencia — documentando el cambio en la matriz misma.</div>
+      </div>
     </div>
 
     <!-- ============ SECCIÓN 2: MODELO ABCD ============ -->
@@ -581,9 +613,9 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
     <!-- ============ EVALUACIÓN FINAL (10) ============ -->
     <div class="eval-block" id="evaluacion">
       <h2>Evaluación — Unidad 2.2</h2>
-      <div class="eval-sub">10 preguntas. El puntaje se guarda en tu ruta de aprendizaje. Puedes reintentar sin límite.</div>
+      <div class="eval-sub">12 preguntas. El puntaje se guarda en tu ruta de aprendizaje. Puedes reintentar sin límite.</div>
       <div id="quizRoot"></div>
-      <div class="eval-counter" id="quizCounter">Respondidas: 0/10</div>
+      <div class="eval-counter" id="quizCounter">Respondidas: 0/12</div>
       <button class="eval-submit" id="quizSubmit" onclick="submitQuiz()" disabled>Enviar evaluación</button>
       <div class="result-card" id="resultCard">
         <div class="result-score" id="resultScore">0%</div>
@@ -715,6 +747,8 @@ const QUIZ = [
   { q: '¿Por qué un verbo como "comprender" es problemático en un objetivo de aprendizaje?', opts: ['Porque es una palabra demasiado larga','Porque describe un estado mental interno que no se puede observar ni medir directamente','Porque no existe en la Taxonomía de Bloom','Porque solo aplica a educación superior'], ans: 1 },
   { q: 'Si el objetivo usa el verbo "aplicar", ¿qué tipo de instrumento de evaluación es generalmente más alineado?', opts: ['Una prueba de selección múltiple sobre definiciones','Un estudio de caso o ejercicio práctico con datos nuevos','Una lista de verdadero o falso','Ninguno, "aplicar" no se puede evaluar'], ans: 1 },
   { q: 'El objetivo "el curso presentará los conceptos clave de accesibilidad web" tiene un error principal. ¿Cuál es?', opts: ['Es demasiado corto','El sujeto es el curso, no el estudiante, por lo que describe contenido y no una conducta del aprendiz', 'Usa un verbo del nivel Evaluar, que es demasiado avanzado','No menciona el nombre del instructor'], ans: 1 },
+  { q: 'En el sistema de tres niveles (perfil de egreso, RA general, RA específico), ¿qué relación deben tener entre sí?', opts: ['Son independientes, no se conectan','Cada nivel inferior debe poder trazarse hacia el nivel superior', 'Solo el perfil de egreso importa, los RA son opcionales','El RA específico define al perfil de egreso'], ans: 1 },
+  { q: '¿Qué documenta una matriz de tributación?', opts: ['El presupuesto de cada asignatura','Qué asignaturas contribuyen a cada competencia del perfil de egreso','El horario de clases','La asistencia de los estudiantes'], ans: 1 },
 ];
 
 function renderQuiz() {
