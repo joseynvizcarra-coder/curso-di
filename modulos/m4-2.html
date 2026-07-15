@@ -201,6 +201,7 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
       <a href="#s1">1 · Panorama de herramientas</a>
       <a href="#s2">2 · Flujo Storyline (paso a paso)</a>
       <a href="#s3">3 · Flujo H5P (paso a paso)</a>
+      <a href="#s3b">3b · Flujo Moodle nativo (Cuestionario, Tarea, Foro)</a>
       <a href="#s4">4 · Cuándo elegir cada una</a>
       <a href="#s5">5 · Del storyboard a la herramienta</a>
       <a href="#s6">6 · Publicar y exportar</a>
@@ -347,6 +348,42 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
       <div class="nota contexto"><span class="nota-tag">Por qué H5P reporta mejor que un SCORM simple</span>Como internamente usa xAPI, H5P puede reportar no solo "completado/no completado" sino <em>qué respuesta específica</em> dio el estudiante en cada intento — dato mucho más rico para analítica que lo que SCORM 1.2 típicamente expone.</div>
     </div>
 
+    <!-- S3b -->
+    <div class="content-section" id="s3b">
+      <h2><span class="sec-num">03b</span> Flujo de trabajo en Moodle nativo — cargar y configurar un curso</h2>
+      <p>Esta es la tarea más frecuente de un rol como Coordinador LMS: recibir contenido ya producido (por un docente, un SME, o incluso ya diagramado en un storyboard) y <strong>configurarlo dentro de Moodle</strong> usando sus actividades y recursos nativos — sin pasar por SCORM ni por una herramienta de autoría externa.</p>
+
+      <h3>Actividades vs. Recursos — la distinción base de Moodle</h3>
+      <p>Moodle separa el contenido de un curso en dos categorías: <strong>Recursos</strong> (contenido estático que el estudiante consume: Archivo, Página, Carpeta, Enlace URL, Libro) y <strong>Actividades</strong> (contenido con el que el estudiante interactúa y que genera una calificación o registro: Cuestionario, Tarea, Foro, Taller, Lección).</p>
+
+      <h3>Configurar un Cuestionario — la actividad más usada</h3>
+      <table class="compare-table">
+        <tr><th>Configuración</th><th>Qué controla</th><th>Decisión típica</th></tr>
+        <tr><td>Intentos permitidos</td><td>Cuántas veces puede rendirlo el estudiante</td><td>1 para evaluación sumativa; ilimitado para autoevaluación formativa</td></tr>
+        <tr><td>Método de calificación</td><td>Si hay varios intentos, cuál nota se guarda</td><td>Calificación más alta (motiva reintentar) o promedio (penaliza adivinar)</td></tr>
+        <tr><td>Aleatorización</td><td>Orden de preguntas y de opciones dentro de cada pregunta</td><td>Activar en evaluaciones sumativas para reducir copia entre estudiantes</td></tr>
+        <tr><td>Retroalimentación</td><td>Qué ve el estudiante después de responder: inmediata, al cerrar el cuestionario, o después de la fecha límite</td><td>Formativa → inmediata. Sumativa con varios estudiantes rindiendo en distintos momentos → después de la fecha límite, para no filtrar respuestas</td></tr>
+        <tr><td>Temporizador</td><td>Límite de tiempo para responder</td><td>Común en evaluaciones sumativas; se desactiva en cuestionarios de repaso</td></tr>
+      </table>
+      <div class="nota alerta"><span class="nota-tag">Error común al configurar un Cuestionario</span>Dejar la retroalimentación en "inmediata" para una evaluación sumativa que varios grupos rinden en horarios distintos — el primer grupo que rinde puede compartir las respuestas correctas con quienes rinden después. Este es exactamente el tipo de detalle operativo que un Coordinador LMS debe revisar antes de publicar, no algo que se note recién cuando ya causó un problema.</div>
+
+      <h3>Configurar una Tarea</h3>
+      <p>Define el <strong>tipo de entrega</strong> (subida de archivo, texto escrito directo en Moodle, o ambos), la <strong>fecha límite</strong> y si se permite entrega tardía con penalización automática de puntaje, y el <strong>método de calificación</strong> — Moodle permite adjuntar una rúbrica configurada directamente en la actividad, que es la aplicación práctica de lo que ya viste en la unidad 3.1: cada criterio y nivel de la rúbrica se carga como estructura, no solo como texto de referencia.</p>
+
+      <h3>Configurar un Foro</h3>
+      <p>Los tipos más usados: <strong>Foro de uso general</strong> (discusión abierta) y <strong>Foro P+R (pregunta y respuesta)</strong>, donde el estudiante debe publicar su propia respuesta antes de poder ver las de sus compañeros — útil para evitar que todos repitan la misma idea. Se puede configurar calificación de la participación, útil cuando el foro es parte de la nota del curso, no solo un espacio de conversación.</p>
+
+      <h3>Organizar el curso — formato de secciones</h3>
+      <p>Moodle organiza el curso completo en <strong>formato por temas</strong> (secciones sin fecha, ideal para cursos autoguiados) o <strong>formato semanal</strong> (cada sección corresponde a una semana calendario, ideal para cursos con cronograma fijo). La elección depende de si el curso tiene fechas de avance obligatorias o el estudiante avanza a su propio ritmo.</p>
+
+      <div class="vineta">
+        <div class="vineta-head">Viñeta de taller · configurar sin storyboard técnico completo</div>
+        <div class="vineta-body">Te entregan el contenido ya producido de un curso (PDF, un video, y un banco de 20 preguntas) para subirlo a Moodle, sin storyboard técnico — solo el material. <strong>¿Qué decisiones de configuración tienes que tomar tú misma, sin que nadie te las haya especificado?</strong></div>
+        <button class="vineta-reveal-btn" onclick="revealVineta(this,'v1')">Piénsalo primero → ver resolución</button>
+        <div class="vineta-solution">Varias: ¿el PDF va como Recurso Archivo o convertido a Página? ¿El video se sube directo o se enlaza desde YouTube/Vimeo? ¿El banco de 20 preguntas se rinde completo o Moodle selecciona una muestra aleatoria por estudiante? ¿Cuántos intentos se permiten y con qué retroalimentación? Sin storyboard técnico, estas decisiones son tuyas — y es exactamente el tipo de criterio operativo que un Coordinador LMS aporta más allá de solo "cargar archivos".</div>
+      </div>
+    </div>
+
     <!-- S4 -->
     <div class="content-section" id="s4">
       <h2><span class="sec-num">04</span> Cuándo elegir cada herramienta</h2>
@@ -484,6 +521,20 @@ h1.lesson-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: c
           </div>
         </div>
       </div>
+
+      <div class="practica">
+        <div class="practica-head"><div class="p-num">Práctica 4 · Coordinador LMS</div><div class="p-q">"Te vamos a entregar todos los contenidos ya listos — tu trabajo es subirlos a Moodle y configurar los cuestionarios y evaluaciones. ¿Sabes hacer eso?"</div></div>
+        <div class="practica-body">
+          <textarea placeholder="Tu respuesta…"></textarea>
+          <button class="rm-toggle" onclick="toggleRM('rm-p4','p4')">Ver respuesta modelo</button>
+          <div class="rm" id="rm-p4">"Sí. Sé configurar un Cuestionario definiendo intentos permitidos, método de calificación, aleatorización de preguntas y cuándo se muestra la retroalimentación — por ejemplo, después de la fecha límite si varios grupos rinden en horarios distintos, para no filtrar respuestas. Sé configurar Tareas con rúbrica integrada, y organizar el curso en formato de temas o semanal según si tiene cronograma fijo. Incluso cuando el contenido llega sin instrucciones detalladas, sé qué decisiones de configuración me corresponde tomar a mí."</div>
+          <div class="checklist"><div class="cl-label">Checklist de tu respuesta</div>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p4a')"> ¿Nombraste configuraciones específicas de Cuestionario (intentos, aleatorización, retroalimentación)?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p4b')"> ¿Mencionaste la rúbrica integrada en Tarea?</label>
+            <label class="cl-item"><input type="checkbox" onchange="clCheck(this,'p4c')"> ¿Mostraste que tomas decisiones de configuración con criterio propio, no solo "cargando archivos"?</label>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="eval-block" id="evaluacion">
@@ -585,12 +636,12 @@ const QUIZ = [
   { q: '¿Qué tipos de variables existen en Storyline?', opts: ['Solo numéricas','True/False, numéricas y de texto','Solo de texto','No existen variables en Storyline'], ans: 1 },
   { q: '¿Qué archivo define los campos configurables de un tipo de contenido H5P?', opts: ['index.html','semantics.json','config.xml','manifest.json'], ans: 1 },
   { q: '¿Cómo reporta H5P internamente los resultados de una interacción?', opts: ['No reporta nada','Vía xAPI, generando statements con detalle de la respuesta','Solo por email','Vía SCORM 2004 exclusivamente'], ans: 1 },
-  { q: 'Si el feedback de una interacción en Storyline aparece antes de sumar el punto, ¿qué deberías revisar primero?', opts: ['El diseño visual','El orden de los triggers en el panel','El precio de la licencia','El manifest SCORM'], ans: 1 },
-  { q: 'Según WCAG, ¿cuál es el contraste mínimo recomendado para texto normal?', opts: ['1:1','4.5:1','10:1','No existe un mínimo'], ans: 1 },
-  { q: '¿Por qué la accesibilidad no es "opcional" en varios contextos institucionales chilenos?', opts: ['Es solo estética','Puede ser un requisito legal/formal en licitaciones y auditorías','No tiene relación con instituciones públicas','Solo aplica a videojuegos'], ans: 1 },
-  { q: '¿Por qué Git tradicional no funciona bien con archivos .story de Storyline?', opts: ['Porque son archivos de texto plano','Porque son archivos binarios grandes, no texto','Porque Storyline no permite guardar archivos','Git funciona perfectamente con ellos'], ans: 1 },
-  { q: 'Al localizar un curso a otro idioma, ¿qué problema técnico es común además de traducir el texto?', opts: ['Ninguno, solo se traduce el texto','Expansión de texto que puede desbordar botones o cajas de diseño','El curso deja de funcionar completamente','No hay problemas técnicos asociados'], ans: 1 },
-  { q: '¿Qué ventaja tiene H5P sobre Storyline en cuanto a integración con Moodle?', opts: ['Ninguna, son iguales','Se integra nativamente sin el ciclo de exportar/importar SCORM','H5P no funciona con Moodle','Storyline es gratuito y H5P no'], ans: 1 },
+  { q: 'En Moodle, ¿cuál es la diferencia entre un Recurso y una Actividad?', opts: ['No hay diferencia','El Recurso es contenido estático que se consume; la Actividad genera interacción y calificación','El Recurso siempre tiene nota; la Actividad no','Solo las Actividades pueden tener archivos adjuntos'], ans: 1 },
+  { q: 'Configurando un Cuestionario sumativo que rendirán varios grupos en horarios distintos, ¿cuándo conviene mostrar la retroalimentación?', opts: ['Inmediatamente después de cada pregunta','Después de la fecha límite, para no filtrar respuestas al grupo siguiente','Nunca mostrarla','Solo al profesor'], ans: 1 },
+  { q: '¿Qué permite adjuntar Moodle directamente en la configuración de una Tarea?', opts: ['Un video obligatorio','Una rúbrica de calificación integrada','Un límite de edad','Nada adicional'], ans: 1 },
+  { q: '¿Cuál es la diferencia entre formato de curso "por temas" y "semanal" en Moodle?', opts: ['No hay diferencia real','El semanal ata cada sección a una fecha calendario; el de temas no tiene fechas fijas','El de temas es solo para cursos cortos','El semanal no permite Cuestionarios'], ans: 1 },
+  { q: '¿Qué documento debe preceder la construcción en cualquier herramienta de autoría?', opts: ['El informe financiero','El storyboard','El certificado del curso','El manual del LMS'], ans: 1 },
+  { q: 'Si un storyboard no especifica qué pasa al fallar una interacción, ¿qué se debe hacer?', opts: ['Improvisar directamente en la herramienta','Volver al storyboard y definir la regla antes de seguir','Ignorar el problema','Cancelar el proyecto'], ans: 1 },
 ];
 function renderQuiz() {
   document.getElementById('quizRoot').innerHTML = QUIZ.map((item, qi) => `
